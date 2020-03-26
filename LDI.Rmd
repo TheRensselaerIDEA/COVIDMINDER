@@ -1,5 +1,5 @@
 ---
-title: "COVID-19 Lof Disparate Impact"
+title: "COVID-19 Disparity Index Prototyping (aka Log Disparate Impact)"
 author: "John Erickson"
 date: "3/25/2020"
 output: html_document
@@ -69,11 +69,11 @@ colnames(provider_capacity) <- c("NAME","total_hosp_beds","hosp_beds_per_1000","
 provider_capacity$p_hosp_beds <-provider_capacity$hosp_beds_per_1000/1000 
 
 # Calculate pUS
-pUS <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
+pUS1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
 
 # ldi.fct <- function(x) {log((x/(1-x))/(pUS/(1-pUS)))} # In case we need a stand-alone definition...
 
-hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS/(1-pUS)))}))
+hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
 
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 
@@ -88,6 +88,7 @@ colnames(state_covid_testing) <- c("NAME","total_num_tests","tests_pos_results")
 # Inner join to add population
 state_covid_testing <- left_join(state_covid_testing, population, by = c('NAME'))
 
+# TODO: This is really just the test rate, not "per 1000"
 state_covid_testing <- state_covid_testing %>% 
   mutate(tests_per_1000 = total_num_tests / Population)
 
