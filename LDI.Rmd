@@ -145,10 +145,10 @@ pal <- colorBin("YlOrRd", domain = states$hosp_beds_ldi, bins = bins, reverse=TR
 
 labels <- sprintf(
   "<strong>%s</strong><br/>
-  Older At Risk Adults DI: %g<br/>
-  At Risk Adults DI: %g<br/>
-  Total Tests DI: %g<br/>
-  <span style='background-color: #e1eaea'>Hospital Beds DI: %g</span>",
+  Older At Risk Adults DI: %.2g<br/>
+  At Risk Adults DI: %.2g<br/>
+  Total Tests DI: %.2g<br/>
+  <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
   states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
@@ -186,10 +186,10 @@ pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=FALS
 
 labels2 <- sprintf(
   "<strong>%s</strong><br/>
-  Older At Risk Adults DI: %g</span><br/>
-  At Risk Adults DI: %g<br/>
-  <span style='background-color: #e1eaea'>Total Tests DI: %g</span><br/>
-  Hospital Beds DI: %g",
+  Older At Risk Adults DI: %.2g</span><br/>
+  At Risk Adults DI: %.2g<br/>
+  <span style='background-color: #e1eaea'>Total Tests DI: %.2g</span><br/>
+  Hospital Beds DI: %.2g",
   states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
@@ -227,10 +227,10 @@ pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=TR
 
 labels3 <- sprintf(
   "<strong>%s</strong><br/>
-  Older At Risk Adults DI: %g<br/>
-  <span style='background-color: #e1eaea'>At Risk Adults DI: %g</span><br/>
-  Total Tests DI: %g<br/>
-  Hospital Beds DI: %g",
+  Older At Risk Adults DI: %.2g<br/>
+  <span style='background-color: #e1eaea'>At Risk Adults DI: %.2g</span><br/>
+  Total Tests DI: %.2g<br/>
+  Hospital Beds DI: %.2g",
   states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
@@ -268,10 +268,10 @@ pal4 <- colorBin("YlOrRd", domain = states$older_at_risk_ldi, bins = bins4, reve
 
 labels4 <- sprintf(
   "<strong>%s</strong><br/>
-  <span style='background-color: #e1eaea'>Older At Risk Adults DI: %g</span><br/>
-  At Risk Adults DI: %g<br/>
-  Total Tests DI: %g<br/>
-  Hospital Beds DI: %g",
+  <span style='background-color: #e1eaea'>Older At Risk Adults DI: %.2g</span><br/>
+  At Risk Adults DI: %.2g<br/>
+  Total Tests DI: %.2g<br/>
+  Hospital Beds DI: %.2g",
   states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
