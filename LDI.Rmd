@@ -153,7 +153,7 @@ labels <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 m <- m %>% addPolygons(
-  fillColor = ~pal(hosp_beds_ldi),
+  fillColor = ~pal(states$hosp_beds_ldi),
   weight = 2,
   opacity = 1,
   color = "white",
@@ -171,7 +171,7 @@ m <- m %>% addPolygons(
     textsize = "15px",
     direction = "auto")) %>% 
   
-  addLegend(pal = pal, values = ~hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds",
+  addLegend(pal = pal, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds",
   position = "bottomright")
 
 m
@@ -194,7 +194,7 @@ labels2 <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 m2 <- m2 %>% addPolygons(
-  fillColor = ~pal2(tests_ldi),
+  fillColor = ~pal2(states$tests_ldi),
   weight = 2,
   opacity = 1,
   color = "white",
@@ -212,7 +212,7 @@ m2 <- m2 %>% addPolygons(
     textsize = "15px",
     direction = "auto")) %>% 
   
-  addLegend(pal = pal2, values = ~tests_ldi, opacity = 0.7, title = "Disparity Index<br/>Total Tests",
+  addLegend(pal = pal2, values = ~states$tests_ldi, opacity = 0.7, title = "Disparity Index<br/>Total Tests",
   position = "bottomright")
 
 m2
@@ -235,7 +235,7 @@ labels3 <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 m3 <- m3 %>% addPolygons(
-  fillColor = ~pal3(at_risk_ldi),
+  fillColor = ~pal3(states$at_risk_ldi),
   weight = 2,
   opacity = 1,
   color = "white",
@@ -253,7 +253,7 @@ m3 <- m3 %>% addPolygons(
     textsize = "15px",
     direction = "auto")) %>% 
   
-  addLegend(pal = pal3, values = ~at_risk_ldi, opacity = 0.7, title = "Disparity Index<br/>At Risk Adults",
+  addLegend(pal = pal3, values = ~states$at_risk_ldi, opacity = 0.7, title = "Disparity Index<br/>At Risk Adults",
   position = "bottomright")
 
 m3
@@ -276,7 +276,7 @@ labels4 <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 m4 <- m4 %>% addPolygons(
-  fillColor = ~pal4(older_at_risk_ldi),
+  fillColor = ~pal4(states$older_at_risk_ldi),
   weight = 2,
   opacity = 1,
   color = "white",
@@ -294,7 +294,7 @@ m4 <- m4 %>% addPolygons(
     textsize = "15px",
     direction = "auto")) %>% 
   
-  addLegend(pal = pal4, values = ~older_at_risk_ldi, opacity = 0.7, title = "Disparity Index<br/>Share of Older At Risk Adults",
+  addLegend(pal = pal4, values = ~states$older_at_risk_ldi, opacity = 0.7, title = "Disparity Index<br/>Share of Older At Risk Adults",
   position = "bottomright")
 
 m4
