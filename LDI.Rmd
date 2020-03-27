@@ -140,8 +140,11 @@ states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ld
 Plot: Disparity Index, Total Hospital Beds/State
 
 ```{r}
-bins <- c(-1, -.75, -.5, -.25, 0, .25, .5, .75, 1)
-pal <- colorBin("YlOrRd", domain = states$hosp_beds_ldi, bins = bins, reverse=TRUE)
+colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+#bins <- c(-0.9, -.75, -.5, -.25, 0, .25, .5, .75, 1)
+bins <- c(-3.0, -0.9, -.2, .2, .9, 6)
+#pal <- colorBin("YlOrRd", domain = states$hosp_beds_ldi, bins = bins, reverse=TRUE)
+pal <- colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
 
 labels <- sprintf(
   "<strong>%s</strong><br/>
@@ -182,7 +185,8 @@ Plot: Disparity Index, Total COVID-19 Testing/State
 
 ```{r}
 bins2 <- c(-3, -2, -1, -.5, 0, .5, 1, 2, 3)
-pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=TRUE)
+#pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=TRUE)
+pal2 <- colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
 
 labels2 <- sprintf(
   "<strong>%s</strong><br/>
@@ -223,7 +227,8 @@ Plot: Disparity Index, Total At-Risk Adults/State
 
 ```{r}
 bins3 <- c(-0.5, -0.3, -.1, 0, 0.1, 0.3, 0.5)
-pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=FALSE)
+#pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=FALSE)
+pal3 <- colorBin(colors, domain = states$at_risk_ldi, bins = bins, reverse=FALSE)
 
 labels3 <- sprintf(
   "<strong>%s</strong><br/>
@@ -264,7 +269,8 @@ Plot: Disparity Index, Total Older At-Risk Adults/State
 
 ```{r}
 bins4 <- c(-0.8, -0.6, -.4, -.2, 0, 0.2, 0.4, 0.6)
-pal4 <- colorBin("YlOrRd", domain = states$older_at_risk_ldi, bins = bins4, reverse=FALSE)
+#pal4 <- colorBin("YlOrRd", domain = states$older_at_risk_ldi, bins = bins4, reverse=FALSE)
+pal4 <- colorBin(colors, domain = states$older_at_risk_ldi, bins = bins, reverse=FALSE)
 
 labels4 <- sprintf(
   "<strong>%s</strong><br/>
