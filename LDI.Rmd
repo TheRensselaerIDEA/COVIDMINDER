@@ -69,7 +69,7 @@ colnames(provider_capacity) <- c("NAME","total_hosp_beds","hosp_beds_per_1000","
 provider_capacity$p_hosp_beds <-provider_capacity$hosp_beds_per_1000/1000 
 
 # Calculate pUS
-pUS1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
+pUS.1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
 
 # ldi.fct <- function(x) {log((x/(1-x))/(pUS/(1-pUS)))} # In case we need a stand-alone definition...
 
