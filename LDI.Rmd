@@ -47,6 +47,9 @@ m2 <- m  # Second map: COVID testing
 m3 <- m  # Third map: All at-risk adults
 m4 <- m  # Fourth map: Fraction at-risk over 60
 
+# Import population
+population <- read_csv("population.csv")
+
 # Import provider capacity
 provider_capacity <- read_csv("provider_capacity.csv")
 
