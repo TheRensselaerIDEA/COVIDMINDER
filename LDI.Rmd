@@ -35,15 +35,17 @@ Data Initialization & Imports...
 #Re-initialize states
 states <- states.import 
 
-# Initialize map 
+# Initialize map
+# First map: Hospital Beds
 m <- leaflet(states) %>%
   setView(-96, 37.8, 4) %>%
   addProviderTiles("MapBox", options = providerTileOptions(
     id = "mapbox.light",
     accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
 
-m2 <- m
-m3 <- m
+m2 <- m  # Second map: COVID testing
+m3 <- m  # Third map: All at-risk adults
+m4 <- m  # Fourth map: Fraction at-risk over 60
 
 # Import provider capacity
 provider_capacity <- read_csv("provider_capacity.csv")
@@ -51,11 +53,9 @@ provider_capacity <- read_csv("provider_capacity.csv")
 # Import state testing 
 state_covid_testing <- read_csv("state_covid_testing.csv")
 
-# Import state testing 
-state_covid_testing <- read_csv("state_covid_testing.csv")
-
 # Import at risk adults
-at_risk_adults <- read_csv("at_risk_adults.csv")
+# NOTE: Includes all at-risk and share of at-risk over 60
+at_risk_adults <- read_csv("at_risk_adults.csv") 
 
 ```
 
@@ -105,22 +105,33 @@ state_covid_testing <- state_covid_testing[1:52,]
 states <- data.frame(states, "tests_ldi"=state_covid_testing$tests_ldi) # Append to states
 
 ## At-risk Adults fixing
-# Fix column names 
-# Columns okay for at risk
 
 # Calculate pUS
+# All at-risk
 pUS.3 <- as.numeric(at_risk_adults[which(at_risk_adults$NAME=="United States"),"p_at_risk_adults"])
 
 at_risk_ldi <- unlist(lapply(at_risk_adults$p_at_risk_adults, FUN=function(x){log((x/(1-x))/(pUS.3/(1-pUS.3)))}))
 
 at_risk_adults <- data.frame(at_risk_adults, at_risk_ldi)
 
+#Older at-risk
+pUS.4 <- as.numeric(at_risk_adults[which(at_risk_adults$NAME=="United States"),"p_older_at_risk_adults"])
+
+older_at_risk_ldi <- unlist(lapply(at_risk_adults$p_older_at_risk_adults, FUN=function(x){log((x/(1-x))/(pUS.4/(1-pUS.4)))}))
+
+at_risk_adults <- data.frame(at_risk_adults, older_at_risk_ldi)
+
+# RE-order to match states ordering
 at_risk_adults <- at_risk_adults[match(states$NAME, at_risk_adults$NAME),]
 
 at_risk_adults <- at_risk_adults[1:52,]
 
+# Append the new columns to states
 states <- data.frame(states, "at_risk_ldi"=at_risk_adults$at_risk_ldi) # Append to states
 
+states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ldi) # Append to states
+
+#summary(older_at_risk_ldi)
 ```
 
 Plot: Disparity Index, Total Hospital Beds/State
@@ -131,10 +142,11 @@ pal <- colorBin("YlOrRd", domain = states$hosp_beds_ldi, bins = bins, reverse=TR
 
 labels <- sprintf(
   "<strong>%s</strong><br/>
+  Older At Risk Adults DI: %g<br/>
   At Risk Adults DI: %g<br/>
   Total Tests DI: %g<br/>
   <span style='background-color: #e1eaea'>Hospital Beds DI: %g</span>",
-  states$NAME, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m <- m %>% addPolygons(
@@ -171,10 +183,11 @@ pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=FALS
 
 labels2 <- sprintf(
   "<strong>%s</strong><br/>
+  Older At Risk Adults DI: %g</span><br/>
   At Risk Adults DI: %g<br/>
   <span style='background-color: #e1eaea'>Total Tests DI: %g</span><br/>
   Hospital Beds DI: %g",
-  states$NAME, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m2 <- m2 %>% addPolygons(
@@ -211,10 +224,11 @@ pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=TR
 
 labels3 <- sprintf(
   "<strong>%s</strong><br/>
+  Older At Risk Adults DI: %g<br/>
   <span style='background-color: #e1eaea'>At Risk Adults DI: %g</span><br/>
   Total Tests DI: %g<br/>
   Hospital Beds DI: %g",
-  states$NAME, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m3 <- m3 %>% addPolygons(
@@ -243,7 +257,43 @@ m3
 
 ```
 
+Plot: Disparity Index, Total Older At-Risk Adults/State
+
 ```{r}
+bins4 <- c(-0.8, -0.6, -.4, -.2, 0, 0.2, 0.4, 0.6)
+pal4 <- colorBin("YlOrRd", domain = states$older_at_risk_ldi, bins = bins4, reverse=FALSE)
+
+labels4 <- sprintf(
+  "<strong>%s</strong><br/>
+  <span style='background-color: #e1eaea'>Older At Risk Adults DI: %g</span><br/>
+  At Risk Adults DI: %g<br/>
+  Total Tests DI: %g<br/>
+  Hospital Beds DI: %g",
+  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+) %>% lapply(htmltools::HTML)
+
+m4 <- m4 %>% addPolygons(
+  fillColor = ~pal4(older_at_risk_ldi),
+  weight = 2,
+  opacity = 1,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+  highlight = highlightOptions(
+    weight = 5,
+    color = "#666",
+    dashArray = "",
+    fillOpacity = 0.7,
+    bringToFront = TRUE),
+  label = labels4,
+  labelOptions = labelOptions(
+    style = list("font-weight" = "normal", padding = "3px 8px"),
+    textsize = "15px",
+    direction = "auto")) %>% 
+  
+  addLegend(pal = pal4, values = ~older_at_risk_ldi, opacity = 0.7, title = "Disparity Index<br/>Share of Older At Risk Adults",
+  position = "bottomright")
+
+m4
 
 ```
-
