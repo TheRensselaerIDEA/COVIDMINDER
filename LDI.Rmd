@@ -182,7 +182,7 @@ Plot: Disparity Index, Total COVID-19 Testing/State
 
 ```{r}
 bins2 <- c(-3, -2, -1, -.5, 0, .5, 1, 2, 3)
-pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=FALSE)
+pal2 <- colorBin("YlOrRd", domain = states$tests_ldi, bins = bins2, reverse=TRUE)
 
 labels2 <- sprintf(
   "<strong>%s</strong><br/>
@@ -223,7 +223,7 @@ Plot: Disparity Index, Total At-Risk Adults/State
 
 ```{r}
 bins3 <- c(-0.5, -0.3, -.1, 0, 0.1, 0.3, 0.5)
-pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=TRUE)
+pal3 <- colorBin("YlOrRd", domain = states$at_risk_ldi, bins = bins3, reverse=FALSE)
 
 labels3 <- sprintf(
   "<strong>%s</strong><br/>
