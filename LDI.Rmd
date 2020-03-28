@@ -168,11 +168,12 @@ pal <- colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALS
 
 labels <- sprintf(
   "<strong>%s</strong><br/>
+  Hypertension Mortality Rate DI: %.2g<br/>
   Older At Risk Adults DI: %.2g<br/>
   At Risk Adults DI: %.2g<br/>
   Total Tests DI: %.2g<br/>
   <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
-  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+    states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m <- m %>% addPolygons(
@@ -210,11 +211,12 @@ pal2 <- colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
 
 labels2 <- sprintf(
   "<strong>%s</strong><br/>
-  Older At Risk Adults DI: %.2g</span><br/>
+  Hypertension Mortality Rate DI: %.2g<br/>
+  Older At Risk Adults DI: %.2g<br/>
   At Risk Adults DI: %.2g<br/>
   <span style='background-color: #e1eaea'>Total Tests DI: %.2g</span><br/>
   Hospital Beds DI: %.2g",
-  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+    states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m2 <- m2 %>% addPolygons(
@@ -252,11 +254,12 @@ pal3 <- colorBin(colors, domain = states$at_risk_ldi, bins = bins, reverse=FALSE
 
 labels3 <- sprintf(
   "<strong>%s</strong><br/>
+  Hypertension Mortality Rate DI: %.2g<br/>
   Older At Risk Adults DI: %.2g<br/>
   <span style='background-color: #e1eaea'>At Risk Adults DI: %.2g</span><br/>
   Total Tests DI: %.2g<br/>
   Hospital Beds DI: %.2g",
-  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+    states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m3 <- m3 %>% addPolygons(
@@ -294,11 +297,12 @@ pal4 <- colorBin(colors, domain = states$older_at_risk_ldi, bins = bins, reverse
 
 labels4 <- sprintf(
   "<strong>%s</strong><br/>
+  Hypertension Mortality Rate DI: %.2g<br/>
   <span style='background-color: #e1eaea'>Older At Risk Adults DI: %.2g</span><br/>
   At Risk Adults DI: %.2g<br/>
   Total Tests DI: %.2g<br/>
   Hospital Beds DI: %.2g",
-  states$NAME, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+  states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
 ) %>% lapply(htmltools::HTML)
 
 m4 <- m4 %>% addPolygons(
