@@ -64,6 +64,7 @@ at_risk_adults <- read_csv("at_risk_adults.csv")
 # Import hypertension
 
 hypertension_mortality <- read_csv("hypertension_mortality.csv")
+hypertension_mortality$p_ht_death_rate <-hypertension_mortality$p_ht_death_rate / 100000
 
 ```
 
