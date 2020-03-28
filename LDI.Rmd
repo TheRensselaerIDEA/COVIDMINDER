@@ -46,6 +46,7 @@ m <- leaflet(states) %>%
 m2 <- m  # Second map: COVID testing
 m3 <- m  # Third map: All at-risk adults
 m4 <- m  # Fourth map: Fraction at-risk over 60
+m5 <- m  # Fifth map: Hypertension deaths
 
 # Import population
 population <- read_csv("population.csv")
@@ -59,6 +60,10 @@ state_covid_testing <- read_csv("state_covid_testing.csv")
 # Import at risk adults
 # NOTE: Includes all at-risk and share of at-risk over 60
 at_risk_adults <- read_csv("at_risk_adults.csv") 
+
+# Import hypertension
+
+hypertension_mortality <- read_csv("hypertension_mortality.csv")
 
 ```
 
@@ -134,7 +139,21 @@ states <- data.frame(states, "at_risk_ldi"=at_risk_adults$at_risk_ldi) # Append 
 
 states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ldi) # Append to states
 
-#summary(older_at_risk_ldi)
+# Hypertension mortality
+pUS.5 <- as.numeric(hypertension_mortality[which(hypertension_mortality$NAME=="United States"),"p_ht_death_rate"])
+
+ht_death_rate_ldi <- unlist(lapply(hypertension_mortality$p_ht_death_rate, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
+
+hypertension_mortality <- data.frame(hypertension_mortality, ht_death_rate_ldi)
+
+# RE-order to match states ordering
+hypertension_mortality <- hypertension_mortality[match(states$NAME, hypertension_mortality$NAME),]
+
+hypertension_mortality <- hypertension_mortality[1:52,]
+
+# Append the new column to states
+states <- data.frame(states, "ht_death_rate_ldi"=hypertension_mortality$ht_death_rate_ldi) # Append to states
+
 ```
 
 Plot: Disparity Index, Total Hospital Beds/State
@@ -304,5 +323,48 @@ m4 <- m4 %>% addPolygons(
   position = "bottomright")
 
 m4
+
+```
+
+Plot: Disparity Index, Hypertension Mortality/State
+
+```{r}
+bins5 <- c(-0.8, -0.6, -.4, -.2, 0, 0.2, 0.4, 0.6)
+#pal4 <- colorBin("YlOrRd", domain = states$older_at_risk_ldi, bins = bins4, reverse=FALSE)
+pal5 <- colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
+
+labels5 <- sprintf(
+  "<strong>%s</strong><br/>
+  <span style='background-color: #e1eaea'>Hypertension Mortality Rate DI: %.2g</span><br/>
+  Older At Risk Adults DI: %.2g<br/>
+  At Risk Adults DI: %.2g<br/>
+  Total Tests DI: %.2g<br/>
+  Hospital Beds DI: %.2g",
+  states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+) %>% lapply(htmltools::HTML)
+
+m5 <- m5 %>% addPolygons(
+  fillColor = ~pal5(states$ht_death_rate_ldi),
+  weight = 2,
+  opacity = 1,
+  color = "white",
+  dashArray = "3",
+  fillOpacity = 0.7,
+  highlight = highlightOptions(
+    weight = 5,
+    color = "#666",
+    dashArray = "",
+    fillOpacity = 0.7,
+    bringToFront = TRUE),
+  label = labels5,
+  labelOptions = labelOptions(
+    style = list("font-weight" = "normal", padding = "3px 8px"),
+    textsize = "15px",
+    direction = "auto")) %>% 
+  
+  addLegend(pal = pal5, values = ~states$ht_death_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>Hypertension Mortality",
+  position = "bottomright")
+
+m5
 
 ```
