@@ -110,8 +110,11 @@ states <- data.frame(states, "ht_death_rate_ldi"=hypertension_mortality$ht_death
 ui <- navbarPage(
   title="CovidMinder",
   tabPanel("COVID-19 Testing/State",
-           mainPanel(leafletOutput(outputId = "mymap"))
-           )
+            fluidRow(
+              column(3, HTML("Plot: Disparity Index</br>Total COVID-19 Testing/State</br>UPDATE: Using South Korea testing rate")),
+              column(9, leafletOutput(outputId = "mymap", width="100%"))
+            )
+  )
 )
 
 
