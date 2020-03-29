@@ -154,9 +154,9 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        #accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
-        accessToken = 'pk.eyJ1IjoiZmlndWVqMyIsImEiOiJjazhkb2RidGkwd2htM2tvd3UzaXp2bGp0In0.o8rTdhI-Iz24zxcug-C6jg')) 
-  })
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        #Remove personal API key
+        })
 }
 
 shinyApp(ui = ui, server = server)
