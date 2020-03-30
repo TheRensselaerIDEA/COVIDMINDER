@@ -36,7 +36,8 @@ ui <- navbarPage(
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Deaths vs Cases/State</br>
-                             <i>Illustrating disparity of US states vs US average</i>")),
+                             <i>Illustrating disparity of US states vs US average</i><br><br>
+                            Here, 'overrepresented'(blue) indicates that a state's COVID-19 death rate is higher than the US rate")),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            )
   )
@@ -174,8 +175,8 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
-    bins <- c(-Inf, -2, -1, -.5, 0, .5, 1, 2, 3)
+    colors <- c("grey","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 3)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$deaths_cases_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
