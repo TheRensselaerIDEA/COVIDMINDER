@@ -3,7 +3,7 @@ COVIDMinder DEvelopment
 
 github cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf 
 
-# Exported leaflet-based plots
+# Exported leaflet-based plots (prototypes)
 
 Data source: https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/#stateleveldata
 
