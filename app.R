@@ -8,7 +8,9 @@ ui <- navbarPage(
   title="CovidMinder",
   tabPanel("COVID-19 Testing/State",
            fluidRow(
-              column(3, HTML("Plot: Disparity Index</br>Total COVID-19 Testing/State</br>UPDATE: Using South Korea testing rate")),
+              column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             Total COVID-19 Testing/State</br>
+                             <i>Illustrating disparity of US states vs South Korea testing rate</i>")),
               column(9, leafletOutput(outputId = "mymap", width="100%"))
             )
   )
