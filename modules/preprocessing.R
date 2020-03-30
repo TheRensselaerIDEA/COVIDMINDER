@@ -20,7 +20,7 @@ provider_capacity <- provider_capacity[1:52,]
 states <- data.frame(states, "hosp_beds_ldi"=provider_capacity$hosp_beds_ldi) # Append to states
 
 ## COVID-19 Testing fixing
-colnames(state_covid_testing) <- c("NAME","total_num_tests","tests_pos_results")
+# colnames(state_covid_testing) <- c("NAME","total_num_tests","tests_pos_results")
 # Inner join to add population
 state_covid_testing <- left_join(state_covid_testing, population, by = c('NAME'))
 
