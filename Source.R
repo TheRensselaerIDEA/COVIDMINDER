@@ -11,7 +11,7 @@
 dependencies <- c("shiny", "dplyr", "geojsonio", "htmltools", "leaflet", "leaflet.extras", "tidyverse")
 
 # Check and install packages not yet available
-install.dependencies <- dependencies[!(install.dependencies %in% installed.packages()[, "Package"])]
+install.dependencies <- dependencies[!(dependencies %in% installed.packages()[, "Package"])]
 if (length(install.dependencies) > 0) {
   install.packages(install.dependencies)
 }
