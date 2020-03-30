@@ -1,4 +1,4 @@
-"Location","Total Hospital Beds","Hospital Beds per 1,000 Population","Total CHCs","CHC Service Delivery Sites"
+"NAME","total_hosp_beds","hosp_beds_per_1000","total_CHCs","CHC_delivery_sites"
 "United States","792417","2.43","1331","11606"
 "Alabama","15278","3.13","15","144"
 "Alaska","1636","2.23","27","193"
