@@ -10,7 +10,8 @@ ui <- navbarPage(
            fluidRow(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
-                             <i>Illustrating disparity of US states vs South Korea testing rate</i>")),
+                             <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
+                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate")),
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
   ),
@@ -18,7 +19,8 @@ ui <- navbarPage(
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
-                             <i>Illustrating disparity of US states vs US average</i>")),
+                             <i>Illustrating disparity of US states vs US average</i><br><br>
+                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the US rate")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
            )
   ),
@@ -28,7 +30,8 @@ ui <- navbarPage(
                              Hypertension Mortality Rate/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             <a href='https://ccforum.biomedcentral.com/articles/10.1186/s13054-020-2833-7'>Studies from Wuhan, China</a> have indicated a
-                            higher incidence of hypertension in the histories of patients admitted with severe COVID-19")),
+                            higher incidence of hypertension in the histories of patients admitted with severe COVID-19<br><br>
+                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's hypertension mortality is higher than the US rate")),
              column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
            )
   ),
@@ -37,7 +40,7 @@ ui <- navbarPage(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Deaths vs Cases/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
-                            Here, 'overrepresented'(blue) indicates that a state's COVID-19 death rate is higher than the US rate")),
+                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's COVID-19 death rate is higher than the US rate")),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            )
   )
