@@ -31,6 +31,14 @@ ui <- navbarPage(
                             higher incidence of hypertension in the histories of patients admitted with severe COVID-19")),
              column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
            )
+  ),
+  tabPanel("COVID-19 Death Rate/State",
+           fluidRow(
+             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             COVID-19 Deaths vs Cases/State</br>
+                             <i>Illustrating disparity of US states vs US average</i>")),
+             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
+           )
   )
   
 )
@@ -132,7 +140,7 @@ server <- function(input, output, session) {
       Hypertension Mortality Rate DI: %.2g<br/>
       Older At Risk Adults DI: %.2g<br/>
       At Risk Adults DI: %.2g<br/>
-      Total Tests vs South Korea DI: %.2g</span><br/>
+      Total Tests vs South Korea DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
@@ -158,6 +166,50 @@ server <- function(input, output, session) {
           textsize = "15px",
           direction = "auto")) %>% 
       addLegend(pal = pal2, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds",
+                position = "bottomright") %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
+  
+  output$map.covid_deaths <- renderLeaflet({
+    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    bins <- c(-Inf, -2, -1, -.5, 0, .5, 1, 2, 3)
+#    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
+    pal2 <- leaflet::colorBin(colors, domain = states$deaths_cases_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      <span style='background-color: #e1eaea'>COVID-19 Death Rate (vs Cases) DI: %.2g</span><br/>
+      Hypertension Mortality Rate DI: %.2g<br/>
+      Older At Risk Adults DI: %.2g<br/>
+      At Risk Adults DI: %.2g<br/>
+      Total Tests vs South Korea DI: %.2g<br/>
+      Hospital Beds DI: %.2g",
+      states$NAME, states$deaths_cases_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.original) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$deaths_cases_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, values = ~states$deaths_cases_ldi, opacity = 0.7, title = "Disparity Index<br/>COVID-19 Deaths vs Cases",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",

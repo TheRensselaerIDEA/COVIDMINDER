@@ -84,3 +84,18 @@ hypertension_mortality <- hypertension_mortality[1:52,]
 
 # Append the new column to states
 states <- data.frame(states, "ht_death_rate_ldi"=hypertension_mortality$ht_death_rate_ldi) # Append to states
+
+# COVID-19 Deaths per COVID-19 Case
+pUS.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"p_deaths_cases"])
+
+deaths_cases_ldi <- unlist(lapply(covid_data_states$p_deaths_cases, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
+
+covid_data_states <- data.frame(covid_data_states, deaths_cases_ldi)
+
+# RE-order to match states ordering
+covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$NAME),]
+
+# Append the new column to states
+covid_data_states <- covid_data_states[1:52,]
+
+states <- data.frame(states, "deaths_cases_ldi"=covid_data_states$deaths_cases_ldi) # Append to states
