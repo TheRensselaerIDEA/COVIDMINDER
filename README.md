@@ -3,7 +3,11 @@ COVIDMinder DEvelopment
 
 github cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf 
 
-# Exported leaflet-based plots (prototypes)
+## Shinyapps.io Deployment (30 Mar 2020)
+
+https://olyerickson.shinyapps.io/covid-di-prototype/
+
+## Exported leaflet-based plots (prototypes)
 
 Data source: https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/#stateleveldata
 
@@ -13,7 +17,7 @@ Data source: https://www.kff.org/health-costs/issue-brief/state-data-and-policy-
 * Disparity Index, Share of Older At-Risk Adults: http://orion.tw.rpi.edu/~olyerickson/ldi_older_at_risk_adults.html
 * Disparity Index, Hypertension Mortality: http://orion.tw.rpi.edu/~olyerickson/ldi_hypertension.html
 
-# Project structure
+## Project structure
 
 * **app.R**: The main application file which includes the Shiny application code for both UI and server.
 * **README.md**: The file includes the documentation for this project.
