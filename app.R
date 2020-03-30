@@ -6,7 +6,7 @@ source("modules/preprocessing.R")
 #### UI Code ####
 ui <- navbarPage(
   title="CovidMinder",
-  tabPanel("COVID-19 Testing/State",
+  tabPanel("INTERVENTION: COVID-19 Testing",
            fluidRow(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
@@ -14,7 +14,7 @@ ui <- navbarPage(
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
   ),
-  tabPanel("Hospital Beds/State",
+  tabPanel("RISK: Hospital Beds",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
@@ -22,7 +22,7 @@ ui <- navbarPage(
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
            )
   ),
-  tabPanel("Hypertension Mortality Rate/State",
+  tabPanel("RISK: Hypertension Mortality",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Hypertension Mortality Rate/State</br>
@@ -32,7 +32,7 @@ ui <- navbarPage(
              column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
            )
   ),
-  tabPanel("COVID-19 Death Rate/State",
+  tabPanel("OUTCOMES: COVID-19 Death Rates",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Deaths vs Cases/State</br>
@@ -50,7 +50,7 @@ server <- function(input, output, session) {
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
     colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
-    bins <- c(-5, -2, -1, -.5, 0, .5, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -92,7 +92,7 @@ server <- function(input, output, session) {
   
   output$map.hypertension <- renderLeaflet({
     colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
-    bins <- c(-5, -2, -1, -.5, 0, .5, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -134,7 +134,7 @@ server <- function(input, output, session) {
 
   output$map.hospital <- renderLeaflet({
     colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
-    bins <- c(-5, -2, -1, -.5, 0, .5, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
