@@ -11,16 +11,25 @@ ui <- navbarPage(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i>")),
-              column(9, leafletOutput(outputId = "mymap", width="100%"))
+              column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
+  ),
+  tabPanel("Hospital Beds/State",
+           fluidRow(
+             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             Total Hospital Beds/State</br>
+                             <i>Illustrating disparity of US states vs US average</i>")),
+             column(9, leafletOutput(outputId = "map.hospital", width="100%"))
+           )
   )
+  
 )
 
 #### Server Code ####
 server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
-  output$mymap <- renderLeaflet({
+  output$map.testing <- renderLeaflet({
     colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
     bins <- c(-5, -2, -1, -.5, 0, .5, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
@@ -61,6 +70,49 @@ server <- function(input, output, session) {
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
         #Remove personal API key
         })
+  
+  output$map.hospital <- renderLeaflet({
+    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    bins <- c(-5, -2, -1, -.5, 0, .5, 1, 2, 3)
+    pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Hypertension Mortality Rate DI: %.2g<br/>
+      Older At Risk Adults DI: %.2g<br/>
+      At Risk Adults DI: %.2g<br/>
+      Total Tests vs South Korea DI: %.2g</span><br/>
+      <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
+      states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.original) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$hosp_beds_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds",
+                position = "bottomright") %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
+  
 }
 
 #### Set up Shiny App ####
