@@ -1,7 +1,7 @@
 #### Library and Data Imports ####
-source("Source.R")
-source("data_load.R")
-source("preprocessing.R")
+source("modules/Source.R")
+source("modules/data_load.R")
+source("modules/preprocessing.R")
 
 #### UI Code ####
 ui <- navbarPage(

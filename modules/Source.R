@@ -1,4 +1,4 @@
-##### Load packages
+##### Load packages ####
 
 # List of packages used:
 # - dplyr
