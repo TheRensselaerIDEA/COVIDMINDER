@@ -67,9 +67,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      Hypertension Mortality Rate DI: %.2g<br/>
-      Older At Risk Adults DI: %.2g<br/>
-      At Risk Adults DI: %.2g<br/>
+      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Total Tests vs South Korea DI: %.2g</span><br/>
       Hospital Beds DI: %.2g",
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
@@ -109,6 +107,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
+      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hypertension Mortality Rate DI: %.2g</span><br/>
       Older At Risk Adults DI: %.2g<br/>
       At Risk Adults DI: %.2g<br/>
@@ -151,9 +150,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      Hypertension Mortality Rate DI: %.2g<br/>
-      Older At Risk Adults DI: %.2g<br/>
-      At Risk Adults DI: %.2g<br/>
+      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
@@ -188,16 +185,13 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("grey","#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("grey",      "#b2182b",                "#ef8a62",         "#fddbc7",  "#f7f7f7",  "#d1e5f0",      "#67a9cf")
     bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 3)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$deaths_cases_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       <span style='background-color: #e1eaea'>COVID-19 Death Rate (vs Cases) DI: %.2g</span><br/>
-      Hypertension Mortality Rate DI: %.2g<br/>
-      Older At Risk Adults DI: %.2g<br/>
-      At Risk Adults DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
       Hospital Beds DI: %.2g",
       states$NAME, states$deaths_cases_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
@@ -223,8 +217,12 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$deaths_cases_ldi, opacity = 0.7, title = "Disparity Index<br/>COVID-19 Deaths vs Cases",
-                position = "bottomright") %>%
+      addLegend(pal = pal2, 
+                values = ~states$deaths_cases_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>COVID-19 Deaths vs Cases",
+                position = "bottomright"
+                ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
