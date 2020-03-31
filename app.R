@@ -23,7 +23,21 @@ ui <- navbarPage(
                     #                "UK" = 0.06285))
              ),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
-           )
+           ),
+           fluidRow(column(10,
+             HTML("<p>&nbsp;</p><p><b>EXPLAINATION:</b> The goal of these visualizations is to examine state disparities in COVID-19 
+factors having to  do with risk, mediations (e.g. testing, hospital beds), and outcomes (e.g. deaths, cases).    
+A common measure, the <i>disparity index</i> is used to represent the difference between the observed 
+rate in the state and some baseline rate.</p>
+<p>The advantage of the disparity index is that represents how far off target the observed rate is. </p>
+<p>Mathematically,
+<code>tau = log((x/(1-x))/(y/(1-y)))</code>
+where <i>x</i> would be some state's rate or probability, and <i>y</i> would be the US rate or some rate 
+we're comparing against (e.g. South Korea's rate of testing, which we use in one of the plots).  
+You can think of this as a <i>log odds ratio</i> except the comparison is to a reference population instead of to the usual 'not in the state' population.</p>
+<p>We developed this measure as part of our <i>Machine Learning Fairness Research.</i></p>
+<p><code>DI > 0.2</code> is considered overrepresented, <code>DI < 0.2</code> is considered underrepresented.</p> ")
+           ))
   ),
   tabPanel("MEDIATION: COVID-19 Testing",
            fluidRow(
@@ -34,7 +48,7 @@ ui <- navbarPage(
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
   ),
-  tabPanel("RISK: Hospital Beds",
+  tabPanel("MEDIATION: Hospital Beds",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
