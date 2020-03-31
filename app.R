@@ -5,8 +5,27 @@ source("modules/preprocessing.R")
 
 #### UI Code ####
 ui <- navbarPage(
-  title="CovidMinder",
-  tabPanel("INTERVENTION: COVID-19 Testing",
+  title="COVIDMinder",
+  tabPanel("OUTCOMES: COVID-19 Death Rates",
+           fluidRow(
+             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             COVID-19 Deaths vs Cases/State</br>
+                             <i>Illustrating disparity of US states vs US average</i><br><br>
+                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
+                            state's COVID-19 death rate is higher than the selected rate")
+                    # ,
+                    # radioButtons("pUS.6", "Compare with:",
+                    #              c("United States" = 0.01925,
+                    #                "China" = 0.04023,
+                    #                "Italy" = 0.11392,
+                    #                "Germany" = 0.00969,
+                    #                "Spain" = 0.08772,
+                    #                "UK" = 0.06285))
+             ),
+             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
+           )
+  ),
+  tabPanel("MEDIATION: COVID-19 Testing",
            fluidRow(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
@@ -23,35 +42,19 @@ ui <- navbarPage(
                              Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the US rate")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
            )
-  ),
-  tabPanel("RISK: Hypertension Mortality",
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
-                             Hypertension Mortality Rate/State</br>
-                             <i>Illustrating disparity of US states vs US average</i><br><br>
-                            <a href='https://ccforum.biomedcentral.com/articles/10.1186/s13054-020-2833-7'>Studies from Wuhan, China</a> have indicated a
-                            higher incidence of hypertension in the histories of patients admitted with severe COVID-19<br><br>
-                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's hypertension mortality is higher than the US rate")),
-             column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
-           )
-  ),
-  tabPanel("OUTCOMES: COVID-19 Death Rates",
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
-                             COVID-19 Deaths vs Cases/State</br>
-                             <i>Illustrating disparity of US states vs US average</i><br><br>
-                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
-                            state's COVID-19 death rate is higher than the selected rate"),
-                    radioButtons("pUS.6", "Compare with:",
-                                 c("United States" = 0.01925,
-                                   "China" = 0.04023,
-                                   "Italy" = 0.11392,
-                                   "Germany" = 0.00969,
-                                   "Spain" = 0.08772,
-                                   "UK" = 0.06285))),
-             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
-           )
-  ) 
+  )
+  # ,
+  # tabPanel("RISK: Hypertension Mortality",
+  #          fluidRow(
+  #            column(3, HTML("<b>Nationwide Disparity Index</b></br>
+  #                            Hypertension Mortality Rate/State</br>
+  #                            <i>Illustrating disparity of US states vs US average</i><br><br>
+  #                           <a href='https://ccforum.biomedcentral.com/articles/10.1186/s13054-020-2833-7'>Studies from Wuhan, China</a> have indicated a
+  #                           higher incidence of hypertension in the histories of patients admitted with severe COVID-19<br><br>
+  #                           Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's hypertension mortality is higher than the US rate")),
+  #            column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
+  #          )
+  # )
 )
 
 #### Server Code ####
@@ -59,7 +62,7 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -101,7 +104,7 @@ server <- function(input, output, session) {
         })
   
   output$map.hypertension <- renderLeaflet({
-    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -143,7 +146,7 @@ server <- function(input, output, session) {
   })
 
   output$map.hospital <- renderLeaflet({
-    colors <- c("#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -185,7 +188,7 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("grey","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("grey","#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
     bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 3)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$deaths_cases_ldi, bins = bins, reverse=FALSE)
