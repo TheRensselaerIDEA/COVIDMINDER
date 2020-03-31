@@ -6,10 +6,10 @@ source("modules/preprocessing.R")
 #### UI Code ####
 ui <- navbarPage(
   title="COVIDMinder",
-  tabPanel("OUTCOMES: COVID-19 Death Rates",
+  tabPanel("OUTCOMES: COVID-19 Mortality Rates",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
-                             COVID-19 Deaths vs Cases/State</br>
+                             COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
                             state's COVID-19 death rate is higher than the selected rate")
@@ -81,7 +81,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
+      COVID-19 Mortality Rate DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Total Tests vs South Korea DI: %.2g</span><br/>
       Hospital Beds DI: %.2g",
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
@@ -121,7 +121,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
+      COVID-19 Mortality Rate DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hypertension Mortality Rate DI: %.2g</span><br/>
       Older At Risk Adults DI: %.2g<br/>
       At Risk Adults DI: %.2g<br/>
@@ -164,7 +164,7 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Death Rate (vs Cases) DI: %.2g<br/>
+      COVID-19 Mortality Rate DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
@@ -202,19 +202,19 @@ server <- function(input, output, session) {
     colors <- c("grey",      "#b2182b",                "#ef8a62",         "#fddbc7",  "#f7f7f7",  "#d1e5f0",      "#67a9cf")
     bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 3)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
-    pal2 <- leaflet::colorBin(colors, domain = states$deaths_cases_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      <span style='background-color: #e1eaea'>COVID-19 Death Rate (vs Cases) DI: %.2g</span><br/>
+      <span style='background-color: #e1eaea'>COVID-19 Mortality Rate DI: %.2g</span><br/>
       Total Tests vs South Korea DI: %.2g<br/>
       Hospital Beds DI: %.2g",
-      states$NAME, states$deaths_cases_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+      states$NAME, states$death_rate_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.original) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
-        fillColor = ~pal2(states$deaths_cases_ldi),
+        fillColor = ~pal2(states$death_rate_ldi),
         weight = 2,
         opacity = 1,
         color = "white",
@@ -232,7 +232,7 @@ server <- function(input, output, session) {
           textsize = "15px",
           direction = "auto")) %>% 
       addLegend(pal = pal2, 
-                values = ~states$deaths_cases_ldi, 
+                values = ~states$death_rate_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>COVID-19 Deaths vs Cases",
                 position = "bottomright"
