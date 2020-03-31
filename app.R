@@ -87,7 +87,7 @@ server <- function(input, output, session) {
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
-    leaflet(states.original) %>%
+    leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
       fillColor = ~pal2(states$tests_ldi),
@@ -130,7 +130,7 @@ server <- function(input, output, session) {
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
-    leaflet(states.original) %>%
+    leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$ht_death_rate_ldi),
@@ -170,7 +170,7 @@ server <- function(input, output, session) {
       states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
-    leaflet(states.original) %>%
+    leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$hosp_beds_ldi),
@@ -211,7 +211,7 @@ server <- function(input, output, session) {
       states$NAME, states$death_rate_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
-    leaflet(states.original) %>%
+    leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$death_rate_ldi),
