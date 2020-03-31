@@ -40,11 +40,18 @@ ui <- navbarPage(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Deaths vs Cases/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
-                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's COVID-19 death rate is higher than the US rate")),
+                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
+                            state's COVID-19 death rate is higher than the selected rate"),
+                    radioButtons("pUS.6", "Compare with:",
+                                 c("United States" = 0.01925,
+                                   "China" = 0.04023,
+                                   "Italy" = 0.11392,
+                                   "Germany" = 0.00969,
+                                   "Spain" = 0.08772,
+                                   "UK" = 0.06285))),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            )
-  )
-  
+  ) 
 )
 
 #### Server Code ####
