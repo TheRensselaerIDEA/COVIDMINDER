@@ -1,6 +1,10 @@
 # Import states json
-states.original <- geojsonio::geojson_read("data/json/us-states.json", what = "sp")
-states <- states.original
+states.shapes <- readRDS("data/json/us_projection.Rds")
+
+# Load the state data and remove Puerto Rice for now
+states <- geojsonio::geojson_read("data/json/us-states.json", what = "sp")
+states <- data.frame(states)
+states <- states %>% filter(STATE != 72)
 
 # Import population data
 population <- read_csv("data/csv/population.csv")
