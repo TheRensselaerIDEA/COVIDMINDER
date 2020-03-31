@@ -16,7 +16,7 @@ pUS.1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United Stat
 hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 provider_capacity <- provider_capacity[match(states$NAME, provider_capacity$NAME),]
-provider_capacity <- provider_capacity[1:52,]
+provider_capacity <- provider_capacity[1:51,]
 states <- data.frame(states, "hosp_beds_ldi"=provider_capacity$hosp_beds_ldi) # Append to states
 
 ## COVID-19 Testing fixing
@@ -39,7 +39,7 @@ state_covid_testing <- data.frame(state_covid_testing, tests_ldi)
 
 state_covid_testing <- state_covid_testing[match(states$NAME, state_covid_testing$NAME),]
 
-state_covid_testing <- state_covid_testing[1:52,]
+state_covid_testing <- state_covid_testing[1:51,]
 
 states <- data.frame(states, "tests_ldi"=state_covid_testing$tests_ldi) # Append to states
 
@@ -63,7 +63,7 @@ at_risk_adults <- data.frame(at_risk_adults, older_at_risk_ldi)
 # RE-order to match states ordering
 at_risk_adults <- at_risk_adults[match(states$NAME, at_risk_adults$NAME),]
 
-at_risk_adults <- at_risk_adults[1:52,]
+at_risk_adults <- at_risk_adults[1:51,]
 
 # Append the new columns to states
 states <- data.frame(states, "at_risk_ldi"=at_risk_adults$at_risk_ldi) # Append to states
@@ -80,7 +80,7 @@ hypertension_mortality <- data.frame(hypertension_mortality, ht_death_rate_ldi)
 # RE-order to match states ordering
 hypertension_mortality <- hypertension_mortality[match(states$NAME, hypertension_mortality$NAME),]
 
-hypertension_mortality <- hypertension_mortality[1:52,]
+hypertension_mortality <- hypertension_mortality[1:51,]
 
 # Append the new column to states
 states <- data.frame(states, "ht_death_rate_ldi"=hypertension_mortality$ht_death_rate_ldi) # Append to states
@@ -96,6 +96,6 @@ covid_data_states <- data.frame(covid_data_states, deaths_cases_ldi)
 covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$NAME),]
 
 # Append the new column to states
-covid_data_states <- covid_data_states[1:52,]
+covid_data_states <- covid_data_states[1:51,]
 
 states <- data.frame(states, "deaths_cases_ldi"=covid_data_states$deaths_cases_ldi) # Append to states
