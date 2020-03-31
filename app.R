@@ -12,7 +12,7 @@ ui <- navbarPage(
                              COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
-                            state's COVID-19 death rate is higher than the selected rate")
+                            state's COVID-19 mortality rate is higher than the US rate")
                     # ,
                     # radioButtons("pUS.6", "Compare with:",
                     #              c("United States" = 0.01925,
@@ -199,8 +199,8 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("grey",      "#b2182b",                "#ef8a62",         "#fddbc7",  "#f7f7f7",  "#d1e5f0",      "#67a9cf")
-    bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 3)
+    colors <- c("grey", "#b2182b", "#ef8a62", "#fddbc7", "#f7f7f7", "#d1e5f0", "#67a9cf")
+    bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 5)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -234,7 +234,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~states$death_rate_ldi, 
                 opacity = 0.7, 
-                title = "Disparity Index<br/>COVID-19 Deaths vs Cases",
+                title = "Disparity Index<br/>COVID-19 Mortality Rates",
                 position = "bottomright"
                 ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
