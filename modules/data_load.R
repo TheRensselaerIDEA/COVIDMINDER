@@ -25,4 +25,5 @@ hypertension_mortality <- read_csv("data/csv/hypertension_mortality.csv")
 
 # Import COVID-19 Cases & Deaths data
 covid_data_states <- read_csv("data/csv/covid_data_states.csv")
-covid_data_states$p_deaths_cases <- covid_data_states$covid19_deaths / covid_data_states$covid19_cases
+#covid_data_states$p_deaths_cases <- covid_data_states$covid19_deaths / covid_data_states$covid19_cases
+covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
