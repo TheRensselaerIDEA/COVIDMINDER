@@ -99,3 +99,4 @@ covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$NAME
 covid_data_states <- covid_data_states[1:52,]
 
 states <- data.frame(states, "death_rate_ldi"=covid_data_states$death_rate_ldi) # Append to states
+

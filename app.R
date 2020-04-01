@@ -12,15 +12,8 @@ ui <- navbarPage(
                              COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
-                            state's COVID-19 mortality rate is higher than the US rate")
-                    # ,
-                    # radioButtons("pUS.6", "Compare with:",
-                    #              c("United States" = 0.01925,
-                    #                "China" = 0.04023,
-                    #                "Italy" = 0.11392,
-                    #                "Germany" = 0.00969,
-                    #                "Spain" = 0.08772,
-                    #                "UK" = 0.06285))
+                            state's COVID-19 mortality rate is higher than the US rate<br><br>
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (03-31-2020)")
              ),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            ),
@@ -84,7 +77,7 @@ server <- function(input, output, session) {
       COVID-19 Mortality Rate DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Total Tests vs South Korea DI: %.2g</span><br/>
       Hospital Beds DI: %.2g",
-      states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.original) %>%
@@ -167,7 +160,7 @@ server <- function(input, output, session) {
       COVID-19 Mortality Rate DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
-      states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.original) %>%
@@ -208,7 +201,7 @@ server <- function(input, output, session) {
       <span style='background-color: #e1eaea'>COVID-19 Mortality Rate DI: %.2g</span><br/>
       Total Tests vs South Korea DI: %.2g<br/>
       Hospital Beds DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.original) %>%

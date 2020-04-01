@@ -20,5 +20,16 @@ hypertension_mortality <- read_csv("data/csv/hypertension_mortality.csv")
 
 # Import COVID-19 Cases & Deaths data
 covid_data_states <- read_csv("data/csv/covid_data_states.csv")
-#covid_data_states$p_deaths_cases <- covid_data_states$covid19_deaths / covid_data_states$covid19_cases
-covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
+
+# join in population column
+covid_data_states <- left_join(covid_data_states, population, by = c('NAME'))
+
+# NEW: Need to calculate these because JHU data doesn't pre-calculate
+covid_data_states$calc_case_rate <- covid_data_states$covid19_cases/covid_data_states$Population
+covid_data_states$calc_death_rate <- covid_data_states$covid19_cases/covid_data_states$Population
+
+# Divide-by-mil only needed for KFF data
+# covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
+covid_data_states$p_death_rate <- covid_data_states$calc_death_rate
+
+
