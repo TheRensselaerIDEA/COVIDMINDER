@@ -37,7 +37,8 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
-                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate")),
+                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
+                            Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (03-31-2020)")),
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
   ),
@@ -70,7 +71,7 @@ server <- function(input, output, session) {
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
     colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
-    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -110,7 +111,7 @@ server <- function(input, output, session) {
   
   output$map.hypertension <- renderLeaflet({
     colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
-    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 5)
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -153,7 +154,7 @@ server <- function(input, output, session) {
 
   output$map.hospital <- renderLeaflet({
     colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
-    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
+    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 5)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>

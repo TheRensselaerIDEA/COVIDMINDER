@@ -10,27 +10,34 @@ download.file(statesURL, paste0("data/csv/", "states_testing_raw.csv"))
 todays_raw_data <- read_csv(paste0("data/csv/", "states_testing_raw.csv"))
 
 # Transform to match our structure
-covid_data_states <- todays_raw_data %>%
-  filter(Country_Region == "US") %>%
-  filter(!Province_State %in% c("Diamond Princess","Grand Princess","Northern Mariana Islands","Virgin Islands") ) %>%
-  select(Province_State,Last_Update,Confirmed,Deaths,Recovered) %>%
-  group_by(Province_State) %>%
-  summarize(Confirmed=sum(Confirmed), Deaths=sum(Deaths),Recovered=sum(Recovered))
+state_covid_testing <- todays_raw_data %>%
+#  filter(Country_Region == "US") %>%
+  filter(!state %in% c("AS") ) %>%
+  select(state,positive,negative,total) 
 
-# Change names to match app
-colnames(covid_data_states) <- c("NAME","covid19_cases","covid19_deaths","covid19_recovered")
+# Adjust names
+colnames(state_covid_testing) <- c("Abbreviation","positive","negative","total_num_tests")
+
+states_abbreviations <- read_csv(paste0("data/csv/", "states_abbreviations.csv"))
+
+# join in population column
+state_covid_testing <- left_join(state_covid_testing, states_abbreviations, by = c('Abbreviation'))
+
+state_covid_testing <- state_covid_testing[,-1]
 
 # Create a "United States" row
-covid_data_united_states <- covid_data_states %>%
-  summarize(covid19_cases=sum(covid19_cases), covid19_deaths=sum(covid19_deaths),covid19_recovered=sum(covid19_recovered))
+covid_testing_united_states <- state_covid_testing %>%
+  summarize(total_num_tests=sum(na.omit(total_num_tests)), positive=sum(na.omit(positive)), negative=sum(na.omit(negative)))
+            
+covid_testing_united_states$NAME <- 'United States'
+covid_testing_united_states <- covid_testing_united_states[,c("NAME","positive","negative","total_num_tests")]
 
-covid_data_united_states$NAME <- 'United States'
-covid_data_united_states <- covid_data_united_states[,c("NAME","covid19_cases","covid19_deaths","covid19_recovered")]
-
-covid_data_states <- data.frame(rbind(covid_data_united_states, covid_data_states))
+state_covid_testing <- data.frame(rbind(covid_testing_united_states, state_covid_testing))
+state_covid_testing <- state_covid_testing %>%
+  filter(!is.na(NAME))
 
 # Make backup of existing data
-write_csv(read_csv("data/csv/covid_data_states.csv"),"data/csv/covid_data_states.csv.bak")
+write_csv(read_csv("data/csv/state_covid_testing.csv"),"data/csv/state_covid_testing.csv.bak")
 
 # write out new dataframe to file system 
-write_csv(covid_data_states,"data/csv/covid_data_states.csv")
+write_csv(state_covid_testing,"data/csv/state_covid_testing.csv.csv")
