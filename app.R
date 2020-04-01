@@ -18,7 +18,7 @@ ui <- navbarPage(
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            ),
            fluidRow(column(10,
-             HTML("<p>&nbsp;</p><p><b>EXPLAINATION:</b> The goal of these visualizations is to examine state disparities in COVID-19 
+             HTML("<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine state disparities in COVID-19 
 factors having to  do with risk, mediations (e.g. testing, hospital beds), and outcomes (e.g. deaths, cases).    
 A common measure, the <i>disparity index</i> is used to represent the difference between the observed 
 rate in the state and some baseline rate.</p>
