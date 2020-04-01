@@ -69,7 +69,7 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -109,7 +109,7 @@ server <- function(input, output, session) {
         })
   
   output$map.hypertension <- renderLeaflet({
-    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -152,7 +152,7 @@ server <- function(input, output, session) {
   })
 
   output$map.hospital <- renderLeaflet({
-    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf")
+    colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -192,7 +192,7 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("grey", "#b2182b", "#ef8a62", "#fddbc7", "#f7f7f7", "#d1e5f0", "#67a9cf")
+    colors <- c("grey", "#b2182b", "#ef8a62", "#fddbc7", "#f7f7f7", "#d1e5f0", "#67a9cf","#426C85")
     bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 5)
 #    bins <- c(-5, -2, -1, -.2, .2, 1, 2, 3)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
