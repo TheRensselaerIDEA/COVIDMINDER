@@ -1,6 +1,11 @@
 # Import states json
-states.original <- geojsonio::geojson_read("data/json/us-states.json", what = "sp")
-states <- states.original
+states.shapes <- readRDS("data/json/us_projection.Rds")
+
+# Convert to dataframe state data
+states <- states.shapes
+states <- data.frame(states)
+states <- states[c("fips_state", "name")]
+colnames(states) <- c("FIPS", "NAME")
 
 # Import population data
 population <- read_csv("data/csv/population.csv")
