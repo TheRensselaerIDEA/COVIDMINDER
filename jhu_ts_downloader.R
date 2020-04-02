@@ -3,10 +3,12 @@
 library(tidyverse)
 library(lubridate)
 library(stringr)
+library(plotly)
 
 # curl newest TIME SERIES data from JHU github
 # (You must edit the date below)
-dateURL.1 <- "time_series_covid19_confirmed_US.csv"
+# dateURL.1 <- "time_series_covid19_confirmed_US.csv"
+dateURL.1 <- "time_series_covid19_deaths_US.csv"
 dateURL.2 <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
 # Write raw data to file system; use JHU syntax as above
@@ -20,7 +22,7 @@ covid_TS_states <- todays_TS_data %>%
   filter(Country_Region == "US") %>%
   filter(!Province_State %in% c("Diamond Princess","Grand Princess","Northern Mariana Islands","Virgin Islands") ) %>%
 #  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Country_Region, -Lat, -Long_, -Combined_Key) %>%
-  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key) %>%
+  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
   group_by(Province_State,Country_Region) %>%
   summarize_all(sum)
 
@@ -47,7 +49,7 @@ write_csv(covid_TS_states,"data/csv/time_series/covid_TS_states_wide.csv")
 
 # NOW "gather" to create "LONG" version
 covid_TS_states_long <- covid_TS_states %>%
-  gather(date,cases,2:72)
+  gather(date,deaths,2:72)
 
 # Make date column an actual R date_time
 covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
@@ -56,7 +58,7 @@ covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m.%d
 covid_TS_states_long$NAME <- factor(covid_TS_states_long$NAME)
 
 covid_TS_states_long <- covid_TS_states_long %>% 
-  filter(cases >= 100)
+    filter(deaths >= 10)
 
 # Make backup of existing LONG data
 write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/time_series/covid_TS_states_long.csv.bak")
@@ -69,26 +71,27 @@ write_csv(covid_TS_states_long,"data/csv/time_series/covid_TS_states_long.csv")
 covid_TS_plot <- covid_TS_states_long %>%
   group_by(date)
 
-covid_TS_plot$log_cases <- log10(covid_TS_plot$cases)
+covid_TS_plot$log_deaths <- log10(covid_TS_plot$deaths)
 
 p.log <- covid_TS_plot %>% 
   mutate(
-    State = NAME,     # use year to define separate curves
+    State = NAME,     # use NAME to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>% 
-  ggplot(aes(Date, log_cases, color = State)) +
+  ggplot(aes(Date, log_deaths, color = State)) +
   geom_line() +
-  ggtitle("COVID-19 Confirmed Cases (log10 scale) (Jan - Apr 2020)")
+  ggtitle("COVID-19 Deaths (log10 scale) (Jan - Apr 2020)")
 
 p.log
+#ggplotly(p.log)
 
 p <- covid_TS_plot %>% 
   mutate(
-    State = NAME,     # use year to define separate curves
+    State = NAME,     # use NAME to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>% 
-  ggplot(aes(Date, cases, color = State)) +
+  ggplot(aes(Date, deaths, color = State)) +
   geom_line() +
-  ggtitle("COVID-19 Confirmed Cases (Jan - Apr 2020)")
+  ggtitle("COVID-19 Deaths (Jan - Apr 2020)")
 
 p
