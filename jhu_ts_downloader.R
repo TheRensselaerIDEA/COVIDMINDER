@@ -53,6 +53,11 @@ covid_TS_states_long <- covid_TS_states %>%
 covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
 covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m.%d.%y"))
 
+covid_TS_states_long$NAME <- factor(covid_TS_states_long$NAME)
+
+covid_TS_states_long <- covid_TS_states_long %>% 
+  filter(cases >= 100)
+
 # Make backup of existing LONG data
 write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/time_series/covid_TS_states_long.csv.bak")
 
@@ -68,7 +73,7 @@ covid_TS_plot$log_cases <- log10(covid_TS_plot$cases)
 
 p.log <- covid_TS_plot %>% 
   mutate(
-    State = factor(NAME),     # use year to define separate curves
+    State = NAME,     # use year to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>% 
   ggplot(aes(Date, log_cases, color = State)) +
@@ -79,7 +84,7 @@ p.log
 
 p <- covid_TS_plot %>% 
   mutate(
-    State = factor(NAME),     # use year to define separate curves
+    State = NAME,     # use year to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>% 
   ggplot(aes(Date, cases, color = State)) +
