@@ -1,13 +1,18 @@
 # COVID-DI-Prototype
-COVIDMinder DEvelopment
+COVIDMinder Development
 
 github cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf 
 
-## Shinyapps.io Deployment (30 Mar 2020)
+## Shinyapps.io Deployment (Created 30 Mar 2020; updated frequently!)
 
 https://olyerickson.shinyapps.io/covid-di-prototype/
 
-## Exported leaflet-based plots (prototypes)
+## Data Sources (See also `data` subdirectories)
+
+* JHU CSSE github: 
+* CTP API: 
+
+## Exported leaflet-based plots (prototypes; OLD!)
 
 Data source: https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/#stateleveldata
 
