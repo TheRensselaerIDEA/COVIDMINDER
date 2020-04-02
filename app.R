@@ -46,7 +46,7 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
-                             <i>Illustrating disparity of US states vs US average</i><br><br>
+                             <i>Illustrating disparity of US beds/1000 vs South Korean rate</i><br><br>
                              Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the US rate")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
            )
@@ -160,7 +160,7 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
-      <span style='background-color: #e1eaea'>Hospital Beds DI: %.2g</span>",
+      <span style='background-color: #e1eaea'>Hospital Beds vs South Korea DI: %.2g</span>",
       states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
