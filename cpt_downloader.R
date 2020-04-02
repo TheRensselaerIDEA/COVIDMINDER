@@ -40,4 +40,4 @@ state_covid_testing <- state_covid_testing %>%
 write_csv(read_csv("data/csv/state_covid_testing.csv"),"data/csv/state_covid_testing.csv.bak")
 
 # write out new dataframe to file system 
-write_csv(state_covid_testing,"data/csv/state_covid_testing.csv.csv")
+write_csv(state_covid_testing,"data/csv/state_covid_testing.csv")
