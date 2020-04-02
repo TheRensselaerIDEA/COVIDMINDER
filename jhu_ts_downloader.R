@@ -58,3 +58,21 @@ write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/ti
 
 # write out new LONG dataframe to file system
 write_csv(covid_TS_states_long,"data/csv/time_series/covid_TS_states_long.csv")
+
+
+#### Quickie plot to verify
+covid_TS_plot <- covid_TS_states_long %>%
+  group_by(date)
+
+covid_TS_plot$log_cases <- log10(covid_TS_plot$cases)
+
+p <- covid_TS_plot %>% 
+  mutate(
+    State = factor(NAME),     # use year to define separate curves
+    Date = update(date, year = 1)  # use a constant year for the x-axis
+  ) %>% 
+  ggplot(aes(Date, log_cases, color = State)) +
+  geom_line() +
+  ggtitle("COVID-19 Confirmed Cases (log10 scale) (Jan - Apr 2020)")
+
+p
