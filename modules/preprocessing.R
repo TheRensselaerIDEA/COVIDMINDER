@@ -5,15 +5,16 @@ hypertension_mortality$p_ht_death_rate <-hypertension_mortality$p_ht_death_rate 
 
 # Set provider capacity column names
 colnames(provider_capacity) <- c("NAME","total_hosp_beds","hosp_beds_per_1000","total_CHCs","CHC_delivery_sites")
-# Calculate hospital beds per 1000 per 1000
+# Calculate hospital beds per 1000
 provider_capacity$p_hosp_beds <-provider_capacity$hosp_beds_per_1000/1000 
 
 # Calculate pUS
 pUS.1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
+pSK.1 <- 12.3/1000 # South Korean rate
 
-# ldi.fct <- function(x) {log((x/(1-x))/(pUS/(1-pUS)))} # In case we need a stand-alone definition...
+#hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
+hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pSK.1/(1-pSK.1)))}))
 
-hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 provider_capacity <- provider_capacity[match(states$NAME, provider_capacity$NAME),]
 provider_capacity <- provider_capacity[1:51,]
