@@ -1,6 +1,8 @@
 # Daily data importer
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
 library(tidyverse)
+library(lubridate)
+library(stringr)
 
 # curl newest TIME SERIES data from JHU github
 # (You must edit the date below)
@@ -34,13 +36,25 @@ colnames(covid_TS_united_states)[1] <- 'NAME'
 covid_TS_united_states[1,1] <- "United States"
 
 # Prepend United States summary to states summary
+# THIS IS "WIDE"!
 covid_TS_states <- data.frame(rbind(covid_TS_united_states, covid_TS_states[,-2]))
 
-# Make backup of existing data
+# Make backup of existing WIDE data
 write_csv(read_csv("data/csv/time_series/covid_TS_states_wide.csv"),"data/csv/time_series/covid_TS_states_wide.csv.bak")
 
-# write out new dataframe to file system
-# THIS IS "WIDE"
-write_csv(covid_data_states,"data/csv/time_series/covid_TS_states_wide.csv")
+# write out new WIDE dataframe to file system
+write_csv(covid_TS_states,"data/csv/time_series/covid_TS_states_wide.csv")
 
+# NOW "gather" to create "LONG" version
+covid_TS_states_long <- covid_TS_states %>%
+  gather(date,cases,2:72)
 
+# Make date column an actual R date_time
+covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
+covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m.%d.%y"))
+
+# Make backup of existing LONG data
+write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/time_series/covid_TS_states_long.csv.bak")
+
+# write out new LONG dataframe to file system
+write_csv(covid_TS_states_long,"data/csv/time_series/covid_TS_states_long.csv")
