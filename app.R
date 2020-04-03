@@ -47,7 +47,9 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
                              <i>Illustrating disparity of US beds/1000 vs South Korean rate</i><br><br>
-                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the US rate")),
+                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the US rate<br/><br>
+                            Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>OECD Data</a><br/>
+                            <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
            )
   )
