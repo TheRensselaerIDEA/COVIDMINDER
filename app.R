@@ -13,7 +13,7 @@ ui <- navbarPage(
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-01-2020)")
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-02-2020)")
              ),
              column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
            ),
@@ -38,7 +38,7 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
                              Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
-                            Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-01-2020)")),
+                            Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-02-2020)")),
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
             )
   ),

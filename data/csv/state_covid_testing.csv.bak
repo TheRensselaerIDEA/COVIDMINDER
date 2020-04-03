@@ -1,56 +1,53 @@
-NAME,total_num_tests,tests_pos_results
-United States,303014,0.143987
-Alabama,1832,0.106987
-Alaska,1022,0.035225
-Arizona,580,0.456897
-Arkansas,1132,0.177562
-California,26400,0.065644
-Colorado,6224,0.115681
-Connecticut,4500,0.092222
-Delaware,123,0.707317
-District of Columbia,1334,0.102699
-Florida,13965,0.087863
-Georgia,5069,0.157822
-Hawaii,3666,0.021004
-Idaho,1937,0.025813
-Illinois,9868,0.130219
-Indiana,1960,0.132143
-Iowa,2148,0.048883
-Kansas,499,0.164329
-Kentucky,1866,0.066452
-Louisiana,5948,0.197041
-Maine,2898,0.036922
-Maryland,382,0.753927
-Massachusetts,8922,0.087088
-Michigan,3397,0.390933
-Minnesota,4746,0.049515000000000003
-Mississippi,1392,0.178879
-Missouri,552,0.331522
-Montana,1688,0.026659
-Nebraska,406,0.123153
-Nevada,3735,0.065596
-New Hampshire,2417,0.041787
-New Jersey,3297,0.862602
-New Mexico,5973,0.013896
-New York,79103,0.274187
-North Carolina,8438,0.035198
-North Dakota,1440,0.022222
-Ohio,582,0.75945
-Oklahoma,775,0.104516
-Oregon,3840,0.04974
-Pennsylvania,7239,0.088963
-Rhode Island,1303,0.081351
-South Carolina,2310,0.129004
-South Dakota,1055,0.02654
-Tennessee,3887,0.15822
-Texas,10055,0.035007
-Utah,5047,0.050921
-Vermont,1181,0.063506
-Virginia,3697,0.068704
-Washington,33933,0.065453
-West Virginia,630,0.031746
-Wisconsin,7466,0.055719
-Wyoming,680,0.042647
-Puerto Rico,255,0.121569
-Guam,190,0.152632
-US Virgin Islands,17,1
+NAME,positive,negative,total_num_tests
+United States,212695,956282,1230493
+Alaska,143,4879,5022
+Alabama,1106,6697,7803
+Arkansas,624,7836,8460
+Arizona,1413,19645,21058
+California,8155,22883,90138
+Colorado,3342,15303,18645
+Connecticut,3557,13043,16600
+District of Columbia,586,3262,3850
+Delaware,368,4015,4383
+Florida,7559,60356,69244
+Georgia,4748,15690,20438
+Hawaii,258,10206,10482
+Iowa,549,7304,7853
+Idaho,673,6609,7282
+Illinois,6980,33404,40384
+Indiana,2565,11810,14375
+Kansas,482,5411,5893
+Kentucky,680,7220,7900
+Louisiana,6424,39352,45776
+Massachusetts,7738,44000,51738
+Maryland,1985,17233,19218
+Maine,344,6088,6432
+Michigan,9334,11893,21227
+Minnesota,689,20502,21191
+Missouri,1581,15846,17427
+Mississippi,1073,3712,4785
+Montana,217,4871,5088
+North Carolina,1584,24659,26243
+North Dakota,147,4480,4627
+Nebraska,214,3590,3812
+New Hampshire,415,6078,6619
+New Jersey,22255,30387,52642
+New Mexico,363,13648,14011
+Nevada,1279,11519,12798
+New York,83712,137168,220880
+Ohio,2547,26992,29539
+Oklahoma,719,1248,1967
+Oregon,736,14132,14868
+Pennsylvania,5805,42427,48232
+Rhode Island,566,3831,4397
+South Carolina,1293,5033,6326
+South Dakota,129,3903,4032
+Tennessee,2683,29769,32452
+Texas,3997,43860,47857
+Utah,1012,20155,21167
+Virginia,1484,13860,15344
+Vermont,321,4174,4495
+Washington,5984,68814,74798
+Wisconsin,1550,18819,20369
+West Virginia,191,4384,4575
+Wyoming,137,2328,2465
