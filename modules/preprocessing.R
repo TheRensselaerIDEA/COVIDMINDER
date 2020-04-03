@@ -11,9 +11,12 @@ provider_capacity$p_hosp_beds <-provider_capacity$hosp_beds_per_1000/1000
 # Calculate pUS
 pUS.1 <- as.numeric(provider_capacity[which(provider_capacity$NAME=="United States"),"p_hosp_beds"])
 pSK.1 <- 12.3/1000 # South Korean rate
+pIT.1 <- 3.2/1000 # Italy rate
+pDE.1 <- 8.0/1000 # Germany rate
 
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
-hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pSK.1/(1-pSK.1)))}))
+#hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pSK.1/(1-pSK.1)))}))
+hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pIT.1/(1-pIT.1)))}))
 
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 provider_capacity <- provider_capacity[match(states$NAME, provider_capacity$NAME),]
