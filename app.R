@@ -162,7 +162,7 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
-      <span style='background-color: #e1eaea'>Hospital Beds vs South Korea DI: %.2g</span>",
+      <span style='background-color: #e1eaea'>Hospital Beds vs Italy DI: %.2g</span>",
       states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
@@ -186,7 +186,7 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds",
+      addLegend(pal = pal2, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>Hospital Beds vs Italy",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
