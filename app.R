@@ -3,22 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-#### UI Code ####
-ui <- navbarPage(
-  title="COVIDMinder",
-  tabPanel("OUTCOMES: COVID-19 Mortality Rates",
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
-                             COVID-19 Mortality Rates/State</br>
-                             <i>Illustrating disparity of US states vs US average</i><br><br>
-                            Here, <span style='color:#67a9cf'>over-represented</span> indicates that a 
-                            state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-03-2020)")
-             ),
-             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
-           ),
-           fluidRow(column(10,
-             HTML("<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine state disparities in COVID-19 
+ldi_explanation_text <- "<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine state disparities in COVID-19 
 factors having to  do with risk, mediations (e.g. testing, hospital beds), and outcomes (e.g. deaths, cases).    
 A common measure, the <i>disparity index</i> is used to represent the difference between the observed 
 rate in the state and some baseline rate.</p>
@@ -29,7 +14,24 @@ where <i>x</i> would be some state's rate or probability, and <i>y</i> would be 
 we're comparing against (e.g. South Korea's rate of testing, which we use in one of the plots).  
 You can think of this as a <i>log odds ratio</i> except the comparison is to a reference population instead of to the usual 'not in the state' population.</p>
 <p>We developed this measure as part of our <i>Machine Learning Fairness Research.</i></p>
-<p><code>DI > 0.2</code> is considered overrepresented, <code>DI < 0.2</code> is considered underrepresented.</p> ")
+<p><code>DI > 0.2</code> is considered overrepresented, <code>DI < 0.2</code> is considered underrepresented.</p> "
+
+#### UI Code ####
+ui <- navbarPage(
+  title="COVIDMinder",
+  tabPanel("OUTCOMES: COVID-19 Mortality Rates",
+           fluidRow(
+             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             COVID-19 Mortality Rates/State</br>
+                             <i>Illustrating disparity of US states vs US average</i><br><br>
+                            Here, <span style='color:#426C85'>over-represented</span> indicates that a 
+                            state's COVID-19 mortality rate is higher than the US rate<br><br>
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-04-2020)")
+             ),
+             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
+           ),
+           fluidRow(column(10,
+             HTML(ldi_explanation_text)
            ))
   ),
   tabPanel("MEDIATION: COVID-19 Testing",
@@ -37,34 +39,28 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
-                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
-                            Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-03-2020)")),
+                             Here, <span style='color:#b2182b'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
+                            Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-04-2020)")),
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
-            )
+           ),
+           fluidRow(column(10,
+                           HTML(ldi_explanation_text)
+           ))
   ),
   tabPanel("MEDIATION: Hospital Beds",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
                              <i>Illustrating disparity of US beds/1000 vs Italy rate (3.2/1000)</i><br><br>
-                             Here, <span style='color:#ef8a62'>under-represented</span> indicates that a state's hospital bed availablity is lower than the Italy rate<br/><br>
+                             Here, <span style='color:#b2182b'>under-represented</span> indicates that a state's hospital bed availablity is lower than the Italy rate<br/><br>
                             Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>OECD Data</a><br/>
                             <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
-           )
+           ),
+           fluidRow(column(10,
+                           HTML(ldi_explanation_text)
+           ))
   )
-  # ,
-  # tabPanel("RISK: Hypertension Mortality",
-  #          fluidRow(
-  #            column(3, HTML("<b>Nationwide Disparity Index</b></br>
-  #                            Hypertension Mortality Rate/State</br>
-  #                            <i>Illustrating disparity of US states vs US average</i><br><br>
-  #                           <a href='https://ccforum.biomedcentral.com/articles/10.1186/s13054-020-2833-7'>Studies from Wuhan, China</a> have indicated a
-  #                           higher incidence of hypertension in the histories of patients admitted with severe COVID-19<br><br>
-  #                           Here, <span style='color:#67a9cf'>over-represented</span> indicates that a state's hypertension mortality is higher than the US rate")),
-  #            column(9, leafletOutput(outputId = "map.hypertension", width="100%"))
-  #          )
-  # )
 )
 
 #### Server Code ####
@@ -103,7 +99,7 @@ server <- function(input, output, session) {
         style = list("font-weight" = "normal", padding = "3px 8px"),
         textsize = "15px",
         direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$tests_ldi, opacity = 0.7, title = "Disparity Index<br/>Total Tests",
+      addLegend(pal = pal2, values = ~states$tests_ldi, opacity = 0.7, title = "Disparity Index<br/>Total Tests vs. South Korea",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
