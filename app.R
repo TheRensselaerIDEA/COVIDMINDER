@@ -18,7 +18,7 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
 
 #### UI Code ####
 ui <- navbarPage(
-  title="COVIDMinder",
+  title=div(img(src="Rensselaer_round.png",width="30px"),tags$b("COVIDMinder")),
   tabPanel("OUTCOMES: COVID-19 Mortality Rates",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
