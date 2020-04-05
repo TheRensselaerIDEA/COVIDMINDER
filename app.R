@@ -24,7 +24,7 @@ ui <- navbarPage(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
-                            Here, <span style='color:#426C85'>over-represented</span> indicates that a 
+                            Here, <span style='color:#426C85'><b>over-represented</b></span> indicates that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
                             Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-04-2020)")
              ),
@@ -39,7 +39,7 @@ ui <- navbarPage(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
-                             Here, <span style='color:#b2182b'>under-represented</span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
+                             Here, <span style='color:#b2182b'><b>under-represented</b></span> indicates that a state's testing rate is lower than the South Korean rate<br><br>
                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-04-2020)")),
               column(9, leafletOutput(outputId = "map.testing", width="100%"))
            ),
@@ -52,10 +52,26 @@ ui <- navbarPage(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
                              <i>Illustrating disparity of US beds/1000 vs Italy rate (3.2/1000)</i><br><br>
-                             Here, <span style='color:#b2182b'>under-represented</span> indicates that a state's hospital bed availablity is lower than the Italy rate<br/><br>
+                             Here, <span style='color:#b2182b'><b>under-represented</b></span> indicates that a state's hospital bed availablity is lower than the Italy rate<br/><br>
                             Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>OECD Data</a><br/>
                             <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>")),
              column(9, leafletOutput(outputId = "map.hospital", width="100%"))
+           ),
+           fluidRow(column(10,
+                           HTML(ldi_explanation_text)
+           ))
+  ),
+  tabPanel("RISK: Mortality from Cardiovascular Diseases",
+           fluidRow(
+             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+                             Mortality from total cardiovascular diseases (per 100k)</br>
+                             <i>Illustrating disparity of US rate/100k vs US average</i><br><br>
+                             Here, <span style='color:#426C85'><b>over-represented</b></span> indicates 
+                            that a state's mortality rate from total cardiovascular diseases is 
+                            <b>higher</b> than the US rate<br/><br>
+                            Data source: <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a>
+                            ")),
+             column(9, leafletOutput(outputId = "map.cardio", width="100%"))
            ),
            fluidRow(column(10,
                            HTML(ldi_explanation_text)
@@ -75,8 +91,9 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br/>
       <span style='background-color: #e1eaea'>Total Tests vs South Korea DI: %.2g</span><br/>
-      Hospital Beds DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
+      Hospital Beds DI: %.2g<br>
+      Cardio Mortality Rate DI: %.2g",
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -107,25 +124,23 @@ server <- function(input, output, session) {
         #Remove personal API key
         })
   
-  output$map.hypertension <- renderLeaflet({
+  output$map.cardio <- renderLeaflet({
     colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
     bins <- c(-5, -2, -1, -.2, .2, 1, 2, 5)
-    pal2 <- leaflet::colorBin(colors, domain = states$ht_death_rate_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br/>
-      <span style='background-color: #e1eaea'>Hypertension Mortality Rate DI: %.2g</span><br/>
-      Older At Risk Adults DI: %.2g<br/>
-      At Risk Adults DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
-      Hospital Beds DI: %.2g</span>",
-      states$NAME, states$ht_death_rate_ldi, states$older_at_risk_ldi, states$at_risk_ldi, states$tests_ldi, states$hosp_beds_ldi
+      Hospital Beds DI: %.2g<br/>
+      <span style='background-color: #e1eaea'>Cardio Mortality Rate DI: %.2g</span><br/>",
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
-        fillColor = ~pal2(states$ht_death_rate_ldi),
+        fillColor = ~pal2(states$cardio_death_rate_ldi),
         weight = 2,
         opacity = 1,
         color = "white",
@@ -142,7 +157,7 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$ht_death_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>Hypertension Mortality Rate",
+      addLegend(pal = pal2, values = ~states$cardio_death_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>Cardio Mortality Rate",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
@@ -158,8 +173,9 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br/>
       Total Tests vs South Korea DI: %.2g<br/>
-      <span style='background-color: #e1eaea'>Hospital Beds vs Italy DI: %.2g</span>",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
+      <span style='background-color: #e1eaea'>Hospital Beds vs Italy DI: %.2g</span><br>
+      Cardio Mortality Rate DI: %.2g",
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -199,8 +215,9 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       <span style='background-color: #e1eaea'>COVID-19 Mortality Rate DI: %.2g</span><br/>
       Total Tests vs South Korea DI: %.2g<br/>
-      Hospital Beds DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi
+      Hospital Beds DI: %.2g<br>
+      Cardio Mortality Rate DI: %.2g",
+      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%

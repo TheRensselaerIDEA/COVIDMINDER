@@ -1,7 +1,7 @@
 #### Preprocessing
 
 # Calculate hypertension death rate per 100000
-hypertension_mortality$p_ht_death_rate <-hypertension_mortality$p_ht_death_rate / 100000
+cardio_deaths_2017$cardio_deaths_p_100000 <-cardio_deaths_2017$cardio_deaths_p_100000 / 100000
 
 # Set provider capacity column names
 colnames(provider_capacity) <- c("NAME","total_hosp_beds","hosp_beds_per_1000","total_CHCs","CHC_delivery_sites")
@@ -74,20 +74,20 @@ states <- data.frame(states, "at_risk_ldi"=at_risk_adults$at_risk_ldi) # Append 
 
 states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ldi) # Append to states
 
-# Hypertension mortality
-pUS.5 <- as.numeric(hypertension_mortality[which(hypertension_mortality$NAME=="United States"),"p_ht_death_rate"])
+# Cardio mortality (NEW)
+pUS.5 <- as.numeric(cardio_deaths_2017[which(cardio_deaths_2017$NAME=="United States"),"cardio_deaths_p_100000"])
 
-ht_death_rate_ldi <- unlist(lapply(hypertension_mortality$p_ht_death_rate, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
+cardio_death_rate_ldi <- unlist(lapply(cardio_deaths_2017$cardio_deaths_p_100000, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
 
-hypertension_mortality <- data.frame(hypertension_mortality, ht_death_rate_ldi)
+cardio_deaths_2017 <- data.frame(cardio_deaths_2017, cardio_death_rate_ldi)
 
 # RE-order to match states ordering
-hypertension_mortality <- hypertension_mortality[match(states$NAME, hypertension_mortality$NAME),]
+cardio_deaths_2017 <- cardio_deaths_2017[match(states$NAME, cardio_deaths_2017$NAME),]
 
-hypertension_mortality <- hypertension_mortality[1:51,]
+cardio_deaths_2017 <- cardio_deaths_2017[1:51,]
 
 # Append the new column to states
-states <- data.frame(states, "ht_death_rate_ldi"=hypertension_mortality$ht_death_rate_ldi) # Append to states
+states <- data.frame(states, "cardio_death_rate_ldi"=cardio_deaths_2017$cardio_death_rate_ldi) # Append to states
 
 # COVID-19 Deaths per COVID-19 Case
 pUS.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"p_death_rate"])

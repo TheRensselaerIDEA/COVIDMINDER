@@ -20,8 +20,8 @@ state_covid_testing <- read_csv("data/csv/state_covid_testing.csv")
 # (NOTE: THis includes all at-risk and share of at-risk over 60)
 at_risk_adults <- read_csv("data/csv/at_risk_adults.csv") 
 
-# Import hypertension data
-hypertension_mortality <- read_csv("data/csv/hypertension_mortality.csv")
+# Import cardio data (NEW)
+cardio_deaths_2017 <- read_csv("data/csv/cardio_deaths_2017.csv")
 
 # Import COVID-19 Cases & Deaths data
 covid_data_states <- read_csv("data/csv/covid_data_states.csv")
