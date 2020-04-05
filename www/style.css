@@ -1,0 +1,21 @@
+.navbar-brand {
+  padding: 0;
+  margin: 0;
+}
+
+.logo {
+  height: 100%;
+  padding-right: 10px;
+}
+
+.logo img {
+  height: 100%;
+  padding-left: 15px;
+}
+
+.title-text {
+  display: inline-block;
+  font-weight: bold;
+  vertical-align: middle;
+  line-height: 100%;
+}
