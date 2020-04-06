@@ -46,11 +46,17 @@ covid_TS_New_York[1,1] <- "New York State"
 # THIS IS "WIDE"!
 covid_NY_TS_counties <- data.frame(rbind(covid_TS_New_York, covid_NY_TS_counties[,-c(1,3)]))
 
+covid_NY_counties <- covid_NY_TS_counties[,c(1,ncol(covid_NY_TS_counties))] 
+
+colnames(covid_NY_counties) <- c("state","deaths")
+
 # Make backup of existing WIDE data
-write_csv(read_csv("data/csv/time_series/covid_TS_states_wide.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.csv.bak")
+write_csv(read_csv("data/csv/time_series/covid_TS_counties_wide.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.csv.bak")
+write_csv(read_csv("data/csv/time_series/covid_NY_counties.csv"),"data/csv/time_series/covid_NY_counties.csv.bak")
 
 # write out new WIDE dataframe to file system
 write_csv(covid_NY_TS_counties,"data/csv/time_series/covid_NY_TS_counties_wide.csv")
+write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 
 # NOW "gather" to create "LONG" version
 covid_NY_TS_counties_long <- covid_NY_TS_counties %>%
