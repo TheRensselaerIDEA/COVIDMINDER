@@ -1,13 +1,12 @@
-# COVID-DI-Prototype
-COVIDMinder Development
+# COVID-DI-Prototype: COVIDMinder Development
 
-github cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf 
+* For those new to github: https://education.github.com/git-cheat-sheet-education.pdf (github cheatsheet)
 
 ## Shinyapps.io Deployment (Created 30 Mar 2020; updated frequently!)
-
+http://bit.ly/COVIDMinder
 https://olyerickson.shinyapps.io/covid-di-prototype/
 
-## Data Sources (See also `data` subdirectories)
+## Data Sources: Updated daily! (See also `data` subdirectories)
 
 * JHU CSSE github: https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data
 * CTP Data API: https://covidtracking.com/api
