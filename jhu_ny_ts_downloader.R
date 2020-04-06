@@ -20,69 +20,72 @@ download.file(paste0(dateURL.2,dateURL.1), paste0("data/csv/time_series/", dateU
 todays_TS_data <- read_csv(paste0("data/csv/time_series/", dateURL.1))
 
 # Transform to match our structure
-covid_NY_TS_states <- todays_TS_data %>%
+covid_NY_TS_counties <- todays_TS_data %>%
   filter(Country_Region == "US") %>%
-  filter(Province_State %in% c("New York") ) %>%
+  filter(Province_State == "New York") %>%
 #  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
-  select(-UID, -iso2, -iso3, -code3, -Combined_Key) %>%
-  group_by(Province_State,Country_Region) %>%
+  select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
+  group_by(FIPS, Admin2,Province_State) %>%
+  select(-Lat, -Long_, -Population) %>%
   summarize_all(sum)
 
 # Change colnames to match app
-colnames(covid_TS_states)[1] <- "NAME"
+colnames(covid_NY_TS_counties)[2] <- "County"
 
-# Create a "United States" row
-covid_TS_united_states <- covid_TS_states[,-1] %>%
-  group_by(Country_Region) %>%
+colnames(covid_NY_TS_counties)[3] <- "State"
+
+# Create a "New York State" row
+covid_TS_New_York <- covid_NY_TS_counties[,-c(1,2)] %>%
+  group_by(State) %>%
   summarize_all(sum)
 
-colnames(covid_TS_united_states)[1] <- 'NAME'
-covid_TS_united_states[1,1] <- "United States"
+colnames(covid_TS_New_York)[1] <- 'County'
+covid_TS_New_York[1,1] <- "New York State"
 
-# Prepend United States summary to states summary
+# Prepend New York State summary to counties summary
 # THIS IS "WIDE"!
-covid_TS_states <- data.frame(rbind(covid_TS_united_states, covid_TS_states[,-2]))
+covid_NY_TS_counties <- data.frame(rbind(covid_TS_New_York, covid_NY_TS_counties[,-c(1,3)]))
 
 # Make backup of existing WIDE data
-write_csv(read_csv("data/csv/time_series/covid_TS_states_wide.csv"),"data/csv/time_series/covid_TS_states_wide.csv.bak")
+write_csv(read_csv("data/csv/time_series/covid_TS_states_wide.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.csv.bak")
 
 # write out new WIDE dataframe to file system
-write_csv(covid_TS_states,"data/csv/time_series/covid_TS_states_wide.csv")
+write_csv(covid_NY_TS_counties,"data/csv/time_series/covid_NY_TS_counties_wide.csv")
 
 # NOW "gather" to create "LONG" version
-covid_TS_states_long <- covid_TS_states %>%
-  gather(date,deaths,2:ncol(covid_TS_states))
+covid_NY_TS_counties_long <- covid_NY_TS_counties %>%
+  gather(date,deaths,2:ncol(covid_NY_TS_counties))
 
 # Make date column an actual R date_time
-covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
-covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m.%d.%y"))
+covid_NY_TS_counties_long$date <- str_sub(covid_NY_TS_counties_long$date, 2,-1)
+covid_NY_TS_counties_long$date <- parse_date_time(covid_NY_TS_counties_long$date, c("%m.%d.%y"))
 
-covid_TS_states_long$NAME <- factor(covid_TS_states_long$NAME)
+covid_NY_TS_counties_long$County <- factor(covid_NY_TS_counties_long$County)
 
-covid_TS_states_long <- covid_TS_states_long %>% 
-    filter(deaths >= 10)
+covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
+    filter(deaths >= 2)
 
 # Make backup of existing LONG data
-write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/time_series/covid_TS_states_long.csv.bak")
+write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.csv"),"data/csv/time_series/covid_NY_TS_counties_long.csv.bak")
 
 # write out new LONG dataframe to file system
-write_csv(covid_TS_states_long,"data/csv/time_series/covid_TS_states_long.csv")
+write_csv(covid_NY_TS_counties_long,"data/csv/time_series/covid_NY_TS_counties_long.csv")
 
 
 #### Quickie plot to verify
-covid_TS_plot <- covid_TS_states_long %>%
+covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
   group_by(date)
 
-covid_TS_plot$log_deaths <- log10(covid_TS_plot$deaths)
+covid_NY_TS_plot$log_deaths <- log10(covid_NY_TS_plot$deaths)
 
-p.log <- covid_TS_plot %>% 
+p.log <- covid_NY_TS_plot %>% 
   mutate(
-    State = NAME,     # use NAME to define separate curves
+    County = County,     # use County to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>% 
-  ggplot(aes(Date, log_deaths, color = State)) +
+  ggplot(aes(Date, log_deaths, color = County)) +
   geom_line() +
-  ggtitle("COVID-19 Deaths (log10 scale) (Jan - Apr 2020)")
+  ggtitle("New York State COVID-19 Deaths (log10 scale) (Jan - Apr 2020)")
 
 p.log
 #ggplotly(p.log)
