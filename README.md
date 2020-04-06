@@ -13,7 +13,7 @@ https://olyerickson.shinyapps.io/covid-di-prototype/
 * CTP Data API: https://covidtracking.com/api
 
 ## Screen Shot (06 Apr 2020)
-
+![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-DI-Prototype/master/COVIDMinder_screenshot.png)
 
 ## Project structure
 
