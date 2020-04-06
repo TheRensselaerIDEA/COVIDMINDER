@@ -17,8 +17,10 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
 <p><code>DI > 0.2</code> is considered overrepresented, <code>DI < 0.2</code> is considered underrepresented.</p> "
 
 #### UI Code ####
-ui <- navbarPage(
-  title=div(img(src="Rensselaer_round.png",width="30px"),tags$b("COVIDMinder")),
+ui <- navbarPage(theme="style.css",
+  title=div(class="logo",
+            img(src="Rensselaer_round.png"),
+            tags$div(class="title-text", "COVIDMinder")),
   tabPanel("OUTCOMES: COVID-19 Mortality Rates",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
