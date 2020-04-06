@@ -49,7 +49,7 @@ write_csv(covid_TS_states,"data/csv/time_series/covid_TS_states_wide.csv")
 
 # NOW "gather" to create "LONG" version
 covid_TS_states_long <- covid_TS_states %>%
-  gather(date,deaths,2:72)
+  gather(date,deaths,2:ncol(covid_TS_states))
 
 # Make date column an actual R date_time
 covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
@@ -85,13 +85,13 @@ p.log <- covid_TS_plot %>%
 p.log
 #ggplotly(p.log)
 
-p <- covid_TS_plot %>% 
-  mutate(
-    State = NAME,     # use NAME to define separate curves
-    Date = update(date, year = 1)  # use a constant year for the x-axis
-  ) %>% 
-  ggplot(aes(Date, deaths, color = State)) +
-  geom_line() +
-  ggtitle("COVID-19 Deaths (Jan - Apr 2020)")
-
-p
+# p <- covid_TS_plot %>% 
+#   mutate(
+#     State = NAME,     # use NAME to define separate curves
+#     Date = update(date, year = 1)  # use a constant year for the x-axis
+#   ) %>% 
+#   ggplot(aes(Date, deaths, color = State)) +
+#   geom_line() +
+#   ggtitle("COVID-19 Deaths (Jan - Apr 2020)")
+# 
+# p
