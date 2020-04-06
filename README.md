@@ -9,10 +9,10 @@ https://olyerickson.shinyapps.io/covid-di-prototype/
 
 ## Data Sources (See also `data` subdirectories)
 
-* JHU CSSE github: 
-* CTP API: 
+* JHU CSSE github: https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data
+* CTP Data API: https://covidtracking.com/api
 
-## Exported leaflet-based plots (prototypes; OLD!)
+## Exported leaflet-based plots (prototypes; VERY OLD!)
 
 Data source: https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/#stateleveldata
 
