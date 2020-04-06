@@ -12,11 +12,6 @@
 
 .logo {
   height: 100%;
-  padding-right: 10px;
-}
-
-.logo img {
-  height: 100%;
   padding-left: 15px;
 }
 
@@ -25,4 +20,6 @@
   font-weight: bold;
   vertical-align: middle;
   line-height: 100%;
+  height: 100%;
+  padding-right: 10px;
 }

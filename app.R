@@ -18,10 +18,15 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
 
 #### UI Code ####
 ui <- 
-  navbarPage(theme="style.css",
-  title=div(class="logo",
-            img(src="Rensselaer_round.png"),
-            tags$div(class="title-text", "COVIDMinder")),
+  tagList(
+    tags$head(
+      tags$title("COVIDMinder")
+    ),
+  navbarPage(
+  theme="style.css",
+  title=tags$div(class="title-text",
+            img(class="logo", src="Rensselaer_round.png"),
+            "COVIDMinder"),
   tabPanel("OUTCOMES: COVID-19 Mortality Rates",
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
@@ -80,8 +85,8 @@ ui <-
                            HTML(ldi_explanation_text)
            ))
   )
+  )
 )
-
 #### Server Code ####
 server <- function(input, output, session) {
   
