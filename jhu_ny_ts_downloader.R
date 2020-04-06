@@ -19,6 +19,17 @@ download.file(paste0(dateURL.2,dateURL.1), paste0("data/csv/time_series/", dateU
 # Import raw into R
 todays_TS_data <- read_csv(paste0("data/csv/time_series/", dateURL.1))
 
+# Create a NY county population list
+NY_county_data <- todays_TS_data %>%
+  filter(Country_Region == "US") %>%
+  filter(Province_State == "New York") %>%
+  select(FIPS, Admin2,Lat,Long_,Population)
+
+colnames(NY_county_data)[2] <- "County"
+
+# Write it out 
+write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
+
 # Transform to match our structure
 covid_NY_TS_counties <- todays_TS_data %>%
   filter(Country_Region == "US") %>%
