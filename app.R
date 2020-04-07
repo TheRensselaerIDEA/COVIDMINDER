@@ -284,7 +284,9 @@ server <- function(input, output, session) {
     
     labels <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Mortality Rate DI: %.2g",
+      COVID-19 Mortality Rate DI: %.2g<br>
+      COVID-19 actual deaths: %g<br/>
+      County population: %d",
       NY.data$County, NY.data$death_rate_ldi, NY.data$deaths, NY.data$Population
     ) %>% lapply(htmltools::HTML)
 
