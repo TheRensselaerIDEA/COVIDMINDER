@@ -108,3 +108,8 @@ covid_data_states <- covid_data_states[1:51,]
 
 states <- data.frame(states, "death_rate_ldi"=covid_data_states$death_rate_ldi) # Append to states
 
+# NY specific calculations
+pNY.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="New York"),"p_death_rate"])
+NY.data <- transform(NY.data, death_rate = deaths/Population)
+NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){log(pNY.6/x)}))
+NY.data$death_rate_ldi[NY.data$deaths == 0] <- NA

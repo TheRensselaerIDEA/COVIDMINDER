@@ -1,6 +1,13 @@
 # Import states json
 states.shapes <- readRDS("data/json/us_projection.Rds")
 
+# Import NY shape
+NY.shape <- readRDS("data/shape_files/NY.Rds")
+NY.data <- read_csv("data/csv/time_series/NY_county_tests.csv")
+NY.mortality <- read_csv("data/csv/time_series/covid_NY_counties.csv")
+NY.data <- dplyr::inner_join(as.data.frame(NY.data), as.data.frame(NY.mortality), by = c("County" = "state"))
+NY.data$FIPS <- as.character(NY.data$FIPS)
+
 # Convert to dataframe state data
 states <- states.shapes
 states <- data.frame(states)
@@ -31,7 +38,7 @@ covid_data_states <- left_join(covid_data_states, population, by = c('NAME'))
 
 # NEW: Need to calculate these because JHU data doesn't pre-calculate
 covid_data_states$calc_case_rate <- covid_data_states$covid19_cases/covid_data_states$Population
-covid_data_states$calc_death_rate <- covid_data_states$covid19_cases/covid_data_states$Population
+covid_data_states$calc_death_rate <- covid_data_states$covid19_deaths/covid_data_states$Population
 
 # Divide-by-mil only needed for KFF data
 # covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
