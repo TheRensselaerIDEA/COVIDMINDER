@@ -37,9 +37,9 @@ ui <-
                             Here, <span style='color:#426C85'><b>over-represented</b></span> indicates that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
                             Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-05-2020)"),
-             HTML(ldi_explanation_text), width=3),
+             HTML(ldi_explanation_text), width=4),
              mainPanel(
-              leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=9)
+              leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
