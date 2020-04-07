@@ -40,70 +40,62 @@ ui <-
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
                             Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
              HTML(ldi_explanation_text), width=4),
-             mainPanel(
-              leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
+             mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>MEDIATION:</b></br>COVID-19 Testing")),
-           fluidRow(
-              column(3, HTML("<b>Nationwide Disparity Index</b></br>
+           sidebarLayout(
+             sidebarPanel(HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
                              <i>Illustrating disparity of US states vs South Korea testing rate</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's testing rate is lower than the South Korean rate<br><br>
-                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-06-2020)")),
-              column(9, leafletOutput(outputId = "map.testing", width="100%"))
-           ),
-           fluidRow(column(10,
-                           HTML(ldi_explanation_text)
-           ))
+                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-06-2020)"),
+                          HTML(ldi_explanation_text), width=4),
+              mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
+           )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>MEDIATION:</b></br>Hospital Beds")),
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+           sidebarLayout(
+             sidebarPanel(HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
                              <i>Illustrating disparity of US beds/1000 vs Italy rate (3.2/1000)</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's hospital bed availablity is lower than the rate in <b>Italy</b><br/><br>
                              Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>OECD Data</a><br/>
-                            <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>")),
-             column(9, leafletOutput(outputId = "map.hospital", width="100%"))
-           ),
-           fluidRow(column(10,
-                           HTML(ldi_explanation_text)
-           ))
+                            <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>"),
+                          HTML(ldi_explanation_text), width=4),
+             mainPanel(leafletOutput(outputId = "map.hospital", height="85vh"), width=8)
+           )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>RISK:</b></br>Cardiovascular Diseases")),
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+           sidebarLayout(
+             sidebarPanel(HTML("<b>Nationwide Disparity Index</b></br>
                              Mortality from total cardiovascular diseases (per 100k)</br>
                              <i>Illustrating disparity of US rate/100k vs US average</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's mortality rate from total cardiovascular diseases is 
                             <b>higher</b> than the US rate<br/><br>
                             Data source: <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a>
-                            ")),
-             column(9, leafletOutput(outputId = "map.cardio", width="100%"))
-           ),
-           fluidRow(column(10,
-                           HTML(ldi_explanation_text)
-           ))
+                            "),
+                          HTML(ldi_explanation_text), width=4),
+             mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
+           )
   ),
-  tabPanel("NY: COVID-19 mortality rates",
-           fluidRow(
-             column(3, HTML("<b>New York Disparity Index</b></br>
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>NY:</b></br>COVID-19 mortality rates")),
+           sidebarLayout(
+             sidebarPanel(HTML("<b>New York Disparity Index</b></br>
                              COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of NY counties vs NY average</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's COVID-19 mortality rate is higher than the NY rate")),
-             column(9, leafletOutput(outputId = "map.NY", width="100%"))
-           ),
-           fluidRow(column(10,
-                           HTML(ldi_explanation_text)
-           ))
+                            state's COVID-19 mortality rate is higher than the NY rate"),
+                          HTML(ldi_explanation_text), width=4),
+             mainPanel(leafletOutput(outputId = "map.NY", height="85vh"), width=8)
+           )
   )
   )
 )
