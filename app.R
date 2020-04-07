@@ -128,16 +128,13 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    # colors <- c("#b2182b","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#426C85")
-    # bins <- c(-5, -2, -1, -.2, .2, 1, 2, 5)
-    # pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=TRUE)
     colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong> State<br/>
       Total Tests vs South Korea DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
+      states$NAME, states$tests_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes, width="100%", height="100%") %>%
@@ -174,7 +171,7 @@ server <- function(input, output, session) {
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       Cardio Mortality Rate DI: %.2g<br/>",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
+      states$NAME, states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -212,7 +209,7 @@ server <- function(input, output, session) {
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       Hospital Beds vs Italy DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
+      states$NAME, states$hosp_beds_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -244,15 +241,13 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    # colors <- c("grey", "#b2182b", "#ef8a62", "#fddbc7", "#f7f7f7", "#d1e5f0", "#67a9cf","#426C85")
-    # bins <- c(-Inf, -5, -2, -1, -.2, .2, 1, 2, 5)
     colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g",
-      states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
+      states$NAME, states$death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -289,7 +284,6 @@ server <- function(input, output, session) {
   
   output$map.NY.deaths <- renderLeaflet({
     colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-#    bins <- c(10, 5, 2, 1, .2, -.2, -1, -2, -5)
     bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
     
