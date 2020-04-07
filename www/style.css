@@ -29,11 +29,11 @@
   color:black;
 }
 
-.col-sm-9 {
+.col-sm-8 {
   padding-left:0px;
 }
 
-@media screen and (min-width:828px){
+@media screen and (min-width:1045px){
   .title-text {
     height: 70px;
   }
