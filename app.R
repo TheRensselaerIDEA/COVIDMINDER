@@ -20,29 +20,30 @@ You can think of this as a <i>log odds ratio</i> except the comparison is to a r
 ui <- 
   tagList(
     tags$head(
-      tags$title("COVIDMinder")
+      tags$title("COVIDMINDER")
     ),
   navbarPage(
   theme="style.css",
   title=tags$div(class="title-text",
             img(class="logo", src="Rensselaer_round.png"),
-            "COVIDMinder"),
-  tabPanel("OUTCOMES: COVID-19 Mortality Rates",
-           fluidRow(
-             column(3, HTML("<b>Nationwide Disparity Index</b></br>
+            HTML("COVID<b>MINDER</b>")),
+  tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
+                    HTML("<b>OUTCOMES:</b></br>COVID-19 Mortality Rates")),
+           sidebarLayout(
+             sidebarPanel(
+             HTML("<b>Nationwide Disparity Index</b></br>
                              COVID-19 Mortality Rates/State</br>
                              <i>Illustrating disparity of US states vs US average</i><br><br>
                             Here, <span style='color:#426C85'><b>over-represented</b></span> indicates that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-05-2020)")
-             ),
-             column(9, leafletOutput(outputId = "map.covid_deaths", width="100%"))
-           ),
-           fluidRow(column(10,
-             HTML(ldi_explanation_text)
-           ))
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-05-2020)"),
+             HTML(ldi_explanation_text), width=3),
+             mainPanel(
+              leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=9)
+           )
   ),
-  tabPanel("MEDIATION: COVID-19 Testing",
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>MEDIATION:</b></br>COVID-19 Testing")),
            fluidRow(
               column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total COVID-19 Testing/State</br>
@@ -55,7 +56,8 @@ ui <-
                            HTML(ldi_explanation_text)
            ))
   ),
-  tabPanel("MEDIATION: Hospital Beds",
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>MEDIATION:</b></br>Hospital Beds")),
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Total Hospital Beds/State</br>
@@ -69,7 +71,8 @@ ui <-
                            HTML(ldi_explanation_text)
            ))
   ),
-  tabPanel("RISK: Mortality from Cardiovascular Diseases",
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>RISK:</b></br>Cardiovascular Diseases")),
            fluidRow(
              column(3, HTML("<b>Nationwide Disparity Index</b></br>
                              Mortality from total cardiovascular diseases (per 100k)</br>
@@ -104,8 +107,8 @@ server <- function(input, output, session) {
       states$NAME, states$death_rate_ldi, states$tests_ldi, states$hosp_beds_ldi,states$cardio_death_rate_ldi
     ) %>% lapply(htmltools::HTML)
     
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
+    leaflet(states.shapes, width="100%", height="100%") %>%
+      setView(-96, 37.8, 4) %>% # TODO: Doesn't seem to do anything
       addPolygons(
       fillColor = ~pal2(states$tests_ldi),
       weight = 2,
@@ -129,7 +132,6 @@ server <- function(input, output, session) {
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
-        #Remove personal API key
         })
   
   output$map.cardio <- renderLeaflet({
