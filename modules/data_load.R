@@ -1,6 +1,13 @@
 # Import states json
 states.shapes <- readRDS("data/json/us_projection.Rds")
 
+# Import NY shape
+NY.shape <- readRDS("data/shape_files/NY.Rds")
+NY.data <- read_csv("data/csv/time_series/NY_county_tests.csv")
+NY.mortality <- read_csv("data/csv/time_series/covid_NY_counties.csv")
+NY.data <- dplyr::inner_join(as.data.frame(NY.data), as.data.frame(NY.mortality), by = c("County" = "state"))
+NY.data$FIPS <- as.character(NY.data$FIPS)
+
 # Convert to dataframe state data
 states <- states.shapes
 states <- data.frame(states)
