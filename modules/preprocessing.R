@@ -16,7 +16,8 @@ pDE.1 <- 8.0/1000 # Germany rate
 
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pSK.1/(1-pSK.1)))}))
-hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pIT.1/(1-pIT.1)))}))
+#hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pIT.1/(1-pIT.1)))}))
+hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){-log(x/pIT.1)}))
 
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 provider_capacity <- provider_capacity[match(states$NAME, provider_capacity$NAME),]
@@ -37,7 +38,8 @@ pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United 
 pSK.2 <- 6768 / 1000000
 
 #tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pUS.2/(1-pUS.2)))}))
-tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pSK.2/(1-pSK.2)))}))
+# tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pSK.2/(1-pSK.2)))}))
+tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){-log(x/pSK.2)}))
 
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi)
 
@@ -77,7 +79,8 @@ states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ld
 # Cardio mortality (NEW)
 pUS.5 <- as.numeric(cardio_deaths_2017[which(cardio_deaths_2017$NAME=="United States"),"cardio_deaths_p_100000"])
 
-cardio_death_rate_ldi <- unlist(lapply(cardio_deaths_2017$cardio_deaths_p_100000, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
+#cardio_death_rate_ldi <- unlist(lapply(cardio_deaths_2017$cardio_deaths_p_100000, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
+cardio_death_rate_ldi <- unlist(lapply(cardio_deaths_2017$cardio_deaths_p_100000, FUN=function(x){-log(pUS.5/x)}))
 
 cardio_deaths_2017 <- data.frame(cardio_deaths_2017, cardio_death_rate_ldi)
 
@@ -92,7 +95,8 @@ states <- data.frame(states, "cardio_death_rate_ldi"=cardio_deaths_2017$cardio_d
 # COVID-19 Deaths per COVID-19 Case
 pUS.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"p_death_rate"])
 
-death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
+#death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
+death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){-log(pUS.6/x)}))
 
 covid_data_states <- data.frame(covid_data_states, death_rate_ldi)
 
@@ -104,3 +108,8 @@ covid_data_states <- covid_data_states[1:51,]
 
 states <- data.frame(states, "death_rate_ldi"=covid_data_states$death_rate_ldi) # Append to states
 
+# NY specific calculations
+pNY.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="New York"),"p_death_rate"])
+NY.data <- transform(NY.data, death_rate = deaths/Population)
+NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){log(pNY.6/x)}))
+NY.data$death_rate_ldi[NY.data$deaths == 0] <- NA
