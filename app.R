@@ -88,6 +88,19 @@ ui <-
            fluidRow(column(10,
                            HTML(ldi_explanation_text)
            ))
+  ),
+  tabPanel("NY: COVID-19 mortality rates",
+           fluidRow(
+             column(3, HTML("<b>New York Disparity Index</b></br>
+                             COVID-19 Mortality Rates/State</br>
+                             <i>Illustrating disparity of NY counties vs NY average</i><br><br>
+                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+                            state's COVID-19 mortality rate is higher than the NY rate")),
+             column(9, leafletOutput(outputId = "map.NY", width="100%"))
+           ),
+           fluidRow(column(10,
+                           HTML(ldi_explanation_text)
+           ))
   )
   )
 )
@@ -268,6 +281,53 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
+  output$map.NY <- renderLeaflet({
+    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    bins <- c(10, 5, 2, 1, .2, -.2, -1, -2, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
+    
+    NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
+    NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
+    
+    labels <- sprintf(
+      "<strong>%s</strong><br/>
+      <span style='background-color: #e1eaea'>COVID-19 Mortality Rate DI: %.2g</span><br/>
+      Deaths: %g<br/>
+      Population: %d",
+      NY.data$County, NY.data$death_rate_ldi, NY.data$deaths, NY.data$Population
+    ) %>% lapply(htmltools::HTML)
+
+    leaflet(NY.shape) %>%
+      setView(-74.006, 42.714, 6) %>% 
+      addPolygons(
+        fillColor = ~pal2(NY.data$death_rate_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$death_rate_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>COVID-19 Mortality Rates",
+                position = "bottomright"
+      ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
 }
 
 #### Set up Shiny App ####
