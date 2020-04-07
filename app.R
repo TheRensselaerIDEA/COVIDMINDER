@@ -100,11 +100,25 @@ ui <-
                              <i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's COVID-19 mortality rate is higher than the NY rate.<br>
+                            county's COVID-19 mortality rate is higher than the NY rate.<br>
                             Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
-             mainPanel(leafletOutput(outputId = "map.NY", height="85vh"), width=8)
+             mainPanel(leafletOutput(outputId = "map.NY.deaths", height="85vh"), width=8)
+           )
+  ),
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>STATE VIEW:</b></br>COVID-19 Cases (NY)")),
+           sidebarLayout(
+             sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
+                             <i>This map compares the COVID-19 cases for NY counties with the NY average. 
+                            This map is updated daily. </i><br><br>
+                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+                            county's COVID-19 case count is higher than the NY rate.<br>
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                          HTML(ldi_explanation_text), 
+                          HTML(rpi_accessibility_link), width=4),
+             mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
            )
   )
   )
@@ -273,7 +287,7 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
-  output$map.NY <- renderLeaflet({
+  output$map.NY.deaths <- renderLeaflet({
     colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
 #    bins <- c(10, 5, 2, 1, .2, -.2, -1, -2, -5)
     bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
@@ -321,6 +335,56 @@ server <- function(input, output, session) {
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
+  
+  output$map.NY.cases <- renderLeaflet({
+    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    #    bins <- c(10, 5, 2, 1, .2, -.2, -1, -2, -5)
+    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
+    
+    NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
+    NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
+    
+    labels <- sprintf(
+      "<strong>%s</strong><br/>
+      COVID-19 Cases Rate DI: %.2g<br>
+      COVID-19 actual cases: %g<br/>
+      County population: %d",
+      NY.data$County, NY.data$case_rate_ldi, NY.data$cases, NY.data$Population
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(NY.shape) %>%
+      setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
+      addPolygons(
+        fillColor = ~pal2(NY.data$case_rate_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~NY.data$death_rate_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>NY COVID-19 Cases",
+                position = "bottomright"
+      ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
+  
 }
 
 #### Set up Shiny App ####
