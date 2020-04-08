@@ -170,7 +170,7 @@ ui <-
                                 <a href='http://idea.rpi.edu/'>
                                 The Rensselaer IDEA</a>
                                 ")
-                           ),
+                           )
                     )
   )
 )
@@ -179,8 +179,10 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong> State<br/>
@@ -216,8 +218,10 @@ server <- function(input, output, session) {
         })
   
   output$map.cardio <- renderLeaflet({
-    colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -254,8 +258,10 @@ server <- function(input, output, session) {
   })
 
   output$map.hospital <- renderLeaflet({
-    colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -292,8 +298,10 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    # colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -334,8 +342,11 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.deaths <- renderLeaflet({
-    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    #colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    #bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
+    
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
     
     NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
@@ -382,8 +393,10 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.cases <- renderLeaflet({
-    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    # colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
     NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
