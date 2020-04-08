@@ -9,6 +9,11 @@ NY.shape <- readRDS("data/shape_files/NY.Rds")
 NY.tests <- read_csv("data/csv/time_series/NY_county_data.csv")
 
 NY.deaths.cases <- read_csv("data/csv/time_series/covid_NY_counties.csv")
+# Update with manual deaths
+covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv")
+
+NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
+
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
 NY.data$FIPS <- as.character(NY.data$FIPS)
 

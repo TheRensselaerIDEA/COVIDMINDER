@@ -73,9 +73,13 @@ covid_TS_New_York.deaths[1,1] <- "New York State"
 covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[,-c(1,3)]))
 
 # The "right most" column is the cumulative tally to-date
-covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
+# DISABLED until JHU gets their act togethter
+# covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
+# colnames(covid_NY_counties.deaths) <- c("county","deaths")
 
-colnames(covid_NY_counties.deaths) <- c("county","deaths")
+# UPDATE: Manually curated, from NYSDOH
+# Disable this when JHU gets their act together on NYS...
+covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv")
 
 # Make backup of existing WIDE data
 write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
