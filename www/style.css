@@ -19,6 +19,7 @@
   display: inline-block;
   vertical-align: middle;
   line-height: 100%;
+  height: 50px;
   padding-right: 10px;
   color:black;
 }
