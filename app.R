@@ -101,21 +101,23 @@ ui <-
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             county's COVID-19 mortality rate is higher than the NY rate.<br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                            Data sources: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
+                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a>"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.NY.deaths", height="85vh"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>STATE VIEW:</b></br>COVID-19 Cases (NY)")),
+                    HTML("<b>STATE VIEW:</b></br>COVID-19 case rates (NY)")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
-                             <i>This map compares the COVID-19 cases for NY counties with the NY average. 
+                             <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 case count is higher than the NY rate.<br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                            county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br>
+                            Data sources: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
+                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a>"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
