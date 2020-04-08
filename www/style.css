@@ -19,7 +19,6 @@
   display: inline-block;
   vertical-align: middle;
   line-height: 100%;
-  height: 100%;
   padding-right: 10px;
   color:black;
 }
@@ -30,10 +29,11 @@
 }
 
 .col-sm-8 {
-  padding-left:0px;
+  padding-left:0;
 }
 
-@media screen and (min-width:1045px){
+
+@media screen and (min-width:1420px){
   .title-text {
     height: 70px;
   }
