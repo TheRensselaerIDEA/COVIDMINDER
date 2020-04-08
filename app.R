@@ -43,7 +43,8 @@ ui <-
                             <b>Data source:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)<br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
              HTML(ldi_explanation_text), 
-             HTML(rpi_accessibility_link), width=4),
+             #HTML(rpi_accessibility_link), 
+             width=4),
              mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
            )
   ),
@@ -58,7 +59,8 @@ ui <-
                              <b>Data source:</b> <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)<br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
-                          HTML(rpi_accessibility_link), width=4),
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
              mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
            )
   ),
@@ -74,7 +76,8 @@ ui <-
                              and <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
-                          HTML(rpi_accessibility_link), width=4),
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
              mainPanel(leafletOutput(outputId = "map.hospital", height="85vh"), width=8)
            )
   ),
@@ -92,7 +95,8 @@ ui <-
                             <b>Data source:</b> <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
-                          HTML(rpi_accessibility_link), width=4),
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
              mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
            )
   ),
@@ -108,7 +112,8 @@ ui <-
                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
-                          HTML(rpi_accessibility_link), width=4),
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
              mainPanel(leafletOutput(outputId = "map.NY.deaths", height="85vh"), width=8)
            )
   ),
@@ -127,10 +132,35 @@ ui <-
                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
-                          HTML(rpi_accessibility_link), width=4),
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
              mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
            )
-  )
+  ),
+  tags$br(),
+  footer = fluidRow(class = "navbar navbar-default footer", 
+                    column(6,
+                           HTML("<h4>ABOUT</h4>
+                                COVIDMINDER is an open source interactive application that 
+                                visualizes various COVID-19 related statistics in the United States.
+                                ")
+                           ),
+                    column(3, 
+                           HTML("<h4>DATA SOURCES</h4>
+                                <a href=\"https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data\">
+                                JHU CSSE</a></br>
+                                <a href=\"https://covidtracking.com/api\">
+                                CTP Data API</a>
+                                ")
+                           ),
+                    column(3, 
+                           HTML("<h4>LINKS</h4>
+                                <a href=\"https://github.com/TheRensselaerIDEA/COVID-DI-Prototype\">
+                                GITHUB</a></br>
+                                <a href='https://info.rpi.edu/statement-of-accessibility'>
+                                Rensselaer Statement of Accessibility</a>
+                                ")
+                           ))
   )
 )
 #### Server Code ####
