@@ -32,7 +32,7 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<b>OUTCOMES:</b></br>COVID-19 Mortality Rates (USA)")),
+                    HTML("<b>OUTCOMES (USA):</b></br>COVID-19 Mortality Rates")),
            sidebarLayout(
              sidebarPanel(
              HTML("<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
@@ -49,7 +49,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>MEDIATION:</b></br>COVID-19 Testing (USA)")),
+                    HTML("<b>MEDIATION (USA):</b></br>COVID-19 Testing")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 testing rates across the US compare with South Korea?</b></h4>
                              <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
@@ -65,7 +65,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>MEDIATION:</b></br>Hospital Beds (USA)")),
+                    HTML("<b>MEDIATION (USA):</b></br>Hospital Beds")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How does the availability of hospital beds across the United States compare with Italy?</b></h4>
                              <i>This map compares the availability of hospital beds in US states vs the rate in Italy (3.2 beds/1000). 
@@ -82,7 +82,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>RISK:</b></br>Cardiovascular Diseases (USA)")),
+                    HTML("<b>RISK (USA):</b></br>Cardiovascular Diseases")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
                              <i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
@@ -101,7 +101,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>STATE VIEW:</b></br>COVID-19 Mortality Rates (NY)")),
+                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 Mortality Rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 mortality rates compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
@@ -118,7 +118,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>STATE VIEW:</b></br>COVID-19 case rates (NY)")),
+                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 case rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
@@ -150,7 +150,15 @@ ui <-
                                 <a href=\"https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data\">
                                 JHU CSSE</a></br>
                                 <a href=\"https://covidtracking.com/api\">
-                                CTP Data API</a>
+                                CTP Data API</a></br>
+                                <a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>
+                                OECD</a></br>
+                                <a href='https://bit.ly/2V0CYLU'>
+                                Kaiser Family Foundation</a></br>
+                                <a href='https://bit.ly/2V1Zl3I'>
+                                CDC (2017)</a></br>
+                                <a href='https://on.ny.gov/39VXuCO'>
+                                heath.data.ny.gov API (04-07-2020)</a><br>
                                 ")
                            ),
                     column(3, 
@@ -158,9 +166,12 @@ ui <-
                                 <a href=\"https://github.com/TheRensselaerIDEA/COVID-DI-Prototype\">
                                 GITHUB</a></br>
                                 <a href='https://info.rpi.edu/statement-of-accessibility'>
-                                Rensselaer Statement of Accessibility</a>
+                                Rensselaer Statement of Accessibility</a></b>
+                                <a href='http://idea.rpi.edu/'>
+                                The Rensselaer IDEA</a>
                                 ")
-                           ))
+                           ),
+                    )
   )
 )
 #### Server Code ####
