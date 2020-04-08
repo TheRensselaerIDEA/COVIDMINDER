@@ -101,7 +101,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>STATE VIEW:</b></br>COVID-19 mortality rates (NY)")),
+                    HTML("<b>STATE VIEW:</b></br>COVID-19 Mortality Rates (NY)")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 mortality rates compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
