@@ -113,7 +113,7 @@ pNY.6.deaths <- sum(NY.data$deaths)/sum(NY.data$Population)
 pNY.6.cases <- sum(NY.data$cases)/sum(NY.data$Population)
   
 NY.data <- transform(NY.data, death_rate = deaths/Population)
-NY.data <- transform(NY.data, case_rate = cases/Population)
+#NY.data <- transform(NY.data, case_rate = cases/Population) # We already do this
 
 NY.data <- NY.data %>% 
   filter(!County == c("Out of NY","Unassigned"))
