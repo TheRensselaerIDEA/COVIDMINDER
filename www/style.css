@@ -27,14 +27,27 @@
 .tab-title {
   text-align: center;
   color:black;
+  padding:-5px;
 }
 
 .col-sm-8 {
   padding-left:0;
 }
 
+.footer {
+  margin-left:0;
+  margin-right:0;
+  margin-bottom:0;
+  color:black;
+  padding-bottom:10px;
+}
 
-@media screen and (min-width:1420px){
+.navbar-nav .li a {
+  padding-left:10px;
+  padding-right:10px;
+}
+
+@media screen and (min-width:1280px){
   .title-text {
     height: 70px;
   }
