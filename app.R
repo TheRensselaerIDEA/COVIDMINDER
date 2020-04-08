@@ -40,7 +40,7 @@ ui <-
                             This map is updated daily.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)"),
              HTML(ldi_explanation_text), 
              HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
@@ -54,7 +54,7 @@ ui <-
                              This map is updated daily.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's testing rate is lower than the South Korean rate<br><br>
-                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-06-2020)"),
+                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
