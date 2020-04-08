@@ -332,7 +332,6 @@ server <- function(input, output, session) {
   
   output$map.NY.cases <- renderLeaflet({
     colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    #    bins <- c(10, 5, 2, 1, .2, -.2, -1, -2, -5)
     bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -368,7 +367,7 @@ server <- function(input, output, session) {
           textsize = "15px",
           direction = "auto")) %>% 
       addLegend(pal = pal2, 
-                values = ~NY.data$death_rate_ldi, 
+                values = ~NY.data$case_rate_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>NY COVID-19 Cases",
                 position = "bottomright"

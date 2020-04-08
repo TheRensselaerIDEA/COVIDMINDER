@@ -1,6 +1,8 @@
 # Daily data importer
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
 
+# UPDATE: Now pulling daily & cumulative NY county-level data from: https://health.data.ny.gov/resource/xdss-u53e.csv
+
 # NOTE: This is a special version to prep daily TS data for NY State
 
 library(tidyverse)
@@ -17,17 +19,27 @@ dateURL.2 <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/c
 download.file(paste0(dateURL.2,dateURL.1.cases), paste0("data/csv/time_series/", dateURL.1.cases))
 download.file(paste0(dateURL.2,dateURL.1.deaths), paste0("data/csv/time_series/", dateURL.1.deaths))
 
+# NEW: Download NY daily testing results
+download.file("https://health.data.ny.gov/resource/xdss-u53e.csv",paste0("data/csv/time_series/NY_daily_testing.csv"))
+
 # Import raw into R
 todays_TS_data.cases <- read_csv(paste0("data/csv/time_series/", dateURL.1.cases))
 todays_TS_data.deaths <- read_csv(paste0("data/csv/time_series/", dateURL.1.deaths))
 
-# Create a NY county population list from deaths (could be either)
-NY_county_data <- todays_TS_data.deaths %>%
-  filter(Country_Region == "US") %>%
-  filter(Province_State == "New York") %>%
-  select(FIPS, Admin2,Lat,Long_,Population)
+todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
 
-colnames(NY_county_data)[2] <- "County"
+# Force it to most recent day (for now)
+todays_NY_testing <- todays_TS_NY_testing %>% 
+  filter(test_date == max(test_date))
+
+# Read in NY county population list 
+NY_county_data <- read_csv("data/csv/time_series/NY_population.csv")
+
+# Join above County data with daily testing results
+NY_county_data <- inner_join(NY_county_data, todays_NY_testing, by = c("County" = "county"))
+
+# Add cumulative case rate
+NY_county_data$case_rate <- NY_county_data$cumulative_number_of_positives/NY_county_data$Population
 
 # Write it out 
 write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
@@ -83,15 +95,11 @@ covid_NY_TS_counties_long.deaths$date <- parse_date_time(covid_NY_TS_counties_lo
 
 covid_NY_TS_counties_long.deaths$County <- factor(covid_NY_TS_counties_long.deaths$County)
 
-#covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>% 
-#    filter(deaths >= 2)
-
 # Make backup of existing LONG data
 write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak")
 
 # write out new LONG dataframe to file system
 write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
-
 
 #### Quickie plot to verify
 
@@ -104,16 +112,17 @@ covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
 
 covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
 
-p.log.deaths <- covid_NY_TS_plot.deaths %>% 
-  mutate(
-    County = County,     # use County to define separate curves
-    Date = update(date, year = 1)  # use a constant year for the x-axis
-  ) %>% 
-  ggplot(aes(Date, log_deaths, color = County)) +
-  geom_line() +
-  ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar - Apr 2020)")
-
-p.log.deaths
+## Test: NY Deaths plot
+# p.log.deaths <- covid_NY_TS_plot.deaths %>% 
+#   mutate(
+#     County = County,     # use County to define separate curves
+#     Date = update(date, year = 1)  # use a constant year for the x-axis
+#   ) %>% 
+#   ggplot(aes(Date, log_deaths, color = County)) +
+#   geom_line() +
+#   ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar - Apr 2020)")
+# 
+# p.log.deaths
 
 # NEW YORK STATE CASES
 # Transform to match our structure: NY deaths
@@ -179,7 +188,14 @@ write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.csv"),"data/c
 write_csv(covid_NY_TS_counties_long,"data/csv/time_series/covid_NY_TS_counties_long.csv")
 
 # Create COMBINED data frame
-covid_NY_counties <- left_join(covid_NY_counties.deaths, covid_NY_counties.cases, by = c('county'))
+# UPDATE: We want to use the NY API data for cases: NY_county_data
+# covid_NY_counties <- left_join(covid_NY_counties.deaths, covid_NY_counties.cases, by = c('county'))
+covid_NY_counties <- left_join(covid_NY_counties.deaths, NY_county_data[,c(2,8)], by = c('county'='County'))
+
+# Adjust to match app
+colnames(covid_NY_counties) <- c("county","deaths","cases")
+# Need cumulative
+covid_NY_counties[1,3] <- sum(na.omit(covid_NY_counties$cases))
 
 write_csv(read_csv("data/csv/time_series/covid_NY_counties.csv"),"data/csv/time_series/covid_NY_counties.csv.bak")
 write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
@@ -194,13 +210,13 @@ covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 
-p.log.cases <- covid_NY_TS_plot.cases %>% 
-  mutate(
-    County = County,     # use County to define separate curves
-    Date = update(date, year = 1)  # use a constant year for the x-axis
-  ) %>% 
-  ggplot(aes(Date, log_cases, color = County)) +
-  geom_line() +
-  ggtitle("New York State COVID-19 Cases (log10 scale) (Mar - Apr 2020)")
-
-p.log.cases
+# p.log.cases <- covid_NY_TS_plot.cases %>% 
+#   mutate(
+#     County = County,     # use County to define separate curves
+#     Date = update(date, year = 1)  # use a constant year for the x-axis
+#   ) %>% 
+#   ggplot(aes(Date, log_cases, color = County)) +
+#   geom_line() +
+#   ggtitle("New York State COVID-19 Cases (log10 scale) (Mar - Apr 2020)")
+# 
+# p.log.cases
