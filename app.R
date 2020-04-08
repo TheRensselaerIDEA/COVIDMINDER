@@ -103,7 +103,7 @@ ui <-
                              <i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 mortality rate is higher than the NY rate.<br>
+                            county's COVID-19 mortality rate is higher than the NY rate.<br><br>
                             <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
@@ -119,7 +119,10 @@ ui <-
                              <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br>
+                            county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br><br>
+                            <b>NOTE:</b> <i>Test counts and results are assigned to a county based on this order of preference: 
+                            1) the patient’s address, 2) the ordering healthcare provider’s address, or 3) the ordering facility’s 
+                            address.</i>  (New York State Dept. of Health)<br><br>
                             <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
