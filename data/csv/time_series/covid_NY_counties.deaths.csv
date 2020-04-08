@@ -1,20 +1,20 @@
 county,deaths
-New York State,4698
+New York State,5489
 Albany,8
 Allegany,1
 Bronx,0
-Broome,5
+Broome,6
 Cattaraugus,0
 Cayuga,0
 Chautauqua,2
 Chemung,0
 Chenango,0
 Clinton,0
-Columbia,3
+Columbia,4
 Cortland,0
 Delaware,1
 Dutchess,9
-Erie,30
+Erie,39
 Essex,0
 Franklin,0
 Fulton,0
@@ -25,37 +25,37 @@ Herkimer,3
 Jefferson,0
 Kings,0
 Lewis,0
-Livingston,1
+Livingston,2
 Madison,2
-Monroe,26
+Monroe,31
 Montgomery,1
-Nassau,162
-New York,3485
-Niagara,0
+Nassau,500
+New York,4009
+Niagara,1
 Oneida,2
-Onondaga,5
+Onondaga,6
 Ontario,0
-Orange,76
+Orange,93
 Orleans,0
-Oswego,0
+Oswego,2
 Otsego,1
 Putnam,7
 Queens,0
-Rensselaer,2
+Rensselaer,3
 Richmond,0
-Rockland,119
+Rockland,135
 St. Lawrence,0
 Saratoga,4
 Schenectady,7
 Schoharie,0
 Schuyler,0
 Seneca,0
-Steuben,4
-Suffolk,199
-Sullivan,6
+Steuben,5
+Suffolk,263
+Sullivan,7
 Tioga,0
 Tompkins,0
-Ulster,4
+Ulster,5
 Warren,0
 Washington,1
 Wayne,0
@@ -63,4 +63,4 @@ Westchester,211
 Wyoming,1
 Yates,0
 Out of NY,0
-Unassigned,309
+Unassigned,116
