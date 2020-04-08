@@ -40,7 +40,8 @@ ui <-
                             This map is updated daily.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)"),
+                            <b>Data source:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)<br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
              HTML(ldi_explanation_text), 
              HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
@@ -54,7 +55,8 @@ ui <-
                              This map is updated daily.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's testing rate is lower than the South Korean rate<br><br>
-                             Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)"),
+                             <b>Data source:</b> <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)<br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
@@ -68,8 +70,9 @@ ui <-
                              This map uses recent historical figures and does not reflect 'surge' capacity.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's hospital bed availablity is lower than the rate in <b>Italy</b><br/><br>
-                             Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'> Organisation for Economic Co-operation and Development</a>
-                             and <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>"),
+                             <b>Data sources:</b> <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'> Organisation for Economic Co-operation and Development</a>
+                             and <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.hospital", height="85vh"), width=8)
@@ -86,8 +89,8 @@ ui <-
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's mortality rate from total cardiovascular diseases is 
                             <b>higher</b> than the US rate<br/><br>
-                            Data source: <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a>
-                            "),
+                            <b>Data source:</b> <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a><br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
@@ -101,21 +104,25 @@ ui <-
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             county's COVID-19 mortality rate is higher than the NY rate.<br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                            <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
+                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.NY.deaths", height="85vh"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>STATE VIEW:</b></br>COVID-19 Cases (NY)")),
+                    HTML("<b>STATE VIEW:</b></br>COVID-19 case rates (NY)")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
-                             <i>This map compares the COVID-19 cases for NY counties with the NY average. 
+                             <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 case count is higher than the NY rate.<br>
-                            Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"),
+                            county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br>
+                            <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
+                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
+                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           HTML(rpi_accessibility_link), width=4),
              mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
