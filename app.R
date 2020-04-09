@@ -39,9 +39,8 @@ ui <-
                              <i>This map compares the COVID-19 mortality rates of individual states with the US rate.
                             This map is updated daily.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            <b>Data source:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-08-2020)<br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                            state's COVID-19 mortality rate is higher than the US rate.
+                            "),
              HTML(ldi_explanation_text), 
              #HTML(rpi_accessibility_link), 
              width=4),
@@ -55,9 +54,8 @@ ui <-
                              <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
                              This map is updated daily.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's testing rate is lower than the South Korean rate<br><br>
-                             <b>Data source:</b> <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-08-2020)<br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                             state's testing rate is lower than the South Korean rate.
+                            "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -71,10 +69,8 @@ ui <-
                              <i>This map compares the availability of hospital beds in US states vs the rate in Italy (3.2 beds/1000). 
                              This map uses recent historical figures and does not reflect 'surge' capacity.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's hospital bed availablity is lower than the rate in <b>Italy</b><br/><br>
-                             <b>Data sources:</b> <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'> Organisation for Economic Co-operation and Development</a>
-                             and <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                             state's hospital bed availablity is lower than the rate in <b>Italy</b>
+                            "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -82,18 +78,17 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>RISK (USA):</b></br>Cardiovascular Diseases")),
+                    HTML("<b>DETERMINANTS (USA):</b></br>Cardiovascular Diseases")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
                              <i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
                             with the US rate. In recent literature, COVID-19 risk has been
-                            linked to certain cardiovascular diseases, including hypertension. 
+                            linked to certain cardiovascular diseases, including hypertension.
                             This map uses recent historical figures. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's mortality rate from total cardiovascular diseases is 
-                            <b>higher</b> than the US rate<br/><br>
-                            <b>Data source:</b> <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a><br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                            <b>higher</b> than the US rate.
+                            "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -101,16 +96,14 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 Mortality Rates")),
+                    HTML("<b>OUTCOMES (NY):</b></br>COVID-19 Mortality Rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do New York State COVID-19 mortality rates compare with the US rate?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of NY counties with the United States average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 mortality rate is higher than the NY rate.<br><br>
-                            <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
-                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                            county's COVID-19 mortality rate is higher than the US rate.<br>
+                            "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -118,7 +111,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 Case Rates")),
+                    HTML("<b>OUTCOMES (NY):</b></br>COVID-19 Case Rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
@@ -127,10 +120,8 @@ ui <-
                             county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br><br>
                             <b>NOTE:</b> <i>Test counts and results are assigned to a county based on this order of preference: 
                             1) the patient’s address, 2) the ordering healthcare provider’s address, or 3) the ordering facility’s 
-                            address.</i>  (New York State Dept. of Health)<br><br>
-                            <b>Data sources:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020) and
-                               <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov API (04-07-2020)</a><br>
-                            <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
+                            address.</i>  (New York State Dept. of Health)
+                            "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -140,35 +131,28 @@ ui <-
   tags$br(),
   footer = fluidRow(class = "navbar navbar-default footer", 
                     column(6,
-                           HTML("<h4>ABOUT</h4>
-                                COVIDMINDER is an open source interactive application that 
-                                visualizes various COVID-19 related statistics in the United States.
+                           HTML("<b>ABOUT: </b>
+                                <b>COVIDMINDER</b> is an open source interactive application 
+                                aimed at helping health care providers and other stakeholders 
+                                understand various COVID-19 related measures across the United States.
                                 ")
                            ),
                     column(3, 
-                           HTML("<h4>DATA SOURCES</h4>
-                                <a href=\"https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data\">
-                                JHU CSSE</a></br>
-                                <a href=\"https://covidtracking.com/api\">
-                                CTP Data API</a></br>
-                                <a href='https://data.oecd.org/healtheqt/hospital-beds.htm'>
-                                OECD</a></br>
-                                <a href='https://bit.ly/2V0CYLU'>
-                                Kaiser Family Foundation</a></br>
-                                <a href='https://bit.ly/2V1Zl3I'>
-                                CDC (2017)</a></br>
-                                <a href='https://on.ny.gov/39VXuCO'>
-                                heath.data.ny.gov API (04-07-2020)</a><br>
+                           HTML("<b>DATA SOURCES:</b>
+                                <a href='http://bit.ly/39PMWpD'>JHU CSSE</a>;
+                                <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a>;
+                                <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a>; 
+                                <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>;
+                                <a href='https://bit.ly/2V1Zl3I'>CDC</a>;
+                                <a href='https://bit.ly/34mYLBP'>County Health Rankings</a>;
+                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
                                 ")
                            ),
                     column(3, 
-                           HTML("<h4>LINKS</h4>
-                                <a href=\"https://github.com/TheRensselaerIDEA/COVID-DI-Prototype\">
-                                GITHUB</a></br>
-                                <a href='https://info.rpi.edu/statement-of-accessibility'>
-                                Rensselaer Statement of Accessibility</a></b>
-                                <a href='http://idea.rpi.edu/'>
-                                The Rensselaer IDEA</a>
+                           HTML("<b>LINKS:</b>
+                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMINDER github</a><br>
+                                <a href='http://idea.rpi.edu/'>The Rensselaer IDEA</a><br>
+                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a>
                                 ")
                            )
                     )
