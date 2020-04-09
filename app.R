@@ -6,15 +6,15 @@ source("modules/preprocessing.R")
 ldi_explanation_text <- "<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine 
 nationwide disparities in COVID-19factors having to do with risks, mediations (e.g. testing, hospital beds), 
 and outcomes (e.g. deaths, cases). A common measure, the <i>disparity index</i> is used to represent the 
-difference between the observed rate in the state and some baseline rate.</p>
-<p>The advantage of the disparity index is that represents how far off a target standard the observed rate is. </p>
+difference between the observed rate in the state or county and some baseline rate.</p>
+<p>The disparity index is <i>intuitive</i>; it represents how far off a chosen standard the observed rate is. </p>
 <p>Mathematically,
-<code>DI = log(x/y)</code> or <code>DI = log(y/x)</code>
-depending upon whether being above or below the target is preferred. 
+<code>DI = log(x/y)</code> or <code>DI = -log(x/y)</code>
+depending upon whether a rate being above or below the target is detrimental. 
 <ul>
 <li>In the case of hospital beds or rate of testing, <i>x</i> would be some state's rate , and <i>y</i> would be the US rate or some rate 
 we're comparing against (e.g. South Korea's testing or Italy's hospital beds).</li>
-<li>In the case of mortality rates, <i>x</i> would be the target rate (e.g. some national rate, including the US), and <i>y</i> would be the individual state's rate.</li>
+<li>In the case of mortality rates, <i>x</i> would be the target rate (e.g. some national rate, including the US), and <i>y</i> would be the individual state or county's rate.</li>
 </ul>
 </p>"
 
