@@ -123,8 +123,7 @@ NY.data <- transform(NY.data, death_rate = deaths/Population)
 NY.data <- NY.data %>% 
   filter(!County == c("Out of NY","Unassigned"))
 
-NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pNY.6.deaths/x)}))
-#NY.data$death_rate_ldi[NY.data$deaths == 0] <- NA
+# NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pNY.6.deaths/x)}))  # vs NY rate
+NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pUS.6/x)})) # vs UR rate
 
 NY.data$case_rate_ldi <- unlist(lapply(NY.data$case_rate, FUN=function(x){-log(pNY.6.cases/x)}))
-#NY.data$case_rate_ldi[NY.data$cases == 0] <- NA

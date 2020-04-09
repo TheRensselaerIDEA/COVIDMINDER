@@ -103,8 +103,8 @@ ui <-
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>NEW YORK VIEW:</b></br>COVID-19 Mortality Rates")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do COVID-19 mortality rates compare across New York State?</b></h4>
-                             <i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
+             sidebarPanel(HTML("<h4><b>How do New York State COVID-19 mortality rates compare with the US rate?</b></h4>
+                             <i>This map compares the COVID-19 mortality rates of NY counties with the United States average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             county's COVID-19 mortality rate is higher than the NY rate.<br><br>
