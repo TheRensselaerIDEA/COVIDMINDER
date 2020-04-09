@@ -54,7 +54,7 @@ ui <-
                     Darker colors indicate more disparity.<br><br>
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                    <strong>Death Rate Disparity Index</strong> = log [Mortality Rate  in state/mean Mortality Rate of US)<br>
+                    <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
                     <strong>Date:</strong> 04/09/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
@@ -92,7 +92,7 @@ ui <-
                                Darker colors indicate more disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = -log [Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in South Korea) <br>
                                <strong>Date:</strong> 04/07/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
@@ -131,7 +131,7 @@ ui <-
                                Darker colors indicate more disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = -log [Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in Italy) <br>
                                <strong>Date:</strong> 04/07/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
@@ -171,7 +171,7 @@ ui <-
   #                              Darker colors indicate more disparity.<br><br>
   #                              
   #                              <strong>Cardiovascular Mortality Rate</strong> = number of diabetics individuals per 100K population<br>
-  #                              <strong>Death Rate Disparity Index</strong> = log( Cardiovascular Mortality Rate  in state/average Cardiovascular Mortality Rate in US)<br>
+  #                              <strong>Death Rate Disparity Index</strong> = log(Cardiovascular Mortality Rate  in state/average Cardiovascular Mortality Rate in US)<br>
   #                              <strong>Date:</strong> 04/09/2020 <br><br>
   #                              
   #                              <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>NA</a><br>
