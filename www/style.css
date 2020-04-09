@@ -30,8 +30,11 @@
   padding:-5px;
 }
 
+.leaflet-container {
+  padding-bottom:70%;
+}
 .col-sm-8 {
-  padding-left:0;
+  /*padding-left:0;*/
 }
 
 .footer {
@@ -52,4 +55,7 @@
   .title-text {
     height: 70px;
   }
+  .leaflet-container {
+  padding-bottom:65%;
+}
 }
