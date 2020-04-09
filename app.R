@@ -107,7 +107,7 @@ ui <-
                     HTML("<b>DETERMINANT (USA):</b></br>Diabetes")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do diabetes rates across the US compare with the national average?</b></h4>
-                             <i>The map compares the percentage of a state's population with diabetes 
+                             <i>The map compares the percentage of a state's population having diabetes 
                             with the US percentage.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's mortality rate from total cardiovascular diseases is 
@@ -148,7 +148,7 @@ ui <-
                     HTML("<b>OUTCOME (NY):</b></br>COVID-19 Cases")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
-                             <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
+                             <i>This map compares the COVID-19 case rates for NY counties with the US average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br><br>
@@ -168,7 +168,7 @@ ui <-
                     HTML("<b>DETERMINANT (NY):</b></br>Diabetes")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do rates of diabetes compare across counties in New York State?</b></h4>
-                             <i>This map compares the diabetes rates for NY counties with the NY average. 
+                             <i>This map compares the diabetes rates for NY counties with the US rate. 
                             This map is based on historical data (2017). </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             county's diabetes rate is higher than the NY rate.<br><br>
