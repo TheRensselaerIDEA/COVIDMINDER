@@ -96,6 +96,26 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>DETERMINANTS (USA):</b></br>Diabetes")),
+           sidebarLayout(
+             sidebarPanel(HTML("<h4><b>How do diabetes rates across the US compare with the national average?</b></h4>
+                             <i>The map compares the percentage of a state's population with diabetes 
+                            with the US percentage.</i><br><br>
+                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+                            state's mortality rate from total cardiovascular diseases is 
+                            <b>higher</b> than the US rate.
+                            <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
+                            of COVID-19 and at the same time patients have to control their glucose while living in a
+                            with a decreased and more variable food intake.</i>  
+                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)
+                            "),
+                          HTML(ldi_explanation_text), 
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
+             mainPanel(leafletOutput(outputId = "map.diabetes", height="85vh"), width=8)
+           )
+  ),
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>OUTCOMES (NY):</b></br>COVID-19 Mortality Rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do New York State COVID-19 mortality rates compare with the US rate?</b></h4>
@@ -223,8 +243,6 @@ server <- function(input, output, session) {
         })
   
   output$map.cardio <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
@@ -263,6 +281,45 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
 
+  output$map.diabetes <- renderLeaflet({
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$diabetes_rate_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Diabetes Percentage DI: %.2g<br/>
+      Diabetes Percentage: %.1f pct",
+      states$NAME, states$diabetes_rate_ldi, states$pct_Adults_with_Diabetes
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$diabetes_rate_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, values = ~states$diabetes_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
+                position = "bottomright") %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
+  
   output$map.hospital <- renderLeaflet({
     # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)

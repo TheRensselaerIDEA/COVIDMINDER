@@ -59,6 +59,9 @@ covid_data_states$calc_death_rate <- covid_data_states$covid19_deaths/covid_data
 # covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
 covid_data_states$p_death_rate <- covid_data_states$calc_death_rate
 
+# Import US Diabetes data
+diabetes_data_states <- read_csv("data/csv/diabetes_data_states.csv")
+
 
 
 
