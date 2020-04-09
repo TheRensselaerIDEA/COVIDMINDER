@@ -12,9 +12,15 @@ NY.deaths.cases <- read_csv("data/csv/time_series/covid_NY_counties.csv")
 # Update with manual deaths
 covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv")
 
+# Import NY Diabetes 
+NY_counties_diabetes <- read_csv("data/csv/time_series/NY_counties_diabetes.csv")
+
 NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
 
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
+
+NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_diabetes[,2:3]), by = c("County" = "County"))
+
 NY.data$FIPS <- as.character(NY.data$FIPS)
 
 # Convert to dataframe state data
@@ -52,5 +58,8 @@ covid_data_states$calc_death_rate <- covid_data_states$covid19_deaths/covid_data
 # Divide-by-mil only needed for KFF data
 # covid_data_states$p_death_rate <- covid_data_states$deaths_per_mil/1000000
 covid_data_states$p_death_rate <- covid_data_states$calc_death_rate
+
+
+
 
 
