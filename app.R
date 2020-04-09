@@ -24,7 +24,7 @@ rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/
 ui <- 
   tagList(
     tags$head(
-      tags$title("COVIDMINDER")
+      tags$title("COVIDMINDER"),
     ),
   navbarPage(
   theme="style.css",
@@ -46,12 +46,12 @@ ui <-
              HTML(ldi_explanation_text), 
              #HTML(rpi_accessibility_link), 
              width=4),
-             mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<b>MEDIATION (USA):</b></br>COVID-19 Testing")),
-           sidebarLayout(
+           sidebarLayout(fluid=FALSE,
              sidebarPanel(HTML("<h4><b>How do COVID-19 testing rates across the US compare with South Korea?</b></h4>
                              <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
                              This map is updated daily.</i><br><br>
@@ -64,7 +64,7 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.testing", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -81,7 +81,7 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.hospital", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.hospital", height="100%"), width=8)
            )
   ),
   ## DON"T DELETE! We may restore this or re-purpose
@@ -100,7 +100,7 @@ ui <-
   #                         HTML(ldi_explanation_text), 
   #                         #HTML(rpi_accessibility_link), 
   #                         width=4),
-  #            mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
+  #            mainPanel( leafletOutput(outputId = "map.cardio", height="100%"), width=8)
   #          )
   # ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -123,7 +123,7 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.diabetes", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -141,7 +141,7 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.NY.deaths", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -161,7 +161,7 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -183,10 +183,9 @@ ui <-
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel(leafletOutput(outputId = "map.NY.diabetes", height="85vh"), width=8)
+             mainPanel( leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
            )
   ),
-  tags$br(),
   footer = fluidRow(class = "navbar navbar-default footer", 
                     column(6,
                            HTML("<b>ABOUT: </b>
