@@ -32,7 +32,7 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<b>OUTCOME</b></br>Mortality Rate (USA)")),
+                    HTML("<b>OUTCOME (USA)</b></br>Mortality Rate")),
            sidebarLayout(
              sidebarPanel(
              HTML("<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
@@ -65,25 +65,48 @@ ui <-
                             <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
                             <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information<a><br>"),
+                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
              #HTML(rpi_accessibility_link), 
              width=4),
              mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>MEDIATION (USA):</b></br>COVID-19 Testing")),
+                    HTML("<b>MEDIATION (USA)</b></br>COVID-19 Testing")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 testing rates across the US compare with South Korea?</b></h4>
                              <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
                              This map is updated daily.</i><br><br>
-                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's testing rate is lower than the South Korean rate.<br><br>
-                             <b>DATA SOURCES:</b> <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project (daily)</a> and 
-                            <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            <br>"),
-                          HTML(ldi_explanation_text), 
+                             <strong>Mediation Disparity:</strong> The rate of COVID-19 per 100k population per state varies
+                              greatly  as compared to the South Korean rate of COVID-19 testing per 100k population. Disparity 
+                              in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus, social 
+                              <strong>determinants</strong> that put the population at increased risk, and <strong>mediations</strong>
+                              used/available to combat the virus. South Korea is used as the testing reference rate since South 
+                              Korea successfully used testing to “flatten the curve”.<br><br>
+                               The rate of testing per 100k in a state is: <br>
+                               <ul>
+                               <li>
+                               Lower than South Korean testing rate for  disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               </li>
+                               <li>
+                               About equal South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               </li>
+                               <li>
+                               Higher than South Korean testing rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
+                               <strong>Testing Rate Disparity Index</strong> = -log [Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Date:</strong> 04/07/2020 <br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information<a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(leafletOutput(outputId = "map.testing", height="85vh"), width=8)
