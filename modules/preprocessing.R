@@ -154,4 +154,21 @@ NY.data <- NY.data %>%
   mutate(case_rate_ldi = replace(case_rate_ldi, case_rate_ldi < -5, -5)) %>%
   mutate(diabetes_ldi = replace(diabetes_ldi, diabetes_ldi < -5, -5)) 
   
+### NEW: US Diabetes Rates
+pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
 
+diabetes_rate_ldi <- unlist(lapply(diabetes_data_states$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7/x)}))
+
+diabetes_data_states <- data.frame(diabetes_data_states, diabetes_rate_ldi)
+
+diabetes_data_states <- diabetes_data_states %>% 
+  mutate(diabetes_rate_ldi = replace(diabetes_rate_ldi, diabetes_rate_ldi < -5, -5)) 
+
+# RE-order to match states ordering
+diabetes_data_states <- diabetes_data_states[match(states$NAME, diabetes_data_states$State),]
+
+# Append the new column to states
+diabetes_data_states <- diabetes_data_states[1:51,]
+
+states <- data.frame(states, "diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
+states <- data.frame(states, "pct_Adults_with_Diabetes"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
