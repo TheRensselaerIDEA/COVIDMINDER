@@ -111,15 +111,19 @@ states <- data.frame(states, "cardio_deaths_p_100000"=cardio_deaths_2017$cardio_
 states <- data.frame(states, "cardio_death_rate_ldi"=cardio_deaths_2017$cardio_death_rate_ldi) # Append to states
 
 # COVID-19 Deaths per COVID-19 Case
-pUS.6 <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"p_death_rate"])
+pUS.6.cases <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"calc_case_rate"])
+pUS.6.deaths <- as.numeric(covid_data_states[which(covid_data_states$NAME=="United States"),"p_death_rate"])
 
 #death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
-death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){-log(pUS.6/x)}))
+case_rate_ldi <- unlist(lapply(covid_data_states$calc_case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
+death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){-log(pUS.6.deaths/x)}))
 
 covid_data_states <- data.frame(covid_data_states, death_rate_ldi)
+covid_data_states <- data.frame(covid_data_states, case_rate_ldi)
 
 covid_data_states <- covid_data_states %>% 
-  mutate(death_rate_ldi = replace(death_rate_ldi, death_rate_ldi < -5, -5)) 
+  mutate(death_rate_ldi = replace(death_rate_ldi, death_rate_ldi < -5, -5)) %>%
+  mutate(case_rate_ldi = replace(case_rate_ldi, case_rate_ldi < -5, -5)) 
 
 # RE-order to match states ordering
 covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$NAME),]
@@ -142,11 +146,14 @@ NY.data <- NY.data %>%
   filter(!County == c("Out of NY","Unassigned"))
 
 # NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pNY.6.deaths/x)}))  # vs NY rate
-NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pUS.6/x)})) # vs UR rate
+NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log(pUS.6.deaths/x)})) # vs UR rate
 
-NY.data$case_rate_ldi <- unlist(lapply(NY.data$case_rate, FUN=function(x){-log(pNY.6.cases/x)}))
+NY.data$case_rate_ldi <- unlist(lapply(NY.data$case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 
-NY.data$diabetes_ldi <- unlist(lapply(NY.data$pct_Adults_with_Diabetes, FUN=function(x){-log(pNY.6.diabetes/x)}))
+# Need this for NY Diabetes...
+pUS.7.diabetes <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
+
+NY.data$diabetes_ldi <- unlist(lapply(NY.data$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/x)}))
 
 # Clean up the ranges
 NY.data <- NY.data %>% 
@@ -155,9 +162,9 @@ NY.data <- NY.data %>%
   mutate(diabetes_ldi = replace(diabetes_ldi, diabetes_ldi < -5, -5)) 
   
 ### NEW: US Diabetes Rates
-pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
+#pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
 
-diabetes_rate_ldi <- unlist(lapply(diabetes_data_states$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7/x)}))
+diabetes_rate_ldi <- unlist(lapply(diabetes_data_states$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/x)}))
 
 diabetes_data_states <- data.frame(diabetes_data_states, diabetes_rate_ldi)
 
