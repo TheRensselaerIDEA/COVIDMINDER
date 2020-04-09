@@ -24,7 +24,7 @@ rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/
 ui <- 
   tagList(
     tags$head(
-      tags$title("COVIDMINDER"),
+      tags$title("COVIDMINDER: Where you live matters") 
     ),
   navbarPage(
   theme="style.css",
@@ -222,7 +222,7 @@ server <- function(input, output, session) {
   output$map.testing <- renderLeaflet({
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -281,7 +281,7 @@ server <- function(input, output, session) {
     
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -340,7 +340,7 @@ server <- function(input, output, session) {
     
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-                                     transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
                                      position: fixed !important;
                                      left: 50%;
                                      text-align: left;
@@ -399,7 +399,7 @@ server <- function(input, output, session) {
     
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -456,7 +456,7 @@ server <- function(input, output, session) {
   output$map.covid_deaths <- renderLeaflet({
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -519,7 +519,7 @@ server <- function(input, output, session) {
   output$map.NY.deaths <- renderLeaflet({
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -586,7 +586,7 @@ server <- function(input, output, session) {
   output$map.NY.cases <- renderLeaflet({
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
@@ -654,7 +654,7 @@ server <- function(input, output, session) {
 
     tag.map.title <- tags$style(HTML("
   .leaflet-control.map-title { 
-    transform: translate(-50%,20%);
+    transform: translate(-10%,20%);
     position: fixed !important;
     left: 50%;
     text-align: left;
