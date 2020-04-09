@@ -3,8 +3,8 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-ldi_explanation_text <- "<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine 
-nationwide disparities in COVID-19 factors having to do with risks, mediations (e.g. testing, hospital beds), 
+ldi_explanation_text <- "<p>&nbsp;</p><p><b>EXPLANATION:</b> These visualizations highlight 
+nationwide disparities in COVID-19 factors having to do with determinants, mediations (e.g. testing, hospital beds), 
 and outcomes (e.g. deaths, cases). A common measure, the <i>disparity index</i> is used to represent the 
 difference between the observed rate in the state or county and some baseline rate.</p>
 <p>The disparity index is <i>intuitive</i>; it represents how far off a chosen standard the observed rate is. </p>
@@ -32,15 +32,17 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<b>OUTCOMES (USA):</b></br>COVID-19 Mortality Rates")),
+                    HTML("<b>OUTCOME (USA):</b></br>COVID-19 Deaths")),
            sidebarLayout(
              sidebarPanel(
              HTML("<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of individual states with the US rate.
                             This map is updated daily.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's COVID-19 mortality rate is higher than the US rate.
-                            "),
+                            state's COVID-19 mortality rate is higher than the US rate.<br><br>
+                            <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
+                            <br>"),
              HTML(ldi_explanation_text), 
              #HTML(rpi_accessibility_link), 
              width=4),
@@ -54,8 +56,11 @@ ui <-
                              <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
                              This map is updated daily.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's testing rate is lower than the South Korean rate.
-                            "),
+                             state's testing rate is lower than the South Korean rate.<br><br>
+                             <b>DATA SOURCES:</b> <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project (daily)</a> and 
+                            <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
+                            <br>"),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -69,34 +74,37 @@ ui <-
                              <i>This map compares the availability of hospital beds in US states vs the rate in Italy (3.2 beds/1000). 
                              This map uses recent historical figures and does not reflect 'surge' capacity.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's hospital bed availablity is lower than the rate in <b>Italy</b>
-                            "),
+                             state's hospital bed availablity is lower than the rate in <b>Italy</b><br><br>
+                             <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
+                            <br>"),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(leafletOutput(outputId = "map.hospital", height="85vh"), width=8)
            )
   ),
+  ## DON"T DELETE! We may restore this or re-purpose
+  # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+  #                   HTML("<b>DETERMINANT (USA):</b></br>Cardiovascular Diseases")),
+  #          sidebarLayout(
+  #            sidebarPanel(HTML("<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
+  #                            <i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
+  #                           with the US rate. In recent literature, COVID-19 risk has been
+  #                           linked to certain cardiovascular diseases, including hypertension.
+  #                           This map uses recent historical figures. </i><br><br>
+  #                           Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+  #                           state's mortality rate from total cardiovascular diseases is 
+  #                           <b>higher</b> than the US rate.
+  #                           "),
+  #                         HTML(ldi_explanation_text), 
+  #                         #HTML(rpi_accessibility_link), 
+  #                         width=4),
+  #            mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
+  #          )
+  # ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>DETERMINANTS (USA):</b></br>Cardiovascular Diseases")),
-           sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
-                             <i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
-                            with the US rate. In recent literature, COVID-19 risk has been
-                            linked to certain cardiovascular diseases, including hypertension.
-                            This map uses recent historical figures. </i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's mortality rate from total cardiovascular diseases is 
-                            <b>higher</b> than the US rate.
-                            "),
-                          HTML(ldi_explanation_text), 
-                          #HTML(rpi_accessibility_link), 
-                          width=4),
-             mainPanel(leafletOutput(outputId = "map.cardio", height="85vh"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>DETERMINANTS (USA):</b></br>Diabetes")),
+                    HTML("<b>DETERMINANT (USA):</b></br>Diabetes")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do diabetes rates across the US compare with the national average?</b></h4>
                              <i>The map compares the percentage of a state's population with diabetes 
@@ -107,7 +115,10 @@ ui <-
                             <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
                             of COVID-19 and at the same time patients have to control their glucose while living in a
                             with a decreased and more variable food intake.</i>  
-                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)
+                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)<br><br>
+                            <b>DATA SOURCES:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                            <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
                             "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
@@ -116,14 +127,17 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>OUTCOMES (NY):</b></br>COVID-19 Mortality Rates")),
+                    HTML("<b>OUTCOME (NY):</b></br>COVID-19 Deaths")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do New York State COVID-19 mortality rates compare with the US rate?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of NY counties with the United States average. 
                             This map is updated daily. </i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 mortality rate is higher than the US rate.<br>
-                            "),
+                            county's COVID-19 mortality rate is higher than the US rate.<br><br>
+                            <B>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
+                            <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
+                            <br>"),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -131,7 +145,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>OUTCOMES (NY):</b></br>COVID-19 Case Rates")),
+                    HTML("<b>OUTCOME (NY):</b></br>COVID-19 Cases")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
@@ -140,8 +154,10 @@ ui <-
                             county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br><br>
                             <b>NOTE:</b> <i>Test counts and results are assigned to a county based on this order of preference: 
                             1) the patient’s address, 2) the ordering healthcare provider’s address, or 3) the ordering facility’s 
-                            address.</i>  (New York State Dept. of Health)
-                            "),
+                            address.</i>  (New York State Dept. of Health)<br><br>
+                            <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
+                            <br>"),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
                           width=4),
@@ -149,7 +165,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>DETERMINANTS (NY):</b></br>Diabetes Rates")),
+                    HTML("<b>DETERMINANT (NY):</b></br>Diabetes")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do rates of diabetes compare across counties in New York State?</b></h4>
                              <i>This map compares the diabetes rates for NY counties with the NY average. 
@@ -159,7 +175,10 @@ ui <-
                             <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
                             of COVID-19 and at the same time patients have to control their glucose while living in a
                             with a decreased and more variable food intake.</i>  
-                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)
+                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)<br><br>
+                            <b>DATA SOURCES:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                            <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
                             "),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
@@ -173,25 +192,25 @@ ui <-
                            HTML("<b>ABOUT: </b>
                                 <b>COVIDMINDER</b> is an open source interactive application 
                                 aimed at helping health care providers and other stakeholders 
-                                understand various COVID-19 related measures across the United States.
+                                understand various COVID-19 related measures across the United States.<br>
+                                <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration and Applications</a><br>
+                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a>
                                 ")
                            ),
-                    column(3, 
-                           HTML("<b>DATA SOURCES:</b>
-                                <a href='http://bit.ly/39PMWpD'>JHU CSSE</a>;
-                                <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a>;
-                                <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a>; 
-                                <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>;
-                                <a href='https://bit.ly/2V1Zl3I'>CDC</a>;
-                                <a href='https://bit.ly/34mYLBP'>County Health Rankings</a>;
-                                <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
-                                ")
-                           ),
+                    # column(3, 
+                    #        HTML("<b>DATA SOURCES:</b>
+                    #             <a href='http://bit.ly/39PMWpD'>JHU CSSE</a>;
+                    #             <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a>;
+                    #             <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a>; 
+                    #             <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>;
+                    #             <a href='https://bit.ly/2V1Zl3I'>CDC</a>;
+                    #             <a href='https://bit.ly/34mYLBP'>County Health Rankings</a>;
+                    #             <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
+                    #             ")
+                    #        ),
                     column(3, 
                            HTML("<b>LINKS:</b>
-                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMINDER github</a><br>
-                                <a href='http://idea.rpi.edu/'>The Rensselaer IDEA</a><br>
-                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a>
+                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMINDER github</a>
                                 ")
                            )
                     )
