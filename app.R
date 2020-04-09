@@ -68,7 +68,8 @@ ui <-
                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
              #HTML(rpi_accessibility_link), 
              width=4),
-             mainPanel( leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+                        leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -513,9 +514,9 @@ server <- function(input, output, session) {
   }
 "))
     
-    title <- tags$div(
-      tag.map.title, HTML("COVID-19 Mortality Rate Disparities by State Compared to Average US Rate")
-    )  
+    # title <- tags$div(
+    #   tag.map.title, HTML("COVID-19 Mortality Rate Disparities by State Compared to Average US Rate")
+    # )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -556,8 +557,8 @@ server <- function(input, output, session) {
                 ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+      # addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
