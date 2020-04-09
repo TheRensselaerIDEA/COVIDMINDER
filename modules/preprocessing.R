@@ -37,7 +37,7 @@ pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United 
 
 pSK.2 <- 6768 / 1000000
 
-#tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pUS.2/(1-pUS.2)))}))
+# tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pUS.2/(1-pUS.2)))}))
 # tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pSK.2/(1-pSK.2)))}))
 tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){-log(x/pSK.2)}))
 
@@ -47,7 +47,9 @@ state_covid_testing <- state_covid_testing[match(states$NAME, state_covid_testin
 
 state_covid_testing <- state_covid_testing[1:51,]
 
+states <- data.frame(states, "tests_per_1000"=state_covid_testing$tests_per_1000) # Append to states
 states <- data.frame(states, "tests_ldi"=state_covid_testing$tests_ldi) # Append to states
+states <- data.frame(states, "Population"=state_covid_testing$Population) # Append to states (reference)
 
 ## At-risk Adults fixing
 
@@ -90,6 +92,8 @@ cardio_deaths_2017 <- cardio_deaths_2017[match(states$NAME, cardio_deaths_2017$N
 cardio_deaths_2017 <- cardio_deaths_2017[1:51,]
 
 # Append the new column to states
+
+states <- data.frame(states, "cardio_deaths_p_100000"=cardio_deaths_2017$cardio_deaths_p_100000) # Append to states
 states <- data.frame(states, "cardio_death_rate_ldi"=cardio_deaths_2017$cardio_death_rate_ldi) # Append to states
 
 # COVID-19 Deaths per COVID-19 Case
@@ -107,6 +111,7 @@ covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$NAME
 covid_data_states <- covid_data_states[1:51,]
 
 states <- data.frame(states, "death_rate_ldi"=covid_data_states$death_rate_ldi) # Append to states
+states <- data.frame(states, "covid_death_rate"=covid_data_states$p_death_rate) # Append to states
 
 # NY specific calculations: Death Rates
 pNY.6.deaths <- sum(NY.data$deaths)/sum(NY.data$Population)
