@@ -148,7 +148,7 @@ ui <-
            )
   ),
   tags$br(),
-  footer = fluidRow(class = "navbar navbar-default footer", 
+  footer = fluidRow(class = "navbar navbar-default navbar-fixed-bottom footer", 
                     column(6,
                            HTML("<b>ABOUT: </b>
                                 <b>COVIDMINDER</b> is an open source interactive application 

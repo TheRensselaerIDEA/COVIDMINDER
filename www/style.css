@@ -37,9 +37,12 @@
 .footer {
   margin-left:0;
   margin-right:0;
-  margin-bottom:0;
+  font-size:12px;
   color:black;
-  padding-bottom:10px;
+}
+
+.tab-content {
+  padding-bottom:110px;
 }
 
 .navbar-nav .li a {
