@@ -39,7 +39,8 @@ state_covid_testing <- state_covid_testing %>%
 
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
 
-pSK.2 <- 6768 / 1000000
+pSK.2 <- 9.1 / 1000  # See: https://bit.ly/2yMyjFX
+pIT.2 <- 13.6 / 1000 # See: https://bit.ly/2yMyjFX
 
 # tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pUS.2/(1-pUS.2)))}))
 # tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pSK.2/(1-pSK.2)))}))
