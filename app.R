@@ -104,7 +104,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.testing", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
+                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -143,7 +144,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.hospital", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
+                       leafletOutput(outputId = "map.hospital", height="100%"), width=8)
            )
   ),
   # DON"T DELETE! We may restore this or re-purpose
@@ -183,7 +185,8 @@ ui <-
   #                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
   #                         #HTML(rpi_accessibility_link),
   #                         width=4),
-  #            mainPanel( leafletOutput(outputId = "map.cardio", height="100%"), width=8)
+  #            mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by State Compared to Average US Rate"),
+  #                       leafletOutput(outputId = "map.cardio", height="100%"), width=8)
   #          )
   # ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -223,7 +226,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
+                       leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -262,7 +266,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                       leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -300,7 +305,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+                       leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -341,7 +347,8 @@ ui <-
                                <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
-             mainPanel( leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
+             mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
+                       leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
            )
   ),
   footer = fluidRow(class = "navbar navbar-default footer", 
@@ -378,23 +385,6 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
-    
-    title <- tags$div(
-      tag.map.title, HTML("COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate")
-    )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -431,29 +421,10 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
         })
   
   output$map.cardio <- renderLeaflet({
-    
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
-    
-    title <- tags$div(
-      tag.map.title, HTML("Cardio Mortality Rate Disparities by State Compared to Average US Rate")
-    )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -489,30 +460,11 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
 
   output$map.diabetes <- renderLeaflet({
-    
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-                                     position: fixed !important;
-                                     left: 50%;
-                                     text-align: left;
-                                     padding-left: 30px; 
-                                     padding-right: 10px; 
-                                     background: rgba(255,255,255,0.0);
-                                     font-weight: bold;
-                                     font-size: 20px;
-  }
-                                     "))
-    
-    title <- tags$div(
-      tag.map.title, HTML("Diabetes Rate Disparities by State Compared to Average US Rate")
-    )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -548,30 +500,11 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
   
   output$map.hospital <- renderLeaflet({
-    
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
-    
-    title <- tags$div(
-      tag.map.title, HTML("Hospital Bed Rate Disparities by State Compared to Average Italian Rate")
-    )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -606,34 +539,16 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title") 
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
-    
-    # title <- tags$div(
-    #   tag.map.title, HTML("COVID-19 Mortality Rate Disparities by State Compared to Average US Rate")
-    # )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
-#    browser() 
+
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
@@ -670,28 +585,10 @@ server <- function(input, output, session) {
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
-      # addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
   output$map.NY.deaths <- renderLeaflet({
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
-    
-    title <- tags$div(
-      tag.map.title, HTML("NY COVID-19 Mortality Rate Disparities by County Compared to Average US Rate")
-    )  
     
         colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -736,32 +633,13 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
   
   output$map.NY.cases <- renderLeaflet({
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
     
-    title <- tags$div(
-      tag.map.title, HTML("NY COVID-19 Case Rate Disparities by County Compared to Average US Rate")
-    )  
-    
-    
-        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -803,32 +681,13 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
   
   output$map.NY.diabetes <- renderLeaflet({
-
-    tag.map.title <- tags$style(HTML("
-  .leaflet-control.map-title { 
-    transform: translate(-10%,20%);
-    position: fixed !important;
-    left: 50%;
-    text-align: left;
-    padding-left: 30px; 
-    padding-right: 10px; 
-    background: rgba(255,255,255,0.0);
-    font-weight: bold;
-    font-size: 20px;
-  }
-"))
     
-    title <- tags$div(
-      tag.map.title, HTML("NY Diabetes Rate Disparities by County Compared to Average US Rate")
-    )  
-    
-        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
     
@@ -870,8 +729,7 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
-      addControl(title, position = "topleft", className="map-title")
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
 }
