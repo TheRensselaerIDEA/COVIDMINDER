@@ -235,7 +235,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("How do COVID-19 testing rates across the US compare with South Korea?")
+      tag.map.title, HTML("COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate")
     )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -294,7 +294,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("Cardio figure title")
+      tag.map.title, HTML("Cardio Mortality Rate Disparities by State Compared to Average US Rate")
     )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -353,7 +353,7 @@ server <- function(input, output, session) {
                                      "))
     
     title <- tags$div(
-      tag.map.title, HTML("Diabetes figure title")
+      tag.map.title, HTML("Diabetes Rate Disparities by State Compared to Average US Rate")
     )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -412,7 +412,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("How does the availability of hospital beds<br>across the United States compare with Italy?")
+      tag.map.title, HTML("Hospital Bed Rate Disparities by State Compared to Average Italian Rate")
     )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -469,7 +469,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("COVID Deaths figure title")
+      tag.map.title, HTML("COVID-19 Mortality Rate Disparities by State Compared to Average US Rate")
     )  
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -532,7 +532,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("NY COVID deaths figure title")
+      tag.map.title, HTML("NY COVID-19 Mortality Rate Disparities by County Compared to Average US Rate")
     )  
     
         colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -599,7 +599,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("NY cases figure title")
+      tag.map.title, HTML("NY COVID-19 Case Rate Disparities by County Compared to Average US Rate")
     )  
     
     
@@ -667,7 +667,7 @@ server <- function(input, output, session) {
 "))
     
     title <- tags$div(
-      tag.map.title, HTML("NY diabetes figure title")
+      tag.map.title, HTML("NY Diabetes Rate Disparities by County Compared to Average US Rate")
     )  
     
         colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
