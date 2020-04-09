@@ -4,7 +4,7 @@ source("modules/data_load.R")
 source("modules/preprocessing.R")
 
 ldi_explanation_text <- "<p>&nbsp;</p><p><b>EXPLANATION:</b> The goal of these visualizations is to examine 
-nationwide disparities in COVID-19factors having to do with risks, mediations (e.g. testing, hospital beds), 
+nationwide disparities in COVID-19 factors having to do with risks, mediations (e.g. testing, hospital beds), 
 and outcomes (e.g. deaths, cases). A common measure, the <i>disparity index</i> is used to represent the 
 difference between the observed rate in the state or county and some baseline rate.</p>
 <p>The disparity index is <i>intuitive</i>; it represents how far off a chosen standard the observed rate is. </p>
