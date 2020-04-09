@@ -128,6 +128,25 @@ ui <-
              mainPanel(leafletOutput(outputId = "map.NY.cases", height="85vh"), width=8)
            )
   ),
+  tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                    HTML("<b>DETERMINANTS (NY):</b></br>Diabetes Rates")),
+           sidebarLayout(
+             sidebarPanel(HTML("<h4><b>How do rates of diabetes compare across counties in New York State?</b></h4>
+                             <i>This map compares the diabetes rates for NY counties with the NY average. 
+                            This map is based on historical data (2017). </i><br><br>
+                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+                            county's diabetes rate is higher than the NY rate.<br><br>
+                            <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
+                            of COVID-19 and at the same time patients have to control their glucose while living in a
+                            with a decreased and more variable food intake.</i>  
+                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)
+                            "),
+                          HTML(ldi_explanation_text), 
+                          #HTML(rpi_accessibility_link), 
+                          width=4),
+             mainPanel(leafletOutput(outputId = "map.NY.diabetes", height="85vh"), width=8)
+           )
+  ),
   tags$br(),
   footer = fluidRow(class = "navbar navbar-default footer", 
                     column(6,
@@ -285,10 +304,10 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    # colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
 #    browser() 
     labels2 <- sprintf(
@@ -331,10 +350,10 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.deaths <- renderLeaflet({
-    #colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    #colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     #bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -381,10 +400,10 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.cases <- renderLeaflet({
-    # colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
     # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
     NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
@@ -429,6 +448,54 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
+  output$map.NY.diabetes <- renderLeaflet({
+    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
+    
+    NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
+    NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
+    
+    labels <- sprintf(
+      "<strong>%s</strong><br/>
+      Diabetes Rate DI: %.2g<br>
+      Diabetes Rate: %.1f pct",
+      NY.data$County, NY.data$diabetes_ldi, NY.data$pct_Adults_with_Diabetes
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(NY.shape) %>%
+      setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
+      addPolygons(
+        fillColor = ~pal2(NY.data$diabetes_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~NY.data$diabetes_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>NY Diabetes Rates",
+                position = "bottomright"
+      ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+    #Remove personal API key
+  })
 }
 
 #### Set up Shiny App ####
