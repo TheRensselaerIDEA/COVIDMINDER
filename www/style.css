@@ -31,7 +31,7 @@
 }
 
 .leaflet-container {
-  padding-bottom:75%;
+  padding-bottom:70%;
 }
 .col-sm-8 {
   /*padding-left:0;*/
@@ -55,4 +55,7 @@
   .title-text {
     height: 70px;
   }
+  .leaflet-container {
+  padding-bottom:65%;
+}
 }
