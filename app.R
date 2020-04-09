@@ -118,7 +118,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 case rates")),
+                    HTML("<b>NEW YORK VIEW:</b></br>COVID-19 Case Rates")),
            sidebarLayout(
              sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
                              <i>This map compares the COVID-19 case rates for NY counties with the NY average. 
@@ -184,10 +184,12 @@ server <- function(input, output, session) {
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
+#    browser()
     labels2 <- sprintf(
       "<strong>%s</strong> State<br/>
-      Total Tests vs South Korea DI: %.2g",
-      states$NAME, states$tests_ldi
+      Testing Rate vs South Korea DI: %.2g<br>
+      Testing Rate: %.1f /1000",
+      states$NAME, states$tests_ldi, states$tests_per_1000*1000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes, width="100%", height="100%") %>%
@@ -225,8 +227,9 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      Cardio Mortality Rate DI: %.2g<br/>",
-      states$NAME, states$cardio_death_rate_ldi
+      Cardio Mortality Rate DI: %.2g<br/>
+      Cardio Mortality Rate: %.1f /100K",
+      states$NAME, states$cardio_death_rate_ldi, states$cardio_deaths_p_100000*100000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -303,10 +306,12 @@ server <- function(input, output, session) {
     colors <- c("grey","#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5, -Inf)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
+#    browser() 
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Mortality Rate DI: %.2g",
-      states$NAME, states$death_rate_ldi
+      COVID-19 Mortality Rate DI: %.2g<br>
+      COVID-19 Mortality Rate: %.1f /100k",
+      states$NAME, states$death_rate_ldi, states$covid_death_rate*100000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -355,9 +360,8 @@ server <- function(input, output, session) {
     labels <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
-      COVID-19 actual deaths: %g<br/>
-      County population: %d",
-      NY.data$County, NY.data$death_rate_ldi, NY.data$deaths, NY.data$Population
+      COVID-19 Mortality Rate: %.1f /100k",
+      NY.data$County, NY.data$death_rate_ldi, (NY.data$deaths/NY.data$Population)*100000
     ) %>% lapply(htmltools::HTML)
 
     leaflet(NY.shape) %>%
@@ -404,10 +408,9 @@ server <- function(input, output, session) {
     
     labels <- sprintf(
       "<strong>%s</strong><br/>
-      COVID-19 Cases Rate DI: %.2g<br>
-      COVID-19 actual cases: %g<br/>
-      County population: %d",
-      NY.data$County, NY.data$case_rate_ldi, NY.data$cases, NY.data$Population
+      COVID-19 Case Rate DI: %.2g<br>
+      COVID-19 Case Rate: %.1f /100k",
+      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
