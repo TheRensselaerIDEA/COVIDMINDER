@@ -35,37 +35,34 @@ ui <-
                     HTML("<b>OUTCOME (USA)</b></br>Mortality Rate")),
            sidebarLayout(
              sidebarPanel(
-             HTML("<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
-                             <i>This map compares the COVID-19 mortality rates of individual states with the US rate.
-                            This map is updated daily.</i><br><br>
-                            <strong>Outcome Disparity:</strong>  The rate of COVID-19 deaths per 100k population per state varies greatly
-                            as compared to the mean United States rate of COVID-19 deaths per 100k population. <strong>Outcome</strong> 
-                            disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
-                            at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
-                            The  rate of covid-19 deaths per 100k in a state is: <br>
-                            <ul>
-                              <li>
-                                Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
-                              </li>
-                              <li>
-                                About US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
-                              </li>
-                              <li>
-                                Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
-                              </li>
-                            </ul>
-                            Darker colors indicate more disparity.<br><br>
-                            
-                            <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                            <strong>Death Rate Disparity Index</strong> = log [Mortality Rate  in state/mean Mortality Rate of US)<br>
-                            <strong>Date:</strong> 04/09/2020<br><br>
+             HTML("<strong>Outcome Disparity:</strong> The rate of COVID-19 deaths per 100k population per state varies greatly
+                    as compared to the mean United States rate of COVID-19 deaths per 100k population. <strong>Outcome</strong> 
+                    disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
+                    at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
+                    The  rate of covid-19 deaths per 100k in a state is: <br>
+                    <ul>
+                      <li>
+                        Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                      </li>
+                      <li>
+                        About US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                      </li>
+                      <li>
+                        Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                      </li>
+                    </ul>
+                    Darker colors indicate more disparity.<br><br>
+                    
+                    <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                    <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
+                    <strong>Date:</strong> 04/09/2020<br><br>
 
-                            <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                            <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
-                            <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                            <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
-                              <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                    <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                    <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                    <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                    <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                      <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                      <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
              #HTML(rpi_accessibility_link), 
              width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
@@ -73,12 +70,9 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>MEDIATION (USA):</b></br>COVID-19 Testing")),
+                    HTML("<b>MEDIATION (USA)</b></br>COVID-19 Testing")),
            sidebarLayout(fluid=FALSE,
-             sidebarPanel(HTML("<h4><b>How do COVID-19 testing rates across the US compare with South Korea?</b></h4>
-                             <i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
-                             This map is updated daily.</i><br><br>
-                             <strong>Mediation Disparity:</strong> The rate of COVID-19 per 100k population per state varies
+             sidebarPanel(HTML("<strong>Mediation Disparity:</strong> The rate of COVID-19 per 100k population per state varies
                               greatly  as compared to the South Korean rate of COVID-19 testing per 100k population. Disparity 
                               in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus, social 
                               <strong>determinants</strong> that put the population at increased risk, and <strong>mediations</strong>
@@ -86,20 +80,20 @@ ui <-
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
                                <ul>
-                               <li>
-                               Lower than South Korean testing rate for  disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
-                               </li>
-                               <li>
-                               About equal South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
-                               </li>
-                               <li>
-                               Higher than South Korean testing rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
-                               </li>
+                                 <li>
+                                 Lower than South Korean testing rate for  disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                                 </li>
+                                 <li>
+                                 About equal South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                                 </li>
+                                 <li>
+                                 Higher than South Korean testing rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                                 </li>
                                </ul>
                                Darker colors indicate more disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = -log [Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in South Korea) <br>
                                <strong>Date:</strong> 04/07/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
@@ -114,119 +108,237 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>MEDIATION (USA):</b></br>Hospital Beds")),
+                    HTML("<b>MEDIATION (USA)</b></br>Hospital Beds")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How does the availability of hospital beds across the United States compare with Italy?</b></h4>
-                             <i>This map compares the availability of hospital beds in US states vs the rate in Italy (3.2 beds/1000). 
-                             This map uses recent historical figures and does not reflect 'surge' capacity.</i><br><br>
-                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                             state's hospital bed availablity is lower than the rate in <b>Italy</b><br><br>
-                             <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            <br>"),
-                          HTML(ldi_explanation_text), 
+             sidebarPanel(HTML("<strong>Mediation Disparity:</strong> This map shows that the rate of hospital beds 
+                                per 100k population across the states varies greatly as compared to the  rate of hospital 
+                                beds per 100k population  in Italy. Disparity in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus,
+                                social <strong>determinants</strong> that put the population at increased risk, and 
+                                <strong>mediations</strong> used/available to combat the virus. Italy has a higher hospital 
+                                bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
+                                Italy’s rate as a minimum target rate.<br><br>
+                                The rate of hospital beds per 100k in a state is<br>
+                               <ul>
+                                <li>
+                                 Lower than Italian rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                                 </li>
+                                 <li>
+                                 About equal to Italian rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                                 </li>
+                                 <li>
+                                 Higher than Italian rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                                 </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
+                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Date:</strong> 04/07/2020 <br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel( leafletOutput(outputId = "map.hospital", height="100%"), width=8)
            )
   ),
-  ## DON"T DELETE! We may restore this or re-purpose
+  # DON"T DELETE! We may restore this or re-purpose
   # tabPanel(tags$div(class="tab-title",style="text-align:center;",
-  #                   HTML("<b>DETERMINANT (USA):</b></br>Cardiovascular Diseases")),
+  #                   HTML("<b>DETERMINANT (USA)</b></br>Cardiovascular Diseases")),
   #          sidebarLayout(
-  #            sidebarPanel(HTML("<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
-  #                            <i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
-  #                           with the US rate. In recent literature, COVID-19 risk has been
-  #                           linked to certain cardiovascular diseases, including hypertension.
-  #                           This map uses recent historical figures. </i><br><br>
-  #                           Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-  #                           state's mortality rate from total cardiovascular diseases is 
-  #                           <b>higher</b> than the US rate.
-  #                           "),
-  #                         HTML(ldi_explanation_text), 
-  #                         #HTML(rpi_accessibility_link), 
+  #            sidebarPanel(HTML("<strong>Determinant Disparity:</strong> This map shows that the deaths due to cardiovascular 
+  #                               disease per 100k population per state varies greatly as compared to the average United States 
+  #                               rate of cardiovascular disease rates  per 100k population. <strong>Outcome</strong> disparities depend on the spread of the virus, social 
+  #                               <strong>determinants</strong> that put the population at increased risk, and <strong>mediations</strong>
+  #                               used/available to combat the virus. Since Cardiovascular Disease puts patients at increased 
+  #                               risk of contracting and dying from COVID-19, areas with higher cardiovascular mortality rates 
+  #                               may face increased COVID-19 burdens.<br><br>
+  #                              The  rate of covid-19 deaths per 100k in a state is<br>
+  #                              <ul>
+  #                                <li>
+  #                                Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+  #                                </li>
+  #                                <li>
+  #                                About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+  #                                </li>
+  #                                <li>
+  #                                Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+  #                                </li>
+  #                              </ul>
+  #                              Darker colors indicate more disparity.<br><br>
+  #                              
+  #                              <strong>Cardiovascular Mortality Rate</strong> = number of diabetics individuals per 100K population<br>
+  #                              <strong>Death Rate Disparity Index</strong> = log(Cardiovascular Mortality Rate  in state/average Cardiovascular Mortality Rate in US)<br>
+  #                              <strong>Date:</strong> 04/09/2020 <br><br>
+  #                              
+  #                              <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>NA</a><br>
+  #                              <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+  #                              <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+  #                              <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+  #                              <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+  #                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+  #                         #HTML(rpi_accessibility_link),
   #                         width=4),
   #            mainPanel( leafletOutput(outputId = "map.cardio", height="100%"), width=8)
   #          )
   # ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>DETERMINANT (USA):</b></br>Diabetes")),
+                    HTML("<b>DETERMINANT (USA)</b></br>Diabetes")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do diabetes rates across the US compare with the national average?</b></h4>
-                             <i>The map compares the percentage of a state's population having diabetes 
-                            with the US percentage.</i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's mortality rate from total cardiovascular diseases is 
-                            <b>higher</b> than the US rate.
-                            <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
-                            of COVID-19 and at the same time patients have to control their glucose while living in a
-                            with a decreased and more variable food intake.</i>  
-                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)<br><br>
-                            <b>DATA SOURCES:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-                            <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            "),
-                          HTML(ldi_explanation_text), 
+             sidebarPanel(HTML("<strong>Determinant Disparity:</strong> This map shows that the rate of diabetes patients 
+                                per 100k population per state varies greatly as compared to the average United States rate 
+                                of diabetes  per 100k population. <strong>Outcome</strong> disparities depend on the spread of the virus, social 
+                                <strong>determinants</strong> that put the population at increased risk, and 
+                                <strong>mediations</strong> used/available to combat the virus. Since diabetes puts patients 
+                                at increased risk of contracting and dying from COVID-19, areas with higher diabetes rates 
+                                may face increased COVID-19 burdens. <br><br>
+                               The  rate of diabetes deaths per 100k in a state is<br>
+                               <ul>
+                               <li>
+                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               </li>
+                               <li>
+                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               </li>
+                               <li>
+                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
+                               <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
+                               <strong>Date:</strong> 2016<br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                                  <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel( leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>OUTCOME (NY):</b></br>COVID-19 Deaths")),
+                    HTML("<b>OUTCOME (NY)</b></br>Mortality Rate")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do New York State COVID-19 mortality rates compare with the US rate?</b></h4>
-                             <i>This map compares the COVID-19 mortality rates of NY counties with the United States average. 
-                            This map is updated daily. </i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 mortality rate is higher than the US rate.<br><br>
-                            <B>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
-                            <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            <br>"),
-                          HTML(ldi_explanation_text), 
+             sidebarPanel(HTML("<strong>Outcome Disparity:</strong> This map shows that in New York the rate of COVID-19 deaths 
+                                per 100k population per county varies greatly as compared to the average United States rate of 
+                                COVID-19 deaths per 100k population.  
+                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
+                                <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
+                                used/available to combat the virus.<br><br>
+                               The rate of covid-19 deaths per 100k in a county is<br>
+                               <ul>
+                               <li>
+                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               </li>
+                               <li>
+                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               </li>
+                               <li>
+                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                               <strong>Death Rate Disparity Index</strong> = log [Mortality Rate  in state/mean Mortality Rate in US)<br>
+                               <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
+                               <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel( leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>OUTCOME (NY):</b></br>COVID-19 Cases")),
+                    HTML("<b>OUTCOME (NY)</b></br>COVID-19 Cases")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
-                             <i>This map compares the COVID-19 case rates for NY counties with the US average. 
-                            This map is updated daily. </i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's COVID-19 case rate (cases per county population) is higher than the NY rate.<br><br>
-                            <b>NOTE:</b> <i>Test counts and results are assigned to a county based on this order of preference: 
-                            1) the patient’s address, 2) the ordering healthcare provider’s address, or 3) the ordering facility’s 
-                            address.</i>  (New York State Dept. of Health)<br><br>
-                            <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            <br>"),
-                          HTML(ldi_explanation_text), 
+             sidebarPanel(HTML("<strong>Outcome Disparity:</strong> This map shows that in New York the rate of COVID-19 
+                                cases per 100k population per county varies greatly as compared to the average United States 
+                                rate of COVID-19 cases per 100k population.  
+                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
+                                <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
+                                used/available to combat the virus. <br><br>
+                               The rate of covid-19 deaths per 100k in a county is<br>
+                               <ul>
+                               <li>
+                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               </li>
+                               <li>
+                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               </li>
+                               <li>
+                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                               <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
+                               <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel( leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<b>DETERMINANT (NY):</b></br>Diabetes")),
+                    HTML("<b>DETERMINANT (NY)</b></br>Diabetes")),
            sidebarLayout(
-             sidebarPanel(HTML("<h4><b>How do rates of diabetes compare across counties in New York State?</b></h4>
-                             <i>This map compares the diabetes rates for NY counties with the US rate. 
-                            This map is based on historical data (2017). </i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            county's diabetes rate is higher than the NY rate.<br><br>
-                            <b>NOTE:</b> <i>Diabetes has been reported to be a risk factor for the severity 
-                            of COVID-19 and at the same time patients have to control their glucose while living in a
-                            with a decreased and more variable food intake.</i>  
-                            (See Sten Madsbad, <a href='https://bit.ly/34yW1BD'>COVID-19 Infection in People with Diabetes</a>)<br><br>
-                            <b>DATA SOURCES:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-                            <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            "),
-                          HTML(ldi_explanation_text), 
+             sidebarPanel(HTML("<strong>Determinant Disparity:</strong> This map shows that the rate of diabetes patients 
+                                per 100k population per county in New York varies greatly as compared to the average United 
+                                States rate of diabetes  per 100k population.
+                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
+                                <strong>determinants</strong> that put the population at increased risk, and 
+                                <strong>mediations</strong> used/available to combat the virus.Since diabetes puts patients 
+                                at increased risk of contracting and dying from COVID-19, areas with higher diabetes rates may 
+                                face increased COVID-19 burdens.<br><br>
+                               The  rate of diabetes patients per 100k in county  is<br>
+                               <ul>
+                               <li>
+                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               </li>
+                               <li>
+                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               </li>
+                               <li>
+                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               </li>
+                               </ul>
+                               Darker colors indicate more disparity.<br><br>
+                               
+                               <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
+                               <strong>Diabetes Disparity Index</strong> = log( Diabetes Rate  in state/average Diabetes Rate in US)<br>
+                               <strong>Date:</strong> 2016<br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                                  <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                               <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                               <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel( leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
