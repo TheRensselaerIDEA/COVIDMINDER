@@ -207,7 +207,7 @@ write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
 covid_NY_TS_counties_long.cases <- covid_NY_TS_counties_long.cases %>% 
-   filter(deaths >= 2)
+   filter(cases >= 2)
 
 covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
   group_by(date)

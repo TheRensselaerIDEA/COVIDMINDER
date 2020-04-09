@@ -40,7 +40,7 @@ ui <-
                             This map is updated daily.</i><br><br>
                             Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                             state's COVID-19 mortality rate is higher than the US rate<br><br>
-                            <b>Data source:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)<br>
+                            <b>Data source:</b> <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-08-2020)<br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
              HTML(ldi_explanation_text), 
              #HTML(rpi_accessibility_link), 
@@ -56,7 +56,7 @@ ui <-
                              This map is updated daily.</i><br><br>
                              Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
                              state's testing rate is lower than the South Korean rate<br><br>
-                             <b>Data source:</b> <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)<br>
+                             <b>Data source:</b> <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-08-2020)<br>
                             <b>Analysis:</b> The Rensselaer Institute for Data Exploration and Applications (<a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>)"),
                           HTML(ldi_explanation_text), 
                           #HTML(rpi_accessibility_link), 
