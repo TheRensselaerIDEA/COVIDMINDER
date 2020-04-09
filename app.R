@@ -220,8 +220,24 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("How do COVID-19 testing rates across the US compare with South Korea?")
+    )  
+    
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
@@ -257,10 +273,30 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
         })
   
   output$map.cardio <- renderLeaflet({
+    
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("Cardio figure title")
+    )  
+    
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
@@ -295,11 +331,31 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
 
   output$map.diabetes <- renderLeaflet({
+    
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+                                     transform: translate(-50%,20%);
+                                     position: fixed !important;
+                                     left: 50%;
+                                     text-align: left;
+                                     padding-left: 30px; 
+                                     padding-right: 10px; 
+                                     background: rgba(255,255,255,0.0);
+                                     font-weight: bold;
+                                     font-size: 20px;
+  }
+                                     "))
+    
+    title <- tags$div(
+      tag.map.title, HTML("Diabetes figure title")
+    )  
+    
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$diabetes_rate_ldi, bins = bins, reverse=FALSE)
@@ -334,13 +390,31 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
   output$map.hospital <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5)
+    
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("How does the availability of hospital beds<br>across the United States compare with Italy?")
+    )  
+    
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
@@ -374,13 +448,30 @@ server <- function(input, output, session) {
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title") 
     #Remove personal API key
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("COVID Deaths figure title")
+    )  
+    
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
@@ -420,14 +511,31 @@ server <- function(input, output, session) {
                 ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
   output$map.NY.deaths <- renderLeaflet({
-    #colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    #bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("NY COVID deaths figure title")
+    )  
+    
+        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
@@ -470,14 +578,32 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
   output$map.NY.cases <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("NY cases figure title")
+    )  
+    
+    
+        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -519,14 +645,32 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
   
   output$map.NY.diabetes <- renderLeaflet({
-    # colors <- c("#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    # bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+
+    tag.map.title <- tags$style(HTML("
+  .leaflet-control.map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: left;
+    padding-left: 30px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.0);
+    font-weight: bold;
+    font-size: 20px;
+  }
+"))
+    
+    title <- tags$div(
+      tag.map.title, HTML("NY diabetes figure title")
+    )  
+    
+        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
     
@@ -568,7 +712,8 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+      addControl(title, position = "topleft", className="map-title")
     #Remove personal API key
   })
 }
