@@ -32,18 +32,40 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<b>OUTCOME (USA):</b></br>COVID-19 Deaths")),
+                    HTML("<b>OUTCOME</b></br>Mortality Rate (USA)")),
            sidebarLayout(
              sidebarPanel(
              HTML("<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
                              <i>This map compares the COVID-19 mortality rates of individual states with the US rate.
                             This map is updated daily.</i><br><br>
-                            Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
-                            state's COVID-19 mortality rate is higher than the US rate.<br><br>
+                            <strong>Outcome Disparity:</strong>  The rate of COVID-19 deaths per 100k population per state varies greatly
+                            as compared to the mean United States rate of COVID-19 deaths per 100k population. <strong>Outcome</strong> 
+                            disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
+                            at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
+                            The  rate of covid-19 deaths per 100k in a state is: <br>
+                            <ul>
+                              <li>
+                                Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                              </li>
+                              <li>
+                                About US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                              </li>
+                              <li>
+                                Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                              </li>
+                            </ul>
+                            Darker colors indicate more disparity.<br><br>
+                            
+                            <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                            <strong>Death Rate Disparity Index</strong> = log [Mortality Rate  in state/mean Mortality Rate of US)<br>
+                            <strong>Date:</strong> 04/09/2020<br><br>
+
                             <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                            <b>ANALYSIS:</b> <a href='http://idea.rpi.edu'>The Rensselaer IDEA</a>
-                            <br>"),
-             HTML(ldi_explanation_text), 
+                            <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
+                            <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
+                            <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                              <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
+                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information<a><br>"),
              #HTML(rpi_accessibility_link), 
              width=4),
              mainPanel(leafletOutput(outputId = "map.covid_deaths", height="85vh"), width=8)
