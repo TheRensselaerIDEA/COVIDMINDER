@@ -60,7 +60,7 @@ ui <-
                     "),
              HTML(footer_text),
              width=4),
-             mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
                         leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
            )
   ),
@@ -97,7 +97,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
                        leafletOutput(outputId = "map.testing", height="100%"), width=8)
            )
   ),
@@ -137,7 +137,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
                        leafletOutput(outputId = "map.hospital", height="100%"), width=8)
            )
   ),
@@ -178,7 +178,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
                        leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
   ),
@@ -216,7 +216,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
            )
   ),
@@ -253,7 +253,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
            )
   ),
@@ -294,7 +294,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
            )
   )
