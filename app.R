@@ -27,7 +27,7 @@ whatisit_text <- "<div style='font-size:80%;line-height:1.3;'>Select from the CO
 ui <- 
   tagList(
     tags$head(
-      tags$title("COVIDMINDER: Where you live matters") 
+      tags$title("COVIDMINDER: Where your life matters") 
     ),
   navbarPage(
   theme="style.css",
