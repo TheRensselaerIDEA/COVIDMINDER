@@ -7,6 +7,15 @@ source("modules/preprocessing.R")
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
+footer_text <- "<br><span style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
+                                of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
+                                and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
+                                <b>COVIDMINDER</b> is an open source project; see the 
+                                <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
+                                for more information. 
+                                <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+                                of Accessibility</a></i></span>"
+
 #### UI Code ####
 ui <- 
   tagList(
@@ -24,6 +33,7 @@ ui <-
              sidebarPanel(
              HTML("<strong>Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    as compared to the average USA rate of COVID-19 deaths per 100k population? </strong><br><br>
+                    <span style='font-size: 90%;'>
                     <strong>Outcome</strong> 
                     disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
                     at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
@@ -33,7 +43,7 @@ ui <-
                         Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
                       </li>
                       <li>
-                        About US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                        About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
                       </li>
                       <li>
                         Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
@@ -46,7 +56,9 @@ ui <-
                     <strong>Date:</strong> 04/09/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                    </span>
                     "),
+             HTML(footer_text),
              width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
                         leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
@@ -57,6 +69,7 @@ ui <-
            sidebarLayout(fluid=FALSE,
              sidebarPanel(HTML("<strong>Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
                               as compared to the South Korean rate of COVID-19 testing per 100k population? </strong><br><br>
+                              <span style='font-size: 90%;'>
                               Disparity in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus, social 
                               <strong>determinants</strong> that put the population at increased risk, and <strong>mediations</strong>
                               used/available to combat the virus. South Korea is used as the testing reference rate since South 
@@ -67,7 +80,7 @@ ui <-
                                  Lower than South Korean testing rate for  disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
                                  </li>
                                  <li>
-                                 About equal South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                                 About equal to South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
                                  </li>
                                  <li>
                                  Higher than South Korean testing rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
@@ -80,8 +93,10 @@ ui <-
                                <strong>Date:</strong> 04/09/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                               "),
+                               </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
                        leafletOutput(outputId = "map.testing", height="100%"), width=8)
            )
@@ -92,6 +107,7 @@ ui <-
              sidebarPanel(HTML("<strong>Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population as compared to the  rate of hospital 
                                 beds per 100k population  in Italy? </strong><br><br>
+                                <span style='font-size: 90%;'>
                                 Disparity in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus,
                                 social <strong>determinants</strong> that put the population at increased risk, and 
                                 <strong>mediations</strong> used/available to combat the virus. Italy has a higher hospital 
@@ -117,8 +133,10 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
-                               "),
+                               </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
                        leafletOutput(outputId = "map.hospital", height="100%"), width=8)
            )
@@ -127,9 +145,10 @@ ui <-
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
                     HTML("<span style='font-size: 80%;'><b>DETERMINANT (USA)</b></br>Diabetes</span>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Determinant:</strong> What are the disparities between states in rate of diabetes patients 
+             sidebarPanel(HTML("<strong>Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state as compared to the average United States rate 
-                                of diabetes  per 100k population? <br><br>
+                                of diabetes  per 100k population? </strong><br><br>
+                                <span style='font-size: 90%;'>
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at increased risk, and 
                                 <strong>mediations</strong> used/available to combat the virus. Since diabetes puts patients 
@@ -155,8 +174,10 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                          "),
+                          </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
                        leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
@@ -166,6 +187,7 @@ ui <-
            sidebarLayout(
              sidebarPanel(HTML("<strong>Outcome: What are the disparities between counties of New York
                                 in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</strong> <br>  
+                                <span style='font-size: 90%;'>
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
                                 used/available to combat the virus.<br><br>
@@ -184,14 +206,16 @@ ui <-
                                Darker colors indicate more disparity.<br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                               <strong>Death Rate Disparity Index</strong> = log [Mortality Rate  in state/mean Mortality Rate in US)<br>
+                               <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
                                <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
 
-                               "),
+                               </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
            )
@@ -202,6 +226,7 @@ ui <-
              sidebarPanel(HTML("<strong>Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population as compared to the average United States 
                                 rate of COVID-19 cases per 100k population?  </strong> <br><br>
+                                <span style='font-size: 90%;'>
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
                                 used/available to combat the virus. <br><br>
@@ -224,8 +249,10 @@ ui <-
                                <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                          "),
+                          </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
            )
@@ -236,6 +263,7 @@ ui <-
              sidebarPanel(HTML("<strong>Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population as compared to the average United 
                                 States rate of diabetes  per 100k population?</strong><br><br>
+                                <span style='font-size: 90%;'>
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at increased risk, and 
                                 <strong>mediations</strong> used/available to combat the virus.Since diabetes puts patients 
@@ -262,25 +290,28 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
-                               "),
+                               </span>"),
+                          HTML(footer_text),
                           width=4),
+             
              mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
            )
-  ),
-  footer = fluidRow(class = "navbar navbar-default footer", 
-                    column(10,
-                           HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
-                                of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
-                                and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-                                <b>COVIDMINDER</b> is an open source project; see the 
-                                <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-                                for more information. 
-                                <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-                                of Accessibility</a></i>
-                                ")
-                           )
-                    )
+  )
+  # ,
+  # footer = fluidRow(class = "navbar navbar-default footer", 
+  #                   column(10,
+  #                          HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
+  #                               of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
+  #                               and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
+  #                               <b>COVIDMINDER</b> is an open source project; see the 
+  #                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
+  #                               for more information. 
+  #                               <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+  #                               of Accessibility</a></i>
+  #                               ")
+  #                          )
+  #                   )
   )
 )
 #### Server Code ####
