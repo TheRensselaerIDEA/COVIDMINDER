@@ -60,6 +60,10 @@
     transform: translateX(-50%);
 }
 
+.well {
+  background-color: #dddddd;
+}
+
 @media screen and (min-width:1280px){
   .title-text {
     height: 70px;
@@ -68,3 +72,4 @@
   padding-bottom:65%;
 }
 }
+

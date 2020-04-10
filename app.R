@@ -37,19 +37,19 @@ ui <-
                     <strong>Outcome</strong> 
                     disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
                     at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
-                    The  rate of covid-19 deaths per 100k in a state is: <br>
+                    The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
                       <li>
-                        Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                        <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
                       </li>
                       <li>
-                        About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                        <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
                       </li>
                       <li>
-                        Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                        <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
                       </li>
                     </ul>
-                    Darker colors indicate more disparity.<br><br>
+                    Darker colors indicate greater disparity.<br><br>
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
@@ -77,16 +77,16 @@ ui <-
                                The rate of testing per 100k in a state is: <br>
                                <ul>
                                  <li>
-                                 Lower than South Korean testing rate for  disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                                 <span style='color:#b2182b;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</span>
                                  </li>
                                  <li>
-                                 About equal to South Korean testing rate for  -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                                 <span style='color:white;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
                                  </li>
                                  <li>
-                                 Higher than South Korean testing rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                                 <span style='color:#253494;font-weight:bold;'>Higher than South Korean testing rate for disparity index &lt; -0.2 (BLUE)</span>
                                  </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in South Korea) <br>
@@ -116,16 +116,16 @@ ui <-
                                 The rate of hospital beds per 100k in a state is<br>
                                <ul>
                                 <li>
-                                 Lower than Italian rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                                 <span style='color:#b2182b;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</span>
                                  </li>
                                  <li>
-                                 About equal to Italian rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                                 <span style='color:white;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
                                  </li>
                                  <li>
-                                 Higher than Italian rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                                 <span style='color:#253494;font-weight:bold;'>Higher than Italian rate for disparity index &lt; -0.2 (BLUE)</span>
                                  </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in Italy) <br>
@@ -157,16 +157,16 @@ ui <-
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <ul>
                                <li>
-                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
                                </li>
                                <li>
-                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
                                </li>
                                <li>
-                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
                                </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
@@ -191,19 +191,19 @@ ui <-
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
                                 used/available to combat the virus.<br><br>
-                               The rate of covid-19 deaths per 100k in a county is<br>
+                               The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
                                </li>
                                <li>
-                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
                                </li>
                                <li>
-                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
                                </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
@@ -230,19 +230,19 @@ ui <-
                                 <strong>Outcome</strong> disparities depend on the spread of the virus, social 
                                 <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
                                 used/available to combat the virus. <br><br>
-                               The rate of covid-19 deaths per 100k in a county is<br>
+                               The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
                                </li>
                                <li>
-                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               <span style='color:#000000'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
                                </li>
                                <li>
-                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
                                </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
@@ -272,16 +272,16 @@ ui <-
                                The  rate of diabetes patients per 100k in county  is<br>
                                <ul>
                                <li>
-                               Higher than US average rate for disparity index > 0.2 <span style='color:#b2182b'>(RED)</span>
+                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
                                </li>
                                <li>
-                               About equal to US average rate for -0.2 <disparity index < 0.2 <span style='color:#000000'>(WHITE)</span>
+                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
                                </li>
                                <li>
-                               Lower than US average rate for disparity index < -0.2 <span style='color:#253494'>(BLUE)</span>
+                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
                                </li>
                                </ul>
-                               Darker colors indicate more disparity.<br><br>
+                               Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
