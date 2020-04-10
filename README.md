@@ -13,17 +13,11 @@
 ## Data Sources: Updated daily! (See also `data` subdirectories)
 
 <a href='http://bit.ly/39PMWpD'>JHU CSSE</a>
-
 <a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a>
-
 <a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a>
-
 <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>
-
 <a href='https://bit.ly/2V1Zl3I'>CDC</a>
-
 <a href='https://bit.ly/34mYLBP'>County Health Rankings</a>
-
 <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
 
 ## Screen Shot (06 Apr 2020)
@@ -37,5 +31,5 @@
 * **/data**: This directory includes all the data files used in the project, including both json as well as CSV files.
 * **/LDI**: This directory includes all the LDI related Rmd and HTML files.
 * **/www**: Files associated esp. with HTML stylin'
-* **/daily_downloaders**: Scripts for manually pulling data from various sources
+* **/data_downloaders**: Scripts for manually pulling data from various sources
 
