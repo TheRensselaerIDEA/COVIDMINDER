@@ -39,9 +39,10 @@ ui <-
            sidebarLayout(
              sidebarPanel(
              HTML(whatisit_text),
-             HTML("<strong>Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
-                   as compared to the average USA rate of COVID-19 deaths per 100k population? </strong><br><br>
-                    <div style='font-size: 90%;'>
+             HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
+                   as compared to the average USA rate of COVID-19 deaths per 100k population? </div><br>
+                    <div style='font-size:90%;line-height:1.2;'>
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
                       <li>
@@ -74,9 +75,10 @@ ui <-
            sidebarLayout(fluid=FALSE,
              sidebarPanel(             
                           HTML(whatisit_text),
-                          HTML("<strong>Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
-                              as compared to the South Korean rate of COVID-19 testing per 100k population? </strong><br><br>
-                              <div style='font-size: 90%;'>
+                          HTML("<div style='font-weight:bold;line-height:1.3;'>
+                              Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
+                              as compared to the South Korean rate of COVID-19 testing per 100k population? </div><br>
+                              <div style='font-size:90%;line-height:1.2;'>
                               South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
@@ -111,10 +113,11 @@ ui <-
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
-               HTML("<strong>Mediation: What are the disparities between states  in  the rate of hospital beds 
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population as compared to the  rate of hospital 
-                                beds per 100k population  in Italy? </strong><br><br>
-                                <div style='font-size: 90%;'>
+                                beds per 100k population  in Italy? </div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Italy has a higher hospital 
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
@@ -152,10 +155,11 @@ ui <-
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
-               HTML("<strong>Determinant: What are the disparities between states in rate of diabetes patients 
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                    Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state as compared to the average United States rate 
-                                of diabetes  per 100k population? </strong><br><br>
-                                <div style='font-size: 90%;'>
+                                of diabetes  per 100k population? </div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
@@ -191,9 +195,10 @@ ui <-
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
-               HTML("<strong>Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</strong> <br><br>  
-                                <div style='font-size: 90%;'>
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Outcome: What are the disparities between counties of New York
+                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</div> <br><br>  
+                                <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
@@ -229,10 +234,11 @@ ui <-
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
-               HTML("<strong>Outcome: What are the disparities between New York counties in the rate of COVID-19 
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population as compared to the average United States 
-                                rate of COVID-19 cases per 100k population?  </strong> <br><br>
-                                <div style='font-size: 90%;'>
+                                rate of COVID-19 cases per 100k population?  </div> <br><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
@@ -266,10 +272,11 @@ ui <-
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
-               HTML("<strong>Determinant: What are the disparities between New York counties in the rate 
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population as compared to the average United 
-                                States rate of diabetes  per 100k population?</strong><br><br>
-                                <div style='font-size: 90%;'>
+                                States rate of diabetes  per 100k population?</div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in county  is<br>
