@@ -244,7 +244,7 @@ ui <-
                                <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <div style='color:#000000'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
+                               <div style='color:#f7f7f7'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
                                <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -548,7 +548,7 @@ server <- function(input, output, session) {
     ) %>% lapply(htmltools::HTML)
 
     leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
+      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$death_rate_ldi),
         weight = 1,
@@ -596,7 +596,7 @@ server <- function(input, output, session) {
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
+      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$case_rate_ldi),
         weight = 1,
@@ -644,7 +644,7 @@ server <- function(input, output, session) {
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
+      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$diabetes_ldi),
         weight = 1,
