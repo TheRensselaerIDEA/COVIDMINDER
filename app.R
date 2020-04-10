@@ -49,7 +49,7 @@ ui <-
                         <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                       </li>
                       <li>
-                        <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
+                        <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                       </li>
                       <li>
                         <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -87,7 +87,7 @@ ui <-
                                  <div style='color:#BD0026;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
-                                 <div style='color:white;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
+                                 <div style='color:#f7f7f7;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                                  </li>
                                  <li>
                                  <div style='color:#253494;font-weight:bold;'>Higher than South Korean testing rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -126,7 +126,7 @@ ui <-
                                  <div style='color:#BD0026;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
-                                 <div style='color:white;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
+                                 <div style='color:#f7f7f7;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                  </li>
                                  <li>
                                  <div style='color:#253494;font-weight:bold;'>Higher than Italian rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -166,7 +166,7 @@ ui <-
                                <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
+                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
                                <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -204,7 +204,7 @@ ui <-
                                <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
+                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
                                <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -283,7 +283,7 @@ ui <-
                                <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
+                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
                                <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
@@ -328,7 +328,7 @@ server <- function(input, output, session) {
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
 #    browser()
@@ -345,7 +345,7 @@ server <- function(input, output, session) {
       fillColor = ~pal2(states$tests_ldi),
       weight = 2,
       opacity = 1,
-      color = "white",
+      color = "#f7f7f7",
       dashArray = "3",
       fillOpacity = 0.7,
       highlight = highlightOptions(
@@ -368,7 +368,7 @@ server <- function(input, output, session) {
   
   output$map.cardio <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -384,7 +384,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(states$cardio_death_rate_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -408,7 +408,7 @@ server <- function(input, output, session) {
 
   output$map.diabetes <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$diabetes_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -424,7 +424,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(states$diabetes_rate_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -448,7 +448,7 @@ server <- function(input, output, session) {
   
   output$map.hospital <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
@@ -463,7 +463,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(states$hosp_beds_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -487,7 +487,7 @@ server <- function(input, output, session) {
   
   output$map.covid_deaths <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
 
@@ -504,7 +504,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(states$death_rate_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -532,7 +532,7 @@ server <- function(input, output, session) {
   
   output$map.NY.deaths <- renderLeaflet({
     
-        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
@@ -553,7 +553,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(NY.data$death_rate_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -581,7 +581,7 @@ server <- function(input, output, session) {
   
   output$map.NY.cases <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -601,7 +601,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(NY.data$case_rate_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
@@ -629,7 +629,7 @@ server <- function(input, output, session) {
   
   output$map.NY.diabetes <- renderLeaflet({
     
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","white","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
     
@@ -649,7 +649,7 @@ server <- function(input, output, session) {
         fillColor = ~pal2(NY.data$diabetes_ldi),
         weight = 2,
         opacity = 1,
-        color = "white",
+        color = "#f7f7f7",
         dashArray = "3",
         fillOpacity = 0.7,
         highlight = highlightOptions(
