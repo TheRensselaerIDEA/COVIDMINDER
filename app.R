@@ -60,9 +60,9 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                     <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                    <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                    <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                       <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                      <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                      <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
              #HTML(rpi_accessibility_link), 
              width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
@@ -99,9 +99,9 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
@@ -139,9 +139,9 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
@@ -180,9 +180,9 @@ ui <-
   #                              <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>NA</a><br>
   #                              <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
   #                              <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-  #                              <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+  #                              <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
   #                              <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-  #                              <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+  #                              <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
   #                         #HTML(rpi_accessibility_link),
   #                         width=4),
   #            mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by State Compared to Average US Rate"),
@@ -221,9 +221,9 @@ ui <-
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
@@ -261,9 +261,9 @@ ui <-
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
@@ -300,9 +300,9 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
@@ -342,9 +342,9 @@ ui <-
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
                                <b>ANALYSIS:</b> <a href='https://www.rpi.edu/'>Rensselaer Polytechnic Institute</a><br>
                                <a href='https://idea.rpi.edu/'>Institute for Data Application and Explorations (IDEA)</a><br>
-                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype'>COVIDMinder Github</a><br>
+                               <strong>LINKS:</strong> <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMinder Github</a><br>
                                <a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Accessibility Statement<a><br>
-                               <a href='https://github.com/TheRensselaerIDEA/COVID-DI-Prototype/wiki'>More information</a><br>"),
+                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER/wiki'>More information</a><br>"),
                           #HTML(rpi_accessibility_link), 
                           width=4),
              mainPanel(tags$h3(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
