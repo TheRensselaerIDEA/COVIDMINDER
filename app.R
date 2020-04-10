@@ -16,10 +16,7 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
-whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><b>COVIDMINDER</b> reveals the regional disparities in Outcomes, 
-                    Determinants, and Mediations. <i>Outcomes</i> are the direct effects of COVID-19. <i>Social and Economic 
-                    Determinants</i> are pre-existing  risk factors that impact COVID-19 outcomes. <i>Mediations</i> are 
-                    resources and programs used to combat the pandemic.</div><br>"
+whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
 
 
 #### UI Code ####
@@ -43,17 +40,9 @@ ui <-
                    when compared to the average USA rate? </div><br>
                     <div style='font-size:90%;line-height:1.2;'>
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
-                    <ul>
-                      <li>
-                        <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
-                      </li>
-                      <li>
-                        <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
-                      </li>
-                      <li>
-                        <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
-                      </li>
-                    </ul>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US average rate for disparity index &gt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US average rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US average rate for disparity index &lt; -0.2 </div>
                     Darker colors indicate greater disparity.<br><br>
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
@@ -81,17 +70,9 @@ ui <-
                               South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
-                               <ul>
-                                 <li>
-                                 <div style='color:#BD0026;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</div>
-                                 </li>
-                                 <li>
-                                 <div style='color:#f7f7f7;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
-                                 </li>
-                                 <li>
-                                 <div style='color:#253494;font-weight:bold;'>Higher than South Korean testing rate for disparity index &lt; -0.2 (BLUE)</div>
-                                 </li>
-                               </ul>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than South Korean testing rate for disparity index &gt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to South Korean testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than South Korean testing rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
@@ -120,17 +101,9 @@ ui <-
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
                                 The rate of hospital beds per 100k in a state is<br>
-                               <ul>
-                                <li>
-                                 <div style='color:#BD0026;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</div>
-                                 </li>
-                                 <li>
-                                 <div style='color:#f7f7f7;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
-                                 </li>
-                                 <li>
-                                 <div style='color:#253494;font-weight:bold;'>Higher than Italian rate for disparity index &lt; -0.2 (BLUE)</div>
-                                 </li>
-                               </ul>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than Italian rate for disparity index &gt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to Italian rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than Italian rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
@@ -160,17 +133,9 @@ ui <-
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
-                               <ul>
-                               <li>
-                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
-                               </li>
-                               <li>
-                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
-                               </li>
-                               <li>
-                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
-                               </li>
-                               </ul>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US average rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US average rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US average rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
@@ -194,21 +159,13 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div> <br><br>  
+                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
                                 <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
-                               <ul>
-                               <li>
-                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
-                               </li>
-                               <li>
-                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
-                               </li>
-                               <li>
-                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
-                               </li>
-                               </ul>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US average rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US average rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US average rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
@@ -234,21 +191,13 @@ ui <-
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population when compared to the average United States 
-                                rate?  </div> <br><br>
+                                rate?  </div> <br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
-                               <ul>
-                               <li>
-                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
-                               </li>
-                               <li>
-                               <div style='color:#f7f7f7;font-weight:bold'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
-                               </li>
-                               <li>
-                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
-                               </li>
-                               </ul>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US average rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US average rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US average rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
@@ -277,17 +226,9 @@ ui <-
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in a county  is<br>
-                               <ul>
-                               <li>
-                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
-                               </li>
-                               <li>
-                               <div style='color:#f7f7f7;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
-                               </li>
-                               <li>
-                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
-                               </li>
-                               </ul>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US average rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US average rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; '>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US average rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
