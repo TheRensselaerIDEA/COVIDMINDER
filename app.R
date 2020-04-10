@@ -16,11 +16,10 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
-whatisit_text <- "<div style='font-size:80%;line-height:1.3;'>Select from the COVID-19 Outcomes, Determinants, and Mediations above to reveal
-                  how COVID-19 impacts regions differently. <i>Outcomes</i>  are the direct effects of COVID-19.  <i>Social and
-                  Economic Determinants</i> are pre-existing risk factors that impact  COVID-19
-                  outcomes. <i>Mediations</i> are  resources and programs used to combat the pandemic.</div><br>"
-
+whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><b>COVIDMINDER</b> reveals the regional disparities in Outcomes, 
+                    Determinants, and Mediations. <i>Outcomes</i> are the direct effects of COVID-19. <i>Social and Economic 
+                    Determinants</i> are pre-existing  risk factors that impact COVID-19 outcomes. <i>Mediations</i> are 
+                    resources and programs used to combat the pandemic.</div><br>"
 
 
 #### UI Code ####
@@ -277,7 +276,7 @@ ui <-
                                 <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
-                               The  rate of diabetes patients per 100k in county  is<br>
+                               The  rate of diabetes patients per 100k in a county  is<br>
                                <ul>
                                <li>
                                <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
