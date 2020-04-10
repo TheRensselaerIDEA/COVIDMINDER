@@ -41,7 +41,7 @@ ui <-
              HTML(whatisit_text),
              HTML("<div style='font-weight:bold;line-height:1.3;'>
                    Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
-                   as compared to the average USA rate of COVID-19 deaths per 100k population? </div><br>
+                   when compared to the average USA rate of COVID-19 deaths per 100k population? </div><br>
                     <div style='font-size:90%;line-height:1.2;'>
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
@@ -77,7 +77,7 @@ ui <-
                           HTML(whatisit_text),
                           HTML("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
-                              as compared to the South Korean rate of COVID-19 testing per 100k population? </div><br>
+                              when compared to the South Korean rate of COVID-19 testing per 100k population? </div><br>
                               <div style='font-size:90%;line-height:1.2;'>
                               South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
@@ -115,7 +115,7 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Mediation: What are the disparities between states  in  the rate of hospital beds 
-                                per 100k population as compared to the  rate of hospital 
+                                per 100k population when compared to the  rate of hospital 
                                 beds per 100k population  in Italy? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 Italy has a higher hospital 
@@ -157,7 +157,7 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                     Determinant: What are the disparities between states in rate of diabetes patients 
-                                per 100k population per state as compared to the average United States rate 
+                                per 100k population per state when compared to the average United States rate 
                                 of diabetes  per 100k population? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
@@ -197,7 +197,7 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</div> <br><br>  
+                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div> <br><br>  
                                 <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
@@ -236,7 +236,7 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: What are the disparities between New York counties in the rate of COVID-19 
-                                cases per 100k population as compared to the average United States 
+                                cases per 100k population when compared to the average United States 
                                 rate of COVID-19 cases per 100k population?  </div> <br><br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 
@@ -274,7 +274,7 @@ ui <-
                HTML(whatisit_text),
                HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Determinant: What are the disparities between New York counties in the rate 
-                                of diabetes patients per 100k population as compared to the average United 
+                                of diabetes patients per 100k population when compared to the average United 
                                 States rate of diabetes  per 100k population?</div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
