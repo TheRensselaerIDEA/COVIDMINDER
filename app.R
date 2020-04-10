@@ -343,10 +343,10 @@ server <- function(input, output, session) {
       setView(-96, 37.8, 4) %>% # TODO: Doesn't seem to do anything
       addPolygons(
       fillColor = ~pal2(states$tests_ldi),
-      weight = 2,
+      weight = 1,
       opacity = 1,
-      color = "#f7f7f7",
-      dashArray = "3",
+      color = "#330000",
+      dashArray = "1",
       fillOpacity = 0.7,
       highlight = highlightOptions(
         weight = 5,
@@ -382,10 +382,10 @@ server <- function(input, output, session) {
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$cardio_death_rate_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -422,10 +422,10 @@ server <- function(input, output, session) {
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$diabetes_rate_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -461,10 +461,10 @@ server <- function(input, output, session) {
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$hosp_beds_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -502,10 +502,10 @@ server <- function(input, output, session) {
       setView(-96, 37.8, 4) %>% 
       addPolygons(
         fillColor = ~pal2(states$death_rate_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -551,10 +551,10 @@ server <- function(input, output, session) {
       setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$death_rate_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -599,10 +599,10 @@ server <- function(input, output, session) {
       setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$case_rate_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
@@ -647,10 +647,10 @@ server <- function(input, output, session) {
       setView(-76.071782, 42.991989, 7) %>%  # Set to the geographic center of NY
       addPolygons(
         fillColor = ~pal2(NY.data$diabetes_ldi),
-        weight = 2,
+        weight = 1,
         opacity = 1,
-        color = "#f7f7f7",
-        dashArray = "3",
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
         highlight = highlightOptions(
           weight = 5,
