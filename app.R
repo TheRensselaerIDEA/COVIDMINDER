@@ -7,14 +7,21 @@ source("modules/preprocessing.R")
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<br><span style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
+footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project; see the 
                                 <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. 
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-                                of Accessibility</a></i></span>"
+                                of Accessibility</a></i></div>"
+
+whatisit_text <- "<div style='font-size:80%;line-height:1.3;'>Select from the COVID-19 Outcomes, Determinants, and Mediations above to reveal
+                  how COVID-19 impacts regions differently. <i>Outcomes</i>  are the direct effects of COVID-19.  <i>Social and
+                  Economic Determinants</i> are pre-existing risk factors that impact  COVID-19
+                  outcomes. <i>Mediations</i> are  resources and programs used to combat the pandemic.</div><br>"
+
+
 
 #### UI Code ####
 ui <- 
@@ -28,22 +35,24 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<span style='font-size: 80%;'><b>OUTCOME (USA)</b></br>Mortality Rate</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
            sidebarLayout(
              sidebarPanel(
-             HTML("<strong>Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
-                   as compared to the average USA rate of COVID-19 deaths per 100k population? </strong><br><br>
-                    <span style='font-size: 90%;'>
+             HTML(whatisit_text),
+             HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
+                   as compared to the average USA rate of COVID-19 deaths per 100k population? </div><br>
+                    <div style='font-size:90%;line-height:1.2;'>
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
                       <li>
-                        <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
+                        <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                       </li>
                       <li>
-                        <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
+                        <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                       </li>
                       <li>
-                        <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
+                        <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
                       </li>
                     </ul>
                     Darker colors indicate greater disparity.<br><br>
@@ -53,7 +62,7 @@ ui <-
                     <strong>Date:</strong> 04/09/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                    </span>
+                    </div>
                     "),
              HTML(footer_text),
              width=4),
@@ -62,23 +71,26 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
            sidebarLayout(fluid=FALSE,
-             sidebarPanel(HTML("<strong>Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
-                              as compared to the South Korean rate of COVID-19 testing per 100k population? </strong><br><br>
-                              <span style='font-size: 90%;'>
+             sidebarPanel(             
+                          HTML(whatisit_text),
+                          HTML("<div style='font-weight:bold;line-height:1.3;'>
+                              Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
+                              as compared to the South Korean rate of COVID-19 testing per 100k population? </div><br>
+                              <div style='font-size:90%;line-height:1.2;'>
                               South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
                                <ul>
                                  <li>
-                                 <span style='color:#b2182b;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</span>
+                                 <div style='color:#b2182b;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
-                                 <span style='color:white;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
+                                 <div style='color:white;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                                  </li>
                                  <li>
-                                 <span style='color:#253494;font-weight:bold;'>Higher than South Korean testing rate for disparity index &lt; -0.2 (BLUE)</span>
+                                 <div style='color:#253494;font-weight:bold;'>Higher than South Korean testing rate for disparity index &lt; -0.2 (BLUE)</div>
                                  </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -88,7 +100,7 @@ ui <-
                                <strong>Date:</strong> 04/09/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                               </span>"),
+                               </div>"),
                           HTML(footer_text),
                           width=4),
              
@@ -97,25 +109,28 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>MEDIATION (USA)</b></br>Hospital Beds</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Mediation: What are the disparities between states  in  the rate of hospital beds 
+             sidebarPanel(
+               HTML(whatisit_text),
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population as compared to the  rate of hospital 
-                                beds per 100k population  in Italy? </strong><br><br>
-                                <span style='font-size: 90%;'>
+                                beds per 100k population  in Italy? </div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Italy has a higher hospital 
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
                                 The rate of hospital beds per 100k in a state is<br>
                                <ul>
                                 <li>
-                                 <span style='color:#b2182b;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</span>
+                                 <div style='color:#b2182b;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
-                                 <span style='color:white;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
+                                 <div style='color:white;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                  </li>
                                  <li>
-                                 <span style='color:#253494;font-weight:bold;'>Higher than Italian rate for disparity index &lt; -0.2 (BLUE)</span>
+                                 <div style='color:#253494;font-weight:bold;'>Higher than Italian rate for disparity index &lt; -0.2 (BLUE)</div>
                                  </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -126,7 +141,7 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
-                               </span>"),
+                               </div>"),
                           HTML(footer_text),
                           width=4),
              
@@ -136,24 +151,27 @@ ui <-
   ),
 
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>DETERMINANT (USA)</b></br>Diabetes</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Determinant: What are the disparities between states in rate of diabetes patients 
+             sidebarPanel(
+               HTML(whatisit_text),
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                    Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state as compared to the average United States rate 
-                                of diabetes  per 100k population? </strong><br><br>
-                                <span style='font-size: 90%;'>
+                                of diabetes  per 100k population? </div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <ul>
                                <li>
-                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
+                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
+                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
-                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
+                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
                                </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -164,7 +182,7 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                          </span>"),
+                          </div>"),
                           HTML(footer_text),
                           width=4),
              
@@ -173,22 +191,25 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>OUTCOME (NY)</b></br>Mortality Rate</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</strong> <br><br>  
-                                <span style='font-size: 90%;'>
+             sidebarPanel(
+               HTML(whatisit_text),
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Outcome: What are the disparities between counties of New York
+                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</div> <br><br>  
+                                <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
+                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
+                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
-                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
+                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
                                </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -200,7 +221,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
 
-                               </span>"),
+                               </div>"),
                           HTML(footer_text),
                           width=4),
              
@@ -209,23 +230,26 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Outcome: What are the disparities between New York counties in the rate of COVID-19 
+             sidebarPanel(
+               HTML(whatisit_text),
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population as compared to the average United States 
-                                rate of COVID-19 cases per 100k population?  </strong> <br><br>
-                                <span style='font-size: 90%;'>
+                                rate of COVID-19 cases per 100k population?  </div> <br><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
+                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <span style='color:#000000'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</span>
+                               <div style='color:#000000'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
-                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
+                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
                                </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -235,7 +259,7 @@ ui <-
                                <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                          </span>"),
+                          </div>"),
                           HTML(footer_text),
                           width=4),
              
@@ -244,24 +268,27 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<span style='font-size: 80%;'><b>DETERMINANT (NY)</b></br>Diabetes</span>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
            sidebarLayout(
-             sidebarPanel(HTML("<strong>Determinant: What are the disparities between New York counties in the rate 
+             sidebarPanel(
+               HTML(whatisit_text),
+               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                     Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population as compared to the average United 
-                                States rate of diabetes  per 100k population?</strong><br><br>
-                                <span style='font-size: 90%;'>
+                                States rate of diabetes  per 100k population?</div><br>
+                                <div style='font-size:90%;line-height:1.2;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in county  is<br>
                                <ul>
                                <li>
-                               <span style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</span>
+                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
-                               <span style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</span>
+                               <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
                                </li>
                                <li>
-                               <span style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</span>
+                               <div style='color:#253494;font-weight:bold;'>Lower than US average rate for disparity index &lt; -0.2 (BLUE)</div>
                                </li>
                                </ul>
                                Darker colors indicate greater disparity.<br><br>
@@ -273,7 +300,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
-                               </span>"),
+                               </div>"),
                           HTML(footer_text),
                           width=4),
              
