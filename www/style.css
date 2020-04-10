@@ -60,11 +60,19 @@
     transform: translateX(-50%);
 }
 
+body {
+  background: #f5f5f5;
+}
+
+.leaflet-container {
+  background:none;
+}
+
 .well {
   background-color: #dddddd;
 }
 
-@media screen and (min-width:1280px){
+@media screen and (min-width:1085px){
   .title-text {
     height: 70px;
   }
