@@ -16,7 +16,7 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
-whatisit_text <- "<div style='font-size:80%;'>Select from the COVID-19 Outcomes, Determinants, and Mediations above to reveal
+whatisit_text <- "<div style='font-size:80%;line-height:1.3;'>Select from the COVID-19 Outcomes, Determinants, and Mediations above to reveal
                   how COVID-19 impacts regions differently. <i>Outcomes</i>  are the direct effects of COVID-19.  <i>Social and
                   Economic Determinants</i> are pre-existing risk factors that impact  COVID-19
                   outcomes. <i>Mediations</i> are  resources and programs used to combat the pandemic.</div><br>"
@@ -35,7 +35,7 @@ ui <-
             img(class="logo", src="Rensselaer_round.png"),
             HTML("COVID<b>MINDER</b>")),
   tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<div style='font-size: 80%;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
            sidebarLayout(
              sidebarPanel(
              HTML(whatisit_text),
@@ -71,7 +71,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
            sidebarLayout(fluid=FALSE,
              sidebarPanel(             
                           HTML(whatisit_text),
@@ -109,7 +109,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
@@ -151,7 +151,7 @@ ui <-
   ),
 
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
@@ -191,7 +191,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
@@ -230,7 +230,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
@@ -268,7 +268,7 @@ ui <-
            )
   ),
   tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size: 80%;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
+                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
            sidebarLayout(
              sidebarPanel(
                HTML(whatisit_text),
