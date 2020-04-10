@@ -46,7 +46,7 @@ ui <-
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
                       <li>
-                        <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
+                        <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                       </li>
                       <li>
                         <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
@@ -84,7 +84,7 @@ ui <-
                                The rate of testing per 100k in a state is: <br>
                                <ul>
                                  <li>
-                                 <div style='color:#b2182b;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</div>
+                                 <div style='color:#BD0026;font-weight:bold;'>Lower than South Korean testing rate for  disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
                                  <div style='color:white;font-weight:bold;'>About equal to South Korean testing rate for  -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
@@ -124,7 +124,7 @@ ui <-
                                 The rate of hospital beds per 100k in a state is<br>
                                <ul>
                                 <li>
-                                 <div style='color:#b2182b;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</div>
+                                 <div style='color:#BD0026;font-weight:bold;'>Lower than Italian rate for disparity index &gt; 0.2 (RED)</div>
                                  </li>
                                  <li>
                                  <div style='color:white;font-weight:bold;'>About equal to Italian rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
@@ -165,7 +165,7 @@ ui <-
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <ul>
                                <li>
-                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
+                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
                                <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
@@ -203,7 +203,7 @@ ui <-
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
+                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
                                <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
@@ -243,7 +243,7 @@ ui <-
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
-                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
+                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
                                <div style='color:#000000'>About equal to US average rate for -0.2 &lt;disparity index &lt; 0.2 (WHITE)</div>
@@ -282,7 +282,7 @@ ui <-
                                The  rate of diabetes patients per 100k in county  is<br>
                                <ul>
                                <li>
-                               <div style='color:#b2182b;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
+                               <div style='color:#BD0026;font-weight:bold;'>Higher than US average rate for disparity index &gt; 0.2 (RED)</div>
                                </li>
                                <li>
                                <div style='color:white;font-weight:bold;'>About equal to US average rate for -0.2 &lt; disparity index &lt; 0.2 (WHITE)</div>
