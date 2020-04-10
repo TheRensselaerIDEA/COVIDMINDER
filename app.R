@@ -34,9 +34,6 @@ ui <-
              HTML("<strong>Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    as compared to the average USA rate of COVID-19 deaths per 100k population? </strong><br><br>
                     <span style='font-size: 90%;'>
-                    <strong>Outcome</strong> 
-                    disparities depend on the spread of the virus, social <strong>determinants</strong> that put the population 
-                    at risk, and <strong>mediations</strong> used/available to combat the virus.<br><br>
                     The  rate of COVID-19 deaths per 100k in a state is: <br>
                     <ul>
                       <li>
@@ -70,9 +67,7 @@ ui <-
              sidebarPanel(HTML("<strong>Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
                               as compared to the South Korean rate of COVID-19 testing per 100k population? </strong><br><br>
                               <span style='font-size: 90%;'>
-                              Disparity in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus, social 
-                              <strong>determinants</strong> that put the population at increased risk, and <strong>mediations</strong>
-                              used/available to combat the virus. South Korea is used as the testing reference rate since South 
+                              South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
                                <ul>
@@ -108,9 +103,7 @@ ui <-
                                 per 100k population as compared to the  rate of hospital 
                                 beds per 100k population  in Italy? </strong><br><br>
                                 <span style='font-size: 90%;'>
-                                Disparity in <strong>Outcomes</strong> like COVID-like deaths depend on the spread of the virus,
-                                social <strong>determinants</strong> that put the population at increased risk, and 
-                                <strong>mediations</strong> used/available to combat the virus. Italy has a higher hospital 
+                                Italy has a higher hospital 
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
                                 The rate of hospital beds per 100k in a state is<br>
@@ -149,11 +142,8 @@ ui <-
                                 per 100k population per state as compared to the average United States rate 
                                 of diabetes  per 100k population? </strong><br><br>
                                 <span style='font-size: 90%;'>
-                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
-                                <strong>determinants</strong> that put the population at increased risk, and 
-                                <strong>mediations</strong> used/available to combat the virus. Since diabetes puts patients 
-                                at increased risk of contracting and dying from COVID-19, areas with higher diabetes rates 
-                                may face increased COVID-19 burdens. <br><br>
+                                Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+                                so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <ul>
                                <li>
@@ -186,11 +176,9 @@ ui <-
                     HTML("<span style='font-size: 80%;'><b>OUTCOME (NY)</b></br>Mortality Rate</span>")),
            sidebarLayout(
              sidebarPanel(HTML("<strong>Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</strong> <br>  
+                                in rates of COVID-19 deaths per 100k population as compared to the average USA rate?</strong> <br><br>  
                                 <span style='font-size: 90%;'>
-                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
-                                <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
-                                used/available to combat the virus.<br><br>
+                                
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
@@ -227,9 +215,7 @@ ui <-
                                 cases per 100k population as compared to the average United States 
                                 rate of COVID-19 cases per 100k population?  </strong> <br><br>
                                 <span style='font-size: 90%;'>
-                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
-                                <strong>determinants</strong> that put the population at risk, and <strong>mediations</strong> 
-                                used/available to combat the virus. <br><br>
+                                
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <ul>
                                <li>
@@ -264,11 +250,8 @@ ui <-
                                 of diabetes patients per 100k population as compared to the average United 
                                 States rate of diabetes  per 100k population?</strong><br><br>
                                 <span style='font-size: 90%;'>
-                                <strong>Outcome</strong> disparities depend on the spread of the virus, social 
-                                <strong>determinants</strong> that put the population at increased risk, and 
-                                <strong>mediations</strong> used/available to combat the virus.Since diabetes puts patients 
-                                at increased risk of contracting and dying from COVID-19, areas with higher diabetes rates may 
-                                face increased COVID-19 burdens.<br><br>
+                                Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+                                so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in county  is<br>
                                <ul>
                                <li>
