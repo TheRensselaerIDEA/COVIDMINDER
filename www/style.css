@@ -60,10 +60,6 @@
     transform: translateX(-50%);
 }
 
-body {
-  background: #f5f5f5;
-}
-
 .leaflet-container {
   background:none;
 }
