@@ -184,7 +184,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h4(class="map-title", "COVID-19 Cardiovascular Mortality Rates by State Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
                        leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
            )
   ),
@@ -302,7 +302,7 @@ ui <-
                           HTML(footer_text),
                           width=4),
              
-             mainPanel(tags$h4(class="map-title", "COVID-19 Diabetes Rates by County in New York Compared to Average US Rate"),
+             mainPanel(tags$h4(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
                        leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
            )
   )
