@@ -353,9 +353,9 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$diabetes_rate_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
-      Diabetes Percentage DI: %.2g<br/>
-      Diabetes Percentage: %.1f pct",
-      states$NAME, states$diabetes_rate_ldi, states$pct_Adults_with_Diabetes
+      Diabetes Rate DI: %.2g<br/>
+      Diabetes Rate: %.1f per 100k",
+      states$NAME, states$diabetes_rate_ldi, states$pct_Adults_with_Diabetes*1000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -579,8 +579,8 @@ server <- function(input, output, session) {
     labels <- sprintf(
       "<strong>%s</strong><br/>
       Diabetes Rate DI: %.2g<br>
-      Diabetes Rate: %.1f pct",
-      NY.data$County, NY.data$diabetes_ldi, NY.data$pct_Adults_with_Diabetes
+      Diabetes Rate: %.1f per 100k",
+      NY.data$County, NY.data$diabetes_ldi, NY.data$pct_Adults_with_Diabetes*1000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
