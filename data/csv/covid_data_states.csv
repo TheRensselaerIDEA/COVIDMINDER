@@ -1,56 +1,56 @@
 NAME,covid19_cases,covid19_deaths,covid19_recovered
-United States,461229,16472,25410
-Alabama,2703,70,0
-Alaska,235,7,0
-Arizona,3018,89,0
-Arkansas,1119,21,0
-California,19710,544,0
-Colorado,5655,193,0
-Connecticut,9784,380,0
-Delaware,1209,23,0
-District of Columbia,1523,32,0
-Florida,16364,354,0
-Georgia,10566,379,0
-Guam,128,4,0
+United States,496322,18580,28790
+Alabama,2947,80,0
+Alaska,246,7,0
+Arizona,3112,97,0
+Arkansas,1171,21,0
+California,21081,583,0
+Colorado,6202,226,0
+Connecticut,10538,448,0
+Delaware,1326,32,0
+District of Columbia,1660,38,0
+Florida,17531,390,0
+Georgia,11485,416,0
+Guam,130,4,0
 Hawaii,442,6,0
-Idaho,1232,18,0
-Illinois,15079,462,0
-Indiana,6351,245,0
-Iowa,1270,29,0
-Kansas,1116,42,0
-Kentucky,1341,73,0
-Louisiana,18283,702,0
-Maine,560,16,0
-Maryland,6185,138,0
-Massachusetts,18941,503,0
-Michigan,21504,1076,0
-Minnesota,1240,50,0
-Mississippi,2260,76,0
-Missouri,3432,93,0
-Montana,354,6,0
-Nebraska,568,14,0
-Nevada,2456,81,0
+Idaho,1354,24,0
+Illinois,17887,597,0
+Indiana,6907,300,0
+Iowa,1388,31,0
+Kansas,1117,42,0
+Kentucky,1693,90,0
+Louisiana,19253,755,0
+Maine,586,17,0
+Maryland,6968,171,0
+Massachusetts,20974,599,0
+Michigan,22434,1276,0
+Minnesota,1336,57,0
+Mississippi,2469,82,0
+Missouri,3897,99,0
+Montana,365,6,0
+Nebraska,635,15,0
+Nevada,2722,90,0
 New Hampshire,819,21,0
-New Jersey,51027,1709,0
-New Mexico,865,16,0
-New York,161779,7067,0
-North Carolina,3736,76,0
-North Dakota,269,5,0
-Ohio,5512,213,0
-Oklahoma,1686,80,0
-Oregon,1321,44,0
-Pennsylvania,18300,345,0
-Puerto Rico,683,33,0
-Recovered,0,0,25410
+New Jersey,54588,1932,0
+New Mexico,1081,17,0
+New York,172348,7867,0
+North Carolina,3965,83,0
+North Dakota,278,6,0
+Ohio,5878,231,0
+Oklahoma,1794,88,0
+Oregon,1322,44,0
+Pennsylvania,20051,418,0
+Puerto Rico,725,39,0
+Recovered,0,0,28790
 Rhode Island,1727,43,0
-South Carolina,2793,67,0
-South Dakota,447,6,0
-Tennessee,4634,94,0
-Texas,11208,210,0
-Utah,1856,13,0
-Vermont,628,23,0
-Virginia,4042,109,0
-Washington,9639,456,0
-West Virginia,514,5,0
-Wisconsin,2886,111,0
-Wyoming,230,0,0
+South Carolina,3067,72,0
+South Dakota,536,6,0
+Tennessee,4891,98,0
+Texas,12105,238,0
+Utah,2103,17,0
+Vermont,679,24,0
+Virginia,4509,121,0
+Washington,10119,483,0
+West Virginia,574,5,0
+Wisconsin,3068,128,0
+Wyoming,239,0,0
