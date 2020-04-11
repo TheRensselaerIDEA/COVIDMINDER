@@ -77,7 +77,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/09/2020 <br><br>
+                               <strong>Date:</strong> 04/10/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
@@ -108,7 +108,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/09/2020 <br><br>
+                               <strong>Date:</strong> 04/10/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -140,7 +140,7 @@ ui <-
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                               <strong>Date:</strong> 2016<br><br>
+                               <strong>Date:</strong> 2020<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
@@ -233,7 +233,7 @@ ui <-
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                               <strong>Date:</strong> 2016<br><br>
+                               <strong>Date:</strong> 2020<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
