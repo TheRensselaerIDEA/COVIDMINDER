@@ -107,16 +107,16 @@ write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_cou
 
 #### Quickie plot to verify
 
-# Set number to clean up plot; comment out when running to update data!
-# covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
-#     filter(deaths >= 2)
-# 
-# covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
-#   group_by(date)
-# 
-# covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
-# 
-# ## Test: NY Deaths plot
+# # Set number to clean up plot; comment out when running to update data!
+#  covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
+#      filter(deaths >= 2)
+#  
+#  covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
+#    group_by(date)
+#  
+#  covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
+#  
+# # ## Test: NY Deaths plot
 # p.log.deaths <- covid_NY_TS_plot.deaths %>%
 #   mutate(
 #     County = County,     # use County to define separate curves
