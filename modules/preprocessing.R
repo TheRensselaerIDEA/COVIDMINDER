@@ -163,7 +163,7 @@ NY.data <- NY.data %>%
   mutate(death_rate_ldi = replace(death_rate_ldi, death_rate_ldi < -5, -5)) %>%
   mutate(case_rate_ldi = replace(case_rate_ldi, case_rate_ldi < -5, -5)) %>%
   mutate(diabetes_ldi = replace(diabetes_ldi, diabetes_ldi < -5, -5)) 
-  
+
 ### NEW: US Diabetes Rates
 #pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
 

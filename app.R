@@ -28,17 +28,17 @@ ui <-
     tags$head(
       tags$title("COVIDMINDER: Where you live matters") 
     ),
-  navbarPage(
-  theme="style.css",
-  title=tags$div(class="title-text",
-            img(class="logo", src="Rensselaer_round.png"),
-            HTML("COVID<b>MINDER</b>")),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
-           sidebarLayout(
-             sidebarPanel(
-             HTML(whatisit_text),
-             HTML("<div style='font-weight:bold;line-height:1.3;'>
+    navbarPage(
+      theme="style.css",
+      title=tags$div(class="title-text",
+                     img(class="logo", src="Rensselaer_round.png"),
+                     HTML("COVID<b>MINDER</b>")),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                    Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    when compared to the average USA rate? </div><br>
                     <div style='font-size:90%;line-height:1.2;'>
@@ -55,48 +55,48 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
                     "),
-             HTML(footer_text),
-             width=4),
-             mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
-                        leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
-           sidebarLayout(fluid=FALSE,
-             sidebarPanel(             
-                          HTML(whatisit_text),
-                          HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(footer_text),
+                   width=4),
+                 mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
+               sidebarLayout(fluid=FALSE,
+                             sidebarPanel(             
+                               HTML(whatisit_text),
+                               HTML("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
                               when compared to the South Korean rate? </div><br>
                               <div style='font-size:90%;line-height:1.2;'>
                               South Korea is used as our testing reference rate since South 
                               Korea successfully used testing to “flatten the curve”.<br><br>
                                The rate of testing per 100k in a state is: <br>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than South Korean testing rate for disparity index &gt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than South Korean testing rate for disparity index &gt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to South Korean testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than South Korean testing rate for disparity index &lt; -0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than South Korean testing rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in South Korea) <br>
+                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
                                <strong>Date:</strong> 04/10/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
-                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
-           sidebarLayout(
-             sidebarPanel(
-               HTML(whatisit_text),
-               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                               HTML(footer_text),
+                               width=4),
+                             
+                             mainPanel(tags$h4(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
+                                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population when compared to the rate in Italy? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
@@ -104,32 +104,32 @@ ui <-
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
                                 The rate of hospital beds per 100k in a state is<br>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than Italian rate for disparity index &gt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than Italian rate for disparity index &gt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to Italian rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than Italian rate for disparity index &lt; -0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than Italian rate for disparity index &lt; -0.2</div>
                                Darker colors indicate greater disparity.<br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = -log(Testing Rate  in state/Testing Rate in Italy) <br>
+                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
                                <strong>Date:</strong> 04/10/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
                                </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
-                       leafletOutput(outputId = "map.hospital", height="100%"), width=8)
-           )
-  ),
-
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
-           sidebarLayout(
-             sidebarPanel(
-               HTML(whatisit_text),
-               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(tags$h4(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
+                           leafletOutput(outputId = "map.hospital", height="100%"), width=8)
+               )
+      ),
+      
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                     Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state when compared to the average United States rate? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
@@ -148,19 +148,19 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
                           </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
-                       leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
-           sidebarLayout(
-             sidebarPanel(
-               HTML(whatisit_text),
-               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(tags$h4(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Outcome: What are the disparities between counties of New York
                                 in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
                                 <div style='font-size:90%;line-height:1.2;'>
@@ -179,19 +179,19 @@ ui <-
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
 
                                </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
-                       leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
-           sidebarLayout(
-             sidebarPanel(
-               HTML(whatisit_text),
-               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population when compared to the average United States 
                                 rate?  </div> <br>
@@ -209,19 +209,19 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
-                       leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
-           )
-  ),
-  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                    HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
-           sidebarLayout(
-             sidebarPanel(
-               HTML(whatisit_text),
-               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
                                 States rate?</div><br>
@@ -242,29 +242,29 @@ ui <-
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
                                </div>"),
-                          HTML(footer_text),
-                          width=4),
-             
-             mainPanel(tags$h4(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
-                       leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
-           )
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(tags$h4(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
+               )
+      )
+      # ,
+      # footer = fluidRow(class = "navbar navbar-default footer", 
+      #                   column(10,
+      #                          HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
+      #                               of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
+      #                               and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
+      #                               <b>COVIDMINDER</b> is an open source project; see the 
+      #                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
+      #                               for more information. 
+      #                               <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+      #                               of Accessibility</a></i>
+      #                               ")
+      #                          )
+      #                   )
+    )
   )
-  # ,
-  # footer = fluidRow(class = "navbar navbar-default footer", 
-  #                   column(10,
-  #                          HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
-  #                               of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
-  #                               and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-  #                               <b>COVIDMINDER</b> is an open source project; see the 
-  #                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-  #                               for more information. 
-  #                               <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-  #                               of Accessibility</a></i>
-  #                               ")
-  #                          )
-  #                   )
-  )
-)
 #### Server Code ####
 server <- function(input, output, session) {
   
@@ -285,29 +285,29 @@ server <- function(input, output, session) {
     leaflet(states.shapes, width="100%", height="100%") %>%
       setView(-96, 37.8, 4) %>% # TODO: Doesn't seem to do anything
       addPolygons(
-      fillColor = ~pal2(states$tests_ldi),
-      weight = 1,
-      opacity = 1,
-      color = "#330000",
-      dashArray = "1",
-      fillOpacity = 0.7,
-      highlight = highlightOptions(
-        weight = 5,
-        color = "#666",
-        dashArray = "",
+        fillColor = ~pal2(states$tests_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
         fillOpacity = 0.7,
-        bringToFront = TRUE),
-      label = labels2,
-      labelOptions = labelOptions(
-        style = list("font-weight" = "normal", padding = "3px 8px"),
-        textsize = "15px",
-        direction = "auto")) %>% 
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
       addLegend(pal = pal2, values = ~states$tests_ldi, opacity = 0.7, title = "Disparity Index<br/>US Total Tests vs. South Korea",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
-        })
+  })
   
   output$map.cardio <- renderLeaflet({
     
@@ -348,7 +348,7 @@ server <- function(input, output, session) {
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
-
+  
   output$map.diabetes <- renderLeaflet({
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -433,7 +433,7 @@ server <- function(input, output, session) {
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
-
+    
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
@@ -466,7 +466,7 @@ server <- function(input, output, session) {
                 opacity = 0.7, 
                 title = "Disparity Index<br/>US COVID-19 Mortality Rates",
                 position = "bottomright"
-                ) %>%
+      ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
@@ -475,7 +475,7 @@ server <- function(input, output, session) {
   
   output$map.NY.deaths <- renderLeaflet({
     
-        colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
@@ -489,7 +489,7 @@ server <- function(input, output, session) {
       COVID-19 Mortality Rate: %.1f /100k",
       NY.data$County, NY.data$death_rate_ldi, (NY.data$deaths/NY.data$Population)*100000
     ) %>% lapply(htmltools::HTML)
-
+    
     leaflet(NY.shape) %>%
       setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
       addPolygons(
