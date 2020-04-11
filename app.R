@@ -10,8 +10,8 @@ rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/
 footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-                                <b>COVIDMINDER</b> is an open source project; see the 
-                                <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
+                                <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
+                                see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br>
