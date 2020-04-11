@@ -273,7 +273,7 @@ server <- function(input, output, session) {
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=TRUE)
 #    browser()
     labels2 <- sprintf(
       "<strong>%s</strong> State<br/>
@@ -393,7 +393,7 @@ server <- function(input, output, session) {
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=TRUE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       Hospital Beds vs Italy DI: %.2g",
