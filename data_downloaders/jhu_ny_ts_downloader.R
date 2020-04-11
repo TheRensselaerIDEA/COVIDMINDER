@@ -108,25 +108,26 @@ write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_cou
 #### Quickie plot to verify
 
 # # Set number to clean up plot; comment out when running to update data!
-#  covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
-#      filter(deaths >= 2)
-#  
-#  covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
-#    group_by(date)
-#  
-#  covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
-#  
-# # ## Test: NY Deaths plot
-# p.log.deaths <- covid_NY_TS_plot.deaths %>%
-#   mutate(
-#     County = County,     # use County to define separate curves
-#     Date = update(date, year = 1)  # use a constant year for the x-axis
-#   ) %>%
-#   ggplot(aes(Date, log_deaths, color = County)) +
-#   geom_line() +
-#   ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar - Apr 2020)")
-# 
-# p.log.deaths
+ covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
+     filter(deaths >= 2)%>%
+   filter(County != "Unassigned")
+
+ covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
+   group_by(date)
+
+ covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
+
+# ## Test: NY Deaths plot
+p.log.deaths <- covid_NY_TS_plot.deaths %>%
+  mutate(
+    County = County,     # use County to define separate curves
+    Date = update(date, year = 1)  # use a constant year for the x-axis
+  ) %>%
+  ggplot(aes(Date, log_deaths, color = County)) +
+  geom_line() +
+  ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar - Apr 2020)")
+
+p.log.deaths
 
 # NEW YORK STATE CASES
 # Transform to match our structure: NY deaths
@@ -207,18 +208,19 @@ write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
 covid_NY_TS_counties_long.cases <- covid_NY_TS_counties_long.cases %>% 
-   filter(cases >= 2)
+   filter(cases >= 2) %>%
+  filter(County != "Unassigned")
 
 covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
   group_by(date)
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 
-# p.log.cases <- covid_NY_TS_plot.cases %>% 
+# p.log.cases <- covid_NY_TS_plot.cases %>%
 #   mutate(
 #     County = County,     # use County to define separate curves
 #     Date = update(date, year = 1)  # use a constant year for the x-axis
-#   ) %>% 
+#   ) %>%
 #   ggplot(aes(Date, log_cases, color = County)) +
 #   geom_line() +
 #   ggtitle("New York State COVID-19 Cases (log10 scale) (Mar - Apr 2020)")
