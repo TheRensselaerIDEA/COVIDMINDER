@@ -12,12 +12,15 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project; see the 
                                 <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-                                for more information. 
+                                for more information. <br><br>
+                                Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
+                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br>
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
 whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
 
+comments_link <-"<div style='font-size:80%;line-height:1.3;'>Thanks for using <b>COVIDMINDER!</b> Please take a few moments to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></div>"
 
 #### UI Code ####
 ui <- 
