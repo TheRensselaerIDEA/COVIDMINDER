@@ -17,7 +17,8 @@ pDE.1 <- 8.0/1000 # Germany rate
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pUS.1/(1-pUS.1)))}))
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pSK.1/(1-pSK.1)))}))
 #hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log((x/(1-x))/(pIT.1/(1-pIT.1)))}))
-hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){-log(x/pIT.1)}))
+#hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){-log(x/pIT.1)}))
+hosp_beds_ldi <- unlist(lapply(provider_capacity$p_hosp_beds, FUN=function(x){log(x/pIT.1)}))
 
 provider_capacity <- data.frame(provider_capacity, hosp_beds_ldi)
 provider_capacity <- provider_capacity[match(states$NAME, provider_capacity$NAME),]
@@ -44,7 +45,8 @@ pIT.2 <- 13.6 / 1000 # See: https://bit.ly/2yMyjFX
 
 # tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pUS.2/(1-pUS.2)))}))
 # tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log((x/(1-x))/(pSK.2/(1-pSK.2)))}))
-tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){-log(x/pSK.2)}))
+#tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){-log(x/pSK.2)}))
+tests_ldi <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pSK.2)}))
 
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi)
 
