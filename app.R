@@ -47,7 +47,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/09/2020<br><br>
+                    <strong>Date:</strong> 04/10/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -170,7 +170,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/10/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -202,7 +202,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/09/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/10/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
