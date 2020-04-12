@@ -302,8 +302,19 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$tests_ldi, opacity = 0.7, title = "Disparity Index<br/>US Total Tests vs. South Korea",
-                position = "bottomright") %>%
+      addLegend(pal = pal2, 
+                values = ~states$tests_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>US Total Tests vs. South Korea",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                   cuts[n] = paste0(cuts[n]," lower") 
+                   # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                   for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                   cuts[2] = paste0(cuts[2]," higher") 
+                   paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+                ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
@@ -381,8 +392,17 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$diabetes_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
-                position = "bottomright") %>%
+      addLegend(pal = pal2, 
+                values = ~states$diabetes_rate_ldi, 
+                opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
@@ -420,8 +440,19 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "15px",
           direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$hosp_beds_ldi, opacity = 0.7, title = "Disparity Index<br/>US Hospital Beds vs Italy",
-                position = "bottomright") %>%
+      addLegend(pal = pal2, 
+                values = ~states$hosp_beds_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>US Hospital Beds vs Italy",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+                ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
@@ -465,7 +496,14 @@ server <- function(input, output, session) {
                 values = ~states$death_rate_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>US COVID-19 Mortality Rates",
-                position = "bottomright"
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
@@ -514,7 +552,14 @@ server <- function(input, output, session) {
                 values = ~NY.data$death_rate_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>NY COVID-19 Mortality Rates",
-                position = "bottomright"
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
@@ -562,7 +607,14 @@ server <- function(input, output, session) {
                 values = ~NY.data$case_rate_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>NY COVID-19 Cases",
-                position = "bottomright"
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
@@ -610,7 +662,14 @@ server <- function(input, output, session) {
                 values = ~NY.data$diabetes_ldi, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>NY Diabetes Rates",
-                position = "bottomright"
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light",
