@@ -1,5 +1,7 @@
 # COVIDMINDER: COVIDMINDER Development by the Rensselaer IDEA Team
 
+<strong>COVIDMINDER</strong> reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impactCOVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.
+
 * Home repository: https://github.com/TheRensselaerIDEA/COVIDMINDER
 * For those new to github: https://education.github.com/git-cheat-sheet-education.pdf (github cheatsheet)
 
