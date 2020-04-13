@@ -125,7 +125,8 @@ p.log.deaths <- covid_NY_TS_plot.deaths %>%
   ) %>%
   ggplot(aes(Date, log_deaths, color = County)) +
   geom_line() +
-  ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar-Apr 2020) (4/13/2020)")
+  ylab("log(Cumulative Number of Deaths") + 
+  ggtitle("New York State COVID-19 Deaths (log scale) (Mar-Apr 2020) (4/13/2020)")
 
 p.log.deaths
 
@@ -207,22 +208,37 @@ write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
-covid_NY_TS_counties_long.cases <- covid_NY_TS_counties_long.cases %>% 
-   filter(cases >= 2) %>%
+covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
+   filter(cases >= 1) %>%
   filter(County != "Unassigned")
 
-covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
+# Need regions for times series plots!
+NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
+
+covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
+
+covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
   group_by(date)
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 
-# p.log.cases <- covid_NY_TS_plot.cases %>%
-#   mutate(
-#     County = County,     # use County to define separate curves
-#     Date = update(date, year = 1)  # use a constant year for the x-axis
-#   ) %>%
-#   ggplot(aes(Date, log_cases, color = County)) +
-#   geom_line() +
-#   ggtitle("New York State COVID-19 Cases (log10 scale) (Mar - Apr 2020)")
-# 
-# p.log.cases
+highlight_points <- covid_NY_TS_plot.cases %>% 
+                     filter(County == "New York State" & date == as.Date("2020-03-29") |
+                            County == "New York" & date == as.Date("2020-03-31") |
+                            County == "Suffolk" & date == as.Date("2020-04-02")
+                            )
+
+p.log.cases <- covid_NY_TS_plot.cases %>%
+  ggplot(aes(date, cases, color = Region, group=County)) +
+  geom_line() +
+  scale_y_continuous(
+    trans = "log10",
+    breaks = c(10,100,500,1000,5000,10000, 50000)
+  ) +
+  scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+  ylab("Cumulative Number of Cases") + 
+  ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
+  geom_text_repel(data=highlight_points,  aes(label=County)) + 
+  NULL
+
+p.log.cases

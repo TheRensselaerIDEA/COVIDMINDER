@@ -220,6 +220,25 @@ ui <-
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>
+                                <div style='font-size:90%;line-height:1.2;'>
+                                
+                               <br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                          </div>"),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px"), width = 8)
+      )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
                sidebarLayout(
                  sidebarPanel(
@@ -252,20 +271,6 @@ ui <-
                            leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
                )
       )
-      # ,
-      # footer = fluidRow(class = "navbar navbar-default footer", 
-      #                   column(10,
-      #                          HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
-      #                               of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
-      #                               and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-      #                               <b>COVIDMINDER</b> is an open source project; see the 
-      #                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-      #                               for more information. 
-      #                               <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-      #                               of Accessibility</a></i>
-      #                               ")
-      #                          )
-      #                   )
     )
   )
 #### Server Code ####
@@ -679,6 +684,33 @@ server <- function(input, output, session) {
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
+  
+  output$NY.cases.TS <- renderPlot({
+ 
+    # Pre-filter to remove small numbers
+    covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
+      filter(cases >= 2) %>%
+      filter(County != "Unassigned")
+    
+    covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
+      group_by(date)
+    
+    covid_NY_TS_plot$log_cases <- log10(covid_NY_TS_plot$cases)
+    
+    covid_NY_TS_plot %>%
+      mutate(
+        County = County,     # use County to define separate curves
+        Date = update(date, year = 1)  # use a constant year for the x-axis
+      ) %>%
+      ggplot(aes(Date, log_cases, color = Region)) +
+      geom_line() +
+      ylab("log(Cumulative Number of Cases") + 
+      ggtitle("New York State COVID-19 Cases (log scale) (Mar-Apr 2020)")  + 
+      # theme(legend.position = "none") + 
+      NULL
+    
+      })
+  
 }
 
 #### Set up Shiny App ####
