@@ -4,7 +4,7 @@ library(tidyverse)
 
 # curl newest data from JHU github
 # (You must edit the date below)
-dateURL.1 <- "04-11-2020.csv"
+dateURL.1 <- "04-12-2020.csv"
 dateURL.2 <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
 
 # Write raw data to file system; use date-based name syntax as above
