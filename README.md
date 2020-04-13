@@ -5,7 +5,7 @@
 * Home repository: https://github.com/TheRensselaerIDEA/COVIDMINDER
 * For those new to github: https://education.github.com/git-cheat-sheet-education.pdf (github cheatsheet)
 
-## Production Deployment (10 Apr 2020)
+## Production Deployment (10 Apr 2020; updated daily)
 * http://covidminder.idea.rpi.edu
 
 ## Shinyapps.io Deployment (Created 30 Mar 2020; updated frequently!)
