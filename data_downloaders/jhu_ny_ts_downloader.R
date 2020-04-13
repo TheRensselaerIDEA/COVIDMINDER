@@ -125,7 +125,7 @@ p.log.deaths <- covid_NY_TS_plot.deaths %>%
   ) %>%
   ggplot(aes(Date, log_deaths, color = County)) +
   geom_line() +
-  ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar - Apr 2020)")
+  ggtitle("New York State COVID-19 Deaths (log10 scale) (Mar-Apr 2020) (4/13/2020)")
 
 p.log.deaths
 
