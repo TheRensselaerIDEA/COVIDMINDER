@@ -53,7 +53,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/12/2020<br><br>
+                    <strong>Date:</strong> 04/13/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -83,7 +83,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/12/2020 <br><br>
+                               <strong>Date:</strong> 04/13/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
@@ -114,7 +114,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/12/2020 <br><br>
+                               <strong>Date:</strong> 04/13/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -176,7 +176,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/12/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/13/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -208,7 +208,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/12/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/13/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
@@ -690,37 +690,29 @@ server <- function(input, output, session) {
   
   output$NY.cases.TS <- renderPlot({
  
-    # # Pre-filter to remove small numbers
-    # covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
-    #   filter(cases >= 2) %>%
-    #   filter(County != "Unassigned")
-    # 
-    # covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
-    #   group_by(date)
-    # 
-    # covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
-    # 
-    # covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
-    #   group_by(date)
-    
     highlight_points <- covid_NY_TS_plot.cases %>% 
       filter(County == "New York State" & date == as.Date("2020-03-26") |
                County == "New York" & date == as.Date("2020-03-29") |
                County == "Suffolk" & date == as.Date("2020-03-25") |
                County == "Nassau" & date == as.Date("2020-04-02") |
-               County == "Westchester" & date == as.Date("2020-03-30")
+               County == "Westchester" & date == as.Date("2020-03-30") |
+               County == "Orange" & date == as.Date("2020-04-02") |
+               County == "Rockland" & date == as.Date("2020-04-10") |
+               County == "Erie" & date == as.Date("2020-04-10") |
+               County == "Monroe" & date == as.Date("2020-03-30") |
+               County == "Dutchess" & date == as.Date("2020-04-12")
       )
     
     covid_NY_TS_plot.cases %>%
       ggplot(aes(date, cases, color = Region, group=County)) +
-      geom_line() +
+      geom_line(size=1) +
       scale_y_continuous(
         trans = "log10",
         breaks = c(10,100,500,1000,5000,10000, 50000)
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
+      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
       NULL
     
