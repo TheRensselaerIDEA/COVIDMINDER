@@ -73,16 +73,16 @@ covid_TS_plot <- covid_TS_states_long %>%
 
 covid_TS_plot$log_deaths <- log10(covid_TS_plot$deaths)
 
-p.log <- covid_TS_plot %>% 
-  mutate(
-    State = NAME,     # use NAME to define separate curves
-    Date = update(date, year = 1)  # use a constant year for the x-axis
-  ) %>% 
-  ggplot(aes(Date, log_deaths, color = State)) +
-  geom_line() +
-  ggtitle("COVID-19 Deaths (log10 scale) (Jan - Apr 2020)")
-
-p.log
+# p.log <- covid_TS_plot %>% 
+#   mutate(
+#     State = NAME,     # use NAME to define separate curves
+#     Date = update(date, year = 1)  # use a constant year for the x-axis
+#   ) %>% 
+#   ggplot(aes(Date, log_deaths, color = State)) +
+#   geom_line() +
+#   ggtitle("COVID-19 Deaths (log10 scale) (Jan - Apr 2020)")
+# 
+# p.log
 #ggplotly(p.log)
 
 # p <- covid_TS_plot %>% 

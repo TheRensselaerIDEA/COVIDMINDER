@@ -53,7 +53,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/12/2020<br><br>
+                    <strong>Date:</strong> 04/13/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -83,7 +83,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/12/2020 <br><br>
+                               <strong>Date:</strong> 04/13/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
@@ -114,7 +114,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/12/2020 <br><br>
+                               <strong>Date:</strong> 04/13/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -176,7 +176,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/12/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/13/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -208,7 +208,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/12/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/13/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
@@ -218,6 +218,28 @@ ui <-
                  mainPanel(tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
                            leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
                )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>
+                                <div style='font-size:90%;line-height:1.2;'>
+                                
+                               <br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                          </div>"),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px", 
+                                      hover=hoverOpts(id ="plot_hover",delay = 100, delayType = "debounce")), 
+                           uiOutput("hover_info"), 
+                           width = 8)
+      )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
@@ -252,20 +274,6 @@ ui <-
                            leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
                )
       )
-      # ,
-      # footer = fluidRow(class = "navbar navbar-default footer", 
-      #                   column(10,
-      #                          HTML("<b>COVIDMINDER analysis and visualizations</b> by students and staff
-      #                               of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
-      #                               and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-      #                               <b>COVIDMINDER</b> is an open source project; see the 
-      #                               <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-      #                               for more information. 
-      #                               <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-      #                               of Accessibility</a></i>
-      #                               ")
-      #                          )
-      #                   )
     )
   )
 #### Server Code ####
@@ -679,6 +687,76 @@ server <- function(input, output, session) {
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
     #Remove personal API key
   })
+  
+  output$NY.cases.TS <- renderPlot({
+ 
+    highlight_points <- covid_NY_TS_plot.cases %>% 
+      filter(County == "New York State" & date == as.Date("2020-03-26") |
+               County == "New York" & date == as.Date("2020-03-29") |
+               County == "Suffolk" & date == as.Date("2020-03-25") |
+               County == "Nassau" & date == as.Date("2020-04-02") |
+               County == "Westchester" & date == as.Date("2020-03-30") |
+               County == "Orange" & date == as.Date("2020-04-02") |
+               County == "Rockland" & date == as.Date("2020-04-10") |
+               County == "Erie" & date == as.Date("2020-04-10") |
+               County == "Monroe" & date == as.Date("2020-03-30") |
+               County == "Dutchess" & date == as.Date("2020-04-12")
+      )
+    
+    covid_NY_TS_plot.cases %>%
+      ggplot(aes(date, cases, color = Region, group=County)) +
+      geom_line(size=1) +
+      scale_y_continuous(
+        trans = "log10",
+        breaks = c(10,100,500,1000,5000,10000, 50000)
+      ) +
+      scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+      ylab("Cumulative Number of Cases") + 
+      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
+      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
+      NULL
+    
+      })
+  
+  output$hover_info <- renderPrint({
+    hover <- input$plot_hover
+
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
+
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    # create style property for tooltip
+    # background color is set so tooltip is a bit transparent
+    # z-index is set so we are sure are tooltip will be on top
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+
+    # actual tooltip created as wellPanel
+    if (nrow(point) != 0) {
+      if (point$County == "New York State"){
+        wellPanel(
+        # style = style,
+        p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases as of ",point$date)))
+      )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+        )
+        
+      }
+  }
+  })
+  
+    
+  
 }
 
 #### Set up Shiny App ####
