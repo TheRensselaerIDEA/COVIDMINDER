@@ -235,7 +235,10 @@ ui <-
                    HTML(footer_text),
                    width=4),
                  
-                 mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px"), width = 8)
+                 mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px", 
+                                      hover=hoverOpts(id ="plot_hover",delay = 100, delayType = "debounce")), 
+                           uiOutput("hover_info"), 
+                           width = 8)
       )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -722,6 +725,37 @@ server <- function(input, output, session) {
       NULL
     
       })
+  
+  output$hover_info <- renderPrint({
+    hover <- input$plot_hover
+
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
+
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    # create style property for tooltip
+    # background color is set so tooltip is a bit transparent
+    # z-index is set so we are sure are tooltip will be on top
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+
+    # actual tooltip created as wellPanel
+    if (nrow(point) != 0) {
+        wellPanel(
+        # style = style,
+        p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+      )
+  }
+  })
+  
+    
   
 }
 
