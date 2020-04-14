@@ -234,8 +234,8 @@ ui <-
                    width=4),
                  
                  mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px", 
-                                      hover=hoverOpts(id ="plot_hover",delay = 100, delayType = "debounce")), 
-                           uiOutput("hover_info"), 
+                                      click=clickOpts(id ="plot_click")), 
+                           uiOutput("click_info"), 
                            width = 8)
       )
       ),
@@ -726,8 +726,8 @@ server <- function(input, output, session) {
     
       })
   
-  output$hover_info <- renderPrint({
-    hover <- input$plot_hover
+  output$click_info <- renderPrint({
+    hover <- input$plot_click
 
     point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
     
