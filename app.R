@@ -29,7 +29,8 @@ comments_link <-"<div style='font-size:80%;line-height:1.3;'>Thanks for using <b
 ui <- 
   tagList(
     tags$head(
-      tags$title("COVIDMINDER: Where you live matters") 
+      tags$title("COVIDMINDER: Where you live matters"),
+      tags$script(src = "style.js")
     ),
     navbarPage(
       theme="style.css",
@@ -38,6 +39,7 @@ ui <-
                      HTML("COVID<b>MINDER</b>")),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+               id = "sideBar_us_mort",
                sidebarLayout(
                  sidebarPanel(
                    HTML(whatisit_text),
@@ -60,7 +62,9 @@ ui <-
                     "),
                    HTML(footer_text),
                    width=4),
-                 mainPanel(tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+                 mainPanel(
+                   id = "mainPanel_us_mort",
+                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
                            leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
                )
       ),
@@ -325,8 +329,7 @@ server <- function(input, output, session) {
                 }
                 ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
   })
   
   output$map.cardio <- renderLeaflet({
@@ -364,8 +367,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, values = ~states$cardio_death_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>US Cardio Mortality Rate",
                 position = "bottomright") %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -413,8 +415,7 @@ server <- function(input, output, session) {
                 paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
                 }) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -463,8 +464,7 @@ server <- function(input, output, session) {
                 }
                 ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -515,8 +515,7 @@ server <- function(input, output, session) {
                 }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -571,8 +570,7 @@ server <- function(input, output, session) {
                 }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -626,8 +624,7 @@ server <- function(input, output, session) {
                 }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
@@ -681,8 +678,7 @@ server <- function(input, output, session) {
                 }
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+        id = "mapbox.light"))
     #Remove personal API key
   })
   
