@@ -3,7 +3,6 @@
   padding: 0 5px;
 }
 
-
 /* Navbar styles */
 .navbar-brand {
   padding: 0;
@@ -36,7 +35,6 @@
 }
 
 .leaflet-container {
-  /*padding-bottom:70%;*/
   height:100%;
 }
 
@@ -75,8 +73,5 @@
   .title-text {
     height: 70px;
   }
-   /* .leaflet-container {
-    padding-bottom:65%;
-  } */
 }
 
