@@ -748,10 +748,18 @@ server <- function(input, output, session) {
 
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
+      if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+        p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases as of ",point$date)))
       )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+        )
+        
+      }
   }
   })
   
