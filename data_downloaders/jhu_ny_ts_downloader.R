@@ -22,15 +22,65 @@ download.file(paste0(dateURL.2,dateURL.1.deaths), paste0("data/csv/time_series/"
 # NEW: Download NY daily testing results
 download.file("https://health.data.ny.gov/resource/xdss-u53e.csv",paste0("data/csv/time_series/NY_daily_testing.csv"))
 
-# Import raw into R
+# Import raw into R (JHU)
 todays_TS_data.cases <- read_csv(paste0("data/csv/time_series/", dateURL.1.cases))
 todays_TS_data.deaths <- read_csv(paste0("data/csv/time_series/", dateURL.1.deaths))
 
+# Prep NY TS data (JHU); this has one column per test date
+todays_TS_data.NY.cases <- todays_TS_data.cases %>% 
+  filter(Province_State == "New York") %>%
+  select(-UID, -iso2, -iso3, -code3, -FIPS, -Province_State,-Country_Region, -Lat, -Long_, -Combined_Key) %>%
+  rename(County = Admin2) 
+
+# Need to create NYState summary row here...
+TS_New_York_State.cases <- todays_TS_data.NY.cases[,-c(1)] %>%
+  summarize_all(sum)
+
+County <- as.vector(c("New York State"))
+
+TS_New_York_State.cases <- data.frame(cbind(County,TS_New_York_State.cases))
+# Convert this to "long" first
+TS_New_York_State.cases.long <- TS_New_York_State.cases %>% 
+  gather(test_date,cases,2:ncol(TS_New_York_State.cases))
+
+# Make sure the NYS summary stuff is properly structured
+TS_New_York_State.cases.long$test_date <- str_sub(TS_New_York_State.cases.long$test_date, 2,-1)
+TS_New_York_State.cases.long$test_date <- parse_date_time(TS_New_York_State.cases.long$test_date, c("%m.%d.%y"))
+TS_New_York_State.cases.long$County <- as.factor(TS_New_York_State.cases.long$County)
+
+# Create long version of JHU TS
+todays_TS_data.NY.cases.long <- todays_TS_data.NY.cases %>% 
+  gather(test_date,cases,2:ncol(todays_TS_data.NY.cases))
+
+todays_TS_data.NY.cases.long$test_date <- parse_date_time(todays_TS_data.NY.cases.long$test_date, c("%m/%d/%y"))
+todays_TS_data.NY.cases.long$County <- as.factor(todays_TS_data.NY.cases.long$County)
+
+# Now we can rbind NYS and NY counties long
+todays_TS_data.NY.cases.long <- data.frame(rbind(TS_New_York_State.cases.long, todays_TS_data.NY.cases.long))
+
+# Adjusting JHU dates to NY API...
+# todays_TS_data.NY.cases.JHU <- todays_TS_data.NY.cases.long %>% 
+#   filter(test_date == (max(test_date))) %>% 
+#   mutate(test_date = test_date - 60*60*24) # JHU's dates are 1 day "behind"
+
+# Complete JHU time series: todays_TS_data.NY.cases.JHU
+
+# Read in from NY API (long): This gives correct NYC-area data! 
+# Starts at 03-28-2020
 todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
+
+# todays_TS_data.NY.cases.adj <- todays_TS_data.NY.cases.long %>% 
+#   mutate(test_date = test_date - 60*60*24) # JHU's dates are 1 day "behind"
+# 
+# # This creates a joined-up time series
+# todays_TS_NY_testing <- left_join(todays_TS_data.NY.cases.adj, todays_TS_NY_testing, by = c("County"="county","test_date"="test_date")) %>%
+#   mutate(cumulative_number_of_positives = ifelse(is.na(cumulative_number_of_positives), cases, cumulative_number_of_positives)) 
 
 # Force it to most recent day (for now)
 todays_NY_testing <- todays_TS_NY_testing %>% 
-  filter(test_date == max(test_date))
+  filter(test_date == (max(test_date))) 
+
+todays_NY_testing$county <- as.factor(todays_NY_testing$county)
 
 # Read in NY county population list 
 NY_county_data <- read_csv("data/csv/time_series/NY_population.csv")
@@ -49,9 +99,8 @@ write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
 covid_NY_TS_counties.deaths <- todays_TS_data.deaths %>%
   filter(Country_Region == "US") %>%
   filter(Province_State == "New York") %>%
-#  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
   select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
-  group_by(FIPS, Admin2,Province_State) %>%
+  group_by(FIPS, Admin2, Province_State) %>%
   select(-Lat, -Long_, -Population) %>%
   summarize_all(sum)
 
@@ -131,7 +180,8 @@ p.log.deaths <- covid_NY_TS_plot.deaths %>%
 p.log.deaths
 
 # NEW YORK STATE CASES
-# Transform to match our structure: NY deaths
+# Transform to match our structure: NY cases
+
 covid_NY_TS_counties.cases <- todays_TS_data.cases %>%
   filter(Country_Region == "US") %>%
   filter(Province_State == "New York") %>%
@@ -208,8 +258,8 @@ write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
-covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
-   filter(cases >= 1) %>%
+covid_NY_TS_counties_long <- covid_NY_TS_counties_long.cases %>% 
+   filter(cases >= 5) %>%
   filter(County != "Unassigned")
 
 # Need regions for times series plots!
@@ -221,17 +271,73 @@ covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
   group_by(date)
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
+# make sure we have the same version for our app plot!
+write_csv(covid_NY_TS_plot.cases, "data/csv/time_series/covid_NY_TS_plot.cases.csv")
 
 highlight_points <- covid_NY_TS_plot.cases %>% 
-  filter(County == "New York State" & date == as.Date("2020-03-26") |
-           County == "New York" & date == as.Date("2020-03-29") |
-           County == "Suffolk" & date == as.Date("2020-03-25") |
-           County == "Nassau" & date == as.Date("2020-04-02") |
-           County == "Westchester" & date == as.Date("2020-03-30") |
-           County == "Orange" & date == as.Date("2020-04-02") |
-           County == "Rockland" & date == as.Date("2020-04-10") |
-           County == "Erie" & date == as.Date("2020-04-10") |
-           County == "Dutchess" & date == as.Date("2020-04-12")
+  filter( County == "Albany" & date == as.Date("2020-03-26") |
+            # County == "Allegany" & date == as.Date("2020-03-29") |
+            County == "Bronx" & date == as.Date("2020-03-25") |
+            County == "Broome" & date == as.Date("2020-04-02") |
+            # County == "Cattaraugus" & date == as.Date("2020-03-30") |
+            County == "Cayuga" & date == as.Date("2020-04-02") |
+            County == "Chautauqua" & date == as.Date("2020-04-10") |
+            # County == "Chemung" & date == as.Date("2020-04-10") |
+            County == "Chenango" & date == as.Date("2020-04-12") |
+            County == "Clinton" & date == as.Date("2020-03-26") |
+            # County == "Columbia" & date == as.Date("2020-03-29") |
+            County == "Cortland" & date == as.Date("2020-03-25") |
+            # County == "Delaware" & date == as.Date("2020-04-02") |
+            County == "Dutchess" & date == as.Date("2020-03-30") |
+            County == "Erie" & date == as.Date("2020-04-02") |
+            # County == "Essex" & date == as.Date("2020-04-10") |
+            # County == "Franklin" & date == as.Date("2020-04-10") |
+            # County == "Fulton" & date == as.Date("2020-04-12") |
+            County == "Genesee" & date == as.Date("2020-03-26") |
+            # County == "Greene" & date == as.Date("2020-03-29") |
+            County == "Hamilton" & date == as.Date("2020-03-25") |
+            County == "Herkimer" & date == as.Date("2020-04-02") |
+            # County == "Jefferson" & date == as.Date("2020-03-30") |
+            County == "Kings" & date == as.Date("2020-04-02") |
+            # County == "Lewis" & date == as.Date("2020-04-10") |
+            # County == "Livingston" & date == as.Date("2020-04-10") |
+            County == "Madison" & date == as.Date("2020-04-12") |
+            # County == "Monroe" & date == as.Date("2020-03-26") |
+            # County == "Montgomery" & date == as.Date("2020-03-29") |
+            County == "Nassau" & date == as.Date("2020-03-25") |
+            County == "New York" & date == as.Date("2020-04-02") |
+            County == "Manhattan" & date == as.Date("2020-03-30") |
+            County == "Niagara" & date == as.Date("2020-04-02") |
+            County == "Oneida" & date == as.Date("2020-04-10") |
+            County == "Onondaga" & date == as.Date("2020-04-10") |
+            # County == "Ontario" & date == as.Date("2020-04-12") |
+            County == "Orange" & date == as.Date("2020-03-26") |
+            County == "Orleans" & date == as.Date("2020-03-29") |
+            County == "Oswego" & date == as.Date("2020-03-25") |
+            County == "Otsego" & date == as.Date("2020-04-02") |
+            # County == "Putnam" & date == as.Date("2020-03-30") |
+            County == "Queens" & date == as.Date("2020-04-02") |
+            County == "Rensselaer" & date == as.Date("2020-04-10") |
+            County == "Richmond" & date == as.Date("2020-04-01") |
+            County == "Rockland" & date == as.Date("2020-04-12") |
+            County == "St. Lawrence" & date == as.Date("2020-03-26") |
+            County == "Saratoga" & date == as.Date("2020-03-29") |
+            County == "Schenectady" & date == as.Date("2020-03-25") |
+            County == "Schoharie" & date == as.Date("2020-04-02") |
+            County == "Schuyler" & date == as.Date("2020-03-30") |
+            County == "Seneca" & date == as.Date("2020-04-02") |
+            # County == "Steuben" & date == as.Date("2020-04-10") |
+            County == "Suffolk" & date == as.Date("2020-04-10") |
+            County == "Sullivan" & date == as.Date("2020-04-12") |
+            # County == "Tioga" & date == as.Date("2020-03-26") |
+            County == "Tompkins" & date == as.Date("2020-03-29") |
+            # County == "Ulster" & date == as.Date("2020-03-25") |
+            # County == "Warren" & date == as.Date("2020-04-02") |
+            # County == "Washington" & date == as.Date("2020-03-30") |
+            # County == "Wayne" & date == as.Date("2020-04-02") |
+            County == "Westchester" & date == as.Date("2020-04-10") |
+            # County == "Wyoming" & date == as.Date("2020-04-10") |
+            County == "Yates" & date == as.Date("2020-04-12")
   )
 
 p.log.cases <- covid_NY_TS_plot.cases %>%
@@ -247,5 +353,5 @@ p.log.cases <- covid_NY_TS_plot.cases %>%
   geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
   NULL
 #library(plotly)
-#p.log.cases
-ggplotly(p.log.cases)
+p.log.cases
+#ggplotly(p.log.cases)
