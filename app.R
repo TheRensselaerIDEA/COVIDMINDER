@@ -721,7 +721,7 @@ server <- function(input, output, session) {
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
       ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
-      geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
+      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
       NULL
     
       })
