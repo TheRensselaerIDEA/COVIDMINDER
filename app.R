@@ -225,13 +225,11 @@ ui <-
                  sidebarPanel(
                    HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
-                      Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>
-                                <div style='font-size:90%;line-height:1.2;'>
-                                
-                               <br>
-                               
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                          </div>"),
+                      Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
+                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                   HTML("<br><div style='font-size:90%;line-height:1.2;'>
+                         <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                         </div>"),
                    HTML(footer_text),
                    width=4),
                  
@@ -703,8 +701,18 @@ server <- function(input, output, session) {
                County == "Dutchess" & date == as.Date("2020-04-12")
       )
     
+    NY_region_palette.df <- NY_counties_regions %>%
+      select(Region,Color) %>% 
+      distinct(Region,Color)
+    
+    NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
+    
     covid_NY_TS_plot.cases %>%
-      ggplot(aes(date, cases, color = Region, group=County)) +
+      ggplot(aes(date, 
+                 cases, 
+                 color = Region,
+                 group=County)) +
+      scale_color_manual(values=NY_region_palette) +
       geom_line(size=1) +
       scale_y_continuous(
         trans = "log10",
