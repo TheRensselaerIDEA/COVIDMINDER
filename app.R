@@ -690,18 +690,18 @@ server <- function(input, output, session) {
   
   output$NY.cases.TS <- renderPlot({
  
-    # Pre-filter to remove small numbers
-    covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
-      filter(cases >= 2) %>%
-      filter(County != "Unassigned")
-    
-    covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
-      group_by(date)
-    
-    covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
-    
-    covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
-      group_by(date)
+    # # Pre-filter to remove small numbers
+    # covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
+    #   filter(cases >= 2) %>%
+    #   filter(County != "Unassigned")
+    # 
+    # covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
+    #   group_by(date)
+    # 
+    # covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
+    # 
+    # covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
+    #   group_by(date)
     
     highlight_points <- covid_NY_TS_plot.cases %>% 
       filter(County == "New York State" & date == as.Date("2020-03-26") |
