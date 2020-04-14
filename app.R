@@ -695,18 +695,30 @@ server <- function(input, output, session) {
     covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
       group_by(date)
     
-    covid_NY_TS_plot$log_cases <- log10(covid_NY_TS_plot$cases)
+    covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
     
-    covid_NY_TS_plot %>%
-      mutate(
-        County = County,     # use County to define separate curves
-        Date = update(date, year = 1)  # use a constant year for the x-axis
-      ) %>%
-      ggplot(aes(Date, log_cases, color = Region)) +
+    covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
+      group_by(date)
+    
+    highlight_points <- covid_NY_TS_plot.cases %>% 
+      filter(County == "New York State" & date == as.Date("2020-03-26") |
+               County == "New York" & date == as.Date("2020-03-29") |
+               County == "Suffolk" & date == as.Date("2020-03-25") |
+               County == "Nassau" & date == as.Date("2020-04-02") |
+               County == "Westchester" & date == as.Date("2020-03-30")
+      )
+    
+    covid_NY_TS_plot.cases %>%
+      ggplot(aes(date, cases, color = Region, group=County)) +
       geom_line() +
-      ylab("log(Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases (log scale) (Mar-Apr 2020)")  + 
-      # theme(legend.position = "none") + 
+      scale_y_continuous(
+        trans = "log10",
+        breaks = c(10,100,500,1000,5000,10000, 50000)
+      ) +
+      scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+      ylab("Cumulative Number of Cases") + 
+      ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
+      geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
       NULL
     
       })

@@ -225,9 +225,9 @@ covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 highlight_points <- covid_NY_TS_plot.cases %>% 
                      filter(County == "New York State" & date == as.Date("2020-03-26") |
                             County == "New York" & date == as.Date("2020-03-29") |
-                            County == "Suffolk" & date == as.Date("2020-04-01") |
+                            County == "Suffolk" & date == as.Date("2020-03-25") |
                             County == "Nassau" & date == as.Date("2020-04-02") |
-                            County == "Westchester" & date == as.Date("2020-04-02")
+                            County == "Westchester" & date == as.Date("2020-03-30")
                      )
 
 p.log.cases <- covid_NY_TS_plot.cases %>%
@@ -240,7 +240,7 @@ p.log.cases <- covid_NY_TS_plot.cases %>%
   scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
   ylab("Cumulative Number of Cases") + 
   ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
-  geom_text_repel(data=highlight_points,  aes(label=County)) + 
+  geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
   NULL
 #library(plotly)
 p.log.cases
