@@ -837,6 +837,9 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      scale_linetype_manual(name = "Events", 
+                            values = c(2), 
+                            guide = guide_legend(override.aes = list(color = c("black")))) +
       NULL
     
       })
@@ -937,6 +940,9 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
         geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+        scale_linetype_manual(name = "Events", 
+                              values = c(2), 
+                              guide = guide_legend(override.aes = list(color = c("black")))) +
         NULL
 
   })
