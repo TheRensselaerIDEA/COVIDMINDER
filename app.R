@@ -951,8 +951,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
-    
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE)
+    # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
     left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
