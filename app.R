@@ -923,11 +923,13 @@ server <- function(input, output, session) {
     #browser()
 
       covid_NY_TS_plot.cases %>%
-      ggplot(aes(date, 
-                 p_cases, 
-                 color = Region, 
-                 group=County)) +
-      geom_line() +
+        ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
+        scale_color_manual(values=NY_region_palette) +
+        geom_line(size=1) +
+        scale_y_continuous(
+          trans = "log10"
+          # breaks = c(10,100,500,1000,5000,10000, 50000)
+        ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
       ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 

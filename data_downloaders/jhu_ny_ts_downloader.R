@@ -9,6 +9,7 @@ library(tidyverse)
 library(lubridate)
 library(stringr)
 library(plotly)
+library(ggrepel)
 
 # curl newest TIME SERIES data from JHU github
 dateURL.1.cases <- "time_series_covid19_confirmed_US.csv"   # download cases
@@ -281,7 +282,8 @@ covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>%
 
 # Append case rates per county!
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>%
-  mutate(p_cases = (cases/Population)*100000)
+  mutate(p_cases = (cases/Population)*100000) %>%
+  mutate(log_p_cases = log10(p_cases)) 
 
 # make sure we have the same version for our app plot!
 write_csv(covid_NY_TS_plot.cases, "data/csv/time_series/covid_NY_TS_plot.cases.csv")
@@ -368,13 +370,20 @@ highlight_points <- covid_NY_TS_plot.cases %>%
 # p.log.cases
 # #ggplotly(p.log.cases)
 
+NY_region_palette.df <- NY_counties_regions %>%
+  select(Region,Color) %>% 
+  distinct(Region,Color)
+
+NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
+
 p.case.rates <- covid_NY_TS_plot.cases %>%
-  ggplot(aes(date, p_cases, color = Region, group=County)) +
-  geom_line() +
-  # scale_y_continuous(
-  #   trans = "log10",
-  #   breaks = c(10,100,500,1000,5000,10000, 50000)
-  # ) +
+  ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
+  scale_color_manual(values=NY_region_palette) +
+  geom_line(size=1) +
+  scale_y_continuous(
+    trans = "log10"
+  # #   breaks = c(10,100,500,1000,5000,10000, 50000)
+  ) +
   scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
   ylab("Cases per 100K Population") + 
   ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
