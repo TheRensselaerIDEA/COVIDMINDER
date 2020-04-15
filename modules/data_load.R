@@ -70,6 +70,7 @@ diabetes_data_states <- read_csv("data/csv/diabetes_data_states.csv")
 
 # Import NYS TS cases (for plotting) 
 covid_NY_TS_counties_long <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.csv")
+covid_NY_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.cases.csv")
 
 covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")
 

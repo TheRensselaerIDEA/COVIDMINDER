@@ -1,428 +1,1315 @@
-County,date,deaths,cases,Region,Color
-New York State,2020-03-14T00:00:00Z,2,613,New York State,black
-New York State,2020-03-15T00:00:00Z,2,615,New York State,black
-New York State,2020-03-16T00:00:00Z,10,967,New York State,black
-New York,2020-03-16T00:00:00Z,7,463,New York City,#a8a8a8
-Suffolk,2020-03-16T00:00:00Z,2,74,Long Island,#aa918d
-New York State,2020-03-17T00:00:00Z,13,1578,New York State,black
-New York,2020-03-17T00:00:00Z,7,814,New York City,#a8a8a8
-Suffolk,2020-03-17T00:00:00Z,3,97,Long Island,#aa918d
-New York State,2020-03-18T00:00:00Z,17,3038,New York State,black
-New York,2020-03-18T00:00:00Z,11,1871,New York City,#a8a8a8
-Suffolk,2020-03-18T00:00:00Z,3,116,Long Island,#aa918d
-New York State,2020-03-19T00:00:00Z,38,5704,New York State,black
-Nassau,2020-03-19T00:00:00Z,3,372,Long Island,#aa918d
-New York,2020-03-19T00:00:00Z,26,3954,New York City,#a8a8a8
-Suffolk,2020-03-19T00:00:00Z,3,239,Long Island,#aa918d
-New York State,2020-03-20T00:00:00Z,46,8403,New York State,black
-Nassau,2020-03-20T00:00:00Z,4,754,Long Island,#aa918d
-New York,2020-03-20T00:00:00Z,29,5151,New York City,#a8a8a8
-Suffolk,2020-03-20T00:00:00Z,7,459,Long Island,#aa918d
-New York State,2020-03-21T00:00:00Z,60,11727,New York State,black
-Nassau,2020-03-21T00:00:00Z,4,1234,Long Island,#aa918d
-New York,2020-03-21T00:00:00Z,45,7530,New York City,#a8a8a8
-Suffolk,2020-03-21T00:00:00Z,9,662,Long Island,#aa918d
-New York State,2020-03-22T00:00:00Z,117,15800,New York State,black
-Nassau,2020-03-22T00:00:00Z,4,1900,Long Island,#aa918d
-New York,2020-03-22T00:00:00Z,63,9654,New York City,#a8a8a8
-Suffolk,2020-03-22T00:00:00Z,9,1034,Long Island,#aa918d
-New York State,2020-03-23T00:00:00Z,158,20884,New York State,black
-Monroe,2020-03-23T00:00:00Z,2,81,Finger Lakes,#addb83
-Nassau,2020-03-23T00:00:00Z,4,2442,Long Island,#aa918d
-New York,2020-03-23T00:00:00Z,99,12305,New York City,#a8a8a8
-Suffolk,2020-03-23T00:00:00Z,13,1458,Long Island,#aa918d
-New York State,2020-03-24T00:00:00Z,210,25681,New York State,black
-Monroe,2020-03-24T00:00:00Z,3,106,Finger Lakes,#addb83
-Nassau,2020-03-24T00:00:00Z,9,2869,Long Island,#aa918d
-New York,2020-03-24T00:00:00Z,131,14904,New York City,#a8a8a8
-Rockland,2020-03-24T00:00:00Z,5,671,Catskill,#a05047
-Suffolk,2020-03-24T00:00:00Z,17,1880,Long Island,#aa918d
-New York State,2020-03-25T00:00:00Z,285,30841,New York State,black
-Broome,2020-03-25T00:00:00Z,2,11,Central New York,#e49632
-Monroe,2020-03-25T00:00:00Z,3,118,Finger Lakes,#addb83
-Nassau,2020-03-25T00:00:00Z,17,3285,Long Island,#aa918d
-New York,2020-03-25T00:00:00Z,199,17856,New York City,#a8a8a8
-Rockland,2020-03-25T00:00:00Z,5,968,Catskill,#a05047
-Suffolk,2020-03-25T00:00:00Z,20,2260,Long Island,#aa918d
-New York State,2020-03-26T00:00:00Z,385,37877,New York State,black
-Broome,2020-03-26T00:00:00Z,2,16,Central New York,#e49632
-Erie,2020-03-26T00:00:00Z,2,206,Niagara Frontier,#84c6dc
-Monroe,2020-03-26T00:00:00Z,4,148,Finger Lakes,#addb83
-Nassau,2020-03-26T00:00:00Z,17,3914,Long Island,#aa918d
-New York,2020-03-26T00:00:00Z,281,21873,New York City,#a8a8a8
-Rockland,2020-03-26T00:00:00Z,5,1197,Catskill,#a05047
-Suffolk,2020-03-26T00:00:00Z,22,2735,Long Island,#aa918d
-New York State,2020-03-27T00:00:00Z,527,44876,New York State,black
-Broome,2020-03-27T00:00:00Z,2,18,Central New York,#e49632
-Erie,2020-03-27T00:00:00Z,5,245,Niagara Frontier,#84c6dc
-Monroe,2020-03-27T00:00:00Z,4,166,Finger Lakes,#addb83
-Nassau,2020-03-27T00:00:00Z,19,4657,Long Island,#aa918d
-New York,2020-03-27T00:00:00Z,366,25573,New York City,#a8a8a8
-Rockland,2020-03-27T00:00:00Z,7,1457,Catskill,#a05047
-Suffolk,2020-03-27T00:00:00Z,30,3385,Long Island,#aa918d
-New York State,2020-03-28T00:00:00Z,883,52410,New York State,black
-Broome,2020-03-28T00:00:00Z,3,23,Central New York,#e49632
-Dutchess,2020-03-28T00:00:00Z,2,262,Eastern Hudson Valley,#7877a1
-Erie,2020-03-28T00:00:00Z,6,318,Niagara Frontier,#84c6dc
-Monroe,2020-03-28T00:00:00Z,5,202,Finger Lakes,#addb83
-Nassau,2020-03-28T00:00:00Z,27,5537,Long Island,#aa918d
-New York,2020-03-28T00:00:00Z,672,29776,New York City,#a8a8a8
-Orange,2020-03-28T00:00:00Z,4,1101,Catskill,#a05047
-Rockland,2020-03-28T00:00:00Z,8,1896,Catskill,#a05047
-Suffolk,2020-03-28T00:00:00Z,30,4138,Long Island,#aa918d
-Westchester,2020-03-28T00:00:00Z,10,7875,Eastern Hudson Valley,#7877a1
-New York State,2020-03-29T00:00:00Z,1063,59648,New York State,black
-Broome,2020-03-29T00:00:00Z,3,29,Central New York,#e49632
-Dutchess,2020-03-29T00:00:00Z,2,320,Eastern Hudson Valley,#7877a1
-Erie,2020-03-29T00:00:00Z,7,414,Niagara Frontier,#84c6dc
-Herkimer,2020-03-29T00:00:00Z,2,10,Adirondack,#328ea3
-Monroe,2020-03-29T00:00:00Z,5,219,Finger Lakes,#addb83
-Nassau,2020-03-29T00:00:00Z,39,6445,Long Island,#aa918d
-New York,2020-03-29T00:00:00Z,776,33768,New York City,#a8a8a8
-Orange,2020-03-29T00:00:00Z,5,1247,Catskill,#a05047
-Rockland,2020-03-29T00:00:00Z,8,2209,Catskill,#a05047
-Suffolk,2020-03-29T00:00:00Z,40,5023,Long Island,#aa918d
-Westchester,2020-03-29T00:00:00Z,10,8519,Eastern Hudson Valley,#7877a1
-New York State,2020-03-30T00:00:00Z,1342,66663,New York State,black
-Broome,2020-03-30T00:00:00Z,3,35,Central New York,#e49632
-Dutchess,2020-03-30T00:00:00Z,2,392,Eastern Hudson Valley,#7877a1
-Erie,2020-03-30T00:00:00Z,7,443,Niagara Frontier,#84c6dc
-Herkimer,2020-03-30T00:00:00Z,2,12,Adirondack,#328ea3
-Monroe,2020-03-30T00:00:00Z,6,246,Finger Lakes,#addb83
-Nassau,2020-03-30T00:00:00Z,39,7344,Long Island,#aa918d
-New York,2020-03-30T00:00:00Z,914,37453,New York City,#a8a8a8
-Orange,2020-03-30T00:00:00Z,5,1435,Catskill,#a05047
-Rockland,2020-03-30T00:00:00Z,8,2511,Catskill,#a05047
-Suffolk,2020-03-30T00:00:00Z,40,5791,Long Island,#aa918d
-Westchester,2020-03-30T00:00:00Z,10,9326,Eastern Hudson Valley,#7877a1
-New York State,2020-03-31T00:00:00Z,1714,75833,New York State,black
-Broome,2020-03-31T00:00:00Z,3,38,Central New York,#e49632
-Dutchess,2020-03-31T00:00:00Z,3,484,Eastern Hudson Valley,#7877a1
-Erie,2020-03-31T00:00:00Z,8,499,Niagara Frontier,#84c6dc
-Herkimer,2020-03-31T00:00:00Z,2,12,Adirondack,#328ea3
-Monroe,2020-03-31T00:00:00Z,8,257,Finger Lakes,#addb83
-Nassau,2020-03-31T00:00:00Z,48,8544,Long Island,#aa918d
-New York,2020-03-31T00:00:00Z,1096,43119,New York City,#a8a8a8
-Orange,2020-03-31T00:00:00Z,5,1556,Catskill,#a05047
-Rockland,2020-03-31T00:00:00Z,8,2863,Catskill,#a05047
-Suffolk,2020-03-31T00:00:00Z,44,6713,Long Island,#aa918d
-Westchester,2020-03-31T00:00:00Z,10,9967,Eastern Hudson Valley,#7877a1
-New York State,2020-04-01T00:00:00Z,2176,83948,New York State,black
-Broome,2020-04-01T00:00:00Z,3,42,Central New York,#e49632
-Dutchess,2020-04-01T00:00:00Z,4,547,Eastern Hudson Valley,#7877a1
-Erie,2020-04-01T00:00:00Z,11,582,Niagara Frontier,#84c6dc
-Herkimer,2020-04-01T00:00:00Z,2,12,Adirondack,#328ea3
-Madison,2020-04-01T00:00:00Z,2,62,Central New York,#e49632
-Monroe,2020-04-01T00:00:00Z,9,349,Finger Lakes,#addb83
-Nassau,2020-04-01T00:00:00Z,76,9554,Long Island,#aa918d
-New York,2020-04-01T00:00:00Z,1374,47439,New York City,#a8a8a8
-Orange,2020-04-01T00:00:00Z,19,1756,Catskill,#a05047
-Rockland,2020-04-01T00:00:00Z,18,3321,Catskill,#a05047
-Suffolk,2020-04-01T00:00:00Z,53,7605,Long Island,#aa918d
-Ulster,2020-04-01T00:00:00Z,3,222,Catskill,#a05047
-Westchester,2020-04-01T00:00:00Z,25,10683,Eastern Hudson Valley,#7877a1
-New York State,2020-04-02T00:00:00Z,2738,92506,New York State,black
-Albany,2020-04-02T00:00:00Z,2,253,Capital District,#d4dc55
-Broome,2020-04-02T00:00:00Z,4,46,Central New York,#e49632
-Dutchess,2020-04-02T00:00:00Z,5,667,Eastern Hudson Valley,#7877a1
-Erie,2020-04-02T00:00:00Z,12,617,Niagara Frontier,#84c6dc
-Herkimer,2020-04-02T00:00:00Z,2,14,Adirondack,#328ea3
-Madison,2020-04-02T00:00:00Z,2,68,Central New York,#e49632
-Monroe,2020-04-02T00:00:00Z,9,420,Finger Lakes,#addb83
-Nassau,2020-04-02T00:00:00Z,76,10587,Long Island,#aa918d
-New York,2020-04-02T00:00:00Z,1762,51809,New York City,#a8a8a8
-Onondaga,2020-04-02T00:00:00Z,2,301,Finger Lakes,#addb83
-Orange,2020-04-02T00:00:00Z,19,1993,Catskill,#a05047
-Rockland,2020-04-02T00:00:00Z,18,3751,Catskill,#a05047
-Suffolk,2020-04-02T00:00:00Z,69,8746,Long Island,#aa918d
-Sullivan,2020-04-02T00:00:00Z,4,143,Catskill,#a05047
-Ulster,2020-04-02T00:00:00Z,3,240,Catskill,#a05047
-Westchester,2020-04-02T00:00:00Z,64,11567,Eastern Hudson Valley,#7877a1
-New York State,2020-04-03T00:00:00Z,3594,102987,New York State,black
-Albany,2020-04-03T00:00:00Z,2,267,Capital District,#d4dc55
-Broome,2020-04-03T00:00:00Z,4,56,Central New York,#e49632
-Columbia,2020-04-03T00:00:00Z,2,51,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-03T00:00:00Z,5,809,Eastern Hudson Valley,#7877a1
-Erie,2020-04-03T00:00:00Z,19,734,Niagara Frontier,#84c6dc
-Herkimer,2020-04-03T00:00:00Z,2,14,Adirondack,#328ea3
-Madison,2020-04-03T00:00:00Z,2,77,Central New York,#e49632
-Monroe,2020-04-03T00:00:00Z,10,464,Finger Lakes,#addb83
-Nassau,2020-04-03T00:00:00Z,95,12024,Long Island,#aa918d
-New York,2020-04-03T00:00:00Z,2243,57159,New York City,#a8a8a8
-Onondaga,2020-04-03T00:00:00Z,3,322,Finger Lakes,#addb83
-Orange,2020-04-03T00:00:00Z,30,2397,Catskill,#a05047
-Putnam,2020-04-03T00:00:00Z,7,252,Eastern Hudson Valley,#7877a1
-Rockland,2020-04-03T00:00:00Z,42,4289,Catskill,#a05047
-Schenectady,2020-04-03T00:00:00Z,5,110,Capital District,#d4dc55
-Suffolk,2020-04-03T00:00:00Z,84,10154,Long Island,#aa918d
-Sullivan,2020-04-03T00:00:00Z,5,168,Catskill,#a05047
-Ulster,2020-04-03T00:00:00Z,3,263,Catskill,#a05047
-Westchester,2020-04-03T00:00:00Z,67,12351,Eastern Hudson Valley,#7877a1
-New York State,2020-04-04T00:00:00Z,4290,113833,New York State,black
-Albany,2020-04-04T00:00:00Z,6,293,Capital District,#d4dc55
-Broome,2020-04-04T00:00:00Z,4,65,Central New York,#e49632
-Columbia,2020-04-04T00:00:00Z,2,57,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-04T00:00:00Z,5,938,Eastern Hudson Valley,#7877a1
-Erie,2020-04-04T00:00:00Z,22,808,Niagara Frontier,#84c6dc
-Herkimer,2020-04-04T00:00:00Z,3,18,Adirondack,#328ea3
-Madison,2020-04-04T00:00:00Z,2,78,Central New York,#e49632
-Monroe,2020-04-04T00:00:00Z,14,512,Finger Lakes,#addb83
-Nassau,2020-04-04T00:00:00Z,95,13346,Long Island,#aa918d
-New York,2020-04-04T00:00:00Z,2630,63306,New York City,#a8a8a8
-Onondaga,2020-04-04T00:00:00Z,4,349,Finger Lakes,#addb83
-Orange,2020-04-04T00:00:00Z,40,2741,Catskill,#a05047
-Putnam,2020-04-04T00:00:00Z,7,283,Eastern Hudson Valley,#7877a1
-Rockland,2020-04-04T00:00:00Z,69,4872,Catskill,#a05047
-Schenectady,2020-04-04T00:00:00Z,5,117,Capital District,#d4dc55
-Suffolk,2020-04-04T00:00:00Z,124,11370,Long Island,#aa918d
-Sullivan,2020-04-04T00:00:00Z,5,193,Catskill,#a05047
-Ulster,2020-04-04T00:00:00Z,4,290,Catskill,#a05047
-Westchester,2020-04-04T00:00:00Z,67,13081,Eastern Hudson Valley,#7877a1
-New York State,2020-04-05T00:00:00Z,4951,123160,New York State,black
-Albany,2020-04-05T00:00:00Z,8,305,Capital District,#d4dc55
-Broome,2020-04-05T00:00:00Z,5,71,Central New York,#e49632
-Columbia,2020-04-05T00:00:00Z,3,69,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-05T00:00:00Z,8,1077,Eastern Hudson Valley,#7877a1
-Erie,2020-04-05T00:00:00Z,27,1059,Niagara Frontier,#84c6dc
-Herkimer,2020-04-05T00:00:00Z,3,22,Adirondack,#328ea3
-Madison,2020-04-05T00:00:00Z,2,89,Central New York,#e49632
-Monroe,2020-04-05T00:00:00Z,19,548,Finger Lakes,#addb83
-Nassau,2020-04-05T00:00:00Z,162,14398,Long Island,#aa918d
-New York,2020-04-05T00:00:00Z,3048,67551,New York City,#a8a8a8
-Oneida,2020-04-05T00:00:00Z,2,95,Central New York,#e49632
-Onondaga,2020-04-05T00:00:00Z,5,364,Finger Lakes,#addb83
-Orange,2020-04-05T00:00:00Z,53,3187,Catskill,#a05047
-Putnam,2020-04-05T00:00:00Z,7,314,Eastern Hudson Valley,#7877a1
-Rockland,2020-04-05T00:00:00Z,69,5326,Catskill,#a05047
-Schenectady,2020-04-05T00:00:00Z,7,128,Capital District,#d4dc55
-Suffolk,2020-04-05T00:00:00Z,175,13129,Long Island,#aa918d
-Sullivan,2020-04-05T00:00:00Z,5,193,Catskill,#a05047
-Ulster,2020-04-05T00:00:00Z,4,358,Catskill,#a05047
-Westchester,2020-04-05T00:00:00Z,67,13723,Eastern Hudson Valley,#7877a1
-New York State,2020-04-06T00:00:00Z,4698,131815,New York State,black
-Albany,2020-04-06T00:00:00Z,8,319,Capital District,#d4dc55
-Broome,2020-04-06T00:00:00Z,5,76,Central New York,#e49632
-Chautauqua,2020-04-06T00:00:00Z,2,18,Chautauqua-Alleghany,#dbbc85
-Columbia,2020-04-06T00:00:00Z,3,70,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-06T00:00:00Z,9,1189,Eastern Hudson Valley,#7877a1
-Erie,2020-04-06T00:00:00Z,30,1148,Niagara Frontier,#84c6dc
-Herkimer,2020-04-06T00:00:00Z,3,25,Adirondack,#328ea3
-Madison,2020-04-06T00:00:00Z,2,92,Central New York,#e49632
-Monroe,2020-04-06T00:00:00Z,26,574,Finger Lakes,#addb83
-Nassau,2020-04-06T00:00:00Z,162,15616,Long Island,#aa918d
-New York,2020-04-06T00:00:00Z,3485,72181,New York City,#a8a8a8
-Oneida,2020-04-06T00:00:00Z,2,100,Central New York,#e49632
-Onondaga,2020-04-06T00:00:00Z,5,377,Finger Lakes,#addb83
-Orange,2020-04-06T00:00:00Z,76,3533,Catskill,#a05047
-Putnam,2020-04-06T00:00:00Z,7,345,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-06T00:00:00Z,2,74,Capital District,#d4dc55
-Rockland,2020-04-06T00:00:00Z,119,5703,Catskill,#a05047
-Saratoga,2020-04-06T00:00:00Z,4,153,Capital District,#d4dc55
-Schenectady,2020-04-06T00:00:00Z,7,138,Capital District,#d4dc55
-Steuben,2020-04-06T00:00:00Z,4,75,Finger Lakes,#addb83
-Suffolk,2020-04-06T00:00:00Z,199,14185,Long Island,#aa918d
-Sullivan,2020-04-06T00:00:00Z,6,253,Catskill,#a05047
-Ulster,2020-04-06T00:00:00Z,4,382,Catskill,#a05047
-Westchester,2020-04-06T00:00:00Z,211,14294,Eastern Hudson Valley,#7877a1
-New York State,2020-04-07T00:00:00Z,5489,139875,New York State,black
-Albany,2020-04-07T00:00:00Z,8,333,Capital District,#d4dc55
-Broome,2020-04-07T00:00:00Z,6,86,Central New York,#e49632
-Chautauqua,2020-04-07T00:00:00Z,2,18,Chautauqua-Alleghany,#dbbc85
-Columbia,2020-04-07T00:00:00Z,4,72,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-07T00:00:00Z,9,1249,Eastern Hudson Valley,#7877a1
-Erie,2020-04-07T00:00:00Z,39,1234,Niagara Frontier,#84c6dc
-Herkimer,2020-04-07T00:00:00Z,3,27,Adirondack,#328ea3
-Livingston,2020-04-07T00:00:00Z,2,24,Finger Lakes,#addb83
-Madison,2020-04-07T00:00:00Z,2,92,Central New York,#e49632
-Monroe,2020-04-07T00:00:00Z,31,596,Finger Lakes,#addb83
-Nassau,2020-04-07T00:00:00Z,500,16610,Long Island,#aa918d
-New York,2020-04-07T00:00:00Z,4009,76876,New York City,#a8a8a8
-Oneida,2020-04-07T00:00:00Z,2,118,Central New York,#e49632
-Onondaga,2020-04-07T00:00:00Z,6,397,Finger Lakes,#addb83
-Orange,2020-04-07T00:00:00Z,93,3829,Catskill,#a05047
-Oswego,2020-04-07T00:00:00Z,2,34,Thousand Island,#db848c
-Putnam,2020-04-07T00:00:00Z,7,402,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-07T00:00:00Z,3,88,Capital District,#d4dc55
-Rockland,2020-04-07T00:00:00Z,135,5990,Catskill,#a05047
-Saratoga,2020-04-07T00:00:00Z,4,155,Capital District,#d4dc55
-Schenectady,2020-04-07T00:00:00Z,7,145,Capital District,#d4dc55
-Steuben,2020-04-07T00:00:00Z,5,75,Finger Lakes,#addb83
-Suffolk,2020-04-07T00:00:00Z,263,15561,Long Island,#aa918d
-Sullivan,2020-04-07T00:00:00Z,7,270,Catskill,#a05047
-Ulster,2020-04-07T00:00:00Z,5,398,Catskill,#a05047
-Westchester,2020-04-07T00:00:00Z,211,14294,Eastern Hudson Valley,#7877a1
-New York State,2020-04-08T00:00:00Z,6268,151061,New York State,black
-Albany,2020-04-08T00:00:00Z,9,342,Capital District,#d4dc55
-Broome,2020-04-08T00:00:00Z,6,93,Central New York,#e49632
-Chautauqua,2020-04-08T00:00:00Z,2,18,Chautauqua-Alleghany,#dbbc85
-Columbia,2020-04-08T00:00:00Z,4,76,Eastern Hudson Valley,#7877a1
-Dutchess,2020-04-08T00:00:00Z,10,1395,Eastern Hudson Valley,#7877a1
-Erie,2020-04-08T00:00:00Z,45,1335,Niagara Frontier,#84c6dc
-Herkimer,2020-04-08T00:00:00Z,3,29,Adirondack,#328ea3
-Livingston,2020-04-08T00:00:00Z,2,29,Finger Lakes,#addb83
-Madison,2020-04-08T00:00:00Z,3,92,Central New York,#e49632
-Monroe,2020-04-08T00:00:00Z,34,651,Finger Lakes,#addb83
-Nassau,2020-04-08T00:00:00Z,500,18548,Long Island,#aa918d
-New York,2020-04-08T00:00:00Z,4571,81803,New York City,#a8a8a8
-Oneida,2020-04-08T00:00:00Z,2,125,Central New York,#e49632
-Onondaga,2020-04-08T00:00:00Z,6,422,Finger Lakes,#addb83
-Orange,2020-04-08T00:00:00Z,107,4075,Catskill,#a05047
-Oswego,2020-04-08T00:00:00Z,2,34,Thousand Island,#db848c
-Putnam,2020-04-08T00:00:00Z,7,427,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-08T00:00:00Z,3,88,Capital District,#d4dc55
-Rockland,2020-04-08T00:00:00Z,154,6413,Catskill,#a05047
-Saratoga,2020-04-08T00:00:00Z,4,162,Capital District,#d4dc55
-Schenectady,2020-04-08T00:00:00Z,7,149,Capital District,#d4dc55
-Steuben,2020-04-08T00:00:00Z,6,87,Finger Lakes,#addb83
-Suffolk,2020-04-08T00:00:00Z,323,17008,Long Island,#aa918d
-Sullivan,2020-04-08T00:00:00Z,7,296,Catskill,#a05047
-Ulster,2020-04-08T00:00:00Z,7,462,Catskill,#a05047
-Westchester,2020-04-08T00:00:00Z,283,15887,Eastern Hudson Valley,#7877a1
-New York State,2020-04-09T00:00:00Z,7067,161779,New York State,black
-Albany,2020-04-09T00:00:00Z,11,379,Capital District,#d4dc55
-Broome,2020-04-09T00:00:00Z,6,105,Central New York,#e49632
-Chautauqua,2020-04-09T00:00:00Z,2,22,Chautauqua-Alleghany,#dbbc85
-Columbia,2020-04-09T00:00:00Z,5,83,Eastern Hudson Valley,#7877a1
-Delaware,2020-04-09T00:00:00Z,2,37,Catskill,#a05047
-Dutchess,2020-04-09T00:00:00Z,10,1493,Eastern Hudson Valley,#7877a1
-Erie,2020-04-09T00:00:00Z,51,1432,Niagara Frontier,#84c6dc
-Herkimer,2020-04-09T00:00:00Z,3,32,Adirondack,#328ea3
-Livingston,2020-04-09T00:00:00Z,2,29,Finger Lakes,#addb83
-Madison,2020-04-09T00:00:00Z,3,102,Central New York,#e49632
-Monroe,2020-04-09T00:00:00Z,40,698,Finger Lakes,#addb83
-Nassau,2020-04-09T00:00:00Z,633,20140,Long Island,#aa918d
-New York,2020-04-09T00:00:00Z,5150,87028,New York City,#a8a8a8
-Niagara,2020-04-09T00:00:00Z,4,155,Niagara Frontier,#84c6dc
-Oneida,2020-04-09T00:00:00Z,3,158,Central New York,#e49632
-Onondaga,2020-04-09T00:00:00Z,7,422,Finger Lakes,#addb83
-Orange,2020-04-09T00:00:00Z,115,4309,Catskill,#a05047
-Oswego,2020-04-09T00:00:00Z,2,36,Thousand Island,#db848c
-Putnam,2020-04-09T00:00:00Z,7,456,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-09T00:00:00Z,5,102,Capital District,#d4dc55
-Rockland,2020-04-09T00:00:00Z,172,6665,Catskill,#a05047
-Saratoga,2020-04-09T00:00:00Z,4,172,Capital District,#d4dc55
-Schenectady,2020-04-09T00:00:00Z,7,167,Capital District,#d4dc55
-Steuben,2020-04-09T00:00:00Z,6,92,Finger Lakes,#addb83
-Suffolk,2020-04-09T00:00:00Z,362,18803,Long Island,#aa918d
-Sullivan,2020-04-09T00:00:00Z,7,296,Catskill,#a05047
-Ulster,2020-04-09T00:00:00Z,8,462,Catskill,#a05047
-Westchester,2020-04-09T00:00:00Z,359,17004,Eastern Hudson Valley,#7877a1
-New York State,2020-04-10T00:00:00Z,7867,172348,New York State,black
-Albany,2020-04-10T00:00:00Z,11,426,Capital District,#d4dc55
-Broome,2020-04-10T00:00:00Z,6,112,Central New York,#e49632
-Chautauqua,2020-04-10T00:00:00Z,2,22,Chautauqua-Alleghany,#dbbc85
-Columbia,2020-04-10T00:00:00Z,5,84,Eastern Hudson Valley,#7877a1
-Delaware,2020-04-10T00:00:00Z,2,39,Catskill,#a05047
-Dutchess,2020-04-10T00:00:00Z,10,1598,Eastern Hudson Valley,#7877a1
-Erie,2020-04-10T00:00:00Z,53,1498,Niagara Frontier,#84c6dc
-Herkimer,2020-04-10T00:00:00Z,3,36,Adirondack,#328ea3
-Livingston,2020-04-10T00:00:00Z,2,29,Finger Lakes,#addb83
-Madison,2020-04-10T00:00:00Z,3,102,Central New York,#e49632
-Monroe,2020-04-10T00:00:00Z,40,742,Finger Lakes,#addb83
-Nassau,2020-04-10T00:00:00Z,723,21512,Long Island,#aa918d
-New York,2020-04-10T00:00:00Z,5820,92384,New York City,#a8a8a8
-Niagara,2020-04-10T00:00:00Z,4,156,Niagara Frontier,#84c6dc
-Oneida,2020-04-10T00:00:00Z,3,172,Central New York,#e49632
-Onondaga,2020-04-10T00:00:00Z,8,456,Finger Lakes,#addb83
-Orange,2020-04-10T00:00:00Z,115,4532,Catskill,#a05047
-Oswego,2020-04-10T00:00:00Z,2,36,Thousand Island,#db848c
-Putnam,2020-04-10T00:00:00Z,7,487,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-10T00:00:00Z,5,102,Capital District,#d4dc55
-Rockland,2020-04-10T00:00:00Z,200,7122,Catskill,#a05047
-Saratoga,2020-04-10T00:00:00Z,4,182,Capital District,#d4dc55
-Schenectady,2020-04-10T00:00:00Z,7,191,Capital District,#d4dc55
-Steuben,2020-04-10T00:00:00Z,6,117,Finger Lakes,#addb83
-Suffolk,2020-04-10T00:00:00Z,414,20320,Long Island,#aa918d
-Sullivan,2020-04-10T00:00:00Z,7,318,Catskill,#a05047
-Ulster,2020-04-10T00:00:00Z,8,530,Catskill,#a05047
-Westchester,2020-04-10T00:00:00Z,389,18077,Eastern Hudson Valley,#7877a1
-New York State,2020-04-11T00:00:00Z,8627,181026,New York State,black
-Albany,2020-04-11T00:00:00Z,12,446,Capital District,#d4dc55
-Broome,2020-04-11T00:00:00Z,6,117,Central New York,#e49632
-Chautauqua,2020-04-11T00:00:00Z,3,22,Chautauqua-Alleghany,#dbbc85
-Clinton,2020-04-11T00:00:00Z,2,43,Adirondack,#328ea3
-Columbia,2020-04-11T00:00:00Z,7,87,Eastern Hudson Valley,#7877a1
-Delaware,2020-04-11T00:00:00Z,2,39,Catskill,#a05047
-Dutchess,2020-04-11T00:00:00Z,11,1744,Eastern Hudson Valley,#7877a1
-Erie,2020-04-11T00:00:00Z,53,1506,Niagara Frontier,#84c6dc
-Herkimer,2020-04-11T00:00:00Z,3,37,Adirondack,#328ea3
-Livingston,2020-04-11T00:00:00Z,2,30,Finger Lakes,#addb83
-Madison,2020-04-11T00:00:00Z,3,102,Central New York,#e49632
-Monroe,2020-04-11T00:00:00Z,40,767,Finger Lakes,#addb83
-Nassau,2020-04-11T00:00:00Z,792,22584,Long Island,#aa918d
-New York,2020-04-11T00:00:00Z,6367,98308,New York City,#a8a8a8
-Niagara,2020-04-11T00:00:00Z,4,167,Niagara Frontier,#84c6dc
-Oneida,2020-04-11T00:00:00Z,3,181,Central New York,#e49632
-Onondaga,2020-04-11T00:00:00Z,8,456,Finger Lakes,#addb83
-Orange,2020-04-11T00:00:00Z,132,4847,Catskill,#a05047
-Oswego,2020-04-11T00:00:00Z,2,37,Thousand Island,#db848c
-Putnam,2020-04-11T00:00:00Z,7,494,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-11T00:00:00Z,5,102,Capital District,#d4dc55
-Rockland,2020-04-11T00:00:00Z,200,7477,Catskill,#a05047
-Saratoga,2020-04-11T00:00:00Z,4,187,Capital District,#d4dc55
-Schenectady,2020-04-11T00:00:00Z,7,194,Capital District,#d4dc55
-Steuben,2020-04-11T00:00:00Z,6,117,Finger Lakes,#addb83
-Suffolk,2020-04-11T00:00:00Z,458,20321,Long Island,#aa918d
-Sullivan,2020-04-11T00:00:00Z,7,340,Catskill,#a05047
-Ulster,2020-04-11T00:00:00Z,8,589,Catskill,#a05047
-Westchester,2020-04-11T00:00:00Z,461,18729,Eastern Hudson Valley,#7877a1
-New York State,2020-04-12T00:00:00Z,9385,189033,New York State,black
-Albany,2020-04-12T00:00:00Z,12,478,Capital District,#d4dc55
-Broome,2020-04-12T00:00:00Z,6,126,Central New York,#e49632
-Chautauqua,2020-04-12T00:00:00Z,3,23,Chautauqua-Alleghany,#dbbc85
-Clinton,2020-04-12T00:00:00Z,2,43,Adirondack,#328ea3
-Columbia,2020-04-12T00:00:00Z,7,87,Eastern Hudson Valley,#7877a1
-Delaware,2020-04-12T00:00:00Z,3,39,Catskill,#a05047
-Dutchess,2020-04-12T00:00:00Z,12,1838,Eastern Hudson Valley,#7877a1
-Erie,2020-04-12T00:00:00Z,57,1571,Niagara Frontier,#84c6dc
-Herkimer,2020-04-12T00:00:00Z,3,37,Adirondack,#328ea3
-Livingston,2020-04-12T00:00:00Z,2,34,Finger Lakes,#addb83
-Madison,2020-04-12T00:00:00Z,3,105,Central New York,#e49632
-Monroe,2020-04-12T00:00:00Z,40,798,Finger Lakes,#addb83
-Nassau,2020-04-12T00:00:00Z,846,23553,Long Island,#aa918d
-New York,2020-04-12T00:00:00Z,6898,103208,New York City,#a8a8a8
-Niagara,2020-04-12T00:00:00Z,4,194,Niagara Frontier,#84c6dc
-Oneida,2020-04-12T00:00:00Z,3,195,Central New York,#e49632
-Onondaga,2020-04-12T00:00:00Z,9,494,Finger Lakes,#addb83
-Orange,2020-04-12T00:00:00Z,145,5027,Catskill,#a05047
-Oswego,2020-04-12T00:00:00Z,2,42,Thousand Island,#db848c
-Putnam,2020-04-12T00:00:00Z,7,507,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-12T00:00:00Z,5,102,Capital District,#d4dc55
-Rockland,2020-04-12T00:00:00Z,200,7721,Catskill,#a05047
-Saratoga,2020-04-12T00:00:00Z,4,196,Capital District,#d4dc55
-Schenectady,2020-04-12T00:00:00Z,7,199,Capital District,#d4dc55
-Steuben,2020-04-12T00:00:00Z,10,147,Finger Lakes,#addb83
-Suffolk,2020-04-12T00:00:00Z,518,20934,Long Island,#aa918d
-Sullivan,2020-04-12T00:00:00Z,7,358,Catskill,#a05047
-Ulster,2020-04-12T00:00:00Z,11,655,Catskill,#a05047
-Westchester,2020-04-12T00:00:00Z,511,19313,Eastern Hudson Valley,#7877a1
-New York State,2020-04-13T00:00:00Z,10058,195749,New York State,black
-Albany,2020-04-13T00:00:00Z,14,499,Capital District,#d4dc55
-Broome,2020-04-13T00:00:00Z,8,133,Central New York,#e49632
-Chautauqua,2020-04-13T00:00:00Z,3,23,Chautauqua-Alleghany,#dbbc85
-Clinton,2020-04-13T00:00:00Z,3,44,Adirondack,#328ea3
-Columbia,2020-04-13T00:00:00Z,9,93,Eastern Hudson Valley,#7877a1
-Delaware,2020-04-13T00:00:00Z,3,42,Catskill,#a05047
-Dutchess,2020-04-13T00:00:00Z,13,1881,Eastern Hudson Valley,#7877a1
-Erie,2020-04-13T00:00:00Z,66,1661,Niagara Frontier,#84c6dc
-Herkimer,2020-04-13T00:00:00Z,3,38,Adirondack,#328ea3
-Livingston,2020-04-13T00:00:00Z,3,34,Finger Lakes,#addb83
-Madison,2020-04-13T00:00:00Z,3,110,Central New York,#e49632
-Monroe,2020-04-13T00:00:00Z,50,823,Finger Lakes,#addb83
-Nassau,2020-04-13T00:00:00Z,910,24358,Long Island,#aa918d
-New York,2020-04-13T00:00:00Z,7349,106763,New York City,#a8a8a8
-Niagara,2020-04-13T00:00:00Z,5,194,Niagara Frontier,#84c6dc
-Oneida,2020-04-13T00:00:00Z,3,206,Central New York,#e49632
-Onondaga,2020-04-13T00:00:00Z,11,520,Finger Lakes,#addb83
-Orange,2020-04-13T00:00:00Z,171,5598,Catskill,#a05047
-Oswego,2020-04-13T00:00:00Z,2,42,Thousand Island,#db848c
-Putnam,2020-04-13T00:00:00Z,7,507,Eastern Hudson Valley,#7877a1
-Rensselaer,2020-04-13T00:00:00Z,6,113,Capital District,#d4dc55
-Rockland,2020-04-13T00:00:00Z,241,7965,Catskill,#a05047
-Saratoga,2020-04-13T00:00:00Z,4,201,Capital District,#d4dc55
-Schenectady,2020-04-13T00:00:00Z,8,204,Capital District,#d4dc55
-Steuben,2020-04-13T00:00:00Z,11,147,Finger Lakes,#addb83
-Suffolk,2020-04-13T00:00:00Z,568,21643,Long Island,#aa918d
-Sullivan,2020-04-13T00:00:00Z,8,380,Catskill,#a05047
-Ulster,2020-04-13T00:00:00Z,11,716,Catskill,#a05047
-Westchester,2020-04-13T00:00:00Z,557,19786,Eastern Hudson Valley,#7877a1
+County,date,cases,Region,Color,log_cases
+New York State,2020-03-04T00:00:00Z,11,New York State,black,1.041392685158225
+Westchester,2020-03-04T00:00:00Z,10,Eastern Hudson Valley,#7877a1,1
+New York State,2020-03-05T00:00:00Z,23,New York State,black,1.3617278360175928
+Westchester,2020-03-05T00:00:00Z,18,Eastern Hudson Valley,#7877a1,1.255272505103306
+New York State,2020-03-06T00:00:00Z,31,New York State,black,1.4913616938342726
+New York,2020-03-06T00:00:00Z,11,New York City,#a8a8a8,1.041392685158225
+Westchester,2020-03-06T00:00:00Z,19,Eastern Hudson Valley,#7877a1,1.2787536009528289
+New York State,2020-03-07T00:00:00Z,76,New York State,black,1.8808135922807914
+New York,2020-03-07T00:00:00Z,11,New York City,#a8a8a8,1.041392685158225
+Westchester,2020-03-07T00:00:00Z,57,Eastern Hudson Valley,#7877a1,1.7558748556724915
+New York State,2020-03-08T00:00:00Z,106,New York State,black,2.0253058652647704
+Nassau,2020-03-08T00:00:00Z,5,Long Island,#aa918d,0.6989700043360189
+New York,2020-03-08T00:00:00Z,12,New York City,#a8a8a8,1.0791812460476249
+Westchester,2020-03-08T00:00:00Z,83,Eastern Hudson Valley,#7877a1,1.919078092376074
+New York State,2020-03-09T00:00:00Z,142,New York State,black,2.1522883443830563
+Nassau,2020-03-09T00:00:00Z,17,Long Island,#aa918d,1.2304489213782739
+New York,2020-03-09T00:00:00Z,19,New York City,#a8a8a8,1.2787536009528289
+Westchester,2020-03-09T00:00:00Z,98,Eastern Hudson Valley,#7877a1,1.9912260756924949
+New York State,2020-03-10T00:00:00Z,150,New York State,black,2.1760912590556813
+Nassau,2020-03-10T00:00:00Z,19,Long Island,#aa918d,1.2787536009528289
+New York,2020-03-10T00:00:00Z,25,New York City,#a8a8a8,1.3979400086720377
+Westchester,2020-03-10T00:00:00Z,98,Eastern Hudson Valley,#7877a1,1.9912260756924949
+New York State,2020-03-11T00:00:00Z,220,New York State,black,2.342422680822206
+Nassau,2020-03-11T00:00:00Z,28,Long Island,#aa918d,1.4471580313422192
+New York,2020-03-11T00:00:00Z,55,New York City,#a8a8a8,1.7403626894942439
+Rockland,2020-03-11T00:00:00Z,6,Catskill,#a05047,0.7781512503836436
+Suffolk,2020-03-11T00:00:00Z,6,Long Island,#aa918d,0.7781512503836436
+Westchester,2020-03-11T00:00:00Z,121,Eastern Hudson Valley,#7877a1,2.08278537031645
+New York State,2020-03-12T00:00:00Z,327,New York State,black,2.514547752660286
+Nassau,2020-03-12T00:00:00Z,41,Long Island,#aa918d,1.6127838567197355
+New York,2020-03-12T00:00:00Z,95,New York City,#a8a8a8,1.9777236052888478
+Rockland,2020-03-12T00:00:00Z,7,Catskill,#a05047,0.8450980400142568
+Suffolk,2020-03-12T00:00:00Z,20,Long Island,#aa918d,1.3010299956639813
+Westchester,2020-03-12T00:00:00Z,148,Eastern Hudson Valley,#7877a1,2.1702617153949575
+New York State,2020-03-13T00:00:00Z,421,New York State,black,2.6242820958356683
+Nassau,2020-03-13T00:00:00Z,51,Long Island,#aa918d,1.7075701760979363
+New York,2020-03-13T00:00:00Z,154,New York City,#a8a8a8,2.187520720836463
+Rockland,2020-03-13T00:00:00Z,9,Catskill,#a05047,0.9542425094393249
+Suffolk,2020-03-13T00:00:00Z,28,Long Island,#aa918d,1.4471580313422192
+Ulster,2020-03-13T00:00:00Z,5,Catskill,#a05047,0.6989700043360189
+Westchester,2020-03-13T00:00:00Z,158,Eastern Hudson Valley,#7877a1,2.1986570869544226
+New York State,2020-03-14T00:00:00Z,613,New York State,black,2.787460474518415
+Albany,2020-03-14T00:00:00Z,7,Capital District,#d4dc55,0.8450980400142568
+Nassau,2020-03-14T00:00:00Z,68,Long Island,#aa918d,1.8325089127062364
+New York,2020-03-14T00:00:00Z,269,New York City,#a8a8a8,2.429752280002408
+Orange,2020-03-14T00:00:00Z,6,Catskill,#a05047,0.7781512503836436
+Rockland,2020-03-14T00:00:00Z,10,Catskill,#a05047,1
+Suffolk,2020-03-14T00:00:00Z,33,Long Island,#aa918d,1.5185139398778875
+Ulster,2020-03-14T00:00:00Z,5,Catskill,#a05047,0.6989700043360189
+Westchester,2020-03-14T00:00:00Z,172,Eastern Hudson Valley,#7877a1,2.2355284469075487
+New York State,2020-03-15T00:00:00Z,615,New York State,black,2.788875115775417
+Albany,2020-03-15T00:00:00Z,7,Capital District,#d4dc55,0.8450980400142568
+Nassau,2020-03-15T00:00:00Z,79,Long Island,#aa918d,1.8976270912904414
+New York,2020-03-15T00:00:00Z,269,New York City,#a8a8a8,2.429752280002408
+Orange,2020-03-15T00:00:00Z,6,Catskill,#a05047,0.7781512503836436
+Rockland,2020-03-15T00:00:00Z,12,Catskill,#a05047,1.0791812460476249
+Suffolk,2020-03-15T00:00:00Z,41,Long Island,#aa918d,1.6127838567197355
+Ulster,2020-03-15T00:00:00Z,5,Catskill,#a05047,0.6989700043360189
+Westchester,2020-03-15T00:00:00Z,178,Eastern Hudson Valley,#7877a1,2.250420002308894
+New York State,2020-03-16T00:00:00Z,967,New York State,black,2.9854264740830017
+Albany,2020-03-16T00:00:00Z,15,Capital District,#d4dc55,1.1760912590556813
+Dutchess,2020-03-16T00:00:00Z,10,Eastern Hudson Valley,#7877a1,1
+Erie,2020-03-16T00:00:00Z,7,Niagara Frontier,#84c6dc,0.8450980400142568
+Monroe,2020-03-16T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Nassau,2020-03-16T00:00:00Z,109,Long Island,#aa918d,2.037426497940624
+New York,2020-03-16T00:00:00Z,463,New York City,#a8a8a8,2.6655809910179533
+Orange,2020-03-16T00:00:00Z,11,Catskill,#a05047,1.041392685158225
+Rockland,2020-03-16T00:00:00Z,16,Catskill,#a05047,1.2041199826559248
+Saratoga,2020-03-16T00:00:00Z,5,Capital District,#d4dc55,0.6989700043360189
+Suffolk,2020-03-16T00:00:00Z,74,Long Island,#aa918d,1.8692317197309762
+Ulster,2020-03-16T00:00:00Z,7,Catskill,#a05047,0.8450980400142568
+Westchester,2020-03-16T00:00:00Z,220,Eastern Hudson Valley,#7877a1,2.342422680822206
+New York State,2020-03-17T00:00:00Z,1578,New York State,black,3.1981069988734014
+Albany,2020-03-17T00:00:00Z,25,Capital District,#d4dc55,1.3979400086720377
+Dutchess,2020-03-17T00:00:00Z,16,Eastern Hudson Valley,#7877a1,1.2041199826559248
+Erie,2020-03-17T00:00:00Z,11,Niagara Frontier,#84c6dc,1.041392685158225
+Monroe,2020-03-17T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Nassau,2020-03-17T00:00:00Z,140,Long Island,#aa918d,2.146128035678238
+New York,2020-03-17T00:00:00Z,814,New York City,#a8a8a8,2.910624404889201
+Orange,2020-03-17T00:00:00Z,15,Catskill,#a05047,1.1760912590556813
+Rockland,2020-03-17T00:00:00Z,22,Catskill,#a05047,1.3424226808222062
+Saratoga,2020-03-17T00:00:00Z,9,Capital District,#d4dc55,0.9542425094393249
+Schenectady,2020-03-17T00:00:00Z,5,Capital District,#d4dc55,0.6989700043360189
+Suffolk,2020-03-17T00:00:00Z,97,Long Island,#aa918d,1.9867717342662448
+Ulster,2020-03-17T00:00:00Z,8,Catskill,#a05047,0.9030899869919435
+Westchester,2020-03-17T00:00:00Z,380,Eastern Hudson Valley,#7877a1,2.57978359661681
+New York State,2020-03-18T00:00:00Z,3038,New York State,black,3.4825877695267677
+Albany,2020-03-18T00:00:00Z,36,Capital District,#d4dc55,1.5563025007672873
+Dutchess,2020-03-18T00:00:00Z,20,Eastern Hudson Valley,#7877a1,1.3010299956639813
+Erie,2020-03-18T00:00:00Z,20,Niagara Frontier,#84c6dc,1.3010299956639813
+Monroe,2020-03-18T00:00:00Z,19,Finger Lakes,#addb83,1.2787536009528289
+Nassau,2020-03-18T00:00:00Z,278,Long Island,#aa918d,2.444044795918076
+New York,2020-03-18T00:00:00Z,1871,New York City,#a8a8a8,3.27207378750001
+Onondaga,2020-03-18T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Orange,2020-03-18T00:00:00Z,32,Catskill,#a05047,1.505149978319906
+Rockland,2020-03-18T00:00:00Z,31,Catskill,#a05047,1.4913616938342726
+Saratoga,2020-03-18T00:00:00Z,14,Capital District,#d4dc55,1.146128035678238
+Schenectady,2020-03-18T00:00:00Z,14,Capital District,#d4dc55,1.146128035678238
+Suffolk,2020-03-18T00:00:00Z,116,Long Island,#aa918d,2.0644579892269186
+Tompkins,2020-03-18T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Ulster,2020-03-18T00:00:00Z,9,Catskill,#a05047,0.9542425094393249
+Westchester,2020-03-18T00:00:00Z,538,Eastern Hudson Valley,#7877a1,2.7307822756663893
+New York State,2020-03-19T00:00:00Z,5704,New York State,black,3.756179516843809
+Albany,2020-03-19T00:00:00Z,43,Capital District,#d4dc55,1.6334684555795866
+Dutchess,2020-03-19T00:00:00Z,31,Eastern Hudson Valley,#7877a1,1.4913616938342726
+Erie,2020-03-19T00:00:00Z,28,Niagara Frontier,#84c6dc,1.4471580313422192
+Monroe,2020-03-19T00:00:00Z,30,Finger Lakes,#addb83,1.4771212547196624
+Nassau,2020-03-19T00:00:00Z,372,Long Island,#aa918d,2.5705429398818973
+New York,2020-03-19T00:00:00Z,3954,New York City,#a8a8a8,3.5970366649776535
+Onondaga,2020-03-19T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Orange,2020-03-19T00:00:00Z,51,Catskill,#a05047,1.7075701760979363
+Putnam,2020-03-19T00:00:00Z,5,Eastern Hudson Valley,#7877a1,0.6989700043360189
+Rockland,2020-03-19T00:00:00Z,53,Catskill,#a05047,1.7242758696007892
+Saratoga,2020-03-19T00:00:00Z,14,Capital District,#d4dc55,1.146128035678238
+Schenectady,2020-03-19T00:00:00Z,14,Capital District,#d4dc55,1.146128035678238
+Suffolk,2020-03-19T00:00:00Z,239,Long Island,#aa918d,2.3783979009481375
+Tompkins,2020-03-19T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Ulster,2020-03-19T00:00:00Z,9,Catskill,#a05047,0.9542425094393249
+Westchester,2020-03-19T00:00:00Z,798,Eastern Hudson Valley,#7877a1,2.9020028913507296
+New York State,2020-03-20T00:00:00Z,8403,New York State,black,3.924434363543231
+Albany,2020-03-20T00:00:00Z,70,Capital District,#d4dc55,1.845098040014257
+Dutchess,2020-03-20T00:00:00Z,36,Eastern Hudson Valley,#7877a1,1.5563025007672873
+Erie,2020-03-20T00:00:00Z,47,Niagara Frontier,#84c6dc,1.6720978579357175
+Monroe,2020-03-20T00:00:00Z,36,Finger Lakes,#addb83,1.5563025007672873
+Nassau,2020-03-20T00:00:00Z,754,Long Island,#aa918d,2.877371345869774
+New York,2020-03-20T00:00:00Z,5151,New York City,#a8a8a8,3.711891549880579
+Onondaga,2020-03-20T00:00:00Z,13,Finger Lakes,#addb83,1.1139433523068367
+Orange,2020-03-20T00:00:00Z,84,Catskill,#a05047,1.9242792860618816
+Putnam,2020-03-20T00:00:00Z,12,Eastern Hudson Valley,#7877a1,1.0791812460476249
+Rensselaer,2020-03-20T00:00:00Z,8,Capital District,#d4dc55,0.9030899869919435
+Rockland,2020-03-20T00:00:00Z,101,Catskill,#a05047,2.0043213737826426
+Saratoga,2020-03-20T00:00:00Z,21,Capital District,#d4dc55,1.3222192947339193
+Schenectady,2020-03-20T00:00:00Z,14,Capital District,#d4dc55,1.146128035678238
+Suffolk,2020-03-20T00:00:00Z,459,Long Island,#aa918d,2.661812685537261
+Tompkins,2020-03-20T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Ulster,2020-03-20T00:00:00Z,9,Catskill,#a05047,0.9542425094393249
+Westchester,2020-03-20T00:00:00Z,1091,Eastern Hudson Valley,#7877a1,3.037824750588342
+New York State,2020-03-21T00:00:00Z,11727,New York State,black,4.06918692515191
+Albany,2020-03-21T00:00:00Z,88,Capital District,#d4dc55,1.9444826721501687
+Columbia,2020-03-21T00:00:00Z,7,Eastern Hudson Valley,#7877a1,0.8450980400142568
+Dutchess,2020-03-21T00:00:00Z,49,Eastern Hudson Valley,#7877a1,1.6901960800285136
+Erie,2020-03-21T00:00:00Z,50,Niagara Frontier,#84c6dc,1.6989700043360187
+Monroe,2020-03-21T00:00:00Z,46,Finger Lakes,#addb83,1.662757831681574
+Nassau,2020-03-21T00:00:00Z,1234,Long Island,#aa918d,3.091315159697223
+New York,2020-03-21T00:00:00Z,7530,New York City,#a8a8a8,3.8767949762007006
+Niagara,2020-03-21T00:00:00Z,9,Niagara Frontier,#84c6dc,0.9542425094393249
+Onondaga,2020-03-21T00:00:00Z,34,Finger Lakes,#addb83,1.5314789170422551
+Orange,2020-03-21T00:00:00Z,163,Catskill,#a05047,2.2121876044039577
+Putnam,2020-03-21T00:00:00Z,31,Eastern Hudson Valley,#7877a1,1.4913616938342726
+Rensselaer,2020-03-21T00:00:00Z,20,Capital District,#d4dc55,1.3010299956639813
+Rockland,2020-03-21T00:00:00Z,262,Catskill,#a05047,2.4183012913197452
+Saratoga,2020-03-21T00:00:00Z,35,Capital District,#d4dc55,1.5440680443502757
+Schenectady,2020-03-21T00:00:00Z,32,Capital District,#d4dc55,1.505149978319906
+Suffolk,2020-03-21T00:00:00Z,662,Long Island,#aa918d,2.8208579894397
+Sullivan,2020-03-21T00:00:00Z,12,Catskill,#a05047,1.0791812460476249
+Tompkins,2020-03-21T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Ulster,2020-03-21T00:00:00Z,18,Catskill,#a05047,1.255272505103306
+Westchester,2020-03-21T00:00:00Z,1387,Eastern Hudson Valley,#7877a1,3.1420764610732848
+New York State,2020-03-22T00:00:00Z,15800,New York State,black,4.198657086954423
+Albany,2020-03-22T00:00:00Z,123,Capital District,#d4dc55,2.089905111439398
+Columbia,2020-03-22T00:00:00Z,17,Eastern Hudson Valley,#7877a1,1.2304489213782739
+Dutchess,2020-03-22T00:00:00Z,82,Eastern Hudson Valley,#7877a1,1.9138138523837167
+Erie,2020-03-22T00:00:00Z,56,Niagara Frontier,#84c6dc,1.7481880270062005
+Monroe,2020-03-22T00:00:00Z,68,Finger Lakes,#addb83,1.8325089127062364
+Nassau,2020-03-22T00:00:00Z,1900,Long Island,#aa918d,3.278753600952829
+New York,2020-03-22T00:00:00Z,9654,New York City,#a8a8a8,3.984707294482673
+Niagara,2020-03-22T00:00:00Z,9,Niagara Frontier,#84c6dc,0.9542425094393249
+Onondaga,2020-03-22T00:00:00Z,45,Finger Lakes,#addb83,1.6532125137753437
+Orange,2020-03-22T00:00:00Z,247,Catskill,#a05047,2.392696953259666
+Putnam,2020-03-22T00:00:00Z,31,Eastern Hudson Valley,#7877a1,1.4913616938342726
+Rensselaer,2020-03-22T00:00:00Z,20,Capital District,#d4dc55,1.3010299956639813
+Rockland,2020-03-22T00:00:00Z,455,Catskill,#a05047,2.6580113966571126
+Saratoga,2020-03-22T00:00:00Z,35,Capital District,#d4dc55,1.5440680443502757
+Schenectady,2020-03-22T00:00:00Z,32,Capital District,#d4dc55,1.505149978319906
+Suffolk,2020-03-22T00:00:00Z,1034,Long Island,#aa918d,3.0145205387579237
+Sullivan,2020-03-22T00:00:00Z,12,Catskill,#a05047,1.0791812460476249
+Tompkins,2020-03-22T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Ulster,2020-03-22T00:00:00Z,18,Catskill,#a05047,1.255272505103306
+Westchester,2020-03-22T00:00:00Z,1873,Eastern Hudson Valley,#7877a1,3.2725377773752373
+New York State,2020-03-23T00:00:00Z,20884,New York State,black,4.319813684538678
+Albany,2020-03-23T00:00:00Z,127,Capital District,#d4dc55,2.103803720955957
+Columbia,2020-03-23T00:00:00Z,17,Eastern Hudson Valley,#7877a1,1.2304489213782739
+Dutchess,2020-03-23T00:00:00Z,100,Eastern Hudson Valley,#7877a1,2
+Erie,2020-03-23T00:00:00Z,87,Niagara Frontier,#84c6dc,1.9395192526186185
+Monroe,2020-03-23T00:00:00Z,81,Finger Lakes,#addb83,1.9084850188786497
+Nassau,2020-03-23T00:00:00Z,2442,Long Island,#aa918d,3.3877456596088638
+New York,2020-03-23T00:00:00Z,12305,New York City,#a8a8a8,4.0900816180388215
+Niagara,2020-03-23T00:00:00Z,9,Niagara Frontier,#84c6dc,0.9542425094393249
+Oneida,2020-03-23T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Onondaga,2020-03-23T00:00:00Z,53,Finger Lakes,#addb83,1.7242758696007892
+Orange,2020-03-23T00:00:00Z,389,Catskill,#a05047,2.5899496013257077
+Putnam,2020-03-23T00:00:00Z,31,Eastern Hudson Valley,#7877a1,1.4913616938342726
+Rensselaer,2020-03-23T00:00:00Z,20,Capital District,#d4dc55,1.3010299956639813
+Rockland,2020-03-23T00:00:00Z,592,Catskill,#a05047,2.77232170672292
+Saratoga,2020-03-23T00:00:00Z,35,Capital District,#d4dc55,1.5440680443502757
+Schenectady,2020-03-23T00:00:00Z,32,Capital District,#d4dc55,1.505149978319906
+Suffolk,2020-03-23T00:00:00Z,1458,Long Island,#aa918d,3.163757523981956
+Sullivan,2020-03-23T00:00:00Z,12,Catskill,#a05047,1.0791812460476249
+Tompkins,2020-03-23T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Ulster,2020-03-23T00:00:00Z,18,Catskill,#a05047,1.255272505103306
+Westchester,2020-03-23T00:00:00Z,2894,Eastern Hudson Valley,#7877a1,3.4614985267830187
+New York State,2020-03-24T00:00:00Z,25681,New York State,black,4.409611930846435
+Albany,2020-03-24T00:00:00Z,146,Capital District,#d4dc55,2.164352855784437
+Broome,2020-03-24T00:00:00Z,9,Central New York,#e49632,0.9542425094393249
+Clinton,2020-03-24T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Columbia,2020-03-24T00:00:00Z,18,Eastern Hudson Valley,#7877a1,1.255272505103306
+Dutchess,2020-03-24T00:00:00Z,124,Eastern Hudson Valley,#7877a1,2.093421685162235
+Erie,2020-03-24T00:00:00Z,114,Niagara Frontier,#84c6dc,2.0569048513364727
+Monroe,2020-03-24T00:00:00Z,106,Finger Lakes,#addb83,2.0253058652647704
+Nassau,2020-03-24T00:00:00Z,2869,Long Island,#aa918d,3.4577305482459986
+New York,2020-03-24T00:00:00Z,14904,New York City,#a8a8a8,4.173302841888186
+Niagara,2020-03-24T00:00:00Z,10,Niagara Frontier,#84c6dc,1
+Oneida,2020-03-24T00:00:00Z,10,Central New York,#e49632,1
+Onondaga,2020-03-24T00:00:00Z,60,Finger Lakes,#addb83,1.7781512503836436
+Ontario,2020-03-24T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Orange,2020-03-24T00:00:00Z,498,Catskill,#a05047,2.6972293427597176
+Putnam,2020-03-24T00:00:00Z,82,Eastern Hudson Valley,#7877a1,1.9138138523837167
+Rensselaer,2020-03-24T00:00:00Z,33,Capital District,#d4dc55,1.5185139398778875
+Rockland,2020-03-24T00:00:00Z,671,Catskill,#a05047,2.826722520168992
+Saratoga,2020-03-24T00:00:00Z,53,Capital District,#d4dc55,1.7242758696007892
+Schenectady,2020-03-24T00:00:00Z,44,Capital District,#d4dc55,1.6434526764861874
+Steuben,2020-03-24T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Suffolk,2020-03-24T00:00:00Z,1880,Long Island,#aa918d,3.2741578492636796
+Sullivan,2020-03-24T00:00:00Z,23,Catskill,#a05047,1.3617278360175928
+Tompkins,2020-03-24T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Ulster,2020-03-24T00:00:00Z,35,Catskill,#a05047,1.5440680443502757
+Wayne,2020-03-24T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Westchester,2020-03-24T00:00:00Z,3891,Eastern Hudson Valley,#7877a1,3.5900612308037427
+New York State,2020-03-25T00:00:00Z,30841,New York State,black,4.489128451332258
+Albany,2020-03-25T00:00:00Z,152,Capital District,#d4dc55,2.1818435879447726
+Broome,2020-03-25T00:00:00Z,11,Central New York,#e49632,1.041392685158225
+Clinton,2020-03-25T00:00:00Z,10,Adirondack,#328ea3,1
+Columbia,2020-03-25T00:00:00Z,19,Eastern Hudson Valley,#7877a1,1.2787536009528289
+Delaware,2020-03-25T00:00:00Z,5,Catskill,#a05047,0.6989700043360189
+Dutchess,2020-03-25T00:00:00Z,153,Eastern Hudson Valley,#7877a1,2.184691430817599
+Erie,2020-03-25T00:00:00Z,122,Niagara Frontier,#84c6dc,2.0863598306747484
+Herkimer,2020-03-25T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Madison,2020-03-25T00:00:00Z,7,Central New York,#e49632,0.8450980400142568
+Monroe,2020-03-25T00:00:00Z,118,Finger Lakes,#addb83,2.0718820073061255
+Nassau,2020-03-25T00:00:00Z,3285,Long Island,#aa918d,3.5165353738957994
+New York,2020-03-25T00:00:00Z,17856,New York City,#a8a8a8,4.251784177257485
+Niagara,2020-03-25T00:00:00Z,12,Niagara Frontier,#84c6dc,1.0791812460476249
+Oneida,2020-03-25T00:00:00Z,10,Central New York,#e49632,1
+Onondaga,2020-03-25T00:00:00Z,81,Finger Lakes,#addb83,1.9084850188786497
+Ontario,2020-03-25T00:00:00Z,9,Finger Lakes,#addb83,0.9542425094393249
+Orange,2020-03-25T00:00:00Z,638,Catskill,#a05047,2.8048206787211623
+Putnam,2020-03-25T00:00:00Z,84,Eastern Hudson Valley,#7877a1,1.9242792860618816
+Rensselaer,2020-03-25T00:00:00Z,33,Capital District,#d4dc55,1.5185139398778875
+Rockland,2020-03-25T00:00:00Z,968,Catskill,#a05047,2.9858753573083936
+Saratoga,2020-03-25T00:00:00Z,64,Capital District,#d4dc55,1.806179973983887
+Schenectady,2020-03-25T00:00:00Z,55,Capital District,#d4dc55,1.7403626894942439
+Steuben,2020-03-25T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Suffolk,2020-03-25T00:00:00Z,2260,Long Island,#aa918d,3.3541084391474008
+Sullivan,2020-03-25T00:00:00Z,39,Catskill,#a05047,1.591064607026499
+Tompkins,2020-03-25T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Ulster,2020-03-25T00:00:00Z,65,Catskill,#a05047,1.8129133566428555
+Wayne,2020-03-25T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Westchester,2020-03-25T00:00:00Z,4691,Eastern Hudson Valley,#7877a1,3.6712654329471586
+New York State,2020-03-26T00:00:00Z,37877,New York State,black,4.578375573946839
+Albany,2020-03-26T00:00:00Z,171,Capital District,#d4dc55,2.2329961103921536
+Broome,2020-03-26T00:00:00Z,16,Central New York,#e49632,1.2041199826559248
+Chemung,2020-03-26T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Clinton,2020-03-26T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Columbia,2020-03-26T00:00:00Z,24,Eastern Hudson Valley,#7877a1,1.380211241711606
+Delaware,2020-03-26T00:00:00Z,7,Catskill,#a05047,0.8450980400142568
+Dutchess,2020-03-26T00:00:00Z,190,Eastern Hudson Valley,#7877a1,2.278753600952829
+Erie,2020-03-26T00:00:00Z,206,Niagara Frontier,#84c6dc,2.3138672203691533
+Essex,2020-03-26T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Greene,2020-03-26T00:00:00Z,5,Catskill,#a05047,0.6989700043360189
+Herkimer,2020-03-26T00:00:00Z,7,Adirondack,#328ea3,0.8450980400142568
+Madison,2020-03-26T00:00:00Z,9,Central New York,#e49632,0.9542425094393249
+Monroe,2020-03-26T00:00:00Z,148,Finger Lakes,#addb83,2.1702617153949575
+Montgomery,2020-03-26T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Nassau,2020-03-26T00:00:00Z,3914,Long Island,#aa918d,3.592620821321982
+New York,2020-03-26T00:00:00Z,21873,New York City,#a8a8a8,4.339908352955007
+Niagara,2020-03-26T00:00:00Z,14,Niagara Frontier,#84c6dc,1.146128035678238
+Oneida,2020-03-26T00:00:00Z,13,Central New York,#e49632,1.1139433523068367
+Onondaga,2020-03-26T00:00:00Z,111,Finger Lakes,#addb83,2.0453229787866576
+Ontario,2020-03-26T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Orange,2020-03-26T00:00:00Z,751,Catskill,#a05047,2.8756399370041685
+Putnam,2020-03-26T00:00:00Z,94,Eastern Hudson Valley,#7877a1,1.9731278535996986
+Rensselaer,2020-03-26T00:00:00Z,44,Capital District,#d4dc55,1.6434526764861874
+Rockland,2020-03-26T00:00:00Z,1197,Catskill,#a05047,3.0780941504064105
+Saratoga,2020-03-26T00:00:00Z,73,Capital District,#d4dc55,1.863322860120456
+Schenectady,2020-03-26T00:00:00Z,62,Capital District,#d4dc55,1.792391689498254
+Steuben,2020-03-26T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Suffolk,2020-03-26T00:00:00Z,2735,Long Island,#aa918d,3.4369573306694496
+Sullivan,2020-03-26T00:00:00Z,53,Catskill,#a05047,1.7242758696007892
+Tompkins,2020-03-26T00:00:00Z,23,Finger Lakes,#addb83,1.3617278360175928
+Ulster,2020-03-26T00:00:00Z,78,Catskill,#a05047,1.8920946026904804
+Wayne,2020-03-26T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Westchester,2020-03-26T00:00:00Z,5944,Eastern Hudson Valley,#7877a1,3.774078800752519
+Wyoming,2020-03-26T00:00:00Z,7,Niagara Frontier,#84c6dc,0.8450980400142568
+New York State,2020-03-27T00:00:00Z,44876,New York State,black,4.652014139350008
+Albany,2020-03-27T00:00:00Z,187,Capital District,#d4dc55,2.271841606536499
+Broome,2020-03-27T00:00:00Z,18,Central New York,#e49632,1.255272505103306
+Chemung,2020-03-27T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Clinton,2020-03-27T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Columbia,2020-03-27T00:00:00Z,27,Eastern Hudson Valley,#7877a1,1.4313637641589874
+Delaware,2020-03-27T00:00:00Z,8,Catskill,#a05047,0.9030899869919435
+Dutchess,2020-03-27T00:00:00Z,225,Eastern Hudson Valley,#7877a1,2.3521825181113627
+Erie,2020-03-27T00:00:00Z,245,Niagara Frontier,#84c6dc,2.3891660843645326
+Essex,2020-03-27T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Genesee,2020-03-27T00:00:00Z,6,Niagara Frontier,#84c6dc,0.7781512503836436
+Greene,2020-03-27T00:00:00Z,6,Catskill,#a05047,0.7781512503836436
+Herkimer,2020-03-27T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Madison,2020-03-27T00:00:00Z,17,Central New York,#e49632,1.2304489213782739
+Monroe,2020-03-27T00:00:00Z,166,Finger Lakes,#addb83,2.220108088040055
+Montgomery,2020-03-27T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Nassau,2020-03-27T00:00:00Z,4657,Long Island,#aa918d,3.668106237932731
+New York,2020-03-27T00:00:00Z,25573,New York City,#a8a8a8,4.407781678633348
+Niagara,2020-03-27T00:00:00Z,23,Niagara Frontier,#84c6dc,1.3617278360175928
+Oneida,2020-03-27T00:00:00Z,13,Central New York,#e49632,1.1139433523068367
+Onondaga,2020-03-27T00:00:00Z,123,Finger Lakes,#addb83,2.089905111439398
+Ontario,2020-03-27T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Orange,2020-03-27T00:00:00Z,910,Catskill,#a05047,2.9590413923210934
+Otsego,2020-03-27T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Putnam,2020-03-27T00:00:00Z,111,Eastern Hudson Valley,#7877a1,2.0453229787866576
+Rensselaer,2020-03-27T00:00:00Z,44,Capital District,#d4dc55,1.6434526764861874
+Rockland,2020-03-27T00:00:00Z,1457,Catskill,#a05047,3.16345955176999
+Saratoga,2020-03-27T00:00:00Z,82,Capital District,#d4dc55,1.9138138523837167
+Schenectady,2020-03-27T00:00:00Z,66,Capital District,#d4dc55,1.8195439355418688
+Steuben,2020-03-27T00:00:00Z,12,Finger Lakes,#addb83,1.0791812460476249
+Suffolk,2020-03-27T00:00:00Z,3385,Long Island,#aa918d,3.529558673021163
+Sullivan,2020-03-27T00:00:00Z,64,Catskill,#a05047,1.806179973983887
+Tompkins,2020-03-27T00:00:00Z,32,Finger Lakes,#addb83,1.505149978319906
+Ulster,2020-03-27T00:00:00Z,98,Catskill,#a05047,1.9912260756924949
+Warren,2020-03-27T00:00:00Z,8,Adirondack,#328ea3,0.9030899869919435
+Washington,2020-03-27T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Wayne,2020-03-27T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Westchester,2020-03-27T00:00:00Z,7187,Eastern Hudson Valley,#7877a1,3.856547644856748
+Wyoming,2020-03-27T00:00:00Z,7,Niagara Frontier,#84c6dc,0.8450980400142568
+New York State,2020-03-28T00:00:00Z,52410,New York State,black,4.719414159702593
+Albany,2020-03-28T00:00:00Z,195,Capital District,#d4dc55,2.290034611362518
+Broome,2020-03-28T00:00:00Z,23,Central New York,#e49632,1.3617278360175928
+Chautauqua,2020-03-28T00:00:00Z,5,Chautauqua-Alleghany,#dbbc85,0.6989700043360189
+Chemung,2020-03-28T00:00:00Z,12,Finger Lakes,#addb83,1.0791812460476249
+Chenango,2020-03-28T00:00:00Z,8,Central New York,#e49632,0.9030899869919435
+Clinton,2020-03-28T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Columbia,2020-03-28T00:00:00Z,30,Eastern Hudson Valley,#7877a1,1.4771212547196624
+Cortland,2020-03-28T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Delaware,2020-03-28T00:00:00Z,8,Catskill,#a05047,0.9030899869919435
+Dutchess,2020-03-28T00:00:00Z,262,Eastern Hudson Valley,#7877a1,2.4183012913197452
+Erie,2020-03-28T00:00:00Z,318,Niagara Frontier,#84c6dc,2.5024271199844326
+Essex,2020-03-28T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Franklin,2020-03-28T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Genesee,2020-03-28T00:00:00Z,7,Niagara Frontier,#84c6dc,0.8450980400142568
+Greene,2020-03-28T00:00:00Z,7,Catskill,#a05047,0.8450980400142568
+Herkimer,2020-03-28T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Jefferson,2020-03-28T00:00:00Z,6,Thousand Island,#db848c,0.7781512503836436
+Livingston,2020-03-28T00:00:00Z,10,Finger Lakes,#addb83,1
+Madison,2020-03-28T00:00:00Z,28,Central New York,#e49632,1.4471580313422192
+Monroe,2020-03-28T00:00:00Z,202,Finger Lakes,#addb83,2.305351369446624
+Montgomery,2020-03-28T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Nassau,2020-03-28T00:00:00Z,5537,Long Island,#aa918d,3.7432745235119333
+New York,2020-03-28T00:00:00Z,29776,New York City,#a8a8a8,4.473866355786692
+Niagara,2020-03-28T00:00:00Z,33,Niagara Frontier,#84c6dc,1.5185139398778875
+Oneida,2020-03-28T00:00:00Z,23,Central New York,#e49632,1.3617278360175928
+Onondaga,2020-03-28T00:00:00Z,146,Finger Lakes,#addb83,2.164352855784437
+Ontario,2020-03-28T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Orange,2020-03-28T00:00:00Z,1101,Catskill,#a05047,3.041787318971752
+Oswego,2020-03-28T00:00:00Z,9,Thousand Island,#db848c,0.9542425094393249
+Otsego,2020-03-28T00:00:00Z,7,Central New York,#e49632,0.8450980400142568
+Putnam,2020-03-28T00:00:00Z,131,Eastern Hudson Valley,#7877a1,2.1172712956557644
+Rensselaer,2020-03-28T00:00:00Z,51,Capital District,#d4dc55,1.7075701760979363
+Rockland,2020-03-28T00:00:00Z,1896,Catskill,#a05047,3.2778383330020473
+St. Lawrence,2020-03-28T00:00:00Z,8,Thousand Island,#db848c,0.9030899869919435
+Saratoga,2020-03-28T00:00:00Z,96,Capital District,#d4dc55,1.9822712330395684
+Schenectady,2020-03-28T00:00:00Z,72,Capital District,#d4dc55,1.8573324964312685
+Schoharie,2020-03-28T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Steuben,2020-03-28T00:00:00Z,13,Finger Lakes,#addb83,1.1139433523068367
+Suffolk,2020-03-28T00:00:00Z,4138,Long Island,#aa918d,3.616790486329716
+Sullivan,2020-03-28T00:00:00Z,72,Catskill,#a05047,1.8573324964312685
+Tioga,2020-03-28T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Tompkins,2020-03-28T00:00:00Z,48,Finger Lakes,#addb83,1.6812412373755872
+Ulster,2020-03-28T00:00:00Z,133,Catskill,#a05047,2.123851640967086
+Warren,2020-03-28T00:00:00Z,13,Adirondack,#328ea3,1.1139433523068367
+Washington,2020-03-28T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Wayne,2020-03-28T00:00:00Z,12,Finger Lakes,#addb83,1.0791812460476249
+Westchester,2020-03-28T00:00:00Z,7875,Eastern Hudson Valley,#7877a1,3.896250562461638
+Wyoming,2020-03-28T00:00:00Z,7,Niagara Frontier,#84c6dc,0.8450980400142568
+New York State,2020-03-29T00:00:00Z,59648,New York State,black,4.775595886337869
+Albany,2020-03-29T00:00:00Z,205,Capital District,#d4dc55,2.311753861055754
+Allegany,2020-03-29T00:00:00Z,6,Chautauqua-Alleghany,#dbbc85,0.7781512503836436
+Broome,2020-03-29T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Chautauqua,2020-03-29T00:00:00Z,7,Chautauqua-Alleghany,#dbbc85,0.8450980400142568
+Chemung,2020-03-29T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Chenango,2020-03-29T00:00:00Z,15,Central New York,#e49632,1.1760912590556813
+Clinton,2020-03-29T00:00:00Z,13,Adirondack,#328ea3,1.1139433523068367
+Columbia,2020-03-29T00:00:00Z,30,Eastern Hudson Valley,#7877a1,1.4771212547196624
+Cortland,2020-03-29T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Delaware,2020-03-29T00:00:00Z,8,Catskill,#a05047,0.9030899869919435
+Dutchess,2020-03-29T00:00:00Z,320,Eastern Hudson Valley,#7877a1,2.505149978319906
+Erie,2020-03-29T00:00:00Z,414,Niagara Frontier,#84c6dc,2.617000341120899
+Essex,2020-03-29T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Franklin,2020-03-29T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Genesee,2020-03-29T00:00:00Z,9,Niagara Frontier,#84c6dc,0.9542425094393249
+Greene,2020-03-29T00:00:00Z,7,Catskill,#a05047,0.8450980400142568
+Herkimer,2020-03-29T00:00:00Z,10,Adirondack,#328ea3,1
+Jefferson,2020-03-29T00:00:00Z,7,Thousand Island,#db848c,0.8450980400142568
+Livingston,2020-03-29T00:00:00Z,10,Finger Lakes,#addb83,1
+Madison,2020-03-29T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Monroe,2020-03-29T00:00:00Z,219,Finger Lakes,#addb83,2.3404441148401185
+Montgomery,2020-03-29T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Nassau,2020-03-29T00:00:00Z,6445,Long Island,#aa918d,3.809222921689422
+New York,2020-03-29T00:00:00Z,33768,New York City,#a8a8a8,4.528505339146352
+Niagara,2020-03-29T00:00:00Z,38,Niagara Frontier,#84c6dc,1.5797835966168101
+Oneida,2020-03-29T00:00:00Z,26,Central New York,#e49632,1.414973347970818
+Onondaga,2020-03-29T00:00:00Z,194,Finger Lakes,#addb83,2.287801729930226
+Ontario,2020-03-29T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Orange,2020-03-29T00:00:00Z,1247,Catskill,#a05047,3.0958664534785427
+Oswego,2020-03-29T00:00:00Z,10,Thousand Island,#db848c,1
+Otsego,2020-03-29T00:00:00Z,10,Central New York,#e49632,1
+Putnam,2020-03-29T00:00:00Z,144,Eastern Hudson Valley,#7877a1,2.1583624920952498
+Rensselaer,2020-03-29T00:00:00Z,51,Capital District,#d4dc55,1.7075701760979363
+Rockland,2020-03-29T00:00:00Z,2209,Catskill,#a05047,3.344195715871435
+St. Lawrence,2020-03-29T00:00:00Z,12,Thousand Island,#db848c,1.0791812460476249
+Saratoga,2020-03-29T00:00:00Z,102,Capital District,#d4dc55,2.0086001717619175
+Schenectady,2020-03-29T00:00:00Z,76,Capital District,#d4dc55,1.8808135922807914
+Schoharie,2020-03-29T00:00:00Z,5,Central New York,#e49632,0.6989700043360189
+Steuben,2020-03-29T00:00:00Z,17,Finger Lakes,#addb83,1.2304489213782739
+Suffolk,2020-03-29T00:00:00Z,5023,Long Island,#aa918d,3.700963178159549
+Sullivan,2020-03-29T00:00:00Z,88,Catskill,#a05047,1.9444826721501687
+Tioga,2020-03-29T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Tompkins,2020-03-29T00:00:00Z,56,Finger Lakes,#addb83,1.7481880270062005
+Ulster,2020-03-29T00:00:00Z,146,Catskill,#a05047,2.164352855784437
+Warren,2020-03-29T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Washington,2020-03-29T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Wayne,2020-03-29T00:00:00Z,12,Finger Lakes,#addb83,1.0791812460476249
+Westchester,2020-03-29T00:00:00Z,8519,Eastern Hudson Valley,#7877a1,3.9303886182443217
+Wyoming,2020-03-29T00:00:00Z,8,Niagara Frontier,#84c6dc,0.9030899869919435
+New York State,2020-03-30T00:00:00Z,66663,New York State,black,4.823884854090919
+Albany,2020-03-30T00:00:00Z,217,Capital District,#d4dc55,2.3364597338485296
+Allegany,2020-03-30T00:00:00Z,7,Chautauqua-Alleghany,#dbbc85,0.8450980400142568
+Broome,2020-03-30T00:00:00Z,35,Central New York,#e49632,1.5440680443502757
+Cattaraugus,2020-03-30T00:00:00Z,6,Chautauqua-Alleghany,#dbbc85,0.7781512503836436
+Chautauqua,2020-03-30T00:00:00Z,7,Chautauqua-Alleghany,#dbbc85,0.8450980400142568
+Chemung,2020-03-30T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Chenango,2020-03-30T00:00:00Z,17,Central New York,#e49632,1.2304489213782739
+Clinton,2020-03-30T00:00:00Z,17,Adirondack,#328ea3,1.2304489213782739
+Columbia,2020-03-30T00:00:00Z,36,Eastern Hudson Valley,#7877a1,1.5563025007672873
+Cortland,2020-03-30T00:00:00Z,10,Finger Lakes,#addb83,1
+Delaware,2020-03-30T00:00:00Z,11,Catskill,#a05047,1.041392685158225
+Dutchess,2020-03-30T00:00:00Z,392,Eastern Hudson Valley,#7877a1,2.593286067020457
+Erie,2020-03-30T00:00:00Z,443,Niagara Frontier,#84c6dc,2.6464037262230695
+Essex,2020-03-30T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Franklin,2020-03-30T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Genesee,2020-03-30T00:00:00Z,9,Niagara Frontier,#84c6dc,0.9542425094393249
+Greene,2020-03-30T00:00:00Z,10,Catskill,#a05047,1
+Herkimer,2020-03-30T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Jefferson,2020-03-30T00:00:00Z,11,Thousand Island,#db848c,1.041392685158225
+Livingston,2020-03-30T00:00:00Z,13,Finger Lakes,#addb83,1.1139433523068367
+Madison,2020-03-30T00:00:00Z,42,Central New York,#e49632,1.6232492903979006
+Monroe,2020-03-30T00:00:00Z,246,Finger Lakes,#addb83,2.3909351071033793
+Montgomery,2020-03-30T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Nassau,2020-03-30T00:00:00Z,7344,Long Island,#aa918d,3.865932668193186
+New York,2020-03-30T00:00:00Z,37453,New York City,#a8a8a8,4.57348661058725
+Niagara,2020-03-30T00:00:00Z,41,Niagara Frontier,#84c6dc,1.6127838567197355
+Oneida,2020-03-30T00:00:00Z,34,Central New York,#e49632,1.5314789170422551
+Onondaga,2020-03-30T00:00:00Z,228,Finger Lakes,#addb83,2.357934847000454
+Ontario,2020-03-30T00:00:00Z,20,Finger Lakes,#addb83,1.3010299956639813
+Orange,2020-03-30T00:00:00Z,1435,Catskill,#a05047,3.156851901070011
+Oswego,2020-03-30T00:00:00Z,15,Thousand Island,#db848c,1.1760912590556813
+Otsego,2020-03-30T00:00:00Z,17,Central New York,#e49632,1.2304489213782739
+Putnam,2020-03-30T00:00:00Z,167,Eastern Hudson Valley,#7877a1,2.2227164711475833
+Rensselaer,2020-03-30T00:00:00Z,52,Capital District,#d4dc55,1.7160033436347992
+Rockland,2020-03-30T00:00:00Z,2511,Catskill,#a05047,3.3998467127129226
+St. Lawrence,2020-03-30T00:00:00Z,13,Thousand Island,#db848c,1.1139433523068367
+Saratoga,2020-03-30T00:00:00Z,108,Capital District,#d4dc55,2.03342375548695
+Schenectady,2020-03-30T00:00:00Z,80,Capital District,#d4dc55,1.9030899869919435
+Schoharie,2020-03-30T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Steuben,2020-03-30T00:00:00Z,19,Finger Lakes,#addb83,1.2787536009528289
+Suffolk,2020-03-30T00:00:00Z,5791,Long Island,#aa918d,3.762753564933374
+Sullivan,2020-03-30T00:00:00Z,101,Catskill,#a05047,2.0043213737826426
+Tioga,2020-03-30T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Tompkins,2020-03-30T00:00:00Z,70,Finger Lakes,#addb83,1.845098040014257
+Ulster,2020-03-30T00:00:00Z,190,Catskill,#a05047,2.278753600952829
+Warren,2020-03-30T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Washington,2020-03-30T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Wayne,2020-03-30T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Westchester,2020-03-30T00:00:00Z,9326,Eastern Hudson Valley,#7877a1,3.9696954111184732
+Wyoming,2020-03-30T00:00:00Z,8,Niagara Frontier,#84c6dc,0.9030899869919435
+New York State,2020-03-31T00:00:00Z,75833,New York State,black,4.87985823728254
+Albany,2020-03-31T00:00:00Z,226,Capital District,#d4dc55,2.3541084391474008
+Allegany,2020-03-31T00:00:00Z,9,Chautauqua-Alleghany,#dbbc85,0.9542425094393249
+Broome,2020-03-31T00:00:00Z,38,Central New York,#e49632,1.5797835966168101
+Cattaraugus,2020-03-31T00:00:00Z,6,Chautauqua-Alleghany,#dbbc85,0.7781512503836436
+Chautauqua,2020-03-31T00:00:00Z,7,Chautauqua-Alleghany,#dbbc85,0.8450980400142568
+Chemung,2020-03-31T00:00:00Z,20,Finger Lakes,#addb83,1.3010299956639813
+Chenango,2020-03-31T00:00:00Z,19,Central New York,#e49632,1.2787536009528289
+Clinton,2020-03-31T00:00:00Z,21,Adirondack,#328ea3,1.3222192947339193
+Columbia,2020-03-31T00:00:00Z,36,Eastern Hudson Valley,#7877a1,1.5563025007672873
+Cortland,2020-03-31T00:00:00Z,10,Finger Lakes,#addb83,1
+Delaware,2020-03-31T00:00:00Z,16,Catskill,#a05047,1.2041199826559248
+Dutchess,2020-03-31T00:00:00Z,484,Eastern Hudson Valley,#7877a1,2.6848453616444123
+Erie,2020-03-31T00:00:00Z,499,Niagara Frontier,#84c6dc,2.6981005456233897
+Essex,2020-03-31T00:00:00Z,5,Adirondack,#328ea3,0.6989700043360189
+Franklin,2020-03-31T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Genesee,2020-03-31T00:00:00Z,11,Niagara Frontier,#84c6dc,1.041392685158225
+Greene,2020-03-31T00:00:00Z,10,Catskill,#a05047,1
+Herkimer,2020-03-31T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Jefferson,2020-03-31T00:00:00Z,11,Thousand Island,#db848c,1.041392685158225
+Livingston,2020-03-31T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Madison,2020-03-31T00:00:00Z,49,Central New York,#e49632,1.6901960800285136
+Monroe,2020-03-31T00:00:00Z,257,Finger Lakes,#addb83,2.4099331233312946
+Montgomery,2020-03-31T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Nassau,2020-03-31T00:00:00Z,8544,Long Island,#aa918d,3.9316612396844812
+New York,2020-03-31T00:00:00Z,43119,New York City,#a8a8a8,4.63466868029747
+Niagara,2020-03-31T00:00:00Z,41,Niagara Frontier,#84c6dc,1.6127838567197355
+Oneida,2020-03-31T00:00:00Z,34,Central New York,#e49632,1.5314789170422551
+Onondaga,2020-03-31T00:00:00Z,249,Finger Lakes,#addb83,2.3961993470957363
+Ontario,2020-03-31T00:00:00Z,20,Finger Lakes,#addb83,1.3010299956639813
+Orange,2020-03-31T00:00:00Z,1556,Catskill,#a05047,3.1920095926536702
+Orleans,2020-03-31T00:00:00Z,5,Niagara Frontier,#84c6dc,0.6989700043360189
+Oswego,2020-03-31T00:00:00Z,15,Thousand Island,#db848c,1.1760912590556813
+Otsego,2020-03-31T00:00:00Z,17,Central New York,#e49632,1.2304489213782739
+Putnam,2020-03-31T00:00:00Z,167,Eastern Hudson Valley,#7877a1,2.2227164711475833
+Rensselaer,2020-03-31T00:00:00Z,54,Capital District,#d4dc55,1.7323937598229686
+Rockland,2020-03-31T00:00:00Z,2863,Catskill,#a05047,3.456821348021599
+St. Lawrence,2020-03-31T00:00:00Z,23,Thousand Island,#db848c,1.3617278360175928
+Saratoga,2020-03-31T00:00:00Z,108,Capital District,#d4dc55,2.03342375548695
+Schenectady,2020-03-31T00:00:00Z,85,Capital District,#d4dc55,1.9294189257142929
+Schoharie,2020-03-31T00:00:00Z,6,Central New York,#e49632,0.7781512503836436
+Steuben,2020-03-31T00:00:00Z,19,Finger Lakes,#addb83,1.2787536009528289
+Suffolk,2020-03-31T00:00:00Z,6713,Long Island,#aa918d,3.8269166471849205
+Sullivan,2020-03-31T00:00:00Z,106,Catskill,#a05047,2.0253058652647704
+Tioga,2020-03-31T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-03-31T00:00:00Z,73,Finger Lakes,#addb83,1.863322860120456
+Ulster,2020-03-31T00:00:00Z,207,Catskill,#a05047,2.315970345456918
+Warren,2020-03-31T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Washington,2020-03-31T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Wayne,2020-03-31T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Westchester,2020-03-31T00:00:00Z,9967,Eastern Hudson Valley,#7877a1,3.9985644582609416
+Wyoming,2020-03-31T00:00:00Z,8,Niagara Frontier,#84c6dc,0.9030899869919435
+New York State,2020-04-01T00:00:00Z,83948,New York State,black,4.924010353847379
+Albany,2020-04-01T00:00:00Z,240,Capital District,#d4dc55,2.380211241711606
+Allegany,2020-04-01T00:00:00Z,10,Chautauqua-Alleghany,#dbbc85,1
+Broome,2020-04-01T00:00:00Z,42,Central New York,#e49632,1.6232492903979006
+Cattaraugus,2020-04-01T00:00:00Z,7,Chautauqua-Alleghany,#dbbc85,0.8450980400142568
+Chautauqua,2020-04-01T00:00:00Z,8,Chautauqua-Alleghany,#dbbc85,0.9030899869919435
+Chemung,2020-04-01T00:00:00Z,22,Finger Lakes,#addb83,1.3424226808222062
+Chenango,2020-04-01T00:00:00Z,26,Central New York,#e49632,1.414973347970818
+Clinton,2020-04-01T00:00:00Z,25,Adirondack,#328ea3,1.3979400086720377
+Columbia,2020-04-01T00:00:00Z,41,Eastern Hudson Valley,#7877a1,1.6127838567197355
+Cortland,2020-04-01T00:00:00Z,10,Finger Lakes,#addb83,1
+Delaware,2020-04-01T00:00:00Z,20,Catskill,#a05047,1.3010299956639813
+Dutchess,2020-04-01T00:00:00Z,547,Eastern Hudson Valley,#7877a1,2.737987326333431
+Erie,2020-04-01T00:00:00Z,582,Niagara Frontier,#84c6dc,2.7649229846498886
+Essex,2020-04-01T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Franklin,2020-04-01T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Genesee,2020-04-01T00:00:00Z,13,Niagara Frontier,#84c6dc,1.1139433523068367
+Greene,2020-04-01T00:00:00Z,18,Catskill,#a05047,1.255272505103306
+Herkimer,2020-04-01T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Jefferson,2020-04-01T00:00:00Z,12,Thousand Island,#db848c,1.0791812460476249
+Livingston,2020-04-01T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Madison,2020-04-01T00:00:00Z,62,Central New York,#e49632,1.792391689498254
+Monroe,2020-04-01T00:00:00Z,349,Finger Lakes,#addb83,2.5428254269591797
+Montgomery,2020-04-01T00:00:00Z,7,Central New York,#e49632,0.8450980400142568
+Nassau,2020-04-01T00:00:00Z,9554,Long Island,#aa918d,3.980185236947335
+New York,2020-04-01T00:00:00Z,47439,New York City,#a8a8a8,4.676135525654282
+Niagara,2020-04-01T00:00:00Z,46,Niagara Frontier,#84c6dc,1.662757831681574
+Oneida,2020-04-01T00:00:00Z,50,Central New York,#e49632,1.6989700043360187
+Onondaga,2020-04-01T00:00:00Z,277,Finger Lakes,#addb83,2.4424797690644486
+Ontario,2020-04-01T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Orange,2020-04-01T00:00:00Z,1756,Catskill,#a05047,3.244524511570084
+Orleans,2020-04-01T00:00:00Z,6,Niagara Frontier,#84c6dc,0.7781512503836436
+Oswego,2020-04-01T00:00:00Z,20,Thousand Island,#db848c,1.3010299956639813
+Otsego,2020-04-01T00:00:00Z,19,Central New York,#e49632,1.2787536009528289
+Putnam,2020-04-01T00:00:00Z,207,Eastern Hudson Valley,#7877a1,2.315970345456918
+Rensselaer,2020-04-01T00:00:00Z,55,Capital District,#d4dc55,1.7403626894942439
+Rockland,2020-04-01T00:00:00Z,3321,Catskill,#a05047,3.5212688755983854
+St. Lawrence,2020-04-01T00:00:00Z,34,Thousand Island,#db848c,1.5314789170422551
+Saratoga,2020-04-01T00:00:00Z,122,Capital District,#d4dc55,2.0863598306747484
+Schenectady,2020-04-01T00:00:00Z,93,Capital District,#d4dc55,1.968482948553935
+Schoharie,2020-04-01T00:00:00Z,9,Central New York,#e49632,0.9542425094393249
+Steuben,2020-04-01T00:00:00Z,38,Finger Lakes,#addb83,1.5797835966168101
+Suffolk,2020-04-01T00:00:00Z,7605,Long Island,#aa918d,3.8810992183890174
+Sullivan,2020-04-01T00:00:00Z,121,Catskill,#a05047,2.08278537031645
+Tioga,2020-04-01T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-01T00:00:00Z,76,Finger Lakes,#addb83,1.8808135922807914
+Ulster,2020-04-01T00:00:00Z,222,Catskill,#a05047,2.346352974450639
+Warren,2020-04-01T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Washington,2020-04-01T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Wayne,2020-04-01T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Westchester,2020-04-01T00:00:00Z,10683,Eastern Hudson Valley,#7877a1,4.028693228393916
+Wyoming,2020-04-01T00:00:00Z,10,Niagara Frontier,#84c6dc,1
+New York State,2020-04-02T00:00:00Z,92506,New York State,black,4.966169902278316
+Albany,2020-04-02T00:00:00Z,253,Capital District,#d4dc55,2.403120521175818
+Allegany,2020-04-02T00:00:00Z,12,Chautauqua-Alleghany,#dbbc85,1.0791812460476249
+Broome,2020-04-02T00:00:00Z,46,Central New York,#e49632,1.662757831681574
+Cattaraugus,2020-04-02T00:00:00Z,8,Chautauqua-Alleghany,#dbbc85,0.9030899869919435
+Chautauqua,2020-04-02T00:00:00Z,8,Chautauqua-Alleghany,#dbbc85,0.9030899869919435
+Chemung,2020-04-02T00:00:00Z,22,Finger Lakes,#addb83,1.3424226808222062
+Chenango,2020-04-02T00:00:00Z,28,Central New York,#e49632,1.4471580313422192
+Clinton,2020-04-02T00:00:00Z,25,Adirondack,#328ea3,1.3979400086720377
+Columbia,2020-04-02T00:00:00Z,45,Eastern Hudson Valley,#7877a1,1.6532125137753437
+Cortland,2020-04-02T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Delaware,2020-04-02T00:00:00Z,22,Catskill,#a05047,1.3424226808222062
+Dutchess,2020-04-02T00:00:00Z,667,Eastern Hudson Valley,#7877a1,2.824125833916549
+Erie,2020-04-02T00:00:00Z,617,Niagara Frontier,#84c6dc,2.7902851640332416
+Essex,2020-04-02T00:00:00Z,7,Adirondack,#328ea3,0.8450980400142568
+Franklin,2020-04-02T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Fulton,2020-04-02T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Genesee,2020-04-02T00:00:00Z,16,Niagara Frontier,#84c6dc,1.2041199826559248
+Greene,2020-04-02T00:00:00Z,21,Catskill,#a05047,1.3222192947339193
+Herkimer,2020-04-02T00:00:00Z,14,Adirondack,#328ea3,1.146128035678238
+Jefferson,2020-04-02T00:00:00Z,15,Thousand Island,#db848c,1.1760912590556813
+Livingston,2020-04-02T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Madison,2020-04-02T00:00:00Z,68,Central New York,#e49632,1.8325089127062364
+Monroe,2020-04-02T00:00:00Z,420,Finger Lakes,#addb83,2.6232492903979003
+Montgomery,2020-04-02T00:00:00Z,8,Central New York,#e49632,0.9030899869919435
+Nassau,2020-04-02T00:00:00Z,10587,Long Island,#aa918d,4.024772913079632
+New York,2020-04-02T00:00:00Z,51809,New York City,#a8a8a8,4.714405209761099
+Niagara,2020-04-02T00:00:00Z,91,Niagara Frontier,#84c6dc,1.9590413923210936
+Oneida,2020-04-02T00:00:00Z,61,Central New York,#e49632,1.7853298350107671
+Onondaga,2020-04-02T00:00:00Z,301,Finger Lakes,#addb83,2.478566495593843
+Ontario,2020-04-02T00:00:00Z,26,Finger Lakes,#addb83,1.414973347970818
+Orange,2020-04-02T00:00:00Z,1993,Catskill,#a05047,3.2995072987004876
+Orleans,2020-04-02T00:00:00Z,6,Niagara Frontier,#84c6dc,0.7781512503836436
+Oswego,2020-04-02T00:00:00Z,23,Thousand Island,#db848c,1.3617278360175928
+Otsego,2020-04-02T00:00:00Z,21,Central New York,#e49632,1.3222192947339193
+Putnam,2020-04-02T00:00:00Z,216,Eastern Hudson Valley,#7877a1,2.3344537511509307
+Rensselaer,2020-04-02T00:00:00Z,60,Capital District,#d4dc55,1.7781512503836436
+Rockland,2020-04-02T00:00:00Z,3751,Catskill,#a05047,3.574147064150723
+St. Lawrence,2020-04-02T00:00:00Z,39,Thousand Island,#db848c,1.591064607026499
+Saratoga,2020-04-02T00:00:00Z,132,Capital District,#d4dc55,2.12057393120585
+Schenectady,2020-04-02T00:00:00Z,101,Capital District,#d4dc55,2.0043213737826426
+Schoharie,2020-04-02T00:00:00Z,9,Central New York,#e49632,0.9542425094393249
+Steuben,2020-04-02T00:00:00Z,43,Finger Lakes,#addb83,1.6334684555795866
+Suffolk,2020-04-02T00:00:00Z,8746,Long Island,#aa918d,3.941809473008838
+Sullivan,2020-04-02T00:00:00Z,143,Catskill,#a05047,2.155336037465062
+Tioga,2020-04-02T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-02T00:00:00Z,80,Finger Lakes,#addb83,1.9030899869919435
+Ulster,2020-04-02T00:00:00Z,240,Catskill,#a05047,2.380211241711606
+Warren,2020-04-02T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Washington,2020-04-02T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Wayne,2020-04-02T00:00:00Z,27,Finger Lakes,#addb83,1.4313637641589874
+Westchester,2020-04-02T00:00:00Z,11567,Eastern Hudson Valley,#7877a1,4.063220735581995
+Wyoming,2020-04-02T00:00:00Z,14,Niagara Frontier,#84c6dc,1.146128035678238
+New York State,2020-04-03T00:00:00Z,102987,New York State,black,5.012782407379105
+Albany,2020-04-03T00:00:00Z,267,Capital District,#d4dc55,2.4265112613645754
+Allegany,2020-04-03T00:00:00Z,14,Chautauqua-Alleghany,#dbbc85,1.146128035678238
+Broome,2020-04-03T00:00:00Z,56,Central New York,#e49632,1.7481880270062005
+Cattaraugus,2020-04-03T00:00:00Z,9,Chautauqua-Alleghany,#dbbc85,0.9542425094393249
+Cayuga,2020-04-03T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Chautauqua,2020-04-03T00:00:00Z,9,Chautauqua-Alleghany,#dbbc85,0.9542425094393249
+Chemung,2020-04-03T00:00:00Z,35,Finger Lakes,#addb83,1.5440680443502757
+Chenango,2020-04-03T00:00:00Z,32,Central New York,#e49632,1.505149978319906
+Clinton,2020-04-03T00:00:00Z,30,Adirondack,#328ea3,1.4771212547196624
+Columbia,2020-04-03T00:00:00Z,51,Eastern Hudson Valley,#7877a1,1.7075701760979363
+Cortland,2020-04-03T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Delaware,2020-04-03T00:00:00Z,24,Catskill,#a05047,1.380211241711606
+Dutchess,2020-04-03T00:00:00Z,809,Eastern Hudson Valley,#7877a1,2.9079485216122722
+Erie,2020-04-03T00:00:00Z,734,Niagara Frontier,#84c6dc,2.8656960599160706
+Essex,2020-04-03T00:00:00Z,7,Adirondack,#328ea3,0.8450980400142568
+Franklin,2020-04-03T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-03T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Genesee,2020-04-03T00:00:00Z,17,Niagara Frontier,#84c6dc,1.2304489213782739
+Greene,2020-04-03T00:00:00Z,23,Catskill,#a05047,1.3617278360175928
+Herkimer,2020-04-03T00:00:00Z,14,Adirondack,#328ea3,1.146128035678238
+Jefferson,2020-04-03T00:00:00Z,18,Thousand Island,#db848c,1.255272505103306
+Livingston,2020-04-03T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Madison,2020-04-03T00:00:00Z,77,Central New York,#e49632,1.8864907251724818
+Monroe,2020-04-03T00:00:00Z,464,Finger Lakes,#addb83,2.6665179805548807
+Montgomery,2020-04-03T00:00:00Z,10,Central New York,#e49632,1
+Nassau,2020-04-03T00:00:00Z,12024,Long Island,#aa918d,4.080048967578851
+New York,2020-04-03T00:00:00Z,57159,New York City,#a8a8a8,4.757084622178399
+Niagara,2020-04-03T00:00:00Z,94,Niagara Frontier,#84c6dc,1.9731278535996986
+Oneida,2020-04-03T00:00:00Z,71,Central New York,#e49632,1.8512583487190752
+Onondaga,2020-04-03T00:00:00Z,322,Finger Lakes,#addb83,2.507855871695831
+Ontario,2020-04-03T00:00:00Z,28,Finger Lakes,#addb83,1.4471580313422192
+Orange,2020-04-03T00:00:00Z,2397,Catskill,#a05047,3.379668034033654
+Orleans,2020-04-03T00:00:00Z,6,Niagara Frontier,#84c6dc,0.7781512503836436
+Oswego,2020-04-03T00:00:00Z,28,Thousand Island,#db848c,1.4471580313422192
+Otsego,2020-04-03T00:00:00Z,21,Central New York,#e49632,1.3222192947339193
+Putnam,2020-04-03T00:00:00Z,252,Eastern Hudson Valley,#7877a1,2.401400540781544
+Rensselaer,2020-04-03T00:00:00Z,67,Capital District,#d4dc55,1.8260748027008264
+Rockland,2020-04-03T00:00:00Z,4289,Catskill,#a05047,3.632356046239073
+St. Lawrence,2020-04-03T00:00:00Z,43,Thousand Island,#db848c,1.6334684555795866
+Saratoga,2020-04-03T00:00:00Z,141,Capital District,#d4dc55,2.1492191126553797
+Schenectady,2020-04-03T00:00:00Z,110,Capital District,#d4dc55,2.041392685158225
+Schoharie,2020-04-03T00:00:00Z,11,Central New York,#e49632,1.041392685158225
+Seneca,2020-04-03T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Steuben,2020-04-03T00:00:00Z,46,Finger Lakes,#addb83,1.662757831681574
+Suffolk,2020-04-03T00:00:00Z,10154,Long Island,#aa918d,4.006637159068586
+Sullivan,2020-04-03T00:00:00Z,168,Catskill,#a05047,2.225309281725863
+Tioga,2020-04-03T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-03T00:00:00Z,87,Finger Lakes,#addb83,1.9395192526186185
+Ulster,2020-04-03T00:00:00Z,263,Catskill,#a05047,2.419955748489758
+Warren,2020-04-03T00:00:00Z,19,Adirondack,#328ea3,1.2787536009528289
+Washington,2020-04-03T00:00:00Z,15,Adirondack,#328ea3,1.1760912590556813
+Wayne,2020-04-03T00:00:00Z,30,Finger Lakes,#addb83,1.4771212547196624
+Westchester,2020-04-03T00:00:00Z,12351,Eastern Hudson Valley,#7877a1,4.091702121717148
+Wyoming,2020-04-03T00:00:00Z,15,Niagara Frontier,#84c6dc,1.1760912590556813
+New York State,2020-04-04T00:00:00Z,113833,New York State,black,5.056268181569872
+Albany,2020-04-04T00:00:00Z,293,Capital District,#d4dc55,2.4668676203541096
+Allegany,2020-04-04T00:00:00Z,16,Chautauqua-Alleghany,#dbbc85,1.2041199826559248
+Broome,2020-04-04T00:00:00Z,65,Central New York,#e49632,1.8129133566428555
+Cattaraugus,2020-04-04T00:00:00Z,9,Chautauqua-Alleghany,#dbbc85,0.9542425094393249
+Cayuga,2020-04-04T00:00:00Z,7,Finger Lakes,#addb83,0.8450980400142568
+Chautauqua,2020-04-04T00:00:00Z,10,Chautauqua-Alleghany,#dbbc85,1
+Chemung,2020-04-04T00:00:00Z,36,Finger Lakes,#addb83,1.5563025007672873
+Chenango,2020-04-04T00:00:00Z,39,Central New York,#e49632,1.591064607026499
+Clinton,2020-04-04T00:00:00Z,31,Adirondack,#328ea3,1.4913616938342726
+Columbia,2020-04-04T00:00:00Z,57,Eastern Hudson Valley,#7877a1,1.7558748556724915
+Cortland,2020-04-04T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Delaware,2020-04-04T00:00:00Z,26,Catskill,#a05047,1.414973347970818
+Dutchess,2020-04-04T00:00:00Z,938,Eastern Hudson Valley,#7877a1,2.9722028383790646
+Erie,2020-04-04T00:00:00Z,808,Niagara Frontier,#84c6dc,2.907411360774586
+Essex,2020-04-04T00:00:00Z,7,Adirondack,#328ea3,0.8450980400142568
+Franklin,2020-04-04T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-04T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Genesee,2020-04-04T00:00:00Z,20,Niagara Frontier,#84c6dc,1.3010299956639813
+Greene,2020-04-04T00:00:00Z,24,Catskill,#a05047,1.380211241711606
+Herkimer,2020-04-04T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Jefferson,2020-04-04T00:00:00Z,20,Thousand Island,#db848c,1.3010299956639813
+Livingston,2020-04-04T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Madison,2020-04-04T00:00:00Z,78,Central New York,#e49632,1.8920946026904804
+Monroe,2020-04-04T00:00:00Z,512,Finger Lakes,#addb83,2.709269960975831
+Montgomery,2020-04-04T00:00:00Z,13,Central New York,#e49632,1.1139433523068367
+Nassau,2020-04-04T00:00:00Z,13346,Long Island,#aa918d,4.125351120514752
+New York,2020-04-04T00:00:00Z,63306,New York City,#a8a8a8,4.801444873420249
+Niagara,2020-04-04T00:00:00Z,101,Niagara Frontier,#84c6dc,2.0043213737826426
+Oneida,2020-04-04T00:00:00Z,80,Central New York,#e49632,1.9030899869919435
+Onondaga,2020-04-04T00:00:00Z,349,Finger Lakes,#addb83,2.5428254269591797
+Ontario,2020-04-04T00:00:00Z,31,Finger Lakes,#addb83,1.4913616938342726
+Orange,2020-04-04T00:00:00Z,2741,Catskill,#a05047,3.4379090355394983
+Orleans,2020-04-04T00:00:00Z,10,Niagara Frontier,#84c6dc,1
+Oswego,2020-04-04T00:00:00Z,28,Thousand Island,#db848c,1.4471580313422192
+Otsego,2020-04-04T00:00:00Z,26,Central New York,#e49632,1.414973347970818
+Putnam,2020-04-04T00:00:00Z,283,Eastern Hudson Valley,#7877a1,2.45178643552429
+Rensselaer,2020-04-04T00:00:00Z,67,Capital District,#d4dc55,1.8260748027008264
+Rockland,2020-04-04T00:00:00Z,4872,Catskill,#a05047,3.687707279624819
+St. Lawrence,2020-04-04T00:00:00Z,52,Thousand Island,#db848c,1.7160033436347992
+Saratoga,2020-04-04T00:00:00Z,141,Capital District,#d4dc55,2.1492191126553797
+Schenectady,2020-04-04T00:00:00Z,117,Capital District,#d4dc55,2.0681858617461617
+Schoharie,2020-04-04T00:00:00Z,11,Central New York,#e49632,1.041392685158225
+Seneca,2020-04-04T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
+Steuben,2020-04-04T00:00:00Z,60,Finger Lakes,#addb83,1.7781512503836436
+Suffolk,2020-04-04T00:00:00Z,11370,Long Island,#aa918d,4.055760464687735
+Sullivan,2020-04-04T00:00:00Z,193,Catskill,#a05047,2.285557309007774
+Tioga,2020-04-04T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-04T00:00:00Z,93,Finger Lakes,#addb83,1.968482948553935
+Ulster,2020-04-04T00:00:00Z,290,Catskill,#a05047,2.462397997898956
+Warren,2020-04-04T00:00:00Z,20,Adirondack,#328ea3,1.3010299956639813
+Washington,2020-04-04T00:00:00Z,16,Adirondack,#328ea3,1.2041199826559248
+Wayne,2020-04-04T00:00:00Z,30,Finger Lakes,#addb83,1.4771212547196624
+Westchester,2020-04-04T00:00:00Z,13081,Eastern Hudson Valley,#7877a1,4.116640945661129
+Wyoming,2020-04-04T00:00:00Z,18,Niagara Frontier,#84c6dc,1.255272505103306
+New York State,2020-04-05T00:00:00Z,123160,New York State,black,5.090469680231161
+Albany,2020-04-05T00:00:00Z,305,Capital District,#d4dc55,2.484299839346786
+Allegany,2020-04-05T00:00:00Z,16,Chautauqua-Alleghany,#dbbc85,1.2041199826559248
+Broome,2020-04-05T00:00:00Z,71,Central New York,#e49632,1.8512583487190752
+Cattaraugus,2020-04-05T00:00:00Z,10,Chautauqua-Alleghany,#dbbc85,1
+Cayuga,2020-04-05T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Chautauqua,2020-04-05T00:00:00Z,18,Chautauqua-Alleghany,#dbbc85,1.255272505103306
+Chemung,2020-04-05T00:00:00Z,38,Finger Lakes,#addb83,1.5797835966168101
+Chenango,2020-04-05T00:00:00Z,43,Central New York,#e49632,1.6334684555795866
+Clinton,2020-04-05T00:00:00Z,33,Adirondack,#328ea3,1.5185139398778875
+Columbia,2020-04-05T00:00:00Z,69,Eastern Hudson Valley,#7877a1,1.8388490907372552
+Cortland,2020-04-05T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Delaware,2020-04-05T00:00:00Z,27,Catskill,#a05047,1.4313637641589874
+Dutchess,2020-04-05T00:00:00Z,1077,Eastern Hudson Valley,#7877a1,3.0322157032979815
+Erie,2020-04-05T00:00:00Z,1059,Niagara Frontier,#84c6dc,3.024895960107485
+Essex,2020-04-05T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Franklin,2020-04-05T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-05T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Genesee,2020-04-05T00:00:00Z,22,Niagara Frontier,#84c6dc,1.3424226808222062
+Greene,2020-04-05T00:00:00Z,24,Catskill,#a05047,1.380211241711606
+Herkimer,2020-04-05T00:00:00Z,22,Adirondack,#328ea3,1.3424226808222062
+Jefferson,2020-04-05T00:00:00Z,26,Thousand Island,#db848c,1.414973347970818
+Livingston,2020-04-05T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Madison,2020-04-05T00:00:00Z,89,Central New York,#e49632,1.9493900066449128
+Monroe,2020-04-05T00:00:00Z,548,Finger Lakes,#addb83,2.738780558484369
+Montgomery,2020-04-05T00:00:00Z,15,Central New York,#e49632,1.1760912590556813
+Nassau,2020-04-05T00:00:00Z,14398,Long Island,#aa918d,4.158302169228023
+New York,2020-04-05T00:00:00Z,67551,New York City,#a8a8a8,4.829631782540393
+Niagara,2020-04-05T00:00:00Z,116,Niagara Frontier,#84c6dc,2.0644579892269186
+Oneida,2020-04-05T00:00:00Z,95,Central New York,#e49632,1.9777236052888478
+Onondaga,2020-04-05T00:00:00Z,364,Finger Lakes,#addb83,2.561101383649056
+Ontario,2020-04-05T00:00:00Z,32,Finger Lakes,#addb83,1.505149978319906
+Orange,2020-04-05T00:00:00Z,3187,Catskill,#a05047,3.5033820634737327
+Orleans,2020-04-05T00:00:00Z,11,Niagara Frontier,#84c6dc,1.041392685158225
+Oswego,2020-04-05T00:00:00Z,32,Thousand Island,#db848c,1.505149978319906
+Otsego,2020-04-05T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Putnam,2020-04-05T00:00:00Z,314,Eastern Hudson Valley,#7877a1,2.496929648073215
+Rensselaer,2020-04-05T00:00:00Z,74,Capital District,#d4dc55,1.8692317197309762
+Rockland,2020-04-05T00:00:00Z,5326,Catskill,#a05047,3.7264011621029223
+St. Lawrence,2020-04-05T00:00:00Z,61,Thousand Island,#db848c,1.7853298350107671
+Saratoga,2020-04-05T00:00:00Z,150,Capital District,#d4dc55,2.1760912590556813
+Schenectady,2020-04-05T00:00:00Z,128,Capital District,#d4dc55,2.1072099696478683
+Schoharie,2020-04-05T00:00:00Z,11,Central New York,#e49632,1.041392685158225
+Seneca,2020-04-05T00:00:00Z,9,Finger Lakes,#addb83,0.9542425094393249
+Steuben,2020-04-05T00:00:00Z,73,Finger Lakes,#addb83,1.863322860120456
+Suffolk,2020-04-05T00:00:00Z,13129,Long Island,#aa918d,4.118231648327027
+Sullivan,2020-04-05T00:00:00Z,193,Catskill,#a05047,2.285557309007774
+Tioga,2020-04-05T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-05T00:00:00Z,95,Finger Lakes,#addb83,1.9777236052888478
+Ulster,2020-04-05T00:00:00Z,358,Catskill,#a05047,2.5538830266438746
+Warren,2020-04-05T00:00:00Z,25,Adirondack,#328ea3,1.3979400086720377
+Washington,2020-04-05T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Wayne,2020-04-05T00:00:00Z,32,Finger Lakes,#addb83,1.505149978319906
+Westchester,2020-04-05T00:00:00Z,13723,Eastern Hudson Valley,#7877a1,4.137449063340335
+Wyoming,2020-04-05T00:00:00Z,22,Niagara Frontier,#84c6dc,1.3424226808222062
+New York State,2020-04-06T00:00:00Z,131815,New York State,black,5.119964833979976
+Albany,2020-04-06T00:00:00Z,319,Capital District,#d4dc55,2.503790683057181
+Allegany,2020-04-06T00:00:00Z,17,Chautauqua-Alleghany,#dbbc85,1.2304489213782739
+Broome,2020-04-06T00:00:00Z,76,Central New York,#e49632,1.8808135922807914
+Cattaraugus,2020-04-06T00:00:00Z,12,Chautauqua-Alleghany,#dbbc85,1.0791812460476249
+Cayuga,2020-04-06T00:00:00Z,11,Finger Lakes,#addb83,1.041392685158225
+Chautauqua,2020-04-06T00:00:00Z,18,Chautauqua-Alleghany,#dbbc85,1.255272505103306
+Chemung,2020-04-06T00:00:00Z,47,Finger Lakes,#addb83,1.6720978579357175
+Chenango,2020-04-06T00:00:00Z,46,Central New York,#e49632,1.662757831681574
+Clinton,2020-04-06T00:00:00Z,36,Adirondack,#328ea3,1.5563025007672873
+Columbia,2020-04-06T00:00:00Z,70,Eastern Hudson Valley,#7877a1,1.845098040014257
+Cortland,2020-04-06T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Delaware,2020-04-06T00:00:00Z,29,Catskill,#a05047,1.462397997898956
+Dutchess,2020-04-06T00:00:00Z,1189,Eastern Hudson Valley,#7877a1,3.0751818546186915
+Erie,2020-04-06T00:00:00Z,1148,Niagara Frontier,#84c6dc,3.059941888061955
+Essex,2020-04-06T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Franklin,2020-04-06T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-06T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Genesee,2020-04-06T00:00:00Z,23,Niagara Frontier,#84c6dc,1.3617278360175928
+Greene,2020-04-06T00:00:00Z,24,Catskill,#a05047,1.380211241711606
+Herkimer,2020-04-06T00:00:00Z,25,Adirondack,#328ea3,1.3979400086720377
+Jefferson,2020-04-06T00:00:00Z,33,Thousand Island,#db848c,1.5185139398778875
+Lewis,2020-04-06T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-06T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Madison,2020-04-06T00:00:00Z,92,Central New York,#e49632,1.9637878273455553
+Monroe,2020-04-06T00:00:00Z,574,Finger Lakes,#addb83,2.7589118923979736
+Montgomery,2020-04-06T00:00:00Z,15,Central New York,#e49632,1.1760912590556813
+Nassau,2020-04-06T00:00:00Z,15616,Long Island,#aa918d,4.193569800322616
+New York,2020-04-06T00:00:00Z,72181,New York City,#a8a8a8,4.858422894507549
+Niagara,2020-04-06T00:00:00Z,120,Niagara Frontier,#84c6dc,2.0791812460476247
+Oneida,2020-04-06T00:00:00Z,100,Central New York,#e49632,2
+Onondaga,2020-04-06T00:00:00Z,377,Finger Lakes,#addb83,2.576341350205793
+Ontario,2020-04-06T00:00:00Z,32,Finger Lakes,#addb83,1.505149978319906
+Orange,2020-04-06T00:00:00Z,3533,Catskill,#a05047,3.5481436374348454
+Orleans,2020-04-06T00:00:00Z,13,Niagara Frontier,#84c6dc,1.1139433523068367
+Oswego,2020-04-06T00:00:00Z,34,Thousand Island,#db848c,1.5314789170422551
+Otsego,2020-04-06T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Putnam,2020-04-06T00:00:00Z,345,Eastern Hudson Valley,#7877a1,2.537819095073274
+Rensselaer,2020-04-06T00:00:00Z,74,Capital District,#d4dc55,1.8692317197309762
+Rockland,2020-04-06T00:00:00Z,5703,Catskill,#a05047,3.7561033715851058
+St. Lawrence,2020-04-06T00:00:00Z,61,Thousand Island,#db848c,1.7853298350107671
+Saratoga,2020-04-06T00:00:00Z,153,Capital District,#d4dc55,2.184691430817599
+Schenectady,2020-04-06T00:00:00Z,138,Capital District,#d4dc55,2.1398790864012365
+Schoharie,2020-04-06T00:00:00Z,11,Central New York,#e49632,1.041392685158225
+Seneca,2020-04-06T00:00:00Z,9,Finger Lakes,#addb83,0.9542425094393249
+Steuben,2020-04-06T00:00:00Z,75,Finger Lakes,#addb83,1.8750612633917
+Suffolk,2020-04-06T00:00:00Z,14185,Long Island,#aa918d,4.151829340131871
+Sullivan,2020-04-06T00:00:00Z,253,Catskill,#a05047,2.403120521175818
+Tioga,2020-04-06T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-06T00:00:00Z,102,Finger Lakes,#addb83,2.0086001717619175
+Ulster,2020-04-06T00:00:00Z,382,Catskill,#a05047,2.582063362911709
+Warren,2020-04-06T00:00:00Z,26,Adirondack,#328ea3,1.414973347970818
+Washington,2020-04-06T00:00:00Z,19,Adirondack,#328ea3,1.2787536009528289
+Wayne,2020-04-06T00:00:00Z,34,Finger Lakes,#addb83,1.5314789170422551
+Westchester,2020-04-06T00:00:00Z,14294,Eastern Hudson Valley,#7877a1,4.155153777765149
+Wyoming,2020-04-06T00:00:00Z,23,Niagara Frontier,#84c6dc,1.3617278360175928
+New York State,2020-04-07T00:00:00Z,139875,New York State,black,5.145740099536407
+Albany,2020-04-07T00:00:00Z,333,Capital District,#d4dc55,2.5224442335063197
+Allegany,2020-04-07T00:00:00Z,17,Chautauqua-Alleghany,#dbbc85,1.2304489213782739
+Broome,2020-04-07T00:00:00Z,86,Central New York,#e49632,1.9344984512435677
+Cattaraugus,2020-04-07T00:00:00Z,13,Chautauqua-Alleghany,#dbbc85,1.1139433523068367
+Cayuga,2020-04-07T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Chautauqua,2020-04-07T00:00:00Z,18,Chautauqua-Alleghany,#dbbc85,1.255272505103306
+Chemung,2020-04-07T00:00:00Z,49,Finger Lakes,#addb83,1.6901960800285136
+Chenango,2020-04-07T00:00:00Z,51,Central New York,#e49632,1.7075701760979363
+Clinton,2020-04-07T00:00:00Z,37,Adirondack,#328ea3,1.568201724066995
+Columbia,2020-04-07T00:00:00Z,72,Eastern Hudson Valley,#7877a1,1.8573324964312685
+Cortland,2020-04-07T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Delaware,2020-04-07T00:00:00Z,36,Catskill,#a05047,1.5563025007672873
+Dutchess,2020-04-07T00:00:00Z,1249,Eastern Hudson Valley,#7877a1,3.0965624383741357
+Erie,2020-04-07T00:00:00Z,1234,Niagara Frontier,#84c6dc,3.091315159697223
+Essex,2020-04-07T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Franklin,2020-04-07T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-07T00:00:00Z,13,Adirondack,#328ea3,1.1139433523068367
+Genesee,2020-04-07T00:00:00Z,33,Niagara Frontier,#84c6dc,1.5185139398778875
+Greene,2020-04-07T00:00:00Z,24,Catskill,#a05047,1.380211241711606
+Herkimer,2020-04-07T00:00:00Z,27,Adirondack,#328ea3,1.4313637641589874
+Jefferson,2020-04-07T00:00:00Z,39,Thousand Island,#db848c,1.591064607026499
+Lewis,2020-04-07T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-07T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Madison,2020-04-07T00:00:00Z,92,Central New York,#e49632,1.9637878273455553
+Monroe,2020-04-07T00:00:00Z,596,Finger Lakes,#addb83,2.7752462597402365
+Montgomery,2020-04-07T00:00:00Z,18,Central New York,#e49632,1.255272505103306
+Nassau,2020-04-07T00:00:00Z,16610,Long Island,#aa918d,4.220369632451394
+New York,2020-04-07T00:00:00Z,76876,New York City,#a8a8a8,4.885790778105844
+Niagara,2020-04-07T00:00:00Z,126,Niagara Frontier,#84c6dc,2.100370545117563
+Oneida,2020-04-07T00:00:00Z,118,Central New York,#e49632,2.0718820073061255
+Onondaga,2020-04-07T00:00:00Z,397,Finger Lakes,#addb83,2.598790506763115
+Ontario,2020-04-07T00:00:00Z,33,Finger Lakes,#addb83,1.5185139398778875
+Orange,2020-04-07T00:00:00Z,3829,Catskill,#a05047,3.583085366347688
+Orleans,2020-04-07T00:00:00Z,15,Niagara Frontier,#84c6dc,1.1760912590556813
+Oswego,2020-04-07T00:00:00Z,34,Thousand Island,#db848c,1.5314789170422551
+Otsego,2020-04-07T00:00:00Z,34,Central New York,#e49632,1.5314789170422551
+Putnam,2020-04-07T00:00:00Z,402,Eastern Hudson Valley,#7877a1,2.60422605308447
+Rensselaer,2020-04-07T00:00:00Z,88,Capital District,#d4dc55,1.9444826721501687
+Rockland,2020-04-07T00:00:00Z,5990,Catskill,#a05047,3.7774268223893115
+St. Lawrence,2020-04-07T00:00:00Z,61,Thousand Island,#db848c,1.7853298350107671
+Saratoga,2020-04-07T00:00:00Z,155,Capital District,#d4dc55,2.1903316981702914
+Schenectady,2020-04-07T00:00:00Z,145,Capital District,#d4dc55,2.161368002234975
+Schoharie,2020-04-07T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Seneca,2020-04-07T00:00:00Z,10,Finger Lakes,#addb83,1
+Steuben,2020-04-07T00:00:00Z,75,Finger Lakes,#addb83,1.8750612633917
+Suffolk,2020-04-07T00:00:00Z,15561,Long Island,#aa918d,4.192037502713247
+Sullivan,2020-04-07T00:00:00Z,270,Catskill,#a05047,2.4313637641589874
+Tioga,2020-04-07T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Tompkins,2020-04-07T00:00:00Z,103,Finger Lakes,#addb83,2.012837224705172
+Ulster,2020-04-07T00:00:00Z,398,Catskill,#a05047,2.5998830720736876
+Warren,2020-04-07T00:00:00Z,31,Adirondack,#328ea3,1.4913616938342726
+Washington,2020-04-07T00:00:00Z,19,Adirondack,#328ea3,1.2787536009528289
+Wayne,2020-04-07T00:00:00Z,35,Finger Lakes,#addb83,1.5440680443502757
+Westchester,2020-04-07T00:00:00Z,14294,Eastern Hudson Valley,#7877a1,4.155153777765149
+Wyoming,2020-04-07T00:00:00Z,23,Niagara Frontier,#84c6dc,1.3617278360175928
+New York State,2020-04-08T00:00:00Z,151061,New York State,black,5.179152355331653
+Albany,2020-04-08T00:00:00Z,342,Capital District,#d4dc55,2.534026106056135
+Allegany,2020-04-08T00:00:00Z,21,Chautauqua-Alleghany,#dbbc85,1.3222192947339193
+Broome,2020-04-08T00:00:00Z,93,Central New York,#e49632,1.968482948553935
+Cattaraugus,2020-04-08T00:00:00Z,15,Chautauqua-Alleghany,#dbbc85,1.1760912590556813
+Cayuga,2020-04-08T00:00:00Z,14,Finger Lakes,#addb83,1.146128035678238
+Chautauqua,2020-04-08T00:00:00Z,18,Chautauqua-Alleghany,#dbbc85,1.255272505103306
+Chemung,2020-04-08T00:00:00Z,55,Finger Lakes,#addb83,1.7403626894942439
+Chenango,2020-04-08T00:00:00Z,53,Central New York,#e49632,1.7242758696007892
+Clinton,2020-04-08T00:00:00Z,39,Adirondack,#328ea3,1.591064607026499
+Columbia,2020-04-08T00:00:00Z,76,Eastern Hudson Valley,#7877a1,1.8808135922807914
+Cortland,2020-04-08T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Delaware,2020-04-08T00:00:00Z,37,Catskill,#a05047,1.568201724066995
+Dutchess,2020-04-08T00:00:00Z,1395,Eastern Hudson Valley,#7877a1,3.144574207609616
+Erie,2020-04-08T00:00:00Z,1335,Niagara Frontier,#84c6dc,3.125481265700594
+Essex,2020-04-08T00:00:00Z,9,Adirondack,#328ea3,0.9542425094393249
+Franklin,2020-04-08T00:00:00Z,10,Adirondack,#328ea3,1
+Fulton,2020-04-08T00:00:00Z,14,Adirondack,#328ea3,1.146128035678238
+Genesee,2020-04-08T00:00:00Z,47,Niagara Frontier,#84c6dc,1.6720978579357175
+Greene,2020-04-08T00:00:00Z,25,Catskill,#a05047,1.3979400086720377
+Herkimer,2020-04-08T00:00:00Z,29,Adirondack,#328ea3,1.462397997898956
+Jefferson,2020-04-08T00:00:00Z,40,Thousand Island,#db848c,1.6020599913279625
+Lewis,2020-04-08T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-08T00:00:00Z,29,Finger Lakes,#addb83,1.462397997898956
+Madison,2020-04-08T00:00:00Z,92,Central New York,#e49632,1.9637878273455553
+Monroe,2020-04-08T00:00:00Z,651,Finger Lakes,#addb83,2.8135809885681917
+Montgomery,2020-04-08T00:00:00Z,18,Central New York,#e49632,1.255272505103306
+Nassau,2020-04-08T00:00:00Z,18548,Long Island,#aa918d,4.268297087223766
+New York,2020-04-08T00:00:00Z,81803,New York City,#a8a8a8,4.912769231049744
+Niagara,2020-04-08T00:00:00Z,155,Niagara Frontier,#84c6dc,2.1903316981702914
+Oneida,2020-04-08T00:00:00Z,125,Central New York,#e49632,2.0969100130080562
+Onondaga,2020-04-08T00:00:00Z,422,Finger Lakes,#addb83,2.625312450961674
+Ontario,2020-04-08T00:00:00Z,39,Finger Lakes,#addb83,1.591064607026499
+Orange,2020-04-08T00:00:00Z,4075,Catskill,#a05047,3.6101276130759956
+Orleans,2020-04-08T00:00:00Z,16,Niagara Frontier,#84c6dc,1.2041199826559248
+Oswego,2020-04-08T00:00:00Z,34,Thousand Island,#db848c,1.5314789170422551
+Otsego,2020-04-08T00:00:00Z,38,Central New York,#e49632,1.5797835966168101
+Putnam,2020-04-08T00:00:00Z,427,Eastern Hudson Valley,#7877a1,2.630427875025024
+Rensselaer,2020-04-08T00:00:00Z,88,Capital District,#d4dc55,1.9444826721501687
+Rockland,2020-04-08T00:00:00Z,6413,Catskill,#a05047,3.807061239917239
+St. Lawrence,2020-04-08T00:00:00Z,78,Thousand Island,#db848c,1.8920946026904804
+Saratoga,2020-04-08T00:00:00Z,162,Capital District,#d4dc55,2.2095150145426308
+Schenectady,2020-04-08T00:00:00Z,149,Capital District,#d4dc55,2.173186268412274
+Schoharie,2020-04-08T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Seneca,2020-04-08T00:00:00Z,12,Finger Lakes,#addb83,1.0791812460476249
+Steuben,2020-04-08T00:00:00Z,87,Finger Lakes,#addb83,1.9395192526186185
+Suffolk,2020-04-08T00:00:00Z,17008,Long Island,#aa918d,4.230653247179221
+Sullivan,2020-04-08T00:00:00Z,296,Catskill,#a05047,2.4712917110589387
+Tioga,2020-04-08T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Tompkins,2020-04-08T00:00:00Z,105,Finger Lakes,#addb83,2.0211892990699383
+Ulster,2020-04-08T00:00:00Z,462,Catskill,#a05047,2.6646419755561257
+Warren,2020-04-08T00:00:00Z,33,Adirondack,#328ea3,1.5185139398778875
+Washington,2020-04-08T00:00:00Z,20,Adirondack,#328ea3,1.3010299956639813
+Wayne,2020-04-08T00:00:00Z,39,Finger Lakes,#addb83,1.591064607026499
+Westchester,2020-04-08T00:00:00Z,15887,Eastern Hudson Valley,#7877a1,4.20104189554268
+Wyoming,2020-04-08T00:00:00Z,27,Niagara Frontier,#84c6dc,1.4313637641589874
+New York State,2020-04-09T00:00:00Z,161779,New York State,black,5.208922146596247
+Albany,2020-04-09T00:00:00Z,379,Capital District,#d4dc55,2.578639209968072
+Allegany,2020-04-09T00:00:00Z,22,Chautauqua-Alleghany,#dbbc85,1.3424226808222062
+Broome,2020-04-09T00:00:00Z,105,Central New York,#e49632,2.0211892990699383
+Cattaraugus,2020-04-09T00:00:00Z,17,Chautauqua-Alleghany,#dbbc85,1.2304489213782739
+Cayuga,2020-04-09T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Chautauqua,2020-04-09T00:00:00Z,22,Chautauqua-Alleghany,#dbbc85,1.3424226808222062
+Chemung,2020-04-09T00:00:00Z,59,Finger Lakes,#addb83,1.7708520116421442
+Chenango,2020-04-09T00:00:00Z,55,Central New York,#e49632,1.7403626894942439
+Clinton,2020-04-09T00:00:00Z,40,Adirondack,#328ea3,1.6020599913279625
+Columbia,2020-04-09T00:00:00Z,83,Eastern Hudson Valley,#7877a1,1.919078092376074
+Cortland,2020-04-09T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Delaware,2020-04-09T00:00:00Z,37,Catskill,#a05047,1.568201724066995
+Dutchess,2020-04-09T00:00:00Z,1493,Eastern Hudson Valley,#7877a1,3.1740598077250253
+Erie,2020-04-09T00:00:00Z,1432,Niagara Frontier,#84c6dc,3.1559430179718366
+Essex,2020-04-09T00:00:00Z,8,Adirondack,#328ea3,0.9030899869919435
+Franklin,2020-04-09T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Fulton,2020-04-09T00:00:00Z,15,Adirondack,#328ea3,1.1760912590556813
+Genesee,2020-04-09T00:00:00Z,56,Niagara Frontier,#84c6dc,1.7481880270062005
+Greene,2020-04-09T00:00:00Z,31,Catskill,#a05047,1.4913616938342726
+Herkimer,2020-04-09T00:00:00Z,32,Adirondack,#328ea3,1.505149978319906
+Jefferson,2020-04-09T00:00:00Z,42,Thousand Island,#db848c,1.6232492903979006
+Lewis,2020-04-09T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-09T00:00:00Z,29,Finger Lakes,#addb83,1.462397997898956
+Madison,2020-04-09T00:00:00Z,102,Central New York,#e49632,2.0086001717619175
+Monroe,2020-04-09T00:00:00Z,698,Finger Lakes,#addb83,2.843855422623161
+Montgomery,2020-04-09T00:00:00Z,28,Central New York,#e49632,1.4471580313422192
+Nassau,2020-04-09T00:00:00Z,20140,Long Island,#aa918d,4.304059466217599
+New York,2020-04-09T00:00:00Z,87028,New York City,#a8a8a8,4.939659003067951
+Niagara,2020-04-09T00:00:00Z,155,Niagara Frontier,#84c6dc,2.1903316981702914
+Oneida,2020-04-09T00:00:00Z,158,Central New York,#e49632,2.1986570869544226
+Onondaga,2020-04-09T00:00:00Z,422,Finger Lakes,#addb83,2.625312450961674
+Ontario,2020-04-09T00:00:00Z,43,Finger Lakes,#addb83,1.6334684555795866
+Orange,2020-04-09T00:00:00Z,4309,Catskill,#a05047,3.6343764940883676
+Orleans,2020-04-09T00:00:00Z,22,Niagara Frontier,#84c6dc,1.3424226808222062
+Oswego,2020-04-09T00:00:00Z,36,Thousand Island,#db848c,1.5563025007672873
+Otsego,2020-04-09T00:00:00Z,39,Central New York,#e49632,1.591064607026499
+Putnam,2020-04-09T00:00:00Z,456,Eastern Hudson Valley,#7877a1,2.6589648426644352
+Rensselaer,2020-04-09T00:00:00Z,102,Capital District,#d4dc55,2.0086001717619175
+Rockland,2020-04-09T00:00:00Z,6665,Catskill,#a05047,3.823800153749878
+St. Lawrence,2020-04-09T00:00:00Z,82,Thousand Island,#db848c,1.9138138523837167
+Saratoga,2020-04-09T00:00:00Z,172,Capital District,#d4dc55,2.2355284469075487
+Schenectady,2020-04-09T00:00:00Z,167,Capital District,#d4dc55,2.2227164711475833
+Schoharie,2020-04-09T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Seneca,2020-04-09T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Steuben,2020-04-09T00:00:00Z,92,Finger Lakes,#addb83,1.9637878273455553
+Suffolk,2020-04-09T00:00:00Z,18803,Long Island,#aa918d,4.27422714604577
+Sullivan,2020-04-09T00:00:00Z,296,Catskill,#a05047,2.4712917110589387
+Tioga,2020-04-09T00:00:00Z,17,Finger Lakes,#addb83,1.2304489213782739
+Tompkins,2020-04-09T00:00:00Z,107,Finger Lakes,#addb83,2.0293837776852097
+Ulster,2020-04-09T00:00:00Z,462,Catskill,#a05047,2.6646419755561257
+Warren,2020-04-09T00:00:00Z,40,Adirondack,#328ea3,1.6020599913279625
+Washington,2020-04-09T00:00:00Z,25,Adirondack,#328ea3,1.3979400086720377
+Wayne,2020-04-09T00:00:00Z,39,Finger Lakes,#addb83,1.591064607026499
+Westchester,2020-04-09T00:00:00Z,17004,Eastern Hudson Valley,#7877a1,4.230551096295085
+Wyoming,2020-04-09T00:00:00Z,29,Niagara Frontier,#84c6dc,1.462397997898956
+New York State,2020-04-10T00:00:00Z,172348,New York State,black,5.236406248034053
+Albany,2020-04-10T00:00:00Z,426,Capital District,#d4dc55,2.629409599102719
+Allegany,2020-04-10T00:00:00Z,26,Chautauqua-Alleghany,#dbbc85,1.414973347970818
+Broome,2020-04-10T00:00:00Z,112,Central New York,#e49632,2.0492180226701815
+Cattaraugus,2020-04-10T00:00:00Z,18,Chautauqua-Alleghany,#dbbc85,1.255272505103306
+Cayuga,2020-04-10T00:00:00Z,27,Finger Lakes,#addb83,1.4313637641589874
+Chautauqua,2020-04-10T00:00:00Z,22,Chautauqua-Alleghany,#dbbc85,1.3424226808222062
+Chemung,2020-04-10T00:00:00Z,59,Finger Lakes,#addb83,1.7708520116421442
+Chenango,2020-04-10T00:00:00Z,60,Central New York,#e49632,1.7781512503836436
+Clinton,2020-04-10T00:00:00Z,43,Adirondack,#328ea3,1.6334684555795866
+Columbia,2020-04-10T00:00:00Z,84,Eastern Hudson Valley,#7877a1,1.9242792860618816
+Cortland,2020-04-10T00:00:00Z,17,Finger Lakes,#addb83,1.2304489213782739
+Delaware,2020-04-10T00:00:00Z,39,Catskill,#a05047,1.591064607026499
+Dutchess,2020-04-10T00:00:00Z,1598,Eastern Hudson Valley,#7877a1,3.2035767749779724
+Erie,2020-04-10T00:00:00Z,1498,Niagara Frontier,#84c6dc,3.175511813363448
+Essex,2020-04-10T00:00:00Z,10,Adirondack,#328ea3,1
+Franklin,2020-04-10T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Fulton,2020-04-10T00:00:00Z,18,Adirondack,#328ea3,1.255272505103306
+Genesee,2020-04-10T00:00:00Z,65,Niagara Frontier,#84c6dc,1.8129133566428555
+Greene,2020-04-10T00:00:00Z,34,Catskill,#a05047,1.5314789170422551
+Herkimer,2020-04-10T00:00:00Z,36,Adirondack,#328ea3,1.5563025007672873
+Jefferson,2020-04-10T00:00:00Z,43,Thousand Island,#db848c,1.6334684555795866
+Lewis,2020-04-10T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-10T00:00:00Z,29,Finger Lakes,#addb83,1.462397997898956
+Madison,2020-04-10T00:00:00Z,102,Central New York,#e49632,2.0086001717619175
+Monroe,2020-04-10T00:00:00Z,742,Finger Lakes,#addb83,2.870403905279027
+Montgomery,2020-04-10T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Nassau,2020-04-10T00:00:00Z,21512,Long Island,#aa918d,4.332680789215245
+New York,2020-04-10T00:00:00Z,92384,New York City,#a8a8a8,4.965596762200627
+Niagara,2020-04-10T00:00:00Z,156,Niagara Frontier,#84c6dc,2.1931245983544616
+Oneida,2020-04-10T00:00:00Z,172,Central New York,#e49632,2.2355284469075487
+Onondaga,2020-04-10T00:00:00Z,456,Finger Lakes,#addb83,2.6589648426644352
+Ontario,2020-04-10T00:00:00Z,51,Finger Lakes,#addb83,1.7075701760979363
+Orange,2020-04-10T00:00:00Z,4532,Catskill,#a05047,3.6562899011913594
+Orleans,2020-04-10T00:00:00Z,24,Niagara Frontier,#84c6dc,1.380211241711606
+Oswego,2020-04-10T00:00:00Z,36,Thousand Island,#db848c,1.5563025007672873
+Otsego,2020-04-10T00:00:00Z,41,Central New York,#e49632,1.6127838567197355
+Putnam,2020-04-10T00:00:00Z,487,Eastern Hudson Valley,#7877a1,2.6875289612146345
+Rensselaer,2020-04-10T00:00:00Z,102,Capital District,#d4dc55,2.0086001717619175
+Rockland,2020-04-10T00:00:00Z,7122,Catskill,#a05047,3.852601969338235
+St. Lawrence,2020-04-10T00:00:00Z,82,Thousand Island,#db848c,1.9138138523837167
+Saratoga,2020-04-10T00:00:00Z,182,Capital District,#d4dc55,2.2600713879850747
+Schenectady,2020-04-10T00:00:00Z,191,Capital District,#d4dc55,2.2810333672477277
+Schoharie,2020-04-10T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Schuyler,2020-04-10T00:00:00Z,5,Finger Lakes,#addb83,0.6989700043360189
+Seneca,2020-04-10T00:00:00Z,15,Finger Lakes,#addb83,1.1760912590556813
+Steuben,2020-04-10T00:00:00Z,117,Finger Lakes,#addb83,2.0681858617461617
+Suffolk,2020-04-10T00:00:00Z,20320,Long Island,#aa918d,4.307923703611881
+Sullivan,2020-04-10T00:00:00Z,318,Catskill,#a05047,2.5024271199844326
+Tioga,2020-04-10T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Tompkins,2020-04-10T00:00:00Z,107,Finger Lakes,#addb83,2.0293837776852097
+Ulster,2020-04-10T00:00:00Z,530,Catskill,#a05047,2.724275869600789
+Warren,2020-04-10T00:00:00Z,43,Adirondack,#328ea3,1.6334684555795866
+Washington,2020-04-10T00:00:00Z,26,Adirondack,#328ea3,1.414973347970818
+Wayne,2020-04-10T00:00:00Z,41,Finger Lakes,#addb83,1.6127838567197355
+Westchester,2020-04-10T00:00:00Z,18077,Eastern Hudson Valley,#7877a1,4.257126358022592
+Wyoming,2020-04-10T00:00:00Z,30,Niagara Frontier,#84c6dc,1.4771212547196624
+New York State,2020-04-11T00:00:00Z,181026,New York State,black,5.257740955231639
+Albany,2020-04-11T00:00:00Z,446,Capital District,#d4dc55,2.649334858712142
+Allegany,2020-04-11T00:00:00Z,26,Chautauqua-Alleghany,#dbbc85,1.414973347970818
+Broome,2020-04-11T00:00:00Z,117,Central New York,#e49632,2.0681858617461617
+Cattaraugus,2020-04-11T00:00:00Z,19,Chautauqua-Alleghany,#dbbc85,1.2787536009528289
+Cayuga,2020-04-11T00:00:00Z,28,Finger Lakes,#addb83,1.4471580313422192
+Chautauqua,2020-04-11T00:00:00Z,22,Chautauqua-Alleghany,#dbbc85,1.3424226808222062
+Chemung,2020-04-11T00:00:00Z,60,Finger Lakes,#addb83,1.7781512503836436
+Chenango,2020-04-11T00:00:00Z,61,Central New York,#e49632,1.7853298350107671
+Clinton,2020-04-11T00:00:00Z,43,Adirondack,#328ea3,1.6334684555795866
+Columbia,2020-04-11T00:00:00Z,87,Eastern Hudson Valley,#7877a1,1.9395192526186185
+Cortland,2020-04-11T00:00:00Z,17,Finger Lakes,#addb83,1.2304489213782739
+Delaware,2020-04-11T00:00:00Z,39,Catskill,#a05047,1.591064607026499
+Dutchess,2020-04-11T00:00:00Z,1744,Eastern Hudson Valley,#7877a1,3.2415464805965484
+Erie,2020-04-11T00:00:00Z,1506,Niagara Frontier,#84c6dc,3.177824971864682
+Essex,2020-04-11T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Franklin,2020-04-11T00:00:00Z,11,Adirondack,#328ea3,1.041392685158225
+Fulton,2020-04-11T00:00:00Z,21,Adirondack,#328ea3,1.3222192947339193
+Genesee,2020-04-11T00:00:00Z,67,Niagara Frontier,#84c6dc,1.8260748027008264
+Greene,2020-04-11T00:00:00Z,37,Catskill,#a05047,1.568201724066995
+Herkimer,2020-04-11T00:00:00Z,37,Adirondack,#328ea3,1.568201724066995
+Jefferson,2020-04-11T00:00:00Z,44,Thousand Island,#db848c,1.6434526764861874
+Lewis,2020-04-11T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-11T00:00:00Z,30,Finger Lakes,#addb83,1.4771212547196624
+Madison,2020-04-11T00:00:00Z,102,Central New York,#e49632,2.0086001717619175
+Monroe,2020-04-11T00:00:00Z,767,Finger Lakes,#addb83,2.8847953639489807
+Montgomery,2020-04-11T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Nassau,2020-04-11T00:00:00Z,22584,Long Island,#aa918d,4.353800865138863
+New York,2020-04-11T00:00:00Z,98308,New York City,#a8a8a8,4.992588860807571
+Niagara,2020-04-11T00:00:00Z,167,Niagara Frontier,#84c6dc,2.2227164711475833
+Oneida,2020-04-11T00:00:00Z,181,Central New York,#e49632,2.2576785748691846
+Onondaga,2020-04-11T00:00:00Z,456,Finger Lakes,#addb83,2.6589648426644352
+Ontario,2020-04-11T00:00:00Z,56,Finger Lakes,#addb83,1.7481880270062005
+Orange,2020-04-11T00:00:00Z,4847,Catskill,#a05047,3.6854730197227594
+Orleans,2020-04-11T00:00:00Z,24,Niagara Frontier,#84c6dc,1.380211241711606
+Oswego,2020-04-11T00:00:00Z,37,Thousand Island,#db848c,1.568201724066995
+Otsego,2020-04-11T00:00:00Z,43,Central New York,#e49632,1.6334684555795866
+Putnam,2020-04-11T00:00:00Z,494,Eastern Hudson Valley,#7877a1,2.693726948923647
+Rensselaer,2020-04-11T00:00:00Z,102,Capital District,#d4dc55,2.0086001717619175
+Rockland,2020-04-11T00:00:00Z,7477,Catskill,#a05047,3.8737273806466797
+St. Lawrence,2020-04-11T00:00:00Z,82,Thousand Island,#db848c,1.9138138523837167
+Saratoga,2020-04-11T00:00:00Z,187,Capital District,#d4dc55,2.271841606536499
+Schenectady,2020-04-11T00:00:00Z,194,Capital District,#d4dc55,2.287801729930226
+Schoharie,2020-04-11T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Schuyler,2020-04-11T00:00:00Z,5,Finger Lakes,#addb83,0.6989700043360189
+Seneca,2020-04-11T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Steuben,2020-04-11T00:00:00Z,117,Finger Lakes,#addb83,2.0681858617461617
+Suffolk,2020-04-11T00:00:00Z,20321,Long Island,#aa918d,4.307945075845931
+Sullivan,2020-04-11T00:00:00Z,340,Catskill,#a05047,2.531478917042255
+Tioga,2020-04-11T00:00:00Z,19,Finger Lakes,#addb83,1.2787536009528289
+Tompkins,2020-04-11T00:00:00Z,108,Finger Lakes,#addb83,2.03342375548695
+Ulster,2020-04-11T00:00:00Z,589,Catskill,#a05047,2.7701152947871015
+Warren,2020-04-11T00:00:00Z,44,Adirondack,#328ea3,1.6434526764861874
+Washington,2020-04-11T00:00:00Z,31,Adirondack,#328ea3,1.4913616938342726
+Wayne,2020-04-11T00:00:00Z,42,Finger Lakes,#addb83,1.6232492903979006
+Westchester,2020-04-11T00:00:00Z,18729,Eastern Hudson Valley,#7877a1,4.272514589650952
+Wyoming,2020-04-11T00:00:00Z,31,Niagara Frontier,#84c6dc,1.4913616938342726
+New York State,2020-04-12T00:00:00Z,189033,New York State,black,5.276537626749258
+Albany,2020-04-12T00:00:00Z,478,Capital District,#d4dc55,2.6794278966121188
+Allegany,2020-04-12T00:00:00Z,26,Chautauqua-Alleghany,#dbbc85,1.414973347970818
+Broome,2020-04-12T00:00:00Z,126,Central New York,#e49632,2.100370545117563
+Cattaraugus,2020-04-12T00:00:00Z,28,Chautauqua-Alleghany,#dbbc85,1.4471580313422192
+Cayuga,2020-04-12T00:00:00Z,31,Finger Lakes,#addb83,1.4913616938342726
+Chautauqua,2020-04-12T00:00:00Z,23,Chautauqua-Alleghany,#dbbc85,1.3617278360175928
+Chemung,2020-04-12T00:00:00Z,60,Finger Lakes,#addb83,1.7781512503836436
+Chenango,2020-04-12T00:00:00Z,63,Central New York,#e49632,1.7993405494535817
+Clinton,2020-04-12T00:00:00Z,43,Adirondack,#328ea3,1.6334684555795866
+Columbia,2020-04-12T00:00:00Z,87,Eastern Hudson Valley,#7877a1,1.9395192526186185
+Cortland,2020-04-12T00:00:00Z,21,Finger Lakes,#addb83,1.3222192947339193
+Delaware,2020-04-12T00:00:00Z,39,Catskill,#a05047,1.591064607026499
+Dutchess,2020-04-12T00:00:00Z,1838,Eastern Hudson Valley,#7877a1,3.2643455070500926
+Erie,2020-04-12T00:00:00Z,1571,Niagara Frontier,#84c6dc,3.1961761850399735
+Essex,2020-04-12T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Franklin,2020-04-12T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Fulton,2020-04-12T00:00:00Z,21,Adirondack,#328ea3,1.3222192947339193
+Genesee,2020-04-12T00:00:00Z,70,Niagara Frontier,#84c6dc,1.845098040014257
+Greene,2020-04-12T00:00:00Z,44,Catskill,#a05047,1.6434526764861874
+Herkimer,2020-04-12T00:00:00Z,37,Adirondack,#328ea3,1.568201724066995
+Jefferson,2020-04-12T00:00:00Z,46,Thousand Island,#db848c,1.662757831681574
+Lewis,2020-04-12T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-12T00:00:00Z,34,Finger Lakes,#addb83,1.5314789170422551
+Madison,2020-04-12T00:00:00Z,105,Central New York,#e49632,2.0211892990699383
+Monroe,2020-04-12T00:00:00Z,798,Finger Lakes,#addb83,2.9020028913507296
+Montgomery,2020-04-12T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Nassau,2020-04-12T00:00:00Z,23553,Long Island,#aa918d,4.372046232079206
+New York,2020-04-12T00:00:00Z,103208,New York City,#a8a8a8,5.013713362225274
+Niagara,2020-04-12T00:00:00Z,194,Niagara Frontier,#84c6dc,2.287801729930226
+Oneida,2020-04-12T00:00:00Z,195,Central New York,#e49632,2.290034611362518
+Onondaga,2020-04-12T00:00:00Z,494,Finger Lakes,#addb83,2.693726948923647
+Ontario,2020-04-12T00:00:00Z,57,Finger Lakes,#addb83,1.7558748556724915
+Orange,2020-04-12T00:00:00Z,5027,Catskill,#a05047,3.7013088852280753
+Orleans,2020-04-12T00:00:00Z,25,Niagara Frontier,#84c6dc,1.3979400086720377
+Oswego,2020-04-12T00:00:00Z,42,Thousand Island,#db848c,1.6232492903979006
+Otsego,2020-04-12T00:00:00Z,43,Central New York,#e49632,1.6334684555795866
+Putnam,2020-04-12T00:00:00Z,507,Eastern Hudson Valley,#7877a1,2.705007959333336
+Rensselaer,2020-04-12T00:00:00Z,102,Capital District,#d4dc55,2.0086001717619175
+Rockland,2020-04-12T00:00:00Z,7721,Catskill,#a05047,3.8876735524544475
+St. Lawrence,2020-04-12T00:00:00Z,88,Thousand Island,#db848c,1.9444826721501687
+Saratoga,2020-04-12T00:00:00Z,196,Capital District,#d4dc55,2.292256071356476
+Schenectady,2020-04-12T00:00:00Z,199,Capital District,#d4dc55,2.298853076409707
+Schoharie,2020-04-12T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Schuyler,2020-04-12T00:00:00Z,5,Finger Lakes,#addb83,0.6989700043360189
+Seneca,2020-04-12T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Steuben,2020-04-12T00:00:00Z,147,Finger Lakes,#addb83,2.167317334748176
+Suffolk,2020-04-12T00:00:00Z,20934,Long Island,#aa918d,4.320852219831754
+Sullivan,2020-04-12T00:00:00Z,358,Catskill,#a05047,2.5538830266438746
+Tioga,2020-04-12T00:00:00Z,23,Finger Lakes,#addb83,1.3617278360175928
+Tompkins,2020-04-12T00:00:00Z,113,Finger Lakes,#addb83,2.05307844348342
+Ulster,2020-04-12T00:00:00Z,655,Catskill,#a05047,2.816241299991783
+Warren,2020-04-12T00:00:00Z,46,Adirondack,#328ea3,1.662757831681574
+Washington,2020-04-12T00:00:00Z,34,Adirondack,#328ea3,1.5314789170422551
+Wayne,2020-04-12T00:00:00Z,42,Finger Lakes,#addb83,1.6232492903979006
+Westchester,2020-04-12T00:00:00Z,19313,Eastern Hudson Valley,#7877a1,4.285849740493442
+Wyoming,2020-04-12T00:00:00Z,31,Niagara Frontier,#84c6dc,1.4913616938342726
+New York State,2020-04-13T00:00:00Z,195749,New York State,black,5.291699552106271
+Albany,2020-04-13T00:00:00Z,499,Capital District,#d4dc55,2.6981005456233897
+Allegany,2020-04-13T00:00:00Z,26,Chautauqua-Alleghany,#dbbc85,1.414973347970818
+Broome,2020-04-13T00:00:00Z,133,Central New York,#e49632,2.123851640967086
+Cattaraugus,2020-04-13T00:00:00Z,28,Chautauqua-Alleghany,#dbbc85,1.4471580313422192
+Cayuga,2020-04-13T00:00:00Z,31,Finger Lakes,#addb83,1.4913616938342726
+Chautauqua,2020-04-13T00:00:00Z,23,Chautauqua-Alleghany,#dbbc85,1.3617278360175928
+Chemung,2020-04-13T00:00:00Z,60,Finger Lakes,#addb83,1.7781512503836436
+Chenango,2020-04-13T00:00:00Z,65,Central New York,#e49632,1.8129133566428555
+Clinton,2020-04-13T00:00:00Z,44,Adirondack,#328ea3,1.6434526764861874
+Columbia,2020-04-13T00:00:00Z,93,Eastern Hudson Valley,#7877a1,1.968482948553935
+Cortland,2020-04-13T00:00:00Z,21,Finger Lakes,#addb83,1.3222192947339193
+Delaware,2020-04-13T00:00:00Z,42,Catskill,#a05047,1.6232492903979006
+Dutchess,2020-04-13T00:00:00Z,1881,Eastern Hudson Valley,#7877a1,3.274388795550379
+Erie,2020-04-13T00:00:00Z,1661,Niagara Frontier,#84c6dc,3.2203696324513946
+Essex,2020-04-13T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Franklin,2020-04-13T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Fulton,2020-04-13T00:00:00Z,21,Adirondack,#328ea3,1.3222192947339193
+Genesee,2020-04-13T00:00:00Z,71,Niagara Frontier,#84c6dc,1.8512583487190752
+Greene,2020-04-13T00:00:00Z,45,Catskill,#a05047,1.6532125137753437
+Herkimer,2020-04-13T00:00:00Z,38,Adirondack,#328ea3,1.5797835966168101
+Jefferson,2020-04-13T00:00:00Z,46,Thousand Island,#db848c,1.662757831681574
+Lewis,2020-04-13T00:00:00Z,6,Adirondack,#328ea3,0.7781512503836436
+Livingston,2020-04-13T00:00:00Z,34,Finger Lakes,#addb83,1.5314789170422551
+Madison,2020-04-13T00:00:00Z,110,Central New York,#e49632,2.041392685158225
+Monroe,2020-04-13T00:00:00Z,823,Finger Lakes,#addb83,2.91539983521227
+Montgomery,2020-04-13T00:00:00Z,29,Central New York,#e49632,1.462397997898956
+Nassau,2020-04-13T00:00:00Z,24358,Long Island,#aa918d,4.386641626135628
+New York,2020-04-13T00:00:00Z,106763,New York City,#a8a8a8,5.028420768797938
+Niagara,2020-04-13T00:00:00Z,194,Niagara Frontier,#84c6dc,2.287801729930226
+Oneida,2020-04-13T00:00:00Z,206,Central New York,#e49632,2.3138672203691533
+Onondaga,2020-04-13T00:00:00Z,520,Finger Lakes,#addb83,2.716003343634799
+Ontario,2020-04-13T00:00:00Z,57,Finger Lakes,#addb83,1.7558748556724915
+Orange,2020-04-13T00:00:00Z,5598,Catskill,#a05047,3.7480328941301435
+Orleans,2020-04-13T00:00:00Z,26,Niagara Frontier,#84c6dc,1.414973347970818
+Oswego,2020-04-13T00:00:00Z,42,Thousand Island,#db848c,1.6232492903979006
+Otsego,2020-04-13T00:00:00Z,43,Central New York,#e49632,1.6334684555795866
+Putnam,2020-04-13T00:00:00Z,507,Eastern Hudson Valley,#7877a1,2.705007959333336
+Rensselaer,2020-04-13T00:00:00Z,113,Capital District,#d4dc55,2.05307844348342
+Rockland,2020-04-13T00:00:00Z,7965,Catskill,#a05047,3.9011857801371503
+St. Lawrence,2020-04-13T00:00:00Z,89,Thousand Island,#db848c,1.9493900066449128
+Saratoga,2020-04-13T00:00:00Z,201,Capital District,#d4dc55,2.303196057420489
+Schenectady,2020-04-13T00:00:00Z,204,Capital District,#d4dc55,2.3096301674258988
+Schoharie,2020-04-13T00:00:00Z,12,Central New York,#e49632,1.0791812460476249
+Schuyler,2020-04-13T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Seneca,2020-04-13T00:00:00Z,16,Finger Lakes,#addb83,1.2041199826559248
+Steuben,2020-04-13T00:00:00Z,147,Finger Lakes,#addb83,2.167317334748176
+Suffolk,2020-04-13T00:00:00Z,21643,Long Island,#aa918d,4.33531745944485
+Sullivan,2020-04-13T00:00:00Z,380,Catskill,#a05047,2.57978359661681
+Tioga,2020-04-13T00:00:00Z,23,Finger Lakes,#addb83,1.3617278360175928
+Tompkins,2020-04-13T00:00:00Z,113,Finger Lakes,#addb83,2.05307844348342
+Ulster,2020-04-13T00:00:00Z,716,Catskill,#a05047,2.8549130223078554
+Warren,2020-04-13T00:00:00Z,48,Adirondack,#328ea3,1.6812412373755872
+Washington,2020-04-13T00:00:00Z,37,Adirondack,#328ea3,1.568201724066995
+Wayne,2020-04-13T00:00:00Z,42,Finger Lakes,#addb83,1.6232492903979006
+Westchester,2020-04-13T00:00:00Z,19786,Eastern Hudson Valley,#7877a1,4.296358004741391
+Wyoming,2020-04-13T00:00:00Z,31,Niagara Frontier,#84c6dc,1.4913616938342726
+New York State,2020-04-14T00:00:00Z,203020,New York State,black,5.3075388234392715
+Albany,2020-04-14T00:00:00Z,535,Capital District,#d4dc55,2.7283537820212285
+Allegany,2020-04-14T00:00:00Z,28,Chautauqua-Alleghany,#dbbc85,1.4471580313422192
+Broome,2020-04-14T00:00:00Z,146,Central New York,#e49632,2.164352855784437
+Cattaraugus,2020-04-14T00:00:00Z,32,Chautauqua-Alleghany,#dbbc85,1.505149978319906
+Cayuga,2020-04-14T00:00:00Z,33,Finger Lakes,#addb83,1.5185139398778875
+Chautauqua,2020-04-14T00:00:00Z,23,Chautauqua-Alleghany,#dbbc85,1.3617278360175928
+Chemung,2020-04-14T00:00:00Z,64,Finger Lakes,#addb83,1.806179973983887
+Chenango,2020-04-14T00:00:00Z,68,Central New York,#e49632,1.8325089127062364
+Clinton,2020-04-14T00:00:00Z,45,Adirondack,#328ea3,1.6532125137753437
+Columbia,2020-04-14T00:00:00Z,93,Eastern Hudson Valley,#7877a1,1.968482948553935
+Cortland,2020-04-14T00:00:00Z,22,Finger Lakes,#addb83,1.3424226808222062
+Delaware,2020-04-14T00:00:00Z,45,Catskill,#a05047,1.6532125137753437
+Dutchess,2020-04-14T00:00:00Z,1934,Eastern Hudson Valley,#7877a1,3.286456469746983
+Erie,2020-04-14T00:00:00Z,1730,Niagara Frontier,#84c6dc,3.2380461031287955
+Essex,2020-04-14T00:00:00Z,12,Adirondack,#328ea3,1.0791812460476249
+Franklin,2020-04-14T00:00:00Z,13,Adirondack,#328ea3,1.1139433523068367
+Fulton,2020-04-14T00:00:00Z,22,Adirondack,#328ea3,1.3424226808222062
+Genesee,2020-04-14T00:00:00Z,76,Niagara Frontier,#84c6dc,1.8808135922807914
+Greene,2020-04-14T00:00:00Z,66,Catskill,#a05047,1.8195439355418688
+Herkimer,2020-04-14T00:00:00Z,39,Adirondack,#328ea3,1.591064607026499
+Jefferson,2020-04-14T00:00:00Z,47,Thousand Island,#db848c,1.6720978579357175
+Lewis,2020-04-14T00:00:00Z,7,Adirondack,#328ea3,0.8450980400142568
+Livingston,2020-04-14T00:00:00Z,34,Finger Lakes,#addb83,1.5314789170422551
+Madison,2020-04-14T00:00:00Z,110,Central New York,#e49632,2.041392685158225
+Monroe,2020-04-14T00:00:00Z,850,Finger Lakes,#addb83,2.929418925714293
+Montgomery,2020-04-14T00:00:00Z,32,Central New York,#e49632,1.505149978319906
+Nassau,2020-04-14T00:00:00Z,25250,Long Island,#aa918d,4.402261382454681
+New York,2020-04-14T00:00:00Z,110465,New York City,#a8a8a8,5.0432246968929535
+Niagara,2020-04-14T00:00:00Z,216,Niagara Frontier,#84c6dc,2.3344537511509307
+Oneida,2020-04-14T00:00:00Z,229,Central New York,#e49632,2.359835482339888
+Onondaga,2020-04-14T00:00:00Z,537,Finger Lakes,#addb83,2.7299742856995555
+Ontario,2020-04-14T00:00:00Z,61,Finger Lakes,#addb83,1.7853298350107671
+Orange,2020-04-14T00:00:00Z,5830,Catskill,#a05047,3.765668554759014
+Orleans,2020-04-14T00:00:00Z,31,Niagara Frontier,#84c6dc,1.4913616938342726
+Oswego,2020-04-14T00:00:00Z,42,Thousand Island,#db848c,1.6232492903979006
+Otsego,2020-04-14T00:00:00Z,44,Central New York,#e49632,1.6434526764861874
+Putnam,2020-04-14T00:00:00Z,634,Eastern Hudson Valley,#7877a1,2.8020892578817325
+Rensselaer,2020-04-14T00:00:00Z,140,Capital District,#d4dc55,2.146128035678238
+Rockland,2020-04-14T00:00:00Z,8335,Catskill,#a05047,3.920905604164024
+St. Lawrence,2020-04-14T00:00:00Z,92,Thousand Island,#db848c,1.9637878273455553
+Saratoga,2020-04-14T00:00:00Z,224,Capital District,#d4dc55,2.3502480183341627
+Schenectady,2020-04-14T00:00:00Z,235,Capital District,#d4dc55,2.3710678622717363
+Schoharie,2020-04-14T00:00:00Z,20,Central New York,#e49632,1.3010299956639813
+Schuyler,2020-04-14T00:00:00Z,8,Finger Lakes,#addb83,0.9030899869919435
+Seneca,2020-04-14T00:00:00Z,18,Finger Lakes,#addb83,1.255272505103306
+Steuben,2020-04-14T00:00:00Z,147,Finger Lakes,#addb83,2.167317334748176
+Suffolk,2020-04-14T00:00:00Z,22691,Long Island,#aa918d,4.355853635810543
+Sullivan,2020-04-14T00:00:00Z,415,Catskill,#a05047,2.6180480967120925
+Tioga,2020-04-14T00:00:00Z,24,Finger Lakes,#addb83,1.380211241711606
+Tompkins,2020-04-14T00:00:00Z,113,Finger Lakes,#addb83,2.05307844348342
+Ulster,2020-04-14T00:00:00Z,716,Catskill,#a05047,2.8549130223078554
+Warren,2020-04-14T00:00:00Z,77,Adirondack,#328ea3,1.8864907251724818
+Washington,2020-04-14T00:00:00Z,40,Adirondack,#328ea3,1.6020599913279625
+Wayne,2020-04-14T00:00:00Z,48,Finger Lakes,#addb83,1.6812412373755872
+Westchester,2020-04-14T00:00:00Z,20191,Eastern Hudson Valley,#7877a1,4.305157828786486
+Wyoming,2020-04-14T00:00:00Z,32,Niagara Frontier,#84c6dc,1.505149978319906
+Yates,2020-04-14T00:00:00Z,6,Finger Lakes,#addb83,0.7781512503836436
