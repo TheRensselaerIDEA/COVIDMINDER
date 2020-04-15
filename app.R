@@ -290,7 +290,6 @@ ui <-
                                               brush = brushOpts(
                                                 id = "NY.cases.TS.rates_brush",
                                                 resetOnNew = TRUE)),
-                                  # plotOutput(outputId = "NY.cases.TS.rates", height="90%"),
                                   HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
@@ -837,6 +836,7 @@ server <- function(input, output, session) {
       ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
+      geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       NULL
     
       })
@@ -936,7 +936,8 @@ server <- function(input, output, session) {
       ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
-      NULL
+        geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+        NULL
 
   })
   
