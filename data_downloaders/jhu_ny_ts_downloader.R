@@ -271,6 +271,18 @@ covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
   group_by(date)
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
+
+# Append population
+NY_population <- read_csv("data/csv/time_series/NY_population.csv")
+
+covid_NY_TS_plot.cases <- dplyr::inner_join(covid_NY_TS_plot.cases, as.data.frame(NY_population), by = c("County" = "County"))
+covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>% 
+  select(-FIPS,-Lat,-Long_)
+
+# Append case rates per county!
+covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>%
+  mutate(p_cases = (cases/Population)*100000)
+
 # make sure we have the same version for our app plot!
 write_csv(covid_NY_TS_plot.cases, "data/csv/time_series/covid_NY_TS_plot.cases.csv")
 
@@ -278,80 +290,95 @@ highlight_points <- covid_NY_TS_plot.cases %>%
   filter( County == "Albany" & date == as.Date("2020-03-26") |
             # County == "Allegany" & date == as.Date("2020-03-29") |
             County == "Bronx" & date == as.Date("2020-03-25") |
-            County == "Broome" & date == as.Date("2020-04-02") |
+            # County == "Broome" & date == as.Date("2020-04-02") |
             # County == "Cattaraugus" & date == as.Date("2020-03-30") |
-            County == "Cayuga" & date == as.Date("2020-04-02") |
-            County == "Chautauqua" & date == as.Date("2020-04-10") |
+            # County == "Cayuga" & date == as.Date("2020-04-02") |
+            # County == "Chautauqua" & date == as.Date("2020-04-10") |
             # County == "Chemung" & date == as.Date("2020-04-10") |
-            County == "Chenango" & date == as.Date("2020-04-12") |
-            County == "Clinton" & date == as.Date("2020-03-26") |
+            # County == "Chenango" & date == as.Date("2020-04-12") |
+            # County == "Clinton" & date == as.Date("2020-03-26") |
             # County == "Columbia" & date == as.Date("2020-03-29") |
-            County == "Cortland" & date == as.Date("2020-03-25") |
+            # County == "Cortland" & date == as.Date("2020-03-25") |
             # County == "Delaware" & date == as.Date("2020-04-02") |
-            County == "Dutchess" & date == as.Date("2020-03-30") |
-            County == "Erie" & date == as.Date("2020-04-02") |
+            County == "Dutchess" & date == as.Date("2020-04-06") |
+            # County == "Erie" & date == as.Date("2020-04-02") |
             # County == "Essex" & date == as.Date("2020-04-10") |
             # County == "Franklin" & date == as.Date("2020-04-10") |
             # County == "Fulton" & date == as.Date("2020-04-12") |
-            County == "Genesee" & date == as.Date("2020-03-26") |
+            # County == "Genesee" & date == as.Date("2020-03-26") |
             # County == "Greene" & date == as.Date("2020-03-29") |
-            County == "Hamilton" & date == as.Date("2020-03-25") |
-            County == "Herkimer" & date == as.Date("2020-04-02") |
+            # County == "Hamilton" & date == as.Date("2020-03-25") |
+            # County == "Herkimer" & date == as.Date("2020-04-02") |
             # County == "Jefferson" & date == as.Date("2020-03-30") |
             County == "Kings" & date == as.Date("2020-04-02") |
             # County == "Lewis" & date == as.Date("2020-04-10") |
             # County == "Livingston" & date == as.Date("2020-04-10") |
-            County == "Madison" & date == as.Date("2020-04-12") |
+            # County == "Madison" & date == as.Date("2020-04-12") |
             # County == "Monroe" & date == as.Date("2020-03-26") |
             # County == "Montgomery" & date == as.Date("2020-03-29") |
-            County == "Nassau" & date == as.Date("2020-03-25") |
-            County == "New York" & date == as.Date("2020-04-02") |
+            County == "Nassau" & date == as.Date("2020-04-12") |
+            County == "New York" & date == as.Date("2020-04-12") |
             County == "Manhattan" & date == as.Date("2020-03-30") |
-            County == "Niagara" & date == as.Date("2020-04-02") |
-            County == "Oneida" & date == as.Date("2020-04-10") |
-            County == "Onondaga" & date == as.Date("2020-04-10") |
+            # County == "Niagara" & date == as.Date("2020-04-02") |
+            # County == "Oneida" & date == as.Date("2020-04-10") |
+            # County == "Onondaga" & date == as.Date("2020-04-10") |
             # County == "Ontario" & date == as.Date("2020-04-12") |
-            County == "Orange" & date == as.Date("2020-03-26") |
-            County == "Orleans" & date == as.Date("2020-03-29") |
-            County == "Oswego" & date == as.Date("2020-03-25") |
-            County == "Otsego" & date == as.Date("2020-04-02") |
-            # County == "Putnam" & date == as.Date("2020-03-30") |
+            County == "Orange" & date == as.Date("2020-04-09") |
+            # County == "Orleans" & date == as.Date("2020-04-12") |
+            # County == "Oswego" & date == as.Date("2020-03-25") |
+            # County == "Otsego" & date == as.Date("2020-04-02") |
+            County == "Putnam" & date == as.Date("2020-04-01") |
             County == "Queens" & date == as.Date("2020-04-02") |
-            County == "Rensselaer" & date == as.Date("2020-04-10") |
+            # County == "Rensselaer" & date == as.Date("2020-04-10") |
             County == "Richmond" & date == as.Date("2020-04-01") |
             County == "Rockland" & date == as.Date("2020-04-12") |
-            County == "St. Lawrence" & date == as.Date("2020-03-26") |
-            County == "Saratoga" & date == as.Date("2020-03-29") |
-            County == "Schenectady" & date == as.Date("2020-03-25") |
-            County == "Schoharie" & date == as.Date("2020-04-02") |
-            County == "Schuyler" & date == as.Date("2020-03-30") |
-            County == "Seneca" & date == as.Date("2020-04-02") |
+            # County == "St. Lawrence" & date == as.Date("2020-03-26") |
+            # County == "Saratoga" & date == as.Date("2020-03-29") |
+            # County == "Schenectady" & date == as.Date("2020-03-25") |
+            # County == "Schoharie" & date == as.Date("2020-04-02") |
+            # County == "Schuyler" & date == as.Date("2020-03-30") |
+            # County == "Seneca" & date == as.Date("2020-04-02") |
             # County == "Steuben" & date == as.Date("2020-04-10") |
             County == "Suffolk" & date == as.Date("2020-04-10") |
             County == "Sullivan" & date == as.Date("2020-04-12") |
             # County == "Tioga" & date == as.Date("2020-03-26") |
-            County == "Tompkins" & date == as.Date("2020-03-29") |
-            # County == "Ulster" & date == as.Date("2020-03-25") |
+            # County == "Tompkins" & date == as.Date("2020-03-29") |
+            County == "Ulster" & date == as.Date("2020-04-10") |
             # County == "Warren" & date == as.Date("2020-04-02") |
             # County == "Washington" & date == as.Date("2020-03-30") |
             # County == "Wayne" & date == as.Date("2020-04-02") |
-            County == "Westchester" & date == as.Date("2020-04-10") |
-            # County == "Wyoming" & date == as.Date("2020-04-10") |
-            County == "Yates" & date == as.Date("2020-04-12")
+            County == "Westchester" & date == as.Date("2020-04-10") 
+            # County == "Wyoming" & date == as.Date("2020-04-10") 
+            # County == "Yates" & date == as.Date("2020-04-12")
   )
 
-p.log.cases <- covid_NY_TS_plot.cases %>%
-  ggplot(aes(date, cases, color = Region, group=County)) +
+# p.log.cases <- covid_NY_TS_plot.cases %>%
+#   ggplot(aes(date, cases, color = Region, group=County)) +
+#   geom_line() +
+#   scale_y_continuous(
+#     trans = "log10",
+#     breaks = c(10,100,500,1000,5000,10000, 50000)
+#   ) +
+#   scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+#   ylab("Cumulative Number of Cases") + 
+#   ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
+#   geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
+#   NULL
+# #library(plotly)
+# p.log.cases
+# #ggplotly(p.log.cases)
+
+p.case.rates <- covid_NY_TS_plot.cases %>%
+  ggplot(aes(date, p_cases, color = Region, group=County)) +
   geom_line() +
-  scale_y_continuous(
-    trans = "log10",
-    breaks = c(10,100,500,1000,5000,10000, 50000)
-  ) +
+  # scale_y_continuous(
+  #   trans = "log10",
+  #   breaks = c(10,100,500,1000,5000,10000, 50000)
+  # ) +
   scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
-  ylab("Cumulative Number of Cases") + 
-  ggtitle("New York State COVID-19 Cases (Mar-Apr 2020)")  + 
+  ylab("Cases per 100K Population") + 
+  ggtitle("New York State COVID-19 Cases by County per 100K Population (Mar-Apr 2020)")  + 
   geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
   NULL
-#library(plotly)
-p.log.cases
-#ggplotly(p.log.cases)
+
+p.case.rates
