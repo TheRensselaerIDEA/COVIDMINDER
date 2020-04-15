@@ -377,7 +377,7 @@ p.case.rates <- covid_NY_TS_plot.cases %>%
   # ) +
   scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
   ylab("Cases per 100K Population") + 
-  ggtitle("New York State COVID-19 Cases by County per 100K Population (Mar-Apr 2020)")  + 
+  ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
   geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
   NULL
 
