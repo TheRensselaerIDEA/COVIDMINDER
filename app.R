@@ -237,6 +237,7 @@ ui <-
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
                sidebarLayout(
                  sidebarPanel(
+                   id = "sidebar_ny_CoT",
                    HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
@@ -249,7 +250,8 @@ ui <-
                    HTML(footer_text),
                    width=4),
                  
-                 mainPanel(plotOutput(outputId = "NY.cases.TS", height="500px", 
+                 mainPanel(id = "mainpanel_ny_CoT", 
+                           plotOutput(outputId = "NY.cases.TS", height="500px", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
                                       dblclick = "NY.cases.TS_dblclick",
                                       brush = brushOpts(
