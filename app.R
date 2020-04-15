@@ -250,9 +250,18 @@ ui <-
                    HTML(footer_text),
                    width=4),
                  
-                 mainPanel(id = "mainpanel_ny_CoT",
-                           plotOutput(outputId = "NY.cases.TS", height="100%", 
-                                      click=clickOpts(id ="plot_click")), 
+                 mainPanel(id = "mainpanel_ny_CoT", 
+                           plotOutput(outputId = "NY.cases.TS", height="500px", 
+                                      click = clickOpts(id ="NY.cases.TS_click"),
+                                      dblclick = "NY.cases.TS_dblclick",
+                                      brush = brushOpts(
+                                        id = "NY.cases.TS_brush",
+                                        resetOnNew = TRUE)),
+                           HTML("<div style='font-size:80%;line-height:1.3;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>"),
                            uiOutput("click_info"), 
                            width = 8)
       )
@@ -698,8 +707,18 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
+  # This sets the range for zooming the following plot
+  ranges <- reactiveValues(x = NULL, y = NULL)
+  
+  # output$plot1 <- renderPlot({
+  #   ggplot(mtcars, aes(wt, mpg)) +
+  #     geom_point() +
+  #     coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE)
+  # })
+  
   output$NY.cases.TS <- renderPlot({
- 
+    # browser()
+    
     highlight_points <- covid_NY_TS_plot.cases %>% 
       filter( 
                 County == "New York State" & date == as.Date("2020-03-30") |
@@ -789,12 +808,13 @@ server <- function(input, output, session) {
       ylab("Cumulative Number of Cases") + 
       ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
+      coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       NULL
     
       })
   
   output$click_info <- renderPrint({
-    hover <- input$plot_click
+    hover <- input$NY.cases.TS_click
 
     point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
     
@@ -830,7 +850,18 @@ server <- function(input, output, session) {
   }
   })
   
-    
+  observeEvent(input$NY.cases.TS_dblclick, {
+    brush <- input$NY.cases.TS_brush
+    if (!is.null(brush)) {
+      #browser()
+      ranges$x <- as.POSIXct(c(brush$xmin, brush$xmax), origin="1970-01-01")
+      ranges$y <- c(brush$ymin, brush$ymax)
+      
+    } else {
+      ranges$x <- NULL
+      ranges$y <- NULL
+    }
+  }) 
   
 }
 
