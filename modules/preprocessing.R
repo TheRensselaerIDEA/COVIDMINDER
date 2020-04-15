@@ -203,5 +203,7 @@ covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.dat
 # NOTE: The new TS plot is using this special version
 covid_NY_TS_counties_long.cases <- dplyr::inner_join(covid_NY_TS_counties_long.cases, as.data.frame(NY_counties_regions), by = c("County" = "County"))
 
-covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
-  group_by(date)
+# covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
+#   group_by(date)
+# Do it this way to be safe:
+covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")

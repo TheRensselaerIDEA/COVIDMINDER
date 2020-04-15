@@ -267,6 +267,40 @@ ui <-
       )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                               HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
+                      sidebarLayout(
+                        sidebarPanel(
+                          id = "sidebar_ny_CoT_rates",
+                          HTML(whatisit_text),
+                          HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
+                          img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                          HTML("<div style='font-size:90%;line-height:1.2;'>
+                         <br><br>
+                         <b>Date:</b> 04/14/2020<br><br>
+                         <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                         </div>"),
+                          HTML(footer_text),
+                          width=4),
+                        
+                        mainPanel(id = "mainpanel_ny_CoT_rates",
+                                   plotOutput(outputId = "NY.cases.TS.rates", height="500px",
+                                              click = clickOpts(id ="NY.cases.TS.rates_click"),
+                                              dblclick = "NY.cases.TS.rates_dblclick",
+                                              brush = brushOpts(
+                                                id = "NY.cases.TS.rates_brush",
+                                                resetOnNew = TRUE)),
+                                  # plotOutput(outputId = "NY.cases.TS.rates", height="90%"),
+                                  HTML("<div style='font-size:80%;line-height:1.3;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>"),
+                                  uiOutput("click_info_rates"), 
+                                  width = 8)
+                      )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
                sidebarLayout(
                  sidebarPanel(
@@ -710,12 +744,6 @@ server <- function(input, output, session) {
   # This sets the range for zooming the following plot
   ranges <- reactiveValues(x = NULL, y = NULL)
   
-  # output$plot1 <- renderPlot({
-  #   ggplot(mtcars, aes(wt, mpg)) +
-  #     geom_point() +
-  #     coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE)
-  # })
-  
   output$NY.cases.TS <- renderPlot({
     # browser()
     
@@ -813,6 +841,103 @@ server <- function(input, output, session) {
     
       })
   
+  # This sets the range for zooming the following plot
+  ranges2 <- reactiveValues(x = NULL, y = NULL)
+  
+  output$NY.cases.TS.rates <- renderPlot({
+    # browser()
+    
+    highlight_points <- covid_NY_TS_plot.cases %>% 
+      filter( 
+        County == "New York State" & date == as.Date("2020-03-30") |
+          County == "Albany" & date == as.Date("2020-03-26") |
+          # County == "Allegany" & date == as.Date("2020-03-29") |
+          County == "Bronx" & date == as.Date("2020-03-25") |
+          County == "Broome" & date == as.Date("2020-04-02") |
+          # County == "Cattaraugus" & date == as.Date("2020-03-30") |
+          County == "Cayuga" & date == as.Date("2020-04-02") |
+          County == "Chautauqua" & date == as.Date("2020-04-10") |
+          # County == "Chemung" & date == as.Date("2020-04-10") |
+          County == "Chenango" & date == as.Date("2020-04-12") |
+          County == "Clinton" & date == as.Date("2020-03-26") |
+          # County == "Columbia" & date == as.Date("2020-03-29") |
+          County == "Cortland" & date == as.Date("2020-03-25") |
+          # County == "Delaware" & date == as.Date("2020-04-02") |
+          County == "Dutchess" & date == as.Date("2020-03-30") |
+          County == "Erie" & date == as.Date("2020-04-02") |
+          # County == "Essex" & date == as.Date("2020-04-10") |
+          # County == "Franklin" & date == as.Date("2020-04-10") |
+          # County == "Fulton" & date == as.Date("2020-04-12") |
+          County == "Genesee" & date == as.Date("2020-03-26") |
+          # County == "Greene" & date == as.Date("2020-03-29") |
+          County == "Hamilton" & date == as.Date("2020-03-25") |
+          County == "Herkimer" & date == as.Date("2020-04-02") |
+          # County == "Jefferson" & date == as.Date("2020-03-30") |
+          County == "Kings" & date == as.Date("2020-04-02") |
+          # County == "Lewis" & date == as.Date("2020-04-10") |
+          # County == "Livingston" & date == as.Date("2020-04-10") |
+          County == "Madison" & date == as.Date("2020-04-12") |
+          # County == "Monroe" & date == as.Date("2020-03-26") |
+          # County == "Montgomery" & date == as.Date("2020-03-29") |
+          County == "Nassau" & date == as.Date("2020-03-25") |
+          County == "New York" & date == as.Date("2020-04-02") |
+          County == "Manhattan" & date == as.Date("2020-03-30") |
+          County == "Niagara" & date == as.Date("2020-04-02") |
+          County == "Oneida" & date == as.Date("2020-04-10") |
+          County == "Onondaga" & date == as.Date("2020-04-10") |
+          # County == "Ontario" & date == as.Date("2020-04-12") |
+          County == "Orange" & date == as.Date("2020-03-26") |
+          County == "Orleans" & date == as.Date("2020-03-29") |
+          County == "Oswego" & date == as.Date("2020-03-25") |
+          County == "Otsego" & date == as.Date("2020-04-02") |
+          # County == "Putnam" & date == as.Date("2020-03-30") |
+          County == "Queens" & date == as.Date("2020-04-02") |
+          County == "Rensselaer" & date == as.Date("2020-04-10") |
+          County == "Richmond" & date == as.Date("2020-04-01") |
+          County == "Rockland" & date == as.Date("2020-04-12") |
+          County == "St. Lawrence" & date == as.Date("2020-03-26") |
+          County == "Saratoga" & date == as.Date("2020-03-29") |
+          County == "Schenectady" & date == as.Date("2020-03-25") |
+          County == "Schoharie" & date == as.Date("2020-04-02") |
+          County == "Schuyler" & date == as.Date("2020-03-30") |
+          County == "Seneca" & date == as.Date("2020-04-02") |
+          # County == "Steuben" & date == as.Date("2020-04-10") |
+          County == "Suffolk" & date == as.Date("2020-04-10") |
+          County == "Sullivan" & date == as.Date("2020-04-12") |
+          # County == "Tioga" & date == as.Date("2020-03-26") |
+          County == "Tompkins" & date == as.Date("2020-03-29") |
+          # County == "Ulster" & date == as.Date("2020-03-25") |
+          # County == "Warren" & date == as.Date("2020-04-02") |
+          # County == "Washington" & date == as.Date("2020-03-30") |
+          # County == "Wayne" & date == as.Date("2020-04-02") |
+          County == "Westchester" & date == as.Date("2020-04-10") |
+          # County == "Wyoming" & date == as.Date("2020-04-10") |
+          County == "Yates" & date == as.Date("2020-04-12")
+      )
+    
+    NY_region_palette.df <- NY_counties_regions %>%
+      select(Region,Color) %>% 
+      distinct(Region,Color)
+    
+    NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
+    #browser()
+
+      covid_NY_TS_plot.cases %>%
+      ggplot(aes(date, 
+                 p_cases, 
+                 color = Region, 
+                 group=County)) +
+      geom_line() +
+      scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+      ylab("Cases per 100K Population") + 
+      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
+      geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
+      coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
+      NULL
+
+  })
+  
+  
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
@@ -849,6 +974,43 @@ server <- function(input, output, session) {
       }
   }
   })
+
+  output$click_info_rates <- renderPrint({
+    hover <- input$NY.cases.TS.rates_click
+    
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    # create style property for tooltip
+    # background color is set so tooltip is a bit transparent
+    # z-index is set so we are sure are tooltip will be on top
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+    
+    # actual tooltip created as wellPanel
+    if (nrow(point) != 0) {
+      if (point$County == "New York State"){
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+        )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+        )
+        
+      }
+    }
+  })
   
   observeEvent(input$NY.cases.TS_dblclick, {
     brush <- input$NY.cases.TS_brush
@@ -860,6 +1022,19 @@ server <- function(input, output, session) {
     } else {
       ranges$x <- NULL
       ranges$y <- NULL
+    }
+  }) 
+
+  observeEvent(input$NY.cases.TS.rates_dblclick, {
+    brush2 <- input$NY.cases.TS.rates_brush
+    if (!is.null(brush2)) {
+      #browser()
+      ranges2$x <- as.POSIXct(c(brush2$xmin, brush2$xmax), origin="1970-01-01")
+      ranges2$y <- c(brush2$ymin, brush2$ymax)
+      
+    } else {
+      ranges2$x <- NULL
+      ranges2$y <- NULL
     }
   }) 
   
