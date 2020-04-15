@@ -251,7 +251,7 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT", 
-                           plotOutput(outputId = "NY.cases.TS", height="500px", 
+                           plotOutput(outputId = "NY.cases.TS", height="90%", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
                                       dblclick = "NY.cases.TS_dblclick",
                                       brush = brushOpts(
