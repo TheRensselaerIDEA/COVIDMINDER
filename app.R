@@ -881,6 +881,7 @@ server <- function(input, output, session) {
           # County == "Montgomery" & date == as.Date("2020-03-29") |
           County == "Nassau" & date == as.Date("2020-03-25") |
           County == "New York" & date == as.Date("2020-04-02") |
+          County == "New York State" & date == as.Date("2020-04-12") |
           County == "Manhattan" & date == as.Date("2020-03-30") |
           County == "Niagara" & date == as.Date("2020-04-02") |
           County == "Oneida" & date == as.Date("2020-04-10") |

@@ -278,7 +278,7 @@ NY_population <- read_csv("data/csv/time_series/NY_population.csv")
 
 covid_NY_TS_plot.cases <- dplyr::inner_join(covid_NY_TS_plot.cases, as.data.frame(NY_population), by = c("County" = "County"))
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>% 
-  select(-FIPS,-Lat,-Long_)
+  select(-FIPS)
 
 # Append case rates per county!
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>%
@@ -320,6 +320,7 @@ highlight_points <- covid_NY_TS_plot.cases %>%
             # County == "Montgomery" & date == as.Date("2020-03-29") |
             County == "Nassau" & date == as.Date("2020-04-12") |
             County == "New York" & date == as.Date("2020-04-12") |
+            County == "New York State" & date == as.Date("2020-04-12") |
             County == "Manhattan" & date == as.Date("2020-03-30") |
             # County == "Niagara" & date == as.Date("2020-04-02") |
             # County == "Oneida" & date == as.Date("2020-04-10") |
