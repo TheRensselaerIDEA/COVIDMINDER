@@ -182,3 +182,26 @@ diabetes_data_states <- diabetes_data_states[1:51,]
 
 states <- data.frame(states, "diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
 states <- data.frame(states, "pct_Adults_with_Diabetes"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
+
+
+## Needed for NY TS plot
+
+# Pre-filter to remove small numbers
+covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
+  filter(cases >= 2) %>%
+  filter(County != "Unassigned")
+
+covid_NY_TS_counties_long.cases <- covid_NY_TS_counties_long.cases %>% 
+  filter(cases >= 2) %>%
+  filter(County != "Unassigned")
+
+covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
+  group_by(date)
+
+covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
+
+# NOTE: The new TS plot is using this special version
+covid_NY_TS_counties_long.cases <- dplyr::inner_join(covid_NY_TS_counties_long.cases, as.data.frame(NY_counties_regions), by = c("County" = "County"))
+
+covid_NY_TS_plot.cases <- covid_NY_TS_counties_long.cases %>%
+  group_by(date)

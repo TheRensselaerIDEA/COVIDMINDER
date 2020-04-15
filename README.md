@@ -1,9 +1,11 @@
-# COVIDMINDER: COVIDMINDER Development by the Rensselaer IDEA Team
+# COVIDMINDER: Revealing regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic
+
+<strong>COVIDMINDER</strong> reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. <i>Outcomes</i> are the direct effects of COVID-19. <i>Social and Economic Determinants</i> are pre-existing risk factors that impact COVID-19 outcomes. <i>Mediations</i> are resources and programs used to combat the pandemic.
 
 * Home repository: https://github.com/TheRensselaerIDEA/COVIDMINDER
 * For those new to github: https://education.github.com/git-cheat-sheet-education.pdf (github cheatsheet)
 
-## Production Deployment (10 Apr 2020)
+## Production Deployment (10 Apr 2020; updated daily)
 * http://covidminder.idea.rpi.edu
 
 ## Shinyapps.io Deployment (Created 30 Mar 2020; updated frequently!)

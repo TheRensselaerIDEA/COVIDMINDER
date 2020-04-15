@@ -3,7 +3,6 @@
   padding: 0 5px;
 }
 
-
 /* Navbar styles */
 .navbar-brand {
   padding: 0;
@@ -12,6 +11,11 @@
 
 .logo {
   height: 80%;
+  padding-left: 15px;
+}
+
+.ny-map {
+  height: 20%;
   padding-left: 15px;
 }
 
@@ -31,10 +35,7 @@
 }
 
 .leaflet-container {
-  padding-bottom:70%;
-}
-.col-sm-8 {
-  /*padding-left:0;*/
+  height:100%;
 }
 
 .footer {
@@ -72,8 +73,5 @@
   .title-text {
     height: 70px;
   }
-  .leaflet-container {
-  padding-bottom:65%;
-}
 }
 

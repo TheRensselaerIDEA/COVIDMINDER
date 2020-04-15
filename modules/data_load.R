@@ -12,6 +12,9 @@ NY.deaths.cases <- read_csv("data/csv/time_series/covid_NY_counties.csv")
 # Update with manual deaths
 covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv")
 
+# Import county regions and join them is
+NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
+
 # Import NY Diabetes 
 NY_counties_diabetes <- read_csv("data/csv/time_series/NY_counties_diabetes.csv")
 
@@ -20,6 +23,8 @@ NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.dea
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
 
 NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_diabetes[,2:3]), by = c("County" = "County"))
+
+NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_regions), by = c("County" = "County"))
 
 NY.data$FIPS <- as.character(NY.data$FIPS)
 
@@ -63,6 +68,10 @@ covid_data_states$p_death_rate <- covid_data_states$calc_death_rate
 diabetes_data_states <- read_csv("data/csv/diabetes_data_states.csv")
 
 
+# Import NYS TS cases (for plotting) 
+covid_NY_TS_counties_long <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.csv")
+covid_NY_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.cases.csv")
 
+covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")
 
 
