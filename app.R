@@ -199,7 +199,7 @@ ui <-
                  
                  mainPanel(id = "mainpanel_us_cardio",
                            tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.cardio.bnh", height="750px"), width=8)
+                           leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
                )
       ),
       
