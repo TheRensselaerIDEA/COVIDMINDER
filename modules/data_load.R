@@ -48,7 +48,10 @@ state_covid_testing <- read_csv("data/csv/state_covid_testing.csv")
 at_risk_adults <- read_csv("data/csv/at_risk_adults.csv") 
 
 # Import cardio data (NEW)
-cardio_deaths_2017 <- read_csv("data/csv/cardio_deaths_2017.csv")
+# UPDATED: 16 Apr (new source!)
+#cardio_deaths_2017 <- read_csv("data/csv/cardio_deaths_2017.csv")
+# NOTE: Includes ethnicities; already in p_100K format
+cardio_deaths_2015 <- read_csv("data/csv/HeartDisease_DeathRate_States_CDC_2015.csv")
 
 # Import COVID-19 Cases & Deaths data
 covid_data_states <- read_csv("data/csv/covid_data_states.csv")
