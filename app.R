@@ -968,15 +968,15 @@ server <- function(input, output, session) {
       distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-    #browser()
 
-      covid_NY_TS_plot.cases %>%
+      covid_NY_TS_plot.cases %>% 
+        filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
         scale_color_manual(values=NY_region_palette) +
         geom_line(size=1) +
         scale_y_continuous(
-          trans = "log10"
-          # breaks = c(10,100,500,1000,5000,10000, 50000)
+          trans = "log10",
+          breaks = c(10,50,100,500,1000,5000)
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
@@ -1054,12 +1054,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
         
       }
