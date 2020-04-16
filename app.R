@@ -180,7 +180,8 @@ ui <-
                                 per 100k population per state when compared to the average United States rate? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
                                 Heart disease patients at increased risk of contracting and dying from COVID-19, 
-                                so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. <br><br>
+                                so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. 
+                                Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
@@ -198,7 +199,7 @@ ui <-
                  
                  mainPanel(id = "mainpanel_us_cardio",
                            tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
+                           leafletOutput(outputId = "map.cardio.bnh", height="750px"), width=8)
                )
       ),
       
