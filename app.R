@@ -182,7 +182,7 @@ ui <-
                                 Heart disease patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. 
                                 Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
-                               The  rate of diabetes deaths per 100k in a state is<br>
+                               The rate of deaths due to heart disease per 100k (BNH) in a state is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
