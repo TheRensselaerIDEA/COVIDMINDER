@@ -1,5 +1,11 @@
-# Daily data importer
+# COVIDMINDER Daily data downloader (3 of 4)
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
+# FILES UPDATED BY THIS SCRIPT:
+# "data/csv/time_series/time_series_covid19_deaths_US.csv"
+# "data/csv/time_series/covid_TS_states_wide.csv"
+# "data/csv/time_series/covid_TS_states_wide.csv.bak"
+# "data/csv/time_series/covid_TS_states_long.csv"
+# "data/csv/time_series/covid_TS_states_long.csv.bak"
 library(tidyverse)
 library(lubridate)
 library(stringr)

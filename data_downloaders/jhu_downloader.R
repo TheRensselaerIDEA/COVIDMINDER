@@ -1,10 +1,14 @@
-# Daily data importer
+# COVIDMINDER Daily data downloader (2 of 4)
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
+# FILES CREATED/UPDATED BY THIS SCRIPT:
+# "data/csv/04-XX-2020.csv"  (where 'XX' is the current day)
+# "data/csv/covid_data_states.csv"
+# "data/csv/covid_data_states.csv.bak"
 library(tidyverse)
 
 # curl newest data from JHU github
 # (You must edit the date below)
-dateURL.1 <- "04-15-2020.csv"
+dateURL.1 <- "04-16-2020.csv"
 dateURL.2 <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
 
 # Write raw data to file system; use date-based name syntax as above
