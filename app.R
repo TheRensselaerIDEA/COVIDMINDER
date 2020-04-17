@@ -54,7 +54,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/15/2020<br><br>
+                    <strong>Date:</strong> 04/16/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -88,7 +88,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/15/2020 <br><br>
+                               <strong>Date:</strong> 04/16/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
@@ -121,7 +121,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/15/2020 <br><br>
+                               <strong>Date:</strong> 04/16/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -169,39 +169,39 @@ ui <-
                )
       ),
       
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_cardio",
-                   HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                    Determinant: What are the disparities between states in rate of deaths (black non-hispanic) due to heart disease 
-                                per 100k population per state when compared to the average United States rate? </div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
-                                Heart disease patients at increased risk of contracting and dying from COVID-19, 
-                                so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. 
-                                Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
-                               The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Heart Disease Death Rate (BNH)</strong> = number of heart disease deaths (black non-hispanic) per 100K population <br>
-                               <strong>Heart Disease Death Disparity Index (BNH)</strong> = log(Heart Disease Death Rate (BNH) in state/average Heart Disease Death Rate in US)<br>
-                               <strong>Date:</strong> 2015<br><br>
-                               
-                               <b>DATA SOURCE:</b> <a href='https://sortablestats.cdc.gov/#/indicator'>CDC</a><br>
-                          </div>"),
-                   HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_us_cardio",
-                           tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
-               )
-      ),
+      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
+      #          sidebarLayout(
+      #            sidebarPanel(
+      #              id = "sidebar_us_cardio",
+      #              HTML(whatisit_text),
+      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
+      #               Determinant: What are the disparities between states in rate of deaths (black non-hispanic) due to heart disease 
+      #                           per 100k population per state when compared to the average United States rate? </div><br>
+      #                           <div style='font-size:90%;line-height:1.2;'>
+      #                           Heart disease patients at increased risk of contracting and dying from COVID-19, 
+      #                           so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. 
+      #                           Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
+      #                          The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is<br>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                          <i>Darker shades indicate greater disparity.</i><br><br>
+      #                          
+      #                          <strong>Heart Disease Death Rate (BNH)</strong> = number of heart disease deaths (black non-hispanic) per 100K population <br>
+      #                          <strong>Heart Disease Death Disparity Index (BNH)</strong> = log(Heart Disease Death Rate (BNH) in state/average Heart Disease Death Rate in US)<br>
+      #                          <strong>Date:</strong> 2015<br><br>
+      #                          
+      #                          <b>DATA SOURCE:</b> <a href='https://sortablestats.cdc.gov/#/indicator'>CDC</a><br>
+      #                     </div>"),
+      #              HTML(footer_text),
+      #              width=4),
+      #            
+      #            mainPanel(id = "mainpanel_us_cardio",
+      #                      tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
+      #                      leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
+      #          )
+      # ),
       
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
@@ -222,7 +222,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/15/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/16/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -256,7 +256,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/15/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/16/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
@@ -279,7 +279,7 @@ ui <-
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                    HTML("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/15/2020<br><br>
+                         <b>Date:</b> 04/16/2020<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>"),
                    HTML(footer_text),
@@ -312,7 +312,7 @@ ui <-
                           img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                           HTML("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/15/2020<br><br>
+                         <b>Date:</b> 04/16/2020<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>"),
                           HTML(footer_text),
@@ -968,15 +968,15 @@ server <- function(input, output, session) {
       distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-    #browser()
 
-      covid_NY_TS_plot.cases %>%
+      covid_NY_TS_plot.cases %>% 
+        filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
         scale_color_manual(values=NY_region_palette) +
         geom_line(size=1) +
         scale_y_continuous(
-          trans = "log10"
-          # breaks = c(10,100,500,1000,5000,10000, 50000)
+          trans = "log10",
+          breaks = c(10,50,100,500,1000,5000)
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
@@ -1054,12 +1054,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
         
       }

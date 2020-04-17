@@ -1,5 +1,20 @@
-# Daily data importer
+# COVIDMINDER Daily data downloader (4 of 4)
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
+# FILES UPDATED BY THIS SCRIPT:
+# "data/csv/time_series/time_series_covid19_confirmed_US.csv"
+# "data/csv/time_series/time_series_covid19_deaths_US.csv"
+# "data/csv/time_series/NY_county_data.csv"
+# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"
+# "data/csv/time_series/covid_NY_counties.deaths.csv"
+# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak"
+# "data/csv/time_series/covid_NY_counties.deaths.csv.bak"
+# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"
+# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak"
+# "data/csv/time_series/covid_NY_counties.csv"
+# "data/csv/time_series/covid_NY_counties.csv.bak"
+# "data/csv/time_series/covid_NY_TS_counties_long.cases.csv"
+# "data/csv/time_series/covid_NY_TS_counties_long.cases.csv.bak"
+# "data/csv/time_series/covid_NY_TS_plot.cases.csv"   # TODO: check this!
 
 # UPDATE: Now pulling daily & cumulative NY county-level data from: https://health.data.ny.gov/resource/xdss-u53e.csv
 
