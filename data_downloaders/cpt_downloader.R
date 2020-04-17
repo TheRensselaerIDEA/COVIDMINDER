@@ -1,5 +1,9 @@
-# Daily data importer
-# Source: COVID Tracking Project (api): 
+# COVIDMINDER Daily data downloader (1 of 4)
+# SOURCE: COVID Tracking Project (api): https://covidtracking.com/api/states.csv
+# FILES UPDATED BY THIS SCRIPT:
+# "data/csv/states_testing_raw.csv"
+# "data/csv/state_covid_testing.csv"
+# "data/csv/state_covid_testing.csv.bak"
 library(tidyverse)
 
 # Download states raw data 
