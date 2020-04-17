@@ -24,6 +24,7 @@
   vertical-align: middle;
   line-height: 100%;
   height: 50px;
+  padding-top:2px;
   padding-right: 10px;
   color:black;
 }
@@ -70,8 +71,10 @@
 }
 
 @media screen and (min-width:1085px){
+  /*
   .title-text {
     height: 70px;
   }
+  */
 }
 
