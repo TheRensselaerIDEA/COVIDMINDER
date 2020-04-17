@@ -54,7 +54,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/14/2020<br><br>
+                    <strong>Date:</strong> 04/15/2020<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -88,7 +88,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/14/2020 <br><br>
+                               <strong>Date:</strong> 04/15/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>"),
@@ -121,7 +121,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/14/2020 <br><br>
+                               <strong>Date:</strong> 04/15/2020 <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -168,6 +168,41 @@ ui <-
                            leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
                )
       ),
+      
+      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
+      #          sidebarLayout(
+      #            sidebarPanel(
+      #              id = "sidebar_us_cardio",
+      #              HTML(whatisit_text),
+      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
+      #               Determinant: What are the disparities between states in rate of deaths (black non-hispanic) due to heart disease 
+      #                           per 100k population per state when compared to the average United States rate? </div><br>
+      #                           <div style='font-size:90%;line-height:1.2;'>
+      #                           Heart disease patients at increased risk of contracting and dying from COVID-19, 
+      #                           so areas with a history of higher heart disease mortality may face increased COVID-19 burdens. 
+      #                           Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
+      #                          The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is<br>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                          <i>Darker shades indicate greater disparity.</i><br><br>
+      #                          
+      #                          <strong>Heart Disease Death Rate (BNH)</strong> = number of heart disease deaths (black non-hispanic) per 100K population <br>
+      #                          <strong>Heart Disease Death Disparity Index (BNH)</strong> = log(Heart Disease Death Rate (BNH) in state/average Heart Disease Death Rate in US)<br>
+      #                          <strong>Date:</strong> 2015<br><br>
+      #                          
+      #                          <b>DATA SOURCE:</b> <a href='https://sortablestats.cdc.gov/#/indicator'>CDC</a><br>
+      #                     </div>"),
+      #              HTML(footer_text),
+      #              width=4),
+      #            
+      #            mainPanel(id = "mainpanel_us_cardio",
+      #                      tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
+      #                      leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
+      #          )
+      # ),
+      
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                sidebarLayout(
@@ -187,7 +222,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/14/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/15/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -221,7 +256,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/14/2020 (updated daily) <br><br>
+                               <strong>Date:</strong> 04/15/2020 (updated daily) <br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                           </div>"),
@@ -244,7 +279,7 @@ ui <-
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                    HTML("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/14/2020<br><br>
+                         <b>Date:</b> 04/15/2020<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>"),
                    HTML(footer_text),
@@ -277,7 +312,7 @@ ui <-
                           img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                           HTML("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/14/2020<br><br>
+                         <b>Date:</b> 04/15/2020<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>"),
                           HTML(footer_text),
@@ -290,7 +325,6 @@ ui <-
                                               brush = brushOpts(
                                                 id = "NY.cases.TS.rates_brush",
                                                 resetOnNew = TRUE)),
-                                  # plotOutput(outputId = "NY.cases.TS.rates", height="90%"),
                                   HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
@@ -391,45 +425,6 @@ server <- function(input, output, session) {
         id = "mapbox.light"))
   })
   
-  output$map.cardio <- renderLeaflet({
-    
-    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_ldi, bins = bins, reverse=FALSE)
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      Cardio Mortality Rate DI: %.2g<br/>
-      Cardio Mortality Rate: %.1f /100K",
-      states$NAME, states$cardio_death_rate_ldi, states$cardio_deaths_p_100000*100000
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(states$cardio_death_rate_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, values = ~states$cardio_death_rate_ldi, opacity = 0.7, title = "Disparity Index<br/>US Cardio Mortality Rate",
-                position = "bottomright") %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
-  })
-  
   output$map.diabetes <- renderLeaflet({
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -465,6 +460,54 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~states$diabetes_rate_ldi, 
                 opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+    #Remove personal API key
+  })
+
+  output$map.cardio.bnh <- renderLeaflet({
+    
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_BNH_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Heart Disease Death Rate DI (BNH): %.2g<br/>
+      Heart Disease Death Rate (BNH): %.1f per 100k",
+      states$NAME, states$cardio_death_rate_BNH_ldi, states$cardio_deaths_p_Black_Non_Hispanic
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$cardio_death_rate_BNH_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$cardio_death_rate_BNH_ldi, 
+                opacity = 0.7, title = "Disparity Index<br/>US Heart Disease Death Rate (BNH)",
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                 cuts[n] = paste0(cuts[n]," lower") 
@@ -837,6 +880,10 @@ server <- function(input, output, session) {
       ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
+      geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      scale_linetype_manual(name = "Events", 
+                            values = c(2), 
+                            guide = guide_legend(override.aes = list(color = c("black")))) +
       NULL
     
       })
@@ -921,22 +968,26 @@ server <- function(input, output, session) {
       distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-    #browser()
 
-      covid_NY_TS_plot.cases %>%
+      covid_NY_TS_plot.cases %>% 
+        filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
         scale_color_manual(values=NY_region_palette) +
         geom_line(size=1) +
         scale_y_continuous(
-          trans = "log10"
-          # breaks = c(10,100,500,1000,5000,10000, 50000)
+          trans = "log10",
+          breaks = c(10,50,100,500,1000,5000)
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
       ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
-      NULL
+        geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+        scale_linetype_manual(name = "Events", 
+                              values = c(2), 
+                              guide = guide_legend(override.aes = list(color = c("black")))) +
+        NULL
 
   })
   
@@ -944,8 +995,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
-    
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE)
+    # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
     left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
@@ -1003,12 +1054,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases per 100K as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
         
       }

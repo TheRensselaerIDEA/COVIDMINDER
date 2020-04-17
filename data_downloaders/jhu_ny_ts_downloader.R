@@ -389,6 +389,7 @@ p.case.rates <- covid_NY_TS_plot.cases %>%
   ylab("Cases per 100K Population") + 
   ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
   geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
+  geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
   NULL
 
 p.case.rates
