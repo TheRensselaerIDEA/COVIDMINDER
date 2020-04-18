@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
-
+from simpledbf import Dbf5
+Covid=pd.read_csv('data/csv/04-15-2020.csv')
 Centers = pd.read_csv('CenterStates.csv', index_col='state')
 Borders = pd.read_csv('data/borders/Borders.txt', index_col='ST1ST2')
 Abbreviations = pd.read_csv('data/borders/USStatesAbbreviationstxt.txt')[:50]
@@ -27,6 +28,11 @@ pos = dict(
     [(state, (Centers['longitude'].loc[Abbreviations[state]], Centers['latitude'].loc[Abbreviations[state]])) for state
      in G.nodes])
 weights = [G[u][v]['weight'] for u, v in G.edges]
+
+Cases=dict([(state,(Covid[Covid['Province_State']==state])['Confirmed'].sum()) for state in G.nodes])
+Deaths=dict([(state,(Covid[Covid['Province_State']==state])['Deaths'].sum()) for state in G.nodes])
+nx.set_node_attributes(G,Cases,'Cases')
+nx.set_node_attributes(G,Deaths,'Deaths')
 edges = nx.draw_networkx_edges(G, pos, edge_cmap=plt.cm.rainbow, edge_color=weights, width=5)
 nodes = nx.draw_networkx_nodes(G, pos, node_shape='s', node_color='b', node_size=100)
 labels = nx.draw_networkx_labels(G, pos, labels=Abbreviations, font_color='w', font_size=8)
