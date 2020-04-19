@@ -3,6 +3,8 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
+update_date <- "04-19-2020" # makes it easy to change all occurances when we update
+
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
@@ -42,7 +44,7 @@ ui <-
                  sidebarPanel(
                    id = "sidebar_us_mort",
                    HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                    Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    when compared to the average USA rate? </div><br>
                     <div style='font-size:90%;line-height:1.2;'>
@@ -54,11 +56,11 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong> 04/17/2020<br><br>
+                    <strong>Date:</strong>",update_date,"<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
-                    "),
+                    ")),
                    HTML(footer_text),
                    width=4),
                  mainPanel(
@@ -74,7 +76,7 @@ ui <-
                              sidebarPanel(
                                id = "sidebar_us_test",
                                HTML(whatisit_text),
-                               HTML("<div style='font-weight:bold;line-height:1.3;'>
+                               HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
                               when compared to the South Korean rate? </div><br>
                               <div style='font-size:90%;line-height:1.2;'>
@@ -88,10 +90,10 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                               <strong>Date:</strong> 04/17/2020 <br><br>
+                    <strong>Date:</strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                               </div>"),
+                               </div>")),
                                HTML(footer_text),
                                width=4),
                              
@@ -106,7 +108,7 @@ ui <-
                  sidebarPanel(
                    id = "sidebar_us_hosp",
                    HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                      Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population when compared to the rate in Italy? </div><br>
                                 <div style='font-size:90%;line-height:1.2;'>
@@ -121,11 +123,11 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong> 04/17/2020 <br><br>
+                               <strong>Date:</strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
-                               </div>"),
+                               </div>")),
                    HTML(footer_text),
                    width=4),
                  
@@ -209,7 +211,7 @@ ui <-
                  sidebarPanel(
                    id = "sidebar_ny_mort",
                    HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                      Outcome: What are the disparities between counties of New York
                                 in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
                                 <div style='font-size:90%;line-height:1.2;'>
@@ -222,12 +224,12 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong> 04/17/2020 (updated daily) <br><br>
-                               
+                               <strong>Date:</strong>",update_date,"<br><br>
+
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
 
-                               </div>"),
+                               </div>")),
                    HTML(footer_text),
                    width=4),
                  
@@ -242,7 +244,7 @@ ui <-
                  sidebarPanel(
                    id = "sidebar_ny_cases",
                    HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                 cases per 100k population when compared to the average United States 
                                 rate?  </div> <br>
@@ -255,11 +257,10 @@ ui <-
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                               <strong>Death Rate Disparity Index</strong> = log (COVID-19 Case Rate in state/mean COVID_19 Case Rate in US) <br>
-                               <strong>Date:</strong> 04/17/2020 (updated daily) <br><br>
+                               <strong>Date:</strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                          </div>"),
+                          </div>")),
                    HTML(footer_text),
                    width=4),
                  
@@ -277,11 +278,11 @@ ui <-
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                   HTML("<div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/17/2020<br><br>
+                          <strong>Date:</strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                         </div>"),
+                         </div>")),
                    HTML(footer_text),
                    width=4),
                  
@@ -310,11 +311,11 @@ ui <-
                           HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
                           img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                          HTML("<div style='font-size:90%;line-height:1.2;'>
+                          HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <b>Date:</b> 04/17/2020<br><br>
+                         <strong>Date:</strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                         </div>"),
+                         </div>")),
                           HTML(footer_text),
                           width=4),
                         
