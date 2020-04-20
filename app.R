@@ -1164,7 +1164,7 @@ server <- function(input, output, session) {
       ggplot(aes(x = Race.Ethnicity, 
                  y = Dis,
                  fill = NYS_Dis_m.df$Race.Ethnicity
-      )) + coord_flip() +
+      )) + guides(fill = FALSE) + coord_flip() +
       geom_bar(stat = "Identity") +
       scale_fill_manual(values=NYS_Dis_m.df$color, name = "Race/Ethnicity") +
       theme_minimal() + 
@@ -1222,7 +1222,7 @@ server <- function(input, output, session) {
       ggplot(aes(x = Race.Ethnicity, 
                  y = Dis,
                  fill = NYC_Dis_m.df$Race.Ethnicity
-      )) + coord_flip() +
+      )) + guides(fill = FALSE) + coord_flip() +
       geom_bar(stat = "Identity")
     
     NYC_Dis.p + 
@@ -1236,13 +1236,12 @@ server <- function(input, output, session) {
       ylab("Disparity") + 
       scale_y_continuous(
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
-        limits = c(-1,1)
+        limits = c(-2,2)
       ) +
       labs(title = "COVID Fatalities % and Population % Disparity in New York City",
            subtitle = "By Race/Ethnicity",
            caption = "Source: health.ny.gov") +
       theme(
-        legend.position = "none",
         plot.title = element_text(vjust = 0)) +
       geom_hline(aes(yintercept=-0.2, linetype="'Equivalent' Lower Bound"), color = "green") +
       geom_hline(aes(yintercept= 0.2, linetype="'Equivalent' Upper Bound"), color = "red") +
