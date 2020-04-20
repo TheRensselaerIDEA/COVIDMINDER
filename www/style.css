@@ -73,6 +73,10 @@
   background-color: #dddddd;
 }
 
+.dropdown-toggle > div:first-child {
+  display: inline-block;
+}
+
 @media screen and (min-width:1085px){
   /*
   .title-text {
