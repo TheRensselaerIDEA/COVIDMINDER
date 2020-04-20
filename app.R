@@ -1167,7 +1167,7 @@ server <- function(input, output, session) {
                  y = Dis,
                  fill = NYS_Dis_m.df$Race.Ethnicity
       )) + guides(fill = FALSE) + coord_flip() +
-      geom_bar(stat = "Identity") +
+      geom_bar(stat = "Identity", colour="black") +
       scale_fill_manual(values=NYS_Dis_m.df$color, name = "Race/Ethnicity") +
       theme_minimal() + 
       theme(axis.title.x = element_text(size = 14, vjust = -1),
@@ -1225,7 +1225,7 @@ server <- function(input, output, session) {
                  y = Dis,
                  fill = NYC_Dis_m.df$Race.Ethnicity
       )) + guides(fill = FALSE) + coord_flip() +
-      geom_bar(stat = "Identity")
+      geom_bar(stat = "Identity", colour="black")
     
     NYC_Dis.p + 
       scale_fill_manual(values=NYC_Dis_m.df$color, name = "Race/Ethnicity") + 
@@ -1245,8 +1245,8 @@ server <- function(input, output, session) {
            caption = "Source: health.ny.gov") +
       theme(
         plot.title = element_text(vjust = 0)) +
-      geom_hline(aes(yintercept=-0.2, linetype="'Equivalent' Lower Bound"), color = "green") +
-      geom_hline(aes(yintercept= 0.2, linetype="'Equivalent' Upper Bound"), color = "red") +
+      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "green") +
+      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "red") +
       scale_linetype_manual(name = "Target Levels", 
                             values = c(2, 
                                        2), 
