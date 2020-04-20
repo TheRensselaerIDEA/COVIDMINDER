@@ -1135,10 +1135,6 @@ server <- function(input, output, session) {
     NYS_Dis_m.df <- NYS_Dis.df %>%
       mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
     
-    # Creating columns to measure disparity between city pop percent and fatality percent
-    NYC_Dis_m.df <- NYC_Dis.df %>%
-      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
-    
     # Setup: COVIDMINDER Colors and DI bins
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -1200,7 +1196,7 @@ server <- function(input, output, session) {
     # Setup: COVIDMINDER Colors and DI bins
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    di_pal <- leaflet::colorBin(colors, domain = NYS_Dis_m.df$Dis, bins = bins, reverse=FALSE)
+    di_pal <- leaflet::colorBin(colors, domain = NYC_Dis_m.df$Dis, bins = bins, reverse=FALSE)
     
     # Create color column with correct mapping
     NYC_Dis_m.df <- NYC_Dis_m.df %>% 
