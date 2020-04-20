@@ -38,6 +38,7 @@ ui <-
       title=tags$div(class="title-text",
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (maps)</b><br>Select a USA or state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
                sidebarLayout(
@@ -69,7 +70,140 @@ ui <-
                            leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
                ), 
                tags$script(src = "style.js")
+      ), 
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_mort",
+                   HTML(whatisit_text),
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
+                               Outcome: What are the disparities between counties of New York
+                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
+                               <div style='font-size:90%;line-height:1.2;'>
+                               
+                               The rate of COVID-19 deaths per 100k in a county is<br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                               <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                               <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
+                               <strong>Date:</strong>",update_date,"<br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
+                               <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
+                               
+                               </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_mort",
+                           tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
+                   )
+                 ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_cases",
+                   HTML(whatisit_text),
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
+                               Outcome: What are the disparities between New York counties in the rate of COVID-19 
+                               cases per 100k population when compared to the average United States 
+                               rate?  </div> <br>
+                               <div style='font-size:90%;line-height:1.2;'>
+                               
+                               The rate of COVID-19 deaths per 100k in a county is<br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                               <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                               <strong>Date:</strong>",update_date,"<br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_cases",
+                           tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
+                   )
+                 )),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (over time)</b><br>Select a state outcome</div>"),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_CoT",
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
+                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                               <br><br>
+                               <strong>Date:</strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_CoT", 
+                           plotOutput(outputId = "NY.cases.TS", height="90%", 
+                                      click = clickOpts(id ="NY.cases.TS_click"),
+                                      dblclick = "NY.cases.TS_dblclick",
+                                      brush = brushOpts(
+                                        id = "NY.cases.TS_brush",
+                                        resetOnNew = TRUE)),
+                           HTML("<div style='font-size:80%;line-height:1.3;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>"),
+                           uiOutput("click_info"), 
+                           width = 8)
+                   )
+                   ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_CoT_rates",
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                      Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
+                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                         <br><br>
+                         <strong>Date:</strong>",update_date,"<br><br>
+                         <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                         </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_CoT_rates",
+                           plotOutput(outputId = "NY.cases.TS.rates", height="90%",
+                                      click = clickOpts(id ="NY.cases.TS.rates_click"),
+                                      dblclick = "NY.cases.TS.rates_dblclick",
+                                      brush = brushOpts(
+                                        id = "NY.cases.TS.rates_brush",
+                                        resetOnNew = TRUE)),
+                           HTML("<div style='font-size:80%;line-height:1.3;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>"),
+                           uiOutput("click_info_rates"), 
+                           width = 8)
+               )
+      )
       ),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
                sidebarLayout(fluid=FALSE,
@@ -135,8 +269,8 @@ ui <-
                    tags$h4(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
                            leafletOutput(outputId = "map.hospital", height="100%"), width=8)
                )
-      ),
-      
+      )),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
                sidebarLayout(
@@ -206,136 +340,6 @@ ui <-
       # ),
       
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_mort",
-                   HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                     Outcome: What are the disparities between counties of New York
-                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
-                                <div style='font-size:90%;line-height:1.2;'>
-                                
-                               The rate of COVID-19 deaths per 100k in a county is<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                               <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong>",update_date,"<br><br>
-
-                               <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
-                               <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
-
-                               </div>")),
-                   HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_mort",
-                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_cases",
-                   HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                      Outcome: What are the disparities between New York counties in the rate of COVID-19 
-                                cases per 100k population when compared to the average United States 
-                                rate?  </div> <br>
-                                <div style='font-size:90%;line-height:1.2;'>
-                                
-                               The rate of COVID-19 deaths per 100k in a county is<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                               <strong>Date:</strong>",update_date,"<br><br>
-                               
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                          </div>")),
-                   HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_cases",
-                   tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_CoT",
-                   HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                      Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
-                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                         <br><br>
-                          <strong>Date:</strong>",update_date,"<br><br>
-                         <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                         </div>")),
-                   HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_CoT", 
-                           plotOutput(outputId = "NY.cases.TS", height="90%", 
-                                      click = clickOpts(id ="NY.cases.TS_click"),
-                                      dblclick = "NY.cases.TS_dblclick",
-                                      brush = brushOpts(
-                                        id = "NY.cases.TS_brush",
-                                        resetOnNew = TRUE)),
-                           HTML("<div style='font-size:80%;line-height:1.3;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info"), 
-                           width = 8)
-      )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                               HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
-                      sidebarLayout(
-                        sidebarPanel(
-                          id = "sidebar_ny_CoT_rates",
-                          HTML(whatisit_text),
-                          HTML("<div style='font-weight:bold;line-height:1.3;'>
-                      Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
-                          img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                          HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                         <br><br>
-                         <strong>Date:</strong>",update_date,"<br><br>
-                         <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                         </div>")),
-                          HTML(footer_text),
-                          width=4),
-                        
-                        mainPanel(id = "mainpanel_ny_CoT_rates",
-                                   plotOutput(outputId = "NY.cases.TS.rates", height="90%",
-                                              click = clickOpts(id ="NY.cases.TS.rates_click"),
-                                              dblclick = "NY.cases.TS.rates_dblclick",
-                                              brush = brushOpts(
-                                                id = "NY.cases.TS.rates_brush",
-                                                resetOnNew = TRUE)),
-                                  HTML("<div style='font-size:80%;line-height:1.3;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>"),
-                                  uiOutput("click_info_rates"), 
-                                  width = 8)
-                      )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
                sidebarLayout(
                  sidebarPanel(
@@ -369,6 +373,7 @@ ui <-
                    tags$h4(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
                            leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
                )
+      )
       )
     )
   )
