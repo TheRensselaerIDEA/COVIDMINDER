@@ -201,6 +201,30 @@ ui <-
                            uiOutput("click_info_rates"), 
                            width = 8)
                )
+      ), 
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_race",
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                        Outcome: Do minorities make up a higher proportion of COVID-19 death when compared 
+                        to their population rate? Do New York City and the rest of New York State have 
+                        different disparities in minority COVID-19 deaths?</div> <br>"),
+                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                               <br><br>
+                               <strong>Date:</strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_race", 
+                           plotOutput(outputId = "NY.race.nys", height="250px"), 
+                           plotOutput(outputId = "NY.race.nyc", height="250px"), 
+                           width = 8)
+               )
       )
       ),
       navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
@@ -1097,6 +1121,124 @@ server <- function(input, output, session) {
       ranges2$y <- NULL
     }
   }) 
+  
+  output$NY.race.nys <- renderPlot({
+    
+    # Creating dataframe for death disparity data from health.ny.gov's COVID-19 tracker
+    # See NYS COVIDTracker https://on.ny.gov/2VehafT for current numbers; the following are current as of 04/19
+    NYS_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian", "Other"), 
+                             "Percent.of.Pop" =        c(12,  9, 74, 4, 1), 
+                             "Percent.of.Fatalities" = c(14, 18, 60, 4, 4))
+    
+    
+    # Creating columns to measure disparity between state pop percent and fatality percent
+    NYS_Dis_m.df <- NYS_Dis.df %>%
+      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
+    
+    # Setup: COVIDMINDER Colors and DI bins
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    di_pal <- leaflet::colorBin(colors, domain = NYS_Dis_m.df$Dis, bins = bins, reverse=FALSE)
+    
+    # Create color column with correct mapping
+    NYS_Dis_m.df <- NYS_Dis_m.df %>% 
+      mutate(Race.Ethnicity = ordered(Race.Ethnicity, levels=Race.Ethnicity)) %>% 
+      mutate(color = di_pal(Dis))
+    
+    # Plotting NYS dispairity between NYS pop percent and fatality percent
+    NYS_Dis_m.df %>% 
+      ggplot(aes(x = Race.Ethnicity, 
+                 y = Dis,
+                 fill = NYS_Dis_m.df$Race.Ethnicity
+      )) + coord_flip() +
+      geom_bar(stat = "Identity") +
+      scale_fill_manual(values=NYS_Dis_m.df$color, name = "Race/Ethnicity") +
+      theme_minimal() + 
+      theme(axis.title.x = element_text(size = 14, vjust = -1),
+            axis.title.y = element_text(size = 14),
+            axis.text.x = element_text(size=12),
+            axis.text.y = element_text(size=12)) +
+      xlab("Race/Ethnicity") + 
+      ylab("Disparity") + 
+      scale_y_continuous(
+        breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
+        limits = c(-2,2)
+      ) +
+      labs(title = "COVID Fatalities % and Population % Disparity in NYS (Excl. NYC)",
+           subtitle = "By Race/Ethnicity",
+           caption = "Source: health.ny.gov") +
+      theme(
+        #        legend.position = "none",
+        plot.title = element_text(vjust = 0)) + 
+      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "green") +
+      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "red") + 
+      scale_linetype_manual(name = "Target Levels", 
+                            values = c(2, 
+                                       2), 
+                            guide = guide_legend(override.aes = list(color = c("green", 
+                                                                               "red"))))
+  })
+
+  output$NY.race.nyc <- renderPlot({
+    
+    # Creating dataframe for death disparity data from health.ny.gov's COVID-19 tracker
+    # See NYS COVIDTracker https://on.ny.gov/2VehafT for current numbers; the following are current as of 04/19
+
+    NYC_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian", "Other"), 
+                             "Percent.of.Pop" =        c(29, 22, 32, 14, 3), 
+                             "Percent.of.Fatalities" = c(34, 28, 27,  7, 4))
+    
+    
+    # Creating columns to measure disparity between city pop percent and fatality percent
+    NYC_Dis_m.df <- NYC_Dis.df %>%
+      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
+    
+    # Setup: COVIDMINDER Colors and DI bins
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    di_pal <- leaflet::colorBin(colors, domain = NYC_Dis_m.df$Dis, bins = bins, reverse=FALSE)
+    
+    # Create color column with correct mapping
+    NYC_Dis_m.df <- NYC_Dis_m.df %>% 
+      mutate(Race.Ethnicity = ordered(Race.Ethnicity, levels=Race.Ethnicity)) %>% 
+      mutate(color = di_pal(Dis)) 
+    
+    # Plotting NYS dispairity between NYS pop percent and fatality percent
+    NYC_Dis.p <- NYC_Dis_m.df %>% 
+      ggplot(aes(x = Race.Ethnicity, 
+                 y = Dis,
+                 fill = NYC_Dis_m.df$Race.Ethnicity
+      )) + coord_flip() +
+      geom_bar(stat = "Identity")
+    
+    NYC_Dis.p + 
+      scale_fill_manual(values=NYC_Dis_m.df$color, name = "Race/Ethnicity") + 
+      theme_minimal() + 
+      theme(axis.title.x = element_text(size = 14, vjust = -1),
+            axis.title.y = element_text(size = 14),
+            axis.text.x = element_text(size=12),
+            axis.text.y = element_text(size=12)) +
+      xlab("Race/Ethnicity") + 
+      ylab("Disparity") + 
+      scale_y_continuous(
+        breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
+        limits = c(-1,1)
+      ) +
+      labs(title = "COVID Fatalities % and Population % Disparity in New York City",
+           subtitle = "By Race/Ethnicity",
+           caption = "Source: health.ny.gov") +
+      theme(
+        legend.position = "none",
+        plot.title = element_text(vjust = 0)) +
+      geom_hline(aes(yintercept=-0.2, linetype="'Equivalent' Lower Bound"), color = "green") +
+      geom_hline(aes(yintercept= 0.2, linetype="'Equivalent' Upper Bound"), color = "red") +
+      scale_linetype_manual(name = "Target Levels", 
+                            values = c(2, 
+                                       2), 
+                            guide = guide_legend(override.aes = list(color = c("green", 
+                                                                               "red"))))
+  
+    })
   
 }
 
