@@ -38,7 +38,7 @@ ui <-
       title=tags$div(class="title-text",
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (maps)</b><br>USA or State</div>"),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (maps)</b><br>Select a USA or state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
                sidebarLayout(
@@ -135,7 +135,7 @@ ui <-
                            leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
                    )
                  )),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (over time)</b><br>State</div>"),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (over time)</b><br>Select a state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
                sidebarLayout(
@@ -203,7 +203,7 @@ ui <-
                )
       )
       ),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>USA</div>"),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
                sidebarLayout(fluid=FALSE,
@@ -270,7 +270,7 @@ ui <-
                            leafletOutput(outputId = "map.hospital", height="100%"), width=8)
                )
       )),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>USA</div>"),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
                sidebarLayout(
