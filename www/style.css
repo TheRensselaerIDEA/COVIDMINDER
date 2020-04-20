@@ -10,7 +10,7 @@
 }
 
 .logo {
-  height: 80%;
+  height: 100%;
   padding-left: 15px;
 }
 
@@ -23,8 +23,7 @@
   display: inline-block;
   vertical-align: middle;
   line-height: 100%;
-  height: 50px;
-  padding-top:2px;
+  height: 65px;
   padding-right: 10px;
   color:black;
 }
@@ -73,6 +72,13 @@
   background-color: #dddddd;
 }
 
+.dropdown-toggle > div:first-child {
+  display: inline-block;
+}
+
+.leaflet-top {
+  z-index: 999;
+}
 @media screen and (min-width:1085px){
   /*
   .title-text {

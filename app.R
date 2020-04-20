@@ -211,24 +211,26 @@ ui <-
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: Do minorities make up a higher proportion of COVID-19 death when compared 
                         to their population rate? Do New York City and the rest of New York State have 
-                        different disparities in minority COVID-19 deaths?</div> <br><br>
+                        different disparities in minority COVID-19 deaths?</div><br>
+                        <div style='font-size:90%;line-height:1.2;'>
                         Evidence suggests that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                         If the proportion of COVID-19 death experienced by a racial/ethnic group is higher
                        than that group’s population proportion, this suggests that COVID-19 may have a disparate 
-                       impact on that group. Social and economic determinants may contribute to this disparity.<br>"),
+                       impact on that group. Social and economic determinants may contribute to this disparity.<br><br>"),
                    HTML("For each racial/ethnic group, the proportion of COVID-19 for that group is:<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population proportion for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population proportion for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population proportion for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
-                               <strong>Group COVID-19 Mortality Rate</strong>  =  number of COVID-19 deaths for group/total COVID-19 deaths<br>
-                               <strong>Population Proportion</strong>  = number of residents from that group/ total number of residents
-                        <br>"
+                               <strong>Group COVID-19 Mortality Rate</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
+                               <strong>Population Proportion</strong> = number of residents from that group/ total number of residents
+                        <br>
+                        </div>"
                    ),
                    HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                                <br><br>
-                               <strong>Date:</strong>",update_date,"<br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
                    HTML(footer_text),
@@ -1164,8 +1166,8 @@ server <- function(input, output, session) {
       ggplot(aes(x = Race.Ethnicity, 
                  y = Dis,
                  fill = NYS_Dis_m.df$Race.Ethnicity
-      )) + coord_flip() +
-      geom_bar(stat = "Identity") +
+      )) + guides(fill = FALSE) + coord_flip() +
+      geom_bar(stat = "Identity", colour="black") +
       scale_fill_manual(values=NYS_Dis_m.df$color, name = "Race/Ethnicity") +
       theme_minimal() + 
       theme(axis.title.x = element_text(size = 14, vjust = -1),
@@ -1222,8 +1224,8 @@ server <- function(input, output, session) {
       ggplot(aes(x = Race.Ethnicity, 
                  y = Dis,
                  fill = NYC_Dis_m.df$Race.Ethnicity
-      )) + coord_flip() +
-      geom_bar(stat = "Identity")
+      )) + guides(fill = FALSE) + coord_flip() +
+      geom_bar(stat = "Identity", colour="black")
     
     NYC_Dis.p + 
       scale_fill_manual(values=NYC_Dis_m.df$color, name = "Race/Ethnicity") + 
@@ -1236,16 +1238,15 @@ server <- function(input, output, session) {
       ylab("Disparity") + 
       scale_y_continuous(
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
-        limits = c(-1,1)
+        limits = c(-2,2)
       ) +
       labs(title = "COVID Fatalities % and Population % Disparity in New York City",
            subtitle = "By Race/Ethnicity",
            caption = "Source: health.ny.gov") +
       theme(
-        legend.position = "none",
         plot.title = element_text(vjust = 0)) +
-      geom_hline(aes(yintercept=-0.2, linetype="'Equivalent' Lower Bound"), color = "green") +
-      geom_hline(aes(yintercept= 0.2, linetype="'Equivalent' Upper Bound"), color = "red") +
+      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "green") +
+      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "red") +
       scale_linetype_manual(name = "Target Levels", 
                             values = c(2, 
                                        2), 
