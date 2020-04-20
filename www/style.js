@@ -10,7 +10,8 @@ var ids = {
   "sidebar_ny_cases": "#mainpanel_ny_cases",
   "sidebar_ny_CoT": "#mainpanel_ny_CoT", 
   "sidebar_ny_det": "#mainpanel_ny_det", 
-  "sidebar_ny_CoT_rates": "#mainpanel_ny_CoT_rates"
+  "sidebar_ny_CoT_rates": "#mainpanel_ny_CoT_rates",
+  "sidebar_ny_race": "#mainpanel_ny_race"
 };
 
 function resize_plot() {
