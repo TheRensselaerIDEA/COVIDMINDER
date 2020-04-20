@@ -77,18 +77,18 @@ ui <-
                                id = "sidebar_us_test",
                                HTML(whatisit_text),
                                HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                              Mediation: What are the disparities between states  in  rates of COVID-19 testing per 100k population 
+                              Mediation: What are the disparities between states  in  rates of COVID-19 testing per 1k population 
                               when compared to the South Korean rate? </div><br>
                               <div style='font-size:90%;line-height:1.2;'>
-                              South Korea is used as our testing reference rate since South 
-                              Korea successfully used testing to “flatten the curve”.<br><br>
-                               The rate of testing per 100k in a state is: <br>
+                              South Korea is used as our testing reference rate (10.9/1000 as of 04/19/2020) because South 
+                              Korea is regarded as successfully having used testing to “flatten the curve”.<br><br>
+                               The rate of testing per 1k in a state is: <br>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than South Korean testing rate for disparity index &gt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to South Korean testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than South Korean testing rate for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
-                               <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
+                               <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
                     <strong>Date:</strong>",update_date,"<br><br>
                                
