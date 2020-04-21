@@ -1261,7 +1261,7 @@ server <- function(input, output, session) {
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
       annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=12) +
-      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=12) +
+      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=12deplo) +
       NULL
   
     })
