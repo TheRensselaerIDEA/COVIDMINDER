@@ -237,8 +237,8 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_race", 
-                           plotOutput(outputId = "NY.race.nys", height="250px"), 
-                           plotOutput(outputId = "NY.race.nyc", height="250px"), 
+                           plotOutput(outputId = "NY.race.nys", height="50%"), 
+                           plotOutput(outputId = "NY.race.nyc", height="50%"), 
                            width = 8)
                )
       )
