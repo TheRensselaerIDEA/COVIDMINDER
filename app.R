@@ -209,23 +209,24 @@ ui <-
                    id = "sidebar_ny_race",
                    HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: Do minorities make up a higher proportion of COVID-19 death when compared 
-                        to their population rate? Do New York City and the rest of New York State have 
+                        Outcome: Do minorities make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage? Do New York City and the rest of New York State have 
                         different disparities in minority COVID-19 deaths?</div><br>
                         <div style='font-size:90%;line-height:1.2;'>
                         Evidence suggests that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
-                        If the proportion of COVID-19 death experienced by a racial/ethnic group is higher
-                       than that group’s population proportion, this suggests that COVID-19 may have a disparate 
-                       impact on that group. Social and economic determinants may contribute to this disparity.<br><br>"),
-                   HTML("For each racial/ethnic group, the proportion of COVID-19 for that group is:<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population proportion for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population proportion for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population proportion for disparity index &lt; -0.2</div>
+                        If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
+                        group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
+                        impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
+                   HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
-                               <strong>Group COVID-19 Mortality Rate</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
-                               <strong>Population Proportion</strong> = number of residents from that group/ total number of residents
-                        <br>
+                               <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
+                               <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
+                               <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
+                               <br>
                         </div>"
                    ),
                    HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
@@ -1148,7 +1149,8 @@ server <- function(input, output, session) {
     
     # Creating columns to measure disparity between state pop percent and fatality percent
     NYS_Dis_m.df <- NYS_Dis.df %>%
-      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
+      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities)) %>%
+      arrange(desc(Race.Ethnicity))
     
     # Setup: COVIDMINDER Colors and DI bins
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -1174,24 +1176,26 @@ server <- function(input, output, session) {
             axis.text.x = element_text(size=12),
             axis.text.y = element_text(size=12)) +
       xlab("Race/Ethnicity") + 
+      theme(axis.text.y = element_text(face="bold", size=14)) +
       ylab("Disparity") + 
       scale_y_continuous(
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
-        limits = c(-2,2)
+        limits = c(-1.5,1.5)
       ) +
-      labs(title = "COVID Fatalities % and Population % Disparity in NYS (Excl. NYC)",
+      labs(title = "Racial/ethnic disparities in percentage of COVID-19 deaths as compared to population percentage in New York State (excl. NYC)",
            subtitle = "By Race/Ethnicity",
-           caption = "Source: health.ny.gov") +
+           caption = "Source: covid19tracker.health.ny.gov") +
       theme(
-        #        legend.position = "none",
-        plot.title = element_text(vjust = 0)) + 
-      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "green") +
-      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "red") + 
-      scale_linetype_manual(name = "Target Levels", 
-                            values = c(2, 
-                                       2), 
-                            guide = guide_legend(override.aes = list(color = c("green", 
-                                                                               "red"))))
+                legend.position = "none",
+        plot.title = element_text(vjust = 0, face="bold",size=18)) + 
+      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "#253494") +
+      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "#BD0026") +
+      scale_linetype_manual(name = "Target Levels",
+                            values = c(2,
+                                       2),
+                            guide = guide_legend(override.aes = list(color = c("#253494",
+                                                                               "#BD0026")))) +
+      NULL
   })
 
   output$NY.race.nyc <- renderPlot({
@@ -1206,7 +1210,8 @@ server <- function(input, output, session) {
     
     # Creating columns to measure disparity between city pop percent and fatality percent
     NYC_Dis_m.df <- NYC_Dis.df %>%
-      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
+      mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities)) %>%
+      arrange(desc(Race.Ethnicity))
     
     # Setup: COVIDMINDER Colors and DI bins
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
@@ -1233,24 +1238,27 @@ server <- function(input, output, session) {
             axis.title.y = element_text(size = 14),
             axis.text.x = element_text(size=12),
             axis.text.y = element_text(size=12)) +
-      xlab("Race/Ethnicity") + 
+      xlab("Race/Ethnicity") +
+      theme(axis.text.y = element_text(face="bold", size=14)) +
       ylab("Disparity") + 
       scale_y_continuous(
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
-        limits = c(-2,2)
+        limits = c(-1.5,1.5)
       ) +
-      labs(title = "COVID Fatalities % and Population % Disparity in New York City",
+      labs(title = "Racial/ethnic disparities in percentage of COVID-19 deaths as compared to population percentage in New York City",
            subtitle = "By Race/Ethnicity",
-           caption = "Source: health.ny.gov") +
+           caption = "Source: covid19tracker.health.ny.gov") +
       theme(
-        plot.title = element_text(vjust = 0)) +
-      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "green") +
-      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "red") +
-      scale_linetype_manual(name = "Target Levels", 
-                            values = c(2, 
-                                       2), 
-                            guide = guide_legend(override.aes = list(color = c("green", 
-                                                                               "red"))))
+        legend.position = "none",
+        plot.title = element_text(vjust = 0, face="bold",size=18)) + 
+      geom_hline(aes(yintercept=-0.2, linetype="Lower Bound"), color = "#253494") +
+      geom_hline(aes(yintercept= 0.2, linetype="Upper Bound"), color = "#BD0026") +
+      scale_linetype_manual(name = "Target Levels",
+                            values = c(2,
+                                       2),
+                            guide = guide_legend(override.aes = list(color = c("#253494",
+                                                                               "#BD0026")))) +
+      NULL
   
     })
   
