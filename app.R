@@ -852,7 +852,7 @@ server <- function(input, output, session) {
                 # County == "Columbia" & date == as.Date("2020-03-29") |
                 County == "Cortland" & date == as.Date("2020-03-25") |
                 # County == "Delaware" & date == as.Date("2020-04-02") |
-                County == "Dutchess" & date == as.Date("2020-03-30") |
+                County == "Dutchess" & date == as.Date("2020-04-15") |
                 County == "Erie" & date == as.Date("2020-04-02") |
                 # County == "Essex" & date == as.Date("2020-04-10") |
                 # County == "Franklin" & date == as.Date("2020-04-10") |
@@ -868,18 +868,18 @@ server <- function(input, output, session) {
                 County == "Madison" & date == as.Date("2020-04-12") |
                 # County == "Monroe" & date == as.Date("2020-03-26") |
                 # County == "Montgomery" & date == as.Date("2020-03-29") |
-                County == "Nassau" & date == as.Date("2020-03-25") |
-                County == "New York" & date == as.Date("2020-04-02") |
+                County == "Nassau" & date == as.Date("2020-04-15") |
+                County == "New York" & date == as.Date("2020-04-10") |
                 County == "Manhattan" & date == as.Date("2020-03-30") |
                 County == "Niagara" & date == as.Date("2020-04-02") |
                 County == "Oneida" & date == as.Date("2020-04-10") |
                 County == "Onondaga" & date == as.Date("2020-04-10") |
                 # County == "Ontario" & date == as.Date("2020-04-12") |
-                County == "Orange" & date == as.Date("2020-03-26") |
+                County == "Orange" & date == as.Date("2020-04-18") |
                 County == "Orleans" & date == as.Date("2020-03-29") |
                 County == "Oswego" & date == as.Date("2020-03-25") |
                 County == "Otsego" & date == as.Date("2020-04-02") |
-                # County == "Putnam" & date == as.Date("2020-03-30") |
+                County == "Putnam" & date == as.Date("2020-04-12") |
                 County == "Queens" & date == as.Date("2020-04-02") |
                 County == "Rensselaer" & date == as.Date("2020-04-10") |
                 County == "Richmond" & date == as.Date("2020-04-01") |
@@ -894,8 +894,8 @@ server <- function(input, output, session) {
                 County == "Suffolk" & date == as.Date("2020-04-10") |
                 County == "Sullivan" & date == as.Date("2020-04-12") |
                 # County == "Tioga" & date == as.Date("2020-03-26") |
-                County == "Tompkins" & date == as.Date("2020-03-29") |
-                # County == "Ulster" & date == as.Date("2020-03-25") |
+                County == "Tompkins" & date == as.Date("2020-04-20") |
+                County == "Ulster" & date == as.Date("2020-03-25") |
                 # County == "Warren" & date == as.Date("2020-04-02") |
                 # County == "Washington" & date == as.Date("2020-03-30") |
                 # County == "Wayne" & date == as.Date("2020-04-02") |
@@ -942,7 +942,6 @@ server <- function(input, output, session) {
     
     highlight_points <- covid_NY_TS_plot.cases %>% 
       filter( 
-        County == "New York State" & date == as.Date("2020-03-30") |
           County == "Albany" & date == as.Date("2020-03-26") |
           # County == "Allegany" & date == as.Date("2020-03-29") |
           County == "Bronx" & date == as.Date("2020-03-25") |
@@ -956,7 +955,7 @@ server <- function(input, output, session) {
           # County == "Columbia" & date == as.Date("2020-03-29") |
           County == "Cortland" & date == as.Date("2020-03-25") |
           # County == "Delaware" & date == as.Date("2020-04-02") |
-          County == "Dutchess" & date == as.Date("2020-03-30") |
+          County == "Dutchess" & date == as.Date("2020-04-12") |
           County == "Erie" & date == as.Date("2020-04-02") |
           # County == "Essex" & date == as.Date("2020-04-10") |
           # County == "Franklin" & date == as.Date("2020-04-10") |
@@ -972,19 +971,19 @@ server <- function(input, output, session) {
           County == "Madison" & date == as.Date("2020-04-12") |
           # County == "Monroe" & date == as.Date("2020-03-26") |
           # County == "Montgomery" & date == as.Date("2020-03-29") |
-          County == "Nassau" & date == as.Date("2020-03-25") |
-          County == "New York" & date == as.Date("2020-04-02") |
+          County == "Nassau" & date == as.Date("2020-04-15") |
+          County == "New York" & date == as.Date("2020-04-10") |
           County == "New York State" & date == as.Date("2020-04-12") |
           County == "Manhattan" & date == as.Date("2020-03-30") |
           County == "Niagara" & date == as.Date("2020-04-02") |
           County == "Oneida" & date == as.Date("2020-04-10") |
           County == "Onondaga" & date == as.Date("2020-04-10") |
           # County == "Ontario" & date == as.Date("2020-04-12") |
-          County == "Orange" & date == as.Date("2020-03-26") |
+          County == "Orange" & date == as.Date("2020-04-18") |
           County == "Orleans" & date == as.Date("2020-03-29") |
           County == "Oswego" & date == as.Date("2020-03-25") |
           County == "Otsego" & date == as.Date("2020-04-02") |
-          # County == "Putnam" & date == as.Date("2020-03-30") |
+          County == "Putnam" & date == as.Date("2020-04-20") |
           County == "Queens" & date == as.Date("2020-04-02") |
           County == "Rensselaer" & date == as.Date("2020-04-10") |
           County == "Richmond" & date == as.Date("2020-04-01") |
@@ -1000,7 +999,7 @@ server <- function(input, output, session) {
           County == "Sullivan" & date == as.Date("2020-04-12") |
           # County == "Tioga" & date == as.Date("2020-03-26") |
           County == "Tompkins" & date == as.Date("2020-03-29") |
-          # County == "Ulster" & date == as.Date("2020-03-25") |
+          County == "Ulster" & date == as.Date("2020-04-20") |
           # County == "Warren" & date == as.Date("2020-04-02") |
           # County == "Washington" & date == as.Date("2020-03-30") |
           # County == "Wayne" & date == as.Date("2020-04-02") |
@@ -1027,7 +1026,7 @@ server <- function(input, output, session) {
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
       ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
-      geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=8) + 
+      geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=10) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
         geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
         scale_linetype_manual(name = "Events", 
