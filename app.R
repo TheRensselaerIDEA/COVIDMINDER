@@ -225,7 +225,7 @@ ui <-
                         their population percentage? Do New York City and the rest of New York State have 
                         different disparities in minority COVID-19 deaths?</div><br>
                         <div style='font-size:90%;line-height:1.2;'>
-                        Evidence suggests that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
+                        <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                         If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                         group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                         impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
@@ -1210,7 +1210,7 @@ server <- function(input, output, session) {
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
         limits = c(-1.5,1.5)
       ) +
-      labs(title = "Racial/ethnic disparities in percentage of COVID-19 deaths as compared to population percentage in New York State (excl. NYC)",
+      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population % in New York State (excl. NYC)",
            subtitle = "By Race/Ethnicity",
            caption = "Source: covid19tracker.health.ny.gov") +
       theme(
@@ -1275,7 +1275,7 @@ server <- function(input, output, session) {
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
         limits = c(-1.5,1.5)
       ) +
-      labs(title = "Racial/ethnic disparities in percentage of COVID-19 deaths as compared to population percentage in New York City",
+      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population % in New York City",
            subtitle = "By Race/Ethnicity",
            caption = "Source: covid19tracker.health.ny.gov") +
       theme(
