@@ -942,7 +942,7 @@ server <- function(input, output, session) {
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
       ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
-      gghighlight(NY_counties_regions[NY_counties_regions$County == County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
@@ -1051,7 +1051,7 @@ server <- function(input, output, session) {
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
       ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +   
-        gghighlight(NY_counties_regions[NY_counties_regions$County == County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+        gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
         geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=10) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
@@ -1067,7 +1067,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE)
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE, 
+                        xvar="date", yvar="cases")
     # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1104,7 +1105,8 @@ server <- function(input, output, session) {
   output$click_info_rates <- renderPrint({
     hover <- input$NY.cases.TS.rates_click
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, 
+                        xvar="date", yvar="cases")
     
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
