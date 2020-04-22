@@ -154,6 +154,10 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT", 
+                           selectInput(inputId = "NYRegion",
+                                       label = "NY Regions",
+                                       choices = cbind(c("All Regions"), NY_counties_regions$Region),
+                                       selected = "All Counties"),
                            plotOutput(outputId = "NY.cases.TS", height="90%", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
                                       dblclick = "NY.cases.TS_dblclick",
@@ -836,7 +840,12 @@ server <- function(input, output, session) {
   
   output$NY.cases.TS <- renderPlot({
     # browser()
-    
+    selected.region <- input$NYRegion
+    select.size <- 2
+    if (selected.region == "All Regions") {
+      selected.region <- NY_counties_regions$Region
+      select.size <- 1
+    }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       filter( 
                 County == "New York State" & date == as.Date("2020-03-30") |
@@ -924,8 +933,10 @@ server <- function(input, output, session) {
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
-      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
+      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+      gghighlight(NY_counties_regions[NY_counties_regions$County == County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      geom_line(size=select.size) + 
+      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       scale_linetype_manual(name = "Events", 
