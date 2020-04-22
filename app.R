@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "04-20-2020" # makes it easy to change all occurances when we update
+update_date <- "04-21-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -847,7 +847,7 @@ server <- function(input, output, session) {
       select.size <- 1
     }
     highlight_points <- covid_NY_TS_plot.cases %>% 
-      filter( 
+      dplyr::filter( 
                 County == "New York State" & date == as.Date("2020-03-30") |
                 County == "Albany" & date == as.Date("2020-03-26") |
                 # County == "Allegany" & date == as.Date("2020-03-29") |
@@ -915,8 +915,8 @@ server <- function(input, output, session) {
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
-      select(Region,Color) %>% 
-      distinct(Region,Color)
+      dplyr::select(Region,Color) %>% 
+      dplyr::distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
     
@@ -953,7 +953,7 @@ server <- function(input, output, session) {
     # browser()
     
     highlight_points <- covid_NY_TS_plot.cases %>% 
-      filter( 
+      dplyr::filter( 
           County == "Albany" & date == as.Date("2020-03-26") |
           # County == "Allegany" & date == as.Date("2020-03-29") |
           County == "Bronx" & date == as.Date("2020-03-25") |
@@ -1021,13 +1021,13 @@ server <- function(input, output, session) {
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
-      select(Region,Color) %>% 
-      distinct(Region,Color)
+      dplyr::select(Region,Color) %>% 
+      dplyr::distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
 
       covid_NY_TS_plot.cases %>% 
-        filter(p_cases >= 10) %>%
+        dplyr::filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
         scale_color_manual(values=NY_region_palette) +
         geom_line(size=1) +
@@ -1206,8 +1206,8 @@ server <- function(input, output, session) {
                                        2),
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
-      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=12) +
-      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=12) +
+      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=10) +
+      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=10) +
       NULL
   })
 
@@ -1271,8 +1271,8 @@ server <- function(input, output, session) {
                                        2),
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
-      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=12) +
-      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=12) +
+      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=10) +
+      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=10) +
       NULL
   
     })

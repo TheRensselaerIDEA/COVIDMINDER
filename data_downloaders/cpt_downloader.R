@@ -17,7 +17,7 @@ todays_raw_data <- read_csv(paste0("data/csv/", "states_testing_raw.csv"))
 state_covid_testing <- todays_raw_data %>%
 #  filter(Country_Region == "US") %>%
   filter(!state %in% c("AS") ) %>%
-  select(state,positive,negative,total) 
+  dplyr::select(state,positive,negative,total) 
 
 # Adjust names
 colnames(state_covid_testing) <- c("Abbreviation","positive","negative","total_num_tests")

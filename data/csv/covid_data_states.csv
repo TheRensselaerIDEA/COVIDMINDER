@@ -1,56 +1,59 @@
 NAME,covid19_cases,covid19_deaths,covid19_recovered
-United States,784107,42089,72329
-Alabama,5079,163,0
-Alaska,321,9,0
-Arizona,5068,191,0
-Arkansas,1973,41,0
-California,33686,1225,0
-Colorado,9730,420,0
-Connecticut,19815,1331,0
-Delaware,2745,72,0
-District of Columbia,2927,105,0
-Florida,27059,822,0
-Georgia,19407,775,0
+United States,823567,44840,75204
+Alabama,5317,183,0
+Alaska,329,9,0
+Arizona,5256,208,0
+Arkansas,1990,42,0
+California,35465,1282,0
+Colorado,10473,483,0
+Connecticut,20360,1423,0
+Delaware,2931,82,0
+District of Columbia,3098,112,0
+Federal Bureau of Prisons,816,22,0
+Florida,27869,867,0
+Georgia,19881,798,0
 Guam,136,5,0
-Hawaii,584,10,0
-Idaho,1672,45,0
-Illinois,31513,1349,0
-Indiana,11688,577,0
-Iowa,3159,79,0
-Kansas,2048,102,0
-Kentucky,3050,154,0
-Louisiana,24523,1328,0
-Maine,875,35,0
-Maryland,13684,582,0
-Massachusetts,38077,1706,0
-Michigan,32000,2468,0
-Minnesota,2470,143,0
-Mississippi,4512,169,0
-Missouri,5890,200,0
-Montana,433,10,0
-Nebraska,1648,33,0
-Nevada,3830,159,0
-New Hampshire,1447,42,0
-New Jersey,88722,4496,0
+Hawaii,586,10,0
+Idaho,1736,48,0
+Illinois,33059,1468,0
+Indiana,12097,635,0
+Iowa,3641,83,0
+Kansas,2164,109,0
+Kentucky,3204,171,0
+Louisiana,24854,1405,0
+Maine,888,36,0
+Maryland,14193,652,0
+Massachusetts,41199,1961,0
+Michigan,32667,2575,0
+Minnesota,2567,160,0
+Mississippi,4716,183,0
+Missouri,6066,224,0
+Montana,437,12,0
+Nebraska,1685,33,0
+Nevada,3937,163,0
+New Hampshire,1490,42,0
+New Jersey,92387,4753,0
 New Mexico,1971,58,0
-New York,253060,18611,0
-North Carolina,6895,218,0
-North Dakota,627,9,0
-Ohio,12919,509,0
-Oklahoma,2680,143,0
-Oregon,1957,75,0
-Pennsylvania,33914,1348,0
-Puerto Rico,1252,63,0
-Recovered,0,0,72329
-Rhode Island,5090,155,0
-South Carolina,4446,123,0
-South Dakota,1685,7,0
-Tennessee,7238,152,0
-Texas,19751,507,0
-Utah,3213,28,0
-Vermont,816,38,0
-Virginia,8990,300,0
-Washington,12114,643,0
-West Virginia,902,24,0
-Wisconsin,4499,230,0
-Wyoming,317,2,0
+New York,258361,19104,0
+North Carolina,7134,245,0
+North Dakota,644,13,0
+Ohio,13725,557,0
+Oklahoma,2807,164,0
+Oregon,2004,78,0
+Pennsylvania,35249,1614,0
+Puerto Rico,1298,64,0
+Recovered,0,0,75204
+Rhode Island,5500,171,0
+South Carolina,4439,124,0
+South Dakota,1755,8,0
+Tennessee,7394,157,0
+Texas,20574,533,0
+US Military,5335,22,0
+Utah,3297,32,0
+Vermont,818,40,0
+Veteran Hospitals,5599,357,0
+Virginia,9630,324,0
+Washington,12563,664,0
+West Virginia,908,26,0
+Wisconsin,4625,244,0
+Wyoming,443,2,0

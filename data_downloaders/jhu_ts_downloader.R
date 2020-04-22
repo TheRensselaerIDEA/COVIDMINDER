@@ -25,20 +25,20 @@ todays_TS_data <- read_csv(paste0("data/csv/time_series/", dateURL.1))
 
 # Transform to match our structure
 covid_TS_states <- todays_TS_data %>%
-  filter(Country_Region == "US") %>%
-  filter(!Province_State %in% c("Diamond Princess","Grand Princess","Northern Mariana Islands","Virgin Islands") ) %>%
+  dplyr::filter(Country_Region == "US") %>%
+  dplyr::filter(!Province_State %in% c("Diamond Princess","Grand Princess","Northern Mariana Islands","Virgin Islands") ) %>%
 #  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Country_Region, -Lat, -Long_, -Combined_Key) %>%
-  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
-  group_by(Province_State,Country_Region) %>%
-  summarize_all(sum)
+  dplyr::select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
+  dplyr::group_by(Province_State,Country_Region) %>%
+  dplyr::summarize_all(sum)
 
 # Change colnames to match app
 colnames(covid_TS_states)[1] <- "NAME"
 
 # Create a "United States" row
 covid_TS_united_states <- covid_TS_states[,-1] %>%
-  group_by(Country_Region) %>%
-  summarize_all(sum)
+  dplyr::group_by(Country_Region) %>%
+  dplyr::summarize_all(sum)
 
 colnames(covid_TS_united_states)[1] <- 'NAME'
 covid_TS_united_states[1,1] <- "United States"
@@ -55,7 +55,7 @@ write_csv(covid_TS_states,"data/csv/time_series/covid_TS_states_wide.csv")
 
 # NOW "gather" to create "LONG" version
 covid_TS_states_long <- covid_TS_states %>%
-  gather(date,deaths,2:ncol(covid_TS_states))
+  tidyr::gather(date,deaths,2:ncol(covid_TS_states))
 
 # Make date column an actual R date_time
 covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
@@ -75,7 +75,7 @@ write_csv(covid_TS_states_long,"data/csv/time_series/covid_TS_states_long.csv")
 
 #### Quickie plot to verify
 covid_TS_plot <- covid_TS_states_long %>%
-  group_by(date)
+  dplyr::group_by(date)
 
 covid_TS_plot$log_deaths <- log10(covid_TS_plot$deaths)
 
