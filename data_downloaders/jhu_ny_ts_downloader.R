@@ -44,20 +44,20 @@ todays_TS_data.deaths <- read_csv(paste0("data/csv/time_series/", dateURL.1.deat
 
 # Prep NY TS data (JHU); this has one column per test date
 todays_TS_data.NY.cases <- todays_TS_data.cases %>% 
-  filter(Province_State == "New York") %>%
-  select(-UID, -iso2, -iso3, -code3, -FIPS, -Province_State,-Country_Region, -Lat, -Long_, -Combined_Key) %>%
-  rename(County = Admin2) 
+  dplyr::filter(Province_State == "New York") %>%
+  dplyr::select(-UID, -iso2, -iso3, -code3, -FIPS, -Province_State,-Country_Region, -Lat, -Long_, -Combined_Key) %>%
+  dplyr::rename(County = Admin2) 
 
 # Need to create NYState summary row here...
 TS_New_York_State.cases <- todays_TS_data.NY.cases[,-c(1)] %>%
-  summarize_all(sum)
+  dplyr::summarize_all(sum)
 
 County <- as.vector(c("New York State"))
 
 TS_New_York_State.cases <- data.frame(cbind(County,TS_New_York_State.cases))
 # Convert this to "long" first
 TS_New_York_State.cases.long <- TS_New_York_State.cases %>% 
-  gather(test_date,cases,2:ncol(TS_New_York_State.cases))
+  tidyr::gather(test_date,cases,2:ncol(TS_New_York_State.cases))
 
 # Make sure the NYS summary stuff is properly structured
 TS_New_York_State.cases.long$test_date <- str_sub(TS_New_York_State.cases.long$test_date, 2,-1)
@@ -66,7 +66,7 @@ TS_New_York_State.cases.long$County <- as.factor(TS_New_York_State.cases.long$Co
 
 # Create long version of JHU TS
 todays_TS_data.NY.cases.long <- todays_TS_data.NY.cases %>% 
-  gather(test_date,cases,2:ncol(todays_TS_data.NY.cases))
+  tidyr::gather(test_date,cases,2:ncol(todays_TS_data.NY.cases))
 
 todays_TS_data.NY.cases.long$test_date <- parse_date_time(todays_TS_data.NY.cases.long$test_date, c("%m/%d/%y"))
 todays_TS_data.NY.cases.long$County <- as.factor(todays_TS_data.NY.cases.long$County)
@@ -94,7 +94,7 @@ todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
 
 # Force it to most recent day (for now)
 todays_NY_testing <- todays_TS_NY_testing %>% 
-  filter(test_date == (max(test_date))) 
+  dplyr::filter(test_date == (max(test_date))) 
 
 todays_NY_testing$county <- as.factor(todays_NY_testing$county)
 
@@ -113,12 +113,12 @@ write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
 # NEW YORK STATE DEATHS
 # Transform to match our structure: NY deaths
 covid_NY_TS_counties.deaths <- todays_TS_data.deaths %>%
-  filter(Country_Region == "US") %>%
-  filter(Province_State == "New York") %>%
-  select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
-  group_by(FIPS, Admin2, Province_State) %>%
-  select(-Lat, -Long_, -Population) %>%
-  summarize_all(sum)
+  dplyr::filter(Country_Region == "US") %>%
+  dplyr::filter(Province_State == "New York") %>%
+  dplyr::select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
+  dplyr::group_by(FIPS, Admin2, Province_State) %>%
+  dplyr::select(-Lat, -Long_, -Population) %>%
+  dplyr::summarize_all(sum)
 
 # Change colnames to match app
 colnames(covid_NY_TS_counties.deaths)[2] <- "County"
@@ -127,8 +127,8 @@ colnames(covid_NY_TS_counties.deaths)[3] <- "State"
 
 # Create a "New York State" row
 covid_TS_New_York.deaths <- covid_NY_TS_counties.deaths[,-c(1,2)] %>%
-  group_by(State) %>%
-  summarize_all(sum)
+  dplyr::group_by(State) %>%
+  dplyr::summarize_all(sum)
 
 colnames(covid_TS_New_York.deaths)[1] <- 'County'
 covid_TS_New_York.deaths[1,1] <- "New York State"
@@ -156,7 +156,7 @@ write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.death
 
 # NOW "gather" to create "LONG" version
 covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties.deaths %>%
-  gather(date,deaths,2:ncol(covid_NY_TS_counties.deaths))
+  tidyr::gather(date,deaths,2:ncol(covid_NY_TS_counties.deaths))
 
 # Make date column an actual R date_time
 covid_NY_TS_counties_long.deaths$date <- str_sub(covid_NY_TS_counties_long.deaths$date, 2,-1)
@@ -174,17 +174,17 @@ write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_cou
 
 # # Set number to clean up plot; comment out when running to update data!
  covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
-     filter(deaths >= 2)%>%
-   filter(County != "Unassigned")
+   dplyr::filter(deaths >= 2)%>%
+   dplyr::filter(County != "Unassigned")
 
  covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
-   group_by(date)
+   dplyr::group_by(date)
 
  covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
 
 # ## Test: NY Deaths plot
 p.log.deaths <- covid_NY_TS_plot.deaths %>%
-  mutate(
+  dplyr::mutate(
     County = County,     # use County to define separate curves
     Date = update(date, year = 1)  # use a constant year for the x-axis
   ) %>%
@@ -199,13 +199,13 @@ p.log.deaths
 # Transform to match our structure: NY cases
 
 covid_NY_TS_counties.cases <- todays_TS_data.cases %>%
-  filter(Country_Region == "US") %>%
-  filter(Province_State == "New York") %>%
+  dplyr::filter(Country_Region == "US") %>%
+  dplyr::filter(Province_State == "New York") %>%
   #  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
-  select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
-  group_by(FIPS, Admin2,Province_State) %>%
-  select(-Lat, -Long_) %>%
-  summarize_all(sum)
+  dplyr::select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
+  dplyr::group_by(FIPS, Admin2,Province_State) %>%
+  dplyr::select(-Lat, -Long_) %>%
+  dplyr::summarize_all(sum)
 
 # Change colnames to match app
 colnames(covid_NY_TS_counties.cases)[2] <- "County"
@@ -214,8 +214,8 @@ colnames(covid_NY_TS_counties.cases)[3] <- "State"
 
 # Create a "New York State" row
 covid_TS_New_York.cases <- covid_NY_TS_counties.cases[,-c(1,2)] %>%
-  group_by(State) %>%
-  summarize_all(sum)
+  dplyr::group_by(State) %>%
+  dplyr::summarize_all(sum)
 
 colnames(covid_TS_New_York.cases)[1] <- 'County'
 covid_TS_New_York.cases[1,1] <- "New York State"
@@ -239,7 +239,7 @@ write_csv(covid_NY_counties.cases,"data/csv/time_series/covid_NY_counties.cases.
 
 # NOW "gather" to create "LONG" version
 covid_NY_TS_counties_long.cases <- covid_NY_TS_counties.cases %>%
-  gather(date,cases,2:ncol(covid_NY_TS_counties.cases))
+  tidyr::gather(date,cases,2:ncol(covid_NY_TS_counties.cases))
 
 # Make date column an actual R date_time
 covid_NY_TS_counties_long.cases$date <- str_sub(covid_NY_TS_counties_long.cases$date, 2,-1)
@@ -275,8 +275,8 @@ write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
 covid_NY_TS_counties_long <- covid_NY_TS_counties_long.cases %>% 
-   filter(cases >= 5) %>%
-  filter(County != "Unassigned")
+  dplyr::filter(cases >= 5) %>%
+  dplyr::filter(County != "Unassigned")
 
 # Need regions for times series plots!
 NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
@@ -284,7 +284,7 @@ NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
 covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
 
 covid_NY_TS_plot.cases <- covid_NY_TS_counties_long %>%
-  group_by(date)
+  dplyr::group_by(date)
 
 covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 
@@ -293,18 +293,18 @@ NY_population <- read_csv("data/csv/time_series/NY_population.csv")
 
 covid_NY_TS_plot.cases <- dplyr::inner_join(covid_NY_TS_plot.cases, as.data.frame(NY_population), by = c("County" = "County"))
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>% 
-  select(-FIPS)
+  dplyr::select(-FIPS)
 
 # Append case rates per county!
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>%
-  mutate(p_cases = (cases/Population)*100000) %>%
-  mutate(log_p_cases = log10(p_cases)) 
+  dplyr::mutate(p_cases = (cases/Population)*100000) %>%
+  dplyr::mutate(log_p_cases = log10(p_cases)) 
 
 # make sure we have the same version for our app plot!
 write_csv(covid_NY_TS_plot.cases, "data/csv/time_series/covid_NY_TS_plot.cases.csv")
 
 highlight_points <- covid_NY_TS_plot.cases %>% 
-  filter( County == "Albany" & date == as.Date("2020-03-26") |
+  dplyr::filter( County == "Albany" & date == as.Date("2020-03-26") |
             # County == "Allegany" & date == as.Date("2020-03-29") |
             County == "Bronx" & date == as.Date("2020-03-25") |
             # County == "Broome" & date == as.Date("2020-04-02") |
@@ -387,8 +387,8 @@ highlight_points <- covid_NY_TS_plot.cases %>%
 # #ggplotly(p.log.cases)
 
 NY_region_palette.df <- NY_counties_regions %>%
-  select(Region,Color) %>% 
-  distinct(Region,Color)
+  dplyr::select(Region,Color) %>% 
+  dplyr::distinct(Region,Color)
 
 NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
 
