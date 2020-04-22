@@ -64,6 +64,14 @@
     transform: translateX(-50%);
 }
 
+.NY_case_plots {
+  height: Calc(90% - 65px);
+}
+
+.form-group{
+  margin-bottom:0;
+}
+
 .leaflet-container {
   background:none;
 }
