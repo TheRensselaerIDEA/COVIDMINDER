@@ -154,12 +154,18 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT", 
-                           plotOutput(outputId = "NY.cases.TS", height="90%", 
+                           selectInput(inputId = "NYRegion",
+                                       label = "NY Regions",
+                                       choices = cbind(c("All Regions"), NY_counties_regions$Region),
+                                       selected = "All Counties"),
+                           tags$div(class = "NY_case_plots",
+                           plotOutput(outputId = "NY.cases.TS", height="100%", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
                                       dblclick = "NY.cases.TS_dblclick",
                                       brush = brushOpts(
                                         id = "NY.cases.TS_brush",
                                         resetOnNew = TRUE)),
+                           ),
                            HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
@@ -187,12 +193,18 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates",
-                           plotOutput(outputId = "NY.cases.TS.rates", height="90%",
+                           selectInput(inputId = "NYRegion.rates",
+                                       label = "NY Regions",
+                                       choices = cbind(c("All Regions"), NY_counties_regions$Region),
+                                       selected = "All Counties"),
+                           tags$div(class = "NY_case_plots",
+                           plotOutput(outputId = "NY.cases.TS.rates", height="100%",
                                       click = clickOpts(id ="NY.cases.TS.rates_click"),
                                       dblclick = "NY.cases.TS.rates_dblclick",
                                       brush = brushOpts(
                                         id = "NY.cases.TS.rates_brush",
                                         resetOnNew = TRUE)),
+                           ),
                            HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
@@ -836,7 +848,12 @@ server <- function(input, output, session) {
   
   output$NY.cases.TS <- renderPlot({
     # browser()
-    
+    selected.region <- input$NYRegion
+    select.size <- 2
+    if (selected.region == "All Regions") {
+      selected.region <- NY_counties_regions$Region
+      select.size <- 1
+    }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
                 County == "New York State" & date == as.Date("2020-03-30") |
@@ -924,8 +941,10 @@ server <- function(input, output, session) {
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  + 
-      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) + 
+      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+      gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      geom_line(size=select.size) + 
+      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       scale_linetype_manual(name = "Events", 
@@ -940,7 +959,12 @@ server <- function(input, output, session) {
   
   output$NY.cases.TS.rates <- renderPlot({
     # browser()
-    
+    selected.region <- input$NYRegion.rates
+    select.size <- 2
+    if (selected.region == "All Regions") {
+      selected.region <- NY_counties_regions$Region
+      select.size <- 1
+    }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
           County == "Albany" & date == as.Date("2020-03-26") |
@@ -1026,7 +1050,9 @@ server <- function(input, output, session) {
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
-      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  + 
+      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +   
+        gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+        geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=10) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
         geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
@@ -1041,7 +1067,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE)
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE, 
+                        xvar="date", yvar="cases")
     # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1078,7 +1105,8 @@ server <- function(input, output, session) {
   output$click_info_rates <- renderPrint({
     hover <- input$NY.cases.TS.rates_click
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE)
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, 
+                        xvar="date", yvar="cases")
     
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
