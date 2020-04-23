@@ -57,7 +57,7 @@ ui <-
                     
                     <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                     <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong>",update_date,"<br><br>
+                    <strong>Date: </strong>",update_date,"<br><br>
 
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
@@ -77,24 +77,33 @@ ui <-
                  sidebarPanel(
                    id = "sidebar_us_mort_race",
                    HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                   Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
-                        their population percentage?</div><br>
-                    <div style='font-size:90%;line-height:1.2;'>
-                    <b>CHANGE THIS!!!!</b>
-                    The rate of COVID-19 deaths per 100k in a state is: <br>
-                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2 </div>
-                    <i>Darker shades indicate greater disparity.</i><br><br>
-                    
-                    <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                    <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
-                    <strong>Date:</strong>",update_date,"<br><br>
+                   HTML(paste0("
+                          <div style='font-weight:bold;line-height:1.3;'>
+                          Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
+                          their population percentage?</div><br>
+                          
+                          <div style='font-size:90%;line-height:1.2;'>
+                          <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
+                          If the percentage of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
+                          group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
+                          impact on that group in that region. Social and economic determinants may contribute to this disparity.<br><br>",
+                          
+                          "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
+                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
+                          <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                          <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
+                          <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
+                          <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
+                          <br>
+                          <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                          <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
+                          <strong>Date: </strong>",update_date,"<br><br>
 
-                    <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
-                    </div>
-                    ")),
+                          <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
+                          </div>")),
                    HTML(footer_text),
                    width=4),
                  mainPanel(
@@ -132,7 +141,7 @@ ui <-
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
                                <strong>Death Rate Disparity Index</strong> = log(Mortality Rate in state/mean Mortality Rate in US)<br>
-                               <strong>Date:</strong>",update_date,"<br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
@@ -165,7 +174,7 @@ ui <-
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
                                <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                               <strong>Date:</strong>",update_date,"<br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
@@ -189,7 +198,7 @@ ui <-
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                    HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                                <br><br>
-                               <strong>Date:</strong>",update_date,"<br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
                    HTML(footer_text),
@@ -228,7 +237,7 @@ ui <-
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
                    HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                          <br><br>
-                         <strong>Date:</strong>",update_date,"<br><br>
+                         <strong>Date: </strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>")),
                    HTML(footer_text),
@@ -319,7 +328,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
-                    <strong>Date:</strong>",update_date,"<br><br>
+                    <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                                </div>")),
@@ -352,7 +361,7 @@ ui <-
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 100K population <br>
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in Italy) <br>
-                               <strong>Date:</strong>",update_date,"<br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
@@ -386,7 +395,7 @@ ui <-
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                               <strong>Date:</strong> 2020<br><br>
+                               <strong>Date: </strong> 2020<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
@@ -421,7 +430,7 @@ ui <-
       #                          
       #                          <strong>Heart Disease Death Rate (BNH)</strong> = number of heart disease deaths (black non-hispanic) per 100K population <br>
       #                          <strong>Heart Disease Death Disparity Index (BNH)</strong> = log(Heart Disease Death Rate (BNH) in state/average Heart Disease Death Rate in US)<br>
-      #                          <strong>Date:</strong> 2015<br><br>
+      #                          <strong>Date: </strong> 2015<br><br>
       #                          
       #                          <b>DATA SOURCE:</b> <a href='https://sortablestats.cdc.gov/#/indicator'>CDC</a><br>
       #                     </div>"),
@@ -455,7 +464,7 @@ ui <-
                                
                                <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
                                <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                               <strong>Date:</strong> 2020<br><br>
+                               <strong>Date: </strong> 2020<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
