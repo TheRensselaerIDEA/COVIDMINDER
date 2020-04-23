@@ -116,7 +116,7 @@ ui <-
                                             "Hispanic/Latino (total)"="hlt",
                                             "Non-hispanic Black/African American"="nhbaa"),
                                selected = "nhbaa"),
-                   leafletOutput(outputId = "map.covid_deaths.race", height="500px"), width=8)
+                   leafletOutput(outputId = "map.covid_deaths.race", height="100%"), width=8)
                ), 
                tags$script(src = "style.js")
       ), 
@@ -339,7 +339,7 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ct_race", 
-                           plotOutput(outputId = "NY.race.ct", height="500px"), 
+                           plotOutput(outputId = "NY.race.ct", height="100%"), 
                            width = 8)
                )
       )
