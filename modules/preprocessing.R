@@ -147,7 +147,7 @@ states <- data.frame(states, "covid_death_rate"=covid_data_states$p_death_rate) 
 # Percent cases / percent population, per-state
 
 # Unweighted population pct
-# covid_racial_data_states.wide$death_rate_ldi_nsw <- log(covid_racial_data_states.wide$nsw_deaths_pct / covid_racial_data_states.wide$nsw_un_pop_pct)
+# covid_racial_data_states.wide$death_rate_ldi_nhw <- log(covid_racial_data_states.wide$nhw_deaths_pct / covid_racial_data_states.wide$nhw_un_pop_pct)
 # covid_racial_data_states.wide$death_rate_ldi_nhbaa <- log(covid_racial_data_states.wide$nhbaa_deaths_pct / covid_racial_data_states.wide$nhbaa_un_pop_pct)
 # covid_racial_data_states.wide$death_rate_ldi_nhaian <- log(covid_racial_data_states.wide$nhaian_deaths_pct / covid_racial_data_states.wide$nhaian_un_pop_pct)
 # covid_racial_data_states.wide$death_rate_ldi_nhapi <- log(covid_racial_data_states.wide$nhapi_deaths_pct / covid_racial_data_states.wide$nhapi_un_pop_pct)
@@ -155,7 +155,7 @@ states <- data.frame(states, "covid_death_rate"=covid_data_states$p_death_rate) 
 # covid_racial_data_states.wide$death_rate_ldi_other <- log(covid_racial_data_states.wide$other_deaths_pct / covid_racial_data_states.wide$other_un_pop_pct)
 
 # Weighted population percentage
-covid_racial_data_states.wide$death_rate_ldi_nsw <- log(covid_racial_data_states.wide$nsw_deaths_pct / covid_racial_data_states.wide$nsw_wd_pop_pct)
+covid_racial_data_states.wide$death_rate_ldi_nhw <- log(covid_racial_data_states.wide$nhw_deaths_pct / covid_racial_data_states.wide$nhw_wd_pop_pct)
 covid_racial_data_states.wide$death_rate_ldi_nhbaa <- log(covid_racial_data_states.wide$nhbaa_deaths_pct / covid_racial_data_states.wide$nhbaa_wd_pop_pct)
 covid_racial_data_states.wide$death_rate_ldi_nhaian <- log(covid_racial_data_states.wide$nhaian_deaths_pct / covid_racial_data_states.wide$nhaian_wd_pop_pct)
 covid_racial_data_states.wide$death_rate_ldi_nhapi <- log(covid_racial_data_states.wide$nhapi_deaths_pct / covid_racial_data_states.wide$nhapi_wd_pop_pct)
