@@ -112,7 +112,7 @@ ui <-
                    HTML("<br><br>"),
                    selectInput(inputId = "race",
                                label = "Race/Ethnicity",
-                               choices =  c("Non-hispanic White"="nsw",
+                               choices =  c("Non-hispanic White"="nhw",
                                             "Non-hispanic American Indian/Alaska Native"="nhaian",
                                             "Non-hispanic Asian Pacific Islander"="nhapi",
                                             "Hispanic/Latino (total)"="hlt",
@@ -757,10 +757,10 @@ server <- function(input, output, session) {
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi_race, bins = bins, reverse=FALSE)
     
     labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      COVID-19 Mortality Percentage DI: %.2g<br>
-      COVID-19 Mortality Percentage: %.1f<br>
-      Percentage of population (unweighted): %.1f",
+      paste0("<strong>%s</strong> (",toupper(race),")<br/>
+      COVID-19 Mortality Pct DI: %.2g<br>
+      COVID-19 Mortality Pct: %.1f<br>
+      Percentage of population (weighted): %.1f"),
       states$NAME, states$death_rate_ldi_race, states$race_deaths_pct, states$race_wd_pop_pct
     ) %>% lapply(htmltools::HTML)
     
@@ -1292,9 +1292,9 @@ server <- function(input, output, session) {
     
     # Creating dataframe for death disparity data from health.ny.gov's COVID-19 tracker
     # See NYS COVIDTracker https://on.ny.gov/2VehafT for current numbers; the following are current as of 04/19
-    NYS_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian", "Other"), 
-                             "Percent.of.Pop" =        c(12,  9, 74, 4, 1), 
-                             "Percent.of.Fatalities" = c(14, 18, 60, 4, 4))
+    NYS_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian"), 
+                             "Percent.of.Pop" =        c(12,  9, 74, 4), 
+                             "Percent.of.Fatalities" = c(14, 18, 60, 4))
     
     
     # Creating columns to measure disparity between state pop percent and fatality percent
@@ -1355,9 +1355,9 @@ server <- function(input, output, session) {
     # Creating dataframe for death disparity data from health.ny.gov's COVID-19 tracker
     # See NYS COVIDTracker https://on.ny.gov/2VehafT for current numbers; the following are current as of 04/19
 
-    NYC_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian", "Other"), 
-                             "Percent.of.Pop" =        c(29, 22, 32, 14, 3), 
-                             "Percent.of.Fatalities" = c(34, 28, 27,  7, 4))
+    NYC_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian"), 
+                             "Percent.of.Pop" =        c(29, 22, 32, 14), 
+                             "Percent.of.Fatalities" = c(34, 28, 27,  7))
     
     
     # Creating columns to measure disparity between city pop percent and fatality percent
