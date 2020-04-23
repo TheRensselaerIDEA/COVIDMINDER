@@ -1226,8 +1226,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 10, addDist = TRUE, 
-                        xvar="date", yvar="cases")
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
+                        xvar="date", yvar="p_cases")
     # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1249,12 +1249,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases as of ",point$date)))
+        p(HTML(paste0(point$County,": ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
       )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
         )
         
       }
@@ -1264,7 +1264,7 @@ server <- function(input, output, session) {
   output$click_info_rates <- renderPrint({
     hover <- input$NY.cases.TS.rates_click
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, 
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
                         xvar="date", yvar="cases")
     
     # calculate point position INSIDE the image as percent of total dimensions
