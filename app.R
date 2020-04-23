@@ -1369,8 +1369,8 @@ server <- function(input, output, session) {
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
         limits = c(-1.5,1.5)
       ) +
-      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population % in New York State (excl. NYC)",
-           subtitle = "By Race/Ethnicity",
+      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population %",
+           subtitle = "For  New York State (excluding New York City)",
            caption = "Source: covid19tracker.health.ny.gov") +
       theme(
                 legend.position = "none",
@@ -1382,8 +1382,8 @@ server <- function(input, output, session) {
                                        2),
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
-      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=10) +
-      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=10) +
+      annotate(geom="text", y=-1, x="Hispanic", label="Lower", color="#253494", size=10) +
+      annotate(geom="text", y=1, x="Hispanic", label="Higher", color="#BD0026", size=10) +
       NULL
   })
 
@@ -1434,8 +1434,8 @@ server <- function(input, output, session) {
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
         limits = c(-1.5,1.5)
       ) +
-      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population % in New York City",
-           subtitle = "By Race/Ethnicity",
+      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths as compared to population %",
+           subtitle = "For New York City",
            caption = "Source: covid19tracker.health.ny.gov") +
       theme(
         legend.position = "none",
@@ -1447,8 +1447,8 @@ server <- function(input, output, session) {
                                        2),
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
-      annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=10) +
-      annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=10) +
+      annotate(geom="text", y=-1, x="Hispanic", label="Lower", color="#253494", size=10) +
+      annotate(geom="text", y=1, x="Hispanic", label="Higher", color="#BD0026", size=10) +
       NULL
   
     })
@@ -1495,8 +1495,8 @@ server <- function(input, output, session) {
         breaks = c(-5,-3,-2,-1,-.2,.2,1,2,3,5),
         limits = c(-1.5,1.5)
       ) +
-      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths compared to population % in Connecticut",
-           subtitle = "By Race/Ethnicity",
+      labs(title = "Racial/ethnic disparities in % of COVID-19 deaths compared to population %",
+           subtitle = "For Connecticut",
            caption = "Source: ct.gov") +
       theme(
         legend.position = "none",
@@ -1508,8 +1508,8 @@ server <- function(input, output, session) {
                                        2),
                             guide = guide_legend(override.aes = list(color = c("#253494",
                                                                                "#BD0026")))) +
-      # annotate(geom="text", y=-1, x="Hispanic", label="Under-represented", color="#253494", size=12) +
-      # annotate(geom="text", y=1, x="Hispanic", label="Over-represented", color="#BD0026", size=12) +
+      annotate(geom="text", y=-1, x="White", label="Lower", color="#253494", size=12) +
+      annotate(geom="text", y=1, x="White", label="Higher", color="#BD0026", size=12) +
       NULL
     
   })
