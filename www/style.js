@@ -12,7 +12,8 @@ var ids = {
   "sidebar_ny_det": "#mainpanel_ny_det", 
   "sidebar_ny_CoT_rates": "#mainpanel_ny_CoT_rates", 
   "sidebar_ny_race": "#mainpanel_ny_race", 
-  "sidebar_us_mort_race": "#mainpanel_us_mort_race"
+  "sidebar_us_mort_race": "#mainpanel_us_mort_race", 
+  "sidebar_ct_race": "#mainpanel_ct_race"
 };
 
 function resize_plot() {
