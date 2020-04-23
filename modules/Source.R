@@ -29,4 +29,4 @@ library(leaflet.extras)
 library(shiny)
 library(tidyverse)
 library(lubridate)
-library(rsconnect) # required by JSE for pre-release deployment on shinyapps.io 
+#library(rsconnect) # required by JSE for pre-release deployment on shinyapps.io 
