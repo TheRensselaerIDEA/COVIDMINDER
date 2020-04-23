@@ -213,7 +213,7 @@ ui <-
                                       dblclick = "NY.cases.TS_dblclick",
                                       brush = brushOpts(
                                         id = "NY.cases.TS_brush",
-                                        resetOnNew = TRUE)),
+                                        resetOnNew = TRUE))
                            ),
                            HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
@@ -252,7 +252,7 @@ ui <-
                                       dblclick = "NY.cases.TS.rates_dblclick",
                                       brush = brushOpts(
                                         id = "NY.cases.TS.rates_brush",
-                                        resetOnNew = TRUE)),
+                                        resetOnNew = TRUE))
                            ),
                            HTML("<div style='font-size:80%;line-height:1.3;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
