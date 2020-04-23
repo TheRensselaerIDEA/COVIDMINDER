@@ -1456,9 +1456,9 @@ server <- function(input, output, session) {
   output$NY.race.ct <- renderPlot({
     
     # Data source: ct.gov
-    CT_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian", "Other"), 
-                            "Percent.of.Pop" =        c(16.5,  12, 66.5, 4.9, 0.1), 
-                            "Percent.of.Fatalities" = c(8.9, 14.8, 67.9, 1.3, 1))
+    CT_Dis.df <- data.frame("Race.Ethnicity" =        c("Hispanic", "Black", "White", "Asian"), 
+                            "Percent.of.Pop" =        c(16.5,  12, 66.5, 4.9), 
+                            "Percent.of.Fatalities" = c(8.9, 14.8, 67.9, 1.3))
     
     # Creating columns to measure disparity between state pop percent and fatality percent
     CT_Dis_m.df <- CT_Dis.df %>%
