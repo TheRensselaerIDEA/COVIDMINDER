@@ -86,7 +86,8 @@ ui <-
                           <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                           If the percentage of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                           group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
-                          impact on that group in that region. Social and economic determinants may contribute to this disparity.<br><br>",
+                          impact on that group in that region. Social and economic determinants may contribute to this disparity.
+                          <br><br>",
                           
                           "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                           <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
@@ -96,12 +97,9 @@ ui <-
                                
                           <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
                           <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
-                          <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
-                          <br>
-                          <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
-                          <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
+                          <strong>Death Rate Disparity Index (DI)</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
+                          <br><br>
                           <strong>Date: </strong>",update_date,"<br><br>
-
                           <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
                           </div>")),
                    HTML(footer_text),
