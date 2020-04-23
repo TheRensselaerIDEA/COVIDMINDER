@@ -71,6 +71,48 @@ ui <-
                ), 
                tags$script(src = "style.js")
       ), 
+      tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_us_mort_race",
+                   HTML(whatisit_text),
+                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
+                   Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
+                        their population percentage?</div><br>
+                    <div style='font-size:90%;line-height:1.2;'>
+                    <b>CHANGE THIS!!!!</b>
+                    The rate of COVID-19 deaths per 100k in a state is: <br>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2 </div>
+                    <i>Darker shades indicate greater disparity.</i><br><br>
+                    
+                    <strong>Mortality Rate</strong> = number of COVID-19 deaths per 100K population<br>
+                    <strong>Death Rate Disparity Index</strong> = log(Mortality Rate  in state/mean Mortality Rate of US)<br>
+                    <strong>Date:</strong>",update_date,"<br><br>
+
+                    <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                    </div>
+                    ")),
+                   HTML(footer_text),
+                   width=4),
+                 mainPanel(
+                   id = "mainpanel_us_mort_race",
+                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
+                   HTML("<br><br>"),
+                   selectInput(inputId = "race",
+                               label = "Race/Ethnicity",
+                               choices =  c("Non-hispanic White"="nsw",
+                                            "Non-hispanic American Indian/Alaska Native"="nhaian",
+                                            "Non-hispanic Asian Pacific Islander"="nhapi",
+                                            "Hispanic/Latino (total)"="hlt",
+                                            "Non-hispanic Black/African American"="nhbaa"),
+                               selected = "nhbaa"),
+                   leafletOutput(outputId = "map.covid_deaths.race", height="500px"), width=8)
+               ), 
+               tags$script(src = "style.js")
+      ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                sidebarLayout(
@@ -135,7 +177,7 @@ ui <-
                            leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
                    )
                  )),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (over time)</b><br>Select a state outcome</div>"),
+      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (graphs)</b><br>Select a state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
                sidebarLayout(
@@ -664,6 +706,77 @@ server <- function(input, output, session) {
           direction = "auto")) %>% 
       addLegend(pal = pal2, 
                 values = ~states$death_rate_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>US COVID-19 Mortality Rates",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+      ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+    #Remove personal API key
+  })
+
+  output$map.covid_deaths.race <- renderLeaflet({
+    
+    race <- input$race # selected race
+
+    # modify states to have selected columns for our plot
+    death_rate_ldi_race <- states %>% 
+      select(starts_with("death")) %>%
+      select(ends_with(race))
+
+    race_deaths_pct <- states %>% 
+      select(starts_with(race)) %>%
+      select(ends_with("deaths_pct"))
+    
+    race_wd_pop_pct <- states %>% 
+      select(starts_with(race)) %>%
+      select(ends_with("wd_pop_pct"))
+    
+    states <- data.frame(states, "death_rate_ldi_race"=unlist(death_rate_ldi_race)) # Append to states
+    states <- data.frame(states, "race_deaths_pct"=unlist(race_deaths_pct)) # Append to states
+    states <- data.frame(states, "race_wd_pop_pct"=unlist(race_wd_pop_pct)) # Append to states
+
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi_race, bins = bins, reverse=FALSE)
+    
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      COVID-19 Mortality Percentage DI: %.2g<br>
+      COVID-19 Mortality Percentage: %.1f<br>
+      Percentage of population (unweighted): %.1f",
+      states$NAME, states$death_rate_ldi_race, states$race_deaths_pct, states$race_wd_pop_pct
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$death_rate_ldi_race),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$death_rate_ldi_race, 
                 opacity = 0.7, 
                 title = "Disparity Index<br/>US COVID-19 Mortality Rates",
                 position = "bottomright",
