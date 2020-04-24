@@ -142,7 +142,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
-                               <a href='https://on.ny.gov/2yOj1AD'>New York State Dept. of Health COVID19Tracker (daily)</a><br>
+                               <a href='https://on.ny.gov/39VXuCO'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                
                                </div>")),
                    HTML(footer_text),
@@ -293,7 +293,7 @@ ui <-
                    HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                </div>")),
                    HTML(footer_text),
                    width=4),
