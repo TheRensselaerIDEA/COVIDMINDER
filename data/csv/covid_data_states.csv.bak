@@ -1,59 +1,56 @@
 NAME,covid19_cases,covid19_deaths,covid19_recovered
-United States,823567,44840,75204
-Alabama,5317,183,0
-Alaska,329,9,0
-Arizona,5256,208,0
-Arkansas,1990,42,0
-California,35465,1282,0
-Colorado,10473,483,0
-Connecticut,20360,1423,0
-Delaware,2931,82,0
-District of Columbia,3098,112,0
-Federal Bureau of Prisons,816,22,0
-Florida,27869,867,0
-Georgia,19881,798,0
+United States,839455,46578,77366
+Alabama,5593,196,0
+Alaska,335,9,0
+Arizona,5473,231,0
+Arkansas,2276,42,0
+California,37344,1421,0
+Colorado,10891,506,0
+Connecticut,22469,1544,0
+Delaware,3200,89,0
+District of Columbia,3206,127,0
+Florida,28309,893,0
+Georgia,21214,848,0
 Guam,136,5,0
-Hawaii,586,10,0
-Idaho,1736,48,0
-Illinois,33059,1468,0
-Indiana,12097,635,0
-Iowa,3641,83,0
-Kansas,2164,109,0
-Kentucky,3204,171,0
-Louisiana,24854,1405,0
-Maine,888,36,0
-Maryland,14193,652,0
-Massachusetts,41199,1961,0
-Michigan,32667,2575,0
-Minnesota,2567,160,0
-Mississippi,4716,183,0
-Missouri,6066,224,0
-Montana,437,12,0
-Nebraska,1685,33,0
-Nevada,3937,163,0
-New Hampshire,1490,42,0
-New Jersey,92387,4753,0
-New Mexico,1971,58,0
-New York,258361,19104,0
-North Carolina,7134,245,0
-North Dakota,644,13,0
-Ohio,13725,557,0
-Oklahoma,2807,164,0
-Oregon,2004,78,0
-Pennsylvania,35249,1614,0
-Puerto Rico,1298,64,0
-Recovered,0,0,75204
-Rhode Island,5500,171,0
-South Carolina,4439,124,0
-South Dakota,1755,8,0
+Hawaii,592,12,0
+Idaho,1766,51,0
+Illinois,35107,1565,0
+Indiana,12438,666,0
+Iowa,3748,90,0
+Kansas,2331,112,0
+Kentucky,3378,185,0
+Louisiana,25258,1473,0
+Maine,907,39,0
+Maryland,14775,698,0
+Massachusetts,42944,2182,0
+Michigan,33966,2813,0
+Minnesota,2722,179,0
+Mississippi,4894,193,0
+Missouri,6277,238,0
+Montana,439,14,0
+Nebraska,1813,38,0
+Nevada,4081,172,0
+New Hampshire,1588,48,0
+New Jersey,95914,5150,0
+New Mexico,2210,71,0
+New York,263292,19413,0
+North Carolina,7495,265,0
+North Dakota,679,14,0
+Ohio,14117,610,0
+Oklahoma,2894,170,0
+Oregon,2059,78,0
+Pennsylvania,36082,1673,0
+Puerto Rico,1252,63,0
+Recovered,0,0,77366
+Rhode Island,5841,181,0
+South Carolina,4761,140,0
+South Dakota,1858,9,0
 Tennessee,7394,157,0
-Texas,20574,533,0
-US Military,5335,22,0
-Utah,3297,32,0
-Vermont,818,40,0
-Veteran Hospitals,5599,357,0
-Virginia,9630,324,0
-Washington,12563,664,0
-West Virginia,908,26,0
-Wisconsin,4625,244,0
-Wyoming,443,2,0
+Texas,21321,556,0
+Utah,3445,32,0
+Vermont,823,40,0
+Virginia,10266,349,0
+Washington,12051,647,0
+West Virginia,939,27,0
+Wisconsin,4845,248,0
+Wyoming,447,6,0
