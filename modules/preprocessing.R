@@ -162,8 +162,8 @@ covid_racial_data_states.wide$death_rate_ldi_nhapi <- log(covid_racial_data_stat
 covid_racial_data_states.wide$death_rate_ldi_hlt <- log(covid_racial_data_states.wide$hlt_deaths_pct / covid_racial_data_states.wide$hlt_wd_pop_pct)
 covid_racial_data_states.wide$death_rate_ldi_other <- log(covid_racial_data_states.wide$other_deaths_pct / covid_racial_data_states.wide$other_wd_pop_pct)
 
-covid_racial_data_states.wide <- covid_racial_data_states.wide %>%
-  rename(NAME = state)
+# colnames(covid_racial_data_states.wide) <- covid_racial_data_states.wide %>%
+#   rename(NAME = state)
 
 # Join our new columns in by NAME
 # NOTE: This is cleaner than elsewhere and imports ALL of the race/ethnicity data
