@@ -5,6 +5,6 @@ account: olyerickson
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2020889
-bundleId: 3063097
+bundleId: 3066634
 url: https://olyerickson.shinyapps.io/covid-di-prototype/
-when: 1587811917.23027
+when: 1587896747.54489
