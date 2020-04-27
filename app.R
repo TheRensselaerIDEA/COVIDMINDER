@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "04-25-2020" # makes it easy to change all occurances when we update
+update_date <- "04-26-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -27,6 +27,9 @@ whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER
 
 comments_link <-"<div style='font-size:80%;line-height:1.3;'>Thanks for using <b>COVIDMINDER!</b> Please take a few moments to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></div>"
 
+# For URL parameterization
+url1 <- url2 <- ""
+
 #### UI Code ####
 ui <- 
   tagList(
@@ -34,13 +37,16 @@ ui <-
       tags$title("COVIDMINDER: Where you live matters")
     ),
     navbarPage(
+      id="home",
       theme="style.css",
       title=tags$div(class="title-text",
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (maps)</b><br>Select a USA or state outcome</div>"),
+      navbarMenu(menuName = "outcome_maps_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (maps)</b><br>Select a USA or state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+               value="outcome_usa_mortality",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort",
@@ -73,6 +79,7 @@ ui <-
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
+               value="outcome_usa_racial_disparity",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort_race",
@@ -122,6 +129,7 @@ ui <-
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+               value="outcome_ny_mortality",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_mort",
@@ -155,6 +163,7 @@ ui <-
                  ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+               value="outcome_ny_cases",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_cases",
@@ -184,9 +193,11 @@ ui <-
                            leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
                    )
                  )),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (graphs)</b><br>Select a state outcome</div>"),
+      navbarMenu(menuName = "outcome_plots_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (graphs)</b><br>Select a state outcome</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
+               value="outcome_ny_cases_time",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT",
@@ -226,6 +237,7 @@ ui <-
                    ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
+               value="outcome_ny_cases_rate",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT_rates",
@@ -265,6 +277,7 @@ ui <-
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
+               value="outcome_ny_racial_disparity",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_race",
@@ -306,6 +319,7 @@ ui <-
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
+               value="outcome_ct_racial_disparity",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ct_race",
@@ -344,9 +358,11 @@ ui <-
                )
       )
       ),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
+      navbarMenu(menuName = "mediation_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
+               value="mediation_usa_testing",
                sidebarLayout(fluid=FALSE,
                              sidebarPanel(
                                id = "sidebar_us_test",
@@ -379,6 +395,7 @@ ui <-
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
+               value="mediation_usa_hospital_beds",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_hosp",
@@ -411,9 +428,11 @@ ui <-
                            leafletOutput(outputId = "map.hospital", height="100%"), width=8)
                )
       )),
-      navbarMenu(HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
+      navbarMenu(menuName ="determinant_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+               value="determinant_usa_diabetes",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_db",
@@ -482,6 +501,7 @@ ui <-
       
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
+               value="determinant_ny_diabetes",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_det",
@@ -1514,6 +1534,63 @@ server <- function(input, output, session) {
     
   })
   
+  # For URL parameterization
+
+  values <- reactiveValues(myurl = c(), parent_tab = "")
+  
+  observe({
+    
+    # WORK IN PROGRESS! Based on
+    # https://stackoverflow.com/questions/33021757/externally-link-to-specific-tabpanel-in-shiny-app
+    #
+    # make sure this is called on pageload (to look at the query string)
+    # and whenever any tab is successfully changed.
+    # If you want to stop running this code after the initial load was
+    # successful so that further manual tab changes don't run this,
+    # maybe just have some boolean flag for that.
+    
+    input$home
+    input$tab_sub_tabs
+    query <- parseQueryString(session$clientData$url_search)
+    url <- query$url
+    if (is.null(url)) {
+      url <- ""
+    }
+    
+    # "depth" is how many levels the url in the query string is
+    depth <- function(x) length(unlist(strsplit(x,"/")))
+    
+    # if we reached the end, done!
+    if (length(values$myurl) == depth(url)) {
+      return()
+    }
+    # base case - need to tell it what the first main nav name is
+    else if (length(values$myurl) == 0) {
+      values$parent_tab <- "outcome_maps_menu"
+    }
+    # if we're waiting for a tab switch but the UI hasn't updated yet
+    else if (is.null(input[[values$parent_tab]])) {
+      return()
+    }
+    # same - waiting for a tab switch
+    else if (tail(values$myurl, 1) != input[[values$parent_tab]]) {
+      return()
+    }
+    # the UI is on the tab that we last switched to, and there are more
+    # tabs to switch inside the current tab
+    # make sure the tabs follow the naming scheme
+    else {
+      values$parent_tab <- paste0(tail(values$myurl, 1), "_tabs")
+    }
+    
+    # figure out the id/value of the next tab
+    new_tab <- unlist(strsplit(url, "/"))[length(values$myurl)+1]
+    
+    # easy peasy.
+    updateTabsetPanel(session, values$parent_tab, new_tab)
+    values$myurl <- c(values$myurl, new_tab)
+    
+  })
   
 }
 
