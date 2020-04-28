@@ -144,7 +144,9 @@ covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_
 
 # UPDATE: Manually curated, from NYSDOH
 # Disable this when JHU gets their act together on NYS...
-covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv")
+# UPDATE: critical to only use `county` and `deaths` from this!
+covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv") %>%
+  select(county, deaths)
 
 # Make backup of existing WIDE data
 write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
