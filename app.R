@@ -1035,70 +1035,70 @@ server <- function(input, output, session) {
     }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
-                County == "New York State" & date == as.Date("2020-03-30") |
-                County == "Albany" & date == as.Date("2020-03-26") |
-                # County == "Allegany" & date == as.Date("2020-03-29") |
-                County == "Bronx" & date == as.Date("2020-03-25") |
-                County == "Broome" & date == as.Date("2020-04-02") |
-                # County == "Cattaraugus" & date == as.Date("2020-03-30") |
-                County == "Cayuga" & date == as.Date("2020-04-02") |
-                County == "Chautauqua" & date == as.Date("2020-04-10") |
-                # County == "Chemung" & date == as.Date("2020-04-10") |
-                County == "Chenango" & date == as.Date("2020-04-12") |
-                County == "Clinton" & date == as.Date("2020-03-26") |
-                # County == "Columbia" & date == as.Date("2020-03-29") |
-                County == "Cortland" & date == as.Date("2020-03-25") |
-                # County == "Delaware" & date == as.Date("2020-04-02") |
-                County == "Dutchess" & date == as.Date("2020-04-15") |
-                County == "Erie" & date == as.Date("2020-04-02") |
-                # County == "Essex" & date == as.Date("2020-04-10") |
-                # County == "Franklin" & date == as.Date("2020-04-10") |
-                # County == "Fulton" & date == as.Date("2020-04-12") |
-                County == "Genesee" & date == as.Date("2020-03-26") |
-                # County == "Greene" & date == as.Date("2020-03-29") |
-                County == "Hamilton" & date == as.Date("2020-03-25") |
-                County == "Herkimer" & date == as.Date("2020-04-02") |
-                # County == "Jefferson" & date == as.Date("2020-03-30") |
-                County == "Kings" & date == as.Date("2020-04-02") |
-                # County == "Lewis" & date == as.Date("2020-04-10") |
-                # County == "Livingston" & date == as.Date("2020-04-10") |
-                County == "Madison" & date == as.Date("2020-04-12") |
-                # County == "Monroe" & date == as.Date("2020-03-26") |
-                # County == "Montgomery" & date == as.Date("2020-03-29") |
-                County == "Nassau" & date == as.Date("2020-04-15") |
-                County == "New York" & date == as.Date("2020-04-10") |
-                County == "Manhattan" & date == as.Date("2020-03-30") |
-                County == "Niagara" & date == as.Date("2020-04-02") |
-                County == "Oneida" & date == as.Date("2020-04-10") |
-                County == "Onondaga" & date == as.Date("2020-04-10") |
-                # County == "Ontario" & date == as.Date("2020-04-12") |
-                County == "Orange" & date == as.Date("2020-04-18") |
-                County == "Orleans" & date == as.Date("2020-03-29") |
-                County == "Oswego" & date == as.Date("2020-03-25") |
-                County == "Otsego" & date == as.Date("2020-04-02") |
-                County == "Putnam" & date == as.Date("2020-04-12") |
-                County == "Queens" & date == as.Date("2020-04-02") |
-                County == "Rensselaer" & date == as.Date("2020-04-10") |
-                County == "Richmond" & date == as.Date("2020-04-01") |
-                County == "Rockland" & date == as.Date("2020-04-12") |
-                County == "St. Lawrence" & date == as.Date("2020-03-26") |
-                County == "Saratoga" & date == as.Date("2020-03-29") |
-                County == "Schenectady" & date == as.Date("2020-03-25") |
-                County == "Schoharie" & date == as.Date("2020-04-02") |
-                County == "Schuyler" & date == as.Date("2020-03-30") |
-                County == "Seneca" & date == as.Date("2020-04-02") |
-                # County == "Steuben" & date == as.Date("2020-04-10") |
-                County == "Suffolk" & date == as.Date("2020-04-10") |
-                County == "Sullivan" & date == as.Date("2020-04-12") |
-                # County == "Tioga" & date == as.Date("2020-03-26") |
-                County == "Tompkins" & date == as.Date("2020-04-20") |
-                County == "Ulster" & date == as.Date("2020-03-25") |
-                # County == "Warren" & date == as.Date("2020-04-02") |
-                # County == "Washington" & date == as.Date("2020-03-30") |
-                # County == "Wayne" & date == as.Date("2020-04-02") |
-                County == "Westchester" & date == as.Date("2020-04-10") |
-                # County == "Wyoming" & date == as.Date("2020-04-10") |
-                County == "Yates" & date == as.Date("2020-04-12")
+        County == "Albany" & date == as.Date("2020-04-26") |
+          # County == "Allegany" & date == as.Date("2020-03-29") |
+          County == "Bronx" & date == as.Date("2020-04-25") |
+          County == "Broome" & date == as.Date("2020-04-12") |
+          # County == "Cattaraugus" & date == as.Date("2020-03-30") |
+          County == "Cayuga" & date == as.Date("2020-04-12") |
+          County == "Chautauqua" & date == as.Date("2020-04-10") |
+          # County == "Chemung" & date == as.Date("2020-04-10") |
+          County == "Chenango" & date == as.Date("2020-04-12") |
+          County == "Clinton" & date == as.Date("2020-04-26") |
+          # County == "Columbia" & date == as.Date("2020-03-29") |
+          County == "Cortland" & date == as.Date("2020-04-25") |
+          # County == "Delaware" & date == as.Date("2020-04-02") |
+          County == "Dutchess" & date == as.Date("2020-04-12") |
+          County == "Erie" & date == as.Date("2020-04-02") |
+          # County == "Essex" & date == as.Date("2020-04-10") |
+          # County == "Franklin" & date == as.Date("2020-04-10") |
+          # County == "Fulton" & date == as.Date("2020-04-12") |
+          County == "Genesee" & date == as.Date("2020-04-26") |
+          # County == "Greene" & date == as.Date("2020-03-29") |
+          County == "Hamilton" & date == as.Date("2020-04-25") |
+          County == "Herkimer" & date == as.Date("2020-04-12") |
+          # County == "Jefferson" & date == as.Date("2020-03-30") |
+          County == "Kings" & date == as.Date("2020-04-12") |
+          # County == "Lewis" & date == as.Date("2020-04-10") |
+          # County == "Livingston" & date == as.Date("2020-04-10") |
+          County == "Madison" & date == as.Date("2020-04-12") |
+          # County == "Monroe" & date == as.Date("2020-03-26") |
+          # County == "Montgomery" & date == as.Date("2020-03-29") |
+          County == "Nassau" & date == as.Date("2020-04-15") |
+          County == "New York" & date == as.Date("2020-04-10") |
+          County == "New York State" & date == as.Date("2020-04-12") |
+          County == "Manhattan" & date == as.Date("2020-04-10") |
+          County == "Niagara" & date == as.Date("2020-04-12") |
+          County == "Oneida" & date == as.Date("2020-04-10") |
+          County == "Onondaga" & date == as.Date("2020-04-10") |
+          # County == "Ontario" & date == as.Date("2020-04-12") |
+          County == "Orange" & date == as.Date("2020-04-18") |
+          County == "Orleans" & date == as.Date("2020-04-01") |
+          County == "Oswego" & date == as.Date("2020-04-25") |
+          County == "Otsego" & date == as.Date("2020-04-12") |
+          County == "Putnam" & date == as.Date("2020-04-20") |
+          County == "Queens" & date == as.Date("2020-04-12") |
+          County == "Rensselaer" & date == as.Date("2020-04-10") |
+          County == "Richmond" & date == as.Date("2020-04-11") |
+          County == "Rockland" & date == as.Date("2020-04-12") |
+          County == "St. Lawrence" & date == as.Date("2020-04-26") |
+          County == "Saratoga" & date == as.Date("2020-04-01") |
+          County == "Schenectady" & date == as.Date("2020-04-25") |
+          County == "Schoharie" & date == as.Date("2020-04-12") |
+          County == "Schuyler" & date == as.Date("2020-04-10") |
+          County == "Seneca" & date == as.Date("2020-04-12") |
+          # County == "Steuben" & date == as.Date("2020-04-10") |
+          County == "Suffolk" & date == as.Date("2020-04-10") |
+          County == "Sullivan" & date == as.Date("2020-04-12") |
+          # County == "Tioga" & date == as.Date("2020-03-26") |
+          County == "Tompkins" & date == as.Date("2020-04-10") |
+          County == "Ulster" & date == as.Date("2020-04-20") |
+          # County == "Warren" & date == as.Date("2020-04-02") |
+          # County == "Washington" & date == as.Date("2020-03-30") |
+          # County == "Wayne" & date == as.Date("2020-04-02") |
+          County == "Westchester" & date == as.Date("2020-04-10") |
+          # County == "Wyoming" & date == as.Date("2020-04-10") |
+          County == "Yates" & date == as.Date("2020-04-12")
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
@@ -1146,30 +1146,30 @@ server <- function(input, output, session) {
     }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
-          County == "Albany" & date == as.Date("2020-03-26") |
+        County == "Albany" & date == as.Date("2020-04-26") |
           # County == "Allegany" & date == as.Date("2020-03-29") |
-          County == "Bronx" & date == as.Date("2020-03-25") |
-          County == "Broome" & date == as.Date("2020-04-02") |
+          County == "Bronx" & date == as.Date("2020-04-25") |
+          County == "Broome" & date == as.Date("2020-04-12") |
           # County == "Cattaraugus" & date == as.Date("2020-03-30") |
-          County == "Cayuga" & date == as.Date("2020-04-02") |
+          County == "Cayuga" & date == as.Date("2020-04-12") |
           County == "Chautauqua" & date == as.Date("2020-04-10") |
           # County == "Chemung" & date == as.Date("2020-04-10") |
           County == "Chenango" & date == as.Date("2020-04-12") |
-          County == "Clinton" & date == as.Date("2020-03-26") |
+          County == "Clinton" & date == as.Date("2020-04-26") |
           # County == "Columbia" & date == as.Date("2020-03-29") |
-          County == "Cortland" & date == as.Date("2020-03-25") |
+          County == "Cortland" & date == as.Date("2020-04-25") |
           # County == "Delaware" & date == as.Date("2020-04-02") |
           County == "Dutchess" & date == as.Date("2020-04-12") |
           County == "Erie" & date == as.Date("2020-04-02") |
           # County == "Essex" & date == as.Date("2020-04-10") |
           # County == "Franklin" & date == as.Date("2020-04-10") |
           # County == "Fulton" & date == as.Date("2020-04-12") |
-          County == "Genesee" & date == as.Date("2020-03-26") |
+          County == "Genesee" & date == as.Date("2020-04-26") |
           # County == "Greene" & date == as.Date("2020-03-29") |
-          County == "Hamilton" & date == as.Date("2020-03-25") |
-          County == "Herkimer" & date == as.Date("2020-04-02") |
+          County == "Hamilton" & date == as.Date("2020-04-25") |
+          County == "Herkimer" & date == as.Date("2020-04-12") |
           # County == "Jefferson" & date == as.Date("2020-03-30") |
-          County == "Kings" & date == as.Date("2020-04-02") |
+          County == "Kings" & date == as.Date("2020-04-12") |
           # County == "Lewis" & date == as.Date("2020-04-10") |
           # County == "Livingston" & date == as.Date("2020-04-10") |
           County == "Madison" & date == as.Date("2020-04-12") |
@@ -1178,31 +1178,31 @@ server <- function(input, output, session) {
           County == "Nassau" & date == as.Date("2020-04-15") |
           County == "New York" & date == as.Date("2020-04-10") |
           County == "New York State" & date == as.Date("2020-04-12") |
-          County == "Manhattan" & date == as.Date("2020-03-30") |
-          County == "Niagara" & date == as.Date("2020-04-02") |
+          County == "Manhattan" & date == as.Date("2020-04-10") |
+          County == "Niagara" & date == as.Date("2020-04-12") |
           County == "Oneida" & date == as.Date("2020-04-10") |
           County == "Onondaga" & date == as.Date("2020-04-10") |
           # County == "Ontario" & date == as.Date("2020-04-12") |
           County == "Orange" & date == as.Date("2020-04-18") |
-          County == "Orleans" & date == as.Date("2020-03-29") |
-          County == "Oswego" & date == as.Date("2020-03-25") |
-          County == "Otsego" & date == as.Date("2020-04-02") |
+          County == "Orleans" & date == as.Date("2020-04-01") |
+          County == "Oswego" & date == as.Date("2020-04-25") |
+          County == "Otsego" & date == as.Date("2020-04-12") |
           County == "Putnam" & date == as.Date("2020-04-20") |
-          County == "Queens" & date == as.Date("2020-04-02") |
+          County == "Queens" & date == as.Date("2020-04-12") |
           County == "Rensselaer" & date == as.Date("2020-04-10") |
-          County == "Richmond" & date == as.Date("2020-04-01") |
+          County == "Richmond" & date == as.Date("2020-04-11") |
           County == "Rockland" & date == as.Date("2020-04-12") |
-          County == "St. Lawrence" & date == as.Date("2020-03-26") |
-          County == "Saratoga" & date == as.Date("2020-03-29") |
-          County == "Schenectady" & date == as.Date("2020-03-25") |
-          County == "Schoharie" & date == as.Date("2020-04-02") |
-          County == "Schuyler" & date == as.Date("2020-03-30") |
-          County == "Seneca" & date == as.Date("2020-04-02") |
+          County == "St. Lawrence" & date == as.Date("2020-04-26") |
+          County == "Saratoga" & date == as.Date("2020-04-01") |
+          County == "Schenectady" & date == as.Date("2020-04-25") |
+          County == "Schoharie" & date == as.Date("2020-04-12") |
+          County == "Schuyler" & date == as.Date("2020-04-10") |
+          County == "Seneca" & date == as.Date("2020-04-12") |
           # County == "Steuben" & date == as.Date("2020-04-10") |
           County == "Suffolk" & date == as.Date("2020-04-10") |
           County == "Sullivan" & date == as.Date("2020-04-12") |
           # County == "Tioga" & date == as.Date("2020-03-26") |
-          County == "Tompkins" & date == as.Date("2020-03-29") |
+          County == "Tompkins" & date == as.Date("2020-04-10") |
           County == "Ulster" & date == as.Date("2020-04-20") |
           # County == "Warren" & date == as.Date("2020-04-02") |
           # County == "Washington" & date == as.Date("2020-03-30") |
