@@ -370,12 +370,13 @@ ui <-
                                id = "sidebar_us_test",
                                HTML(whatisit_text),
                                HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                              Mediation: What are the disparities between states  in  rates of COVID-19 testing per 1k population 
-                              when compared to the average rates from other countries? When compared with the average
+                              Mediation: What are the disparities between US states  in  their rates of COVID-19 testing per 1k population 
+                              when compared to the average rates from other countries? When compared with the current average
                               US rate?</div><br>
                               <div style='font-size:90%;line-height:1.2;'>
-                              Several countries can be used as testing reference rates. Some of these countries 
-                              are regarded as having successfully  used testing to “flatten the curve”.<br><br>
+                              Several countries significantly effected by COVID-19 can be used as testing reference rates. 
+                              Some of these countries are regarded as having successfully  used testing to “flatten the curve”,
+                              while others are still in the midst of dealing with the crisis.<br><br>
                                The rate of testing per 1k in a state is: <br>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than selected country testing rate for disparity index &gt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to selected country testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
@@ -386,7 +387,8 @@ ui <-
                                <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in selected country) <br>
                     <strong>Date: </strong>",update_date,"<br><br>
                                
-                               <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
+                               <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
+                               <a href='https://bit.ly/2yMyjFX'>Statista.com (04/29/2020)</a>
                                </div>")),
                                HTML(footer_text),
                                width=4),
@@ -395,7 +397,7 @@ ui <-
                                tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country (",update_date,")")),
                                HTML("<br><br>"),
                                selectInput(inputId = "country",
-                                           label = "Country to compare with",
+                                           label = "",
                                            choices =  c("United States (approx. 17.2/1000)"="us",
                                                         "Portugal (35.3/1000)"="pr",
                                                         "Switzerland (29.6/1000)"="ch",
