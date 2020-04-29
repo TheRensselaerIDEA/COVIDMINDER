@@ -371,18 +371,19 @@ ui <-
                                HTML(whatisit_text),
                                HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between states  in  rates of COVID-19 testing per 1k population 
-                              when compared to the South Korean rate? </div><br>
+                              when compared to the average rates from other countries? When compared with the average
+                              US rate?</div><br>
                               <div style='font-size:90%;line-height:1.2;'>
-                              South Korea is used as our testing reference rate (10.9/1000 as of 04/19/2020) because South 
-                              Korea is regarded as successfully having used testing to “flatten the curve”.<br><br>
+                              Several countries can be used as testing reference rates. Some of these countries 
+                              are regarded as having successfully  used testing to “flatten the curve”.<br><br>
                                The rate of testing per 1k in a state is: <br>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than South Korean testing rate for disparity index &gt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to South Korean testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than South Korean testing rate for disparity index &lt; -0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than selected country testing rate for disparity index &gt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to selected country testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than selected country testing rate for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in South Korea) <br>
+                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in selected country) <br>
                     <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
@@ -391,7 +392,20 @@ ui <-
                                width=4),
                              
                              mainPanel(id = "mainpanel_us_test",
-                               tags$h4(class="map-title", "COVID-19 Testing Rate Disparities by State Compared to Average South Korean Rate"),
+                               tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country (",update_date,")")),
+                               HTML("<br><br>"),
+                               selectInput(inputId = "country",
+                                           label = "Country to compare with",
+                                           choices =  c("United States (approx. 17.2/1000)"="us",
+                                                        "Portugal (35.3/1000)"="pr",
+                                                        "Switzerland (29.6/1000)"="ch",
+                                                        "Italy (29.6/1000)"="it",
+                                                        "Spain (28.8/1000)"="sp",
+                                                        "Ireland (25.7/1000)"="ir",
+                                                        "Germany (24.7/1000)"="de",
+                                                        "Canada (19.4/1000)"="ca",
+                                                        "United Kingdom (10.6/1000)"="uk"),
+                                           selected = "de"),
                                        leafletOutput(outputId = "map.testing", height="100%"), width=8)
                )
       ),
@@ -545,15 +559,24 @@ server <- function(input, output, session) {
   
   # Render leaflet plot with all information in hover
   output$map.testing <- renderLeaflet({
+    # browser()
+    country <- input$country # selected country
+    
+    # modify states to have selected columns for our plot
+    tests_ldi <- states %>% 
+      select(starts_with("tests_ldi")) %>%
+      select(ends_with(country))
+    
+    states <- data.frame(states, "tests_ldi"=unlist(tests_ldi)) # Append to states
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=TRUE)
 #    browser()
     labels2 <- sprintf(
-      "<strong>%s</strong> State<br/>
-      Testing Rate vs South Korea DI: %.2g<br>
-      Testing Rate: %.1f /1000",
+      paste0("<strong>%s</strong> State<br/>
+      Testing Rate vs ", toupper(country)," DI: %.2g<br>
+      Testing Rate: %.1f /1000"),
       states$NAME, states$tests_ldi, states$tests_per_1000*1000
     ) %>% lapply(htmltools::HTML)
     
@@ -580,7 +603,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~states$tests_ldi, 
                 opacity = 0.7, 
-                title = "Disparity Index<br/>US Total Tests vs. South Korea",
+                title = paste0("Disparity Index<br/>US Total Tests vs. ",toupper(country)),
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                    cuts[n] = paste0(cuts[n]," lower") 
