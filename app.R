@@ -396,15 +396,15 @@ ui <-
                                HTML("<br><br>"),
                                selectInput(inputId = "country",
                                            label = "Country to compare with",
-                                           choices =  c("United States"="us",
-                                                        "Portugal"="pr",
-                                                        "Switzerland"="ch",
-                                                        "Ireland"="ir",
-                                                        "Spain"="sp",
-                                                        "Canada"="ca",
-                                                        "Italy"="it",
-                                                        "United Kingdom"="uk",
-                                                        "Germany"="de"),
+                                           choices =  c("United States (approx. 17.2/1000)"="us",
+                                                        "Portugal (35.3/1000)"="pr",
+                                                        "Switzerland (29.6/1000)"="ch",
+                                                        "Italy (29.6/1000)"="it",
+                                                        "Spain (28.8/1000)"="sp",
+                                                        "Ireland (25.7/1000)"="ir",
+                                                        "Germany (24.7/1000)"="de",
+                                                        "Canada (19.4/1000)"="ca",
+                                                        "United Kingdom (10.6/1000)"="uk"),
                                            selected = "de"),
                                        leafletOutput(outputId = "map.testing", height="100%"), width=8)
                )
@@ -575,7 +575,7 @@ server <- function(input, output, session) {
 #    browser()
     labels2 <- sprintf(
       paste0("<strong>%s</strong> State<br/>
-      Testing Rate vs ", country," DI: %.2g<br>
+      Testing Rate vs ", toupper(country)," DI: %.2g<br>
       Testing Rate: %.1f /1000"),
       states$NAME, states$tests_ldi, states$tests_per_1000*1000
     ) %>% lapply(htmltools::HTML)
@@ -603,7 +603,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~states$tests_ldi, 
                 opacity = 0.7, 
-                title = "Disparity Index<br/>US Total Tests vs. South Korea",
+                title = paste0("Disparity Index<br/>US Total Tests vs. ",toupper(country)),
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                    cuts[n] = paste0(cuts[n]," lower") 
