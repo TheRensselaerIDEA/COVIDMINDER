@@ -1,9 +1,9 @@
 county,deaths,cases
-New York State,17303,844994
+New York State,17638,844994
 Albany,26,9520
 Allegany,2,499
-Bronx,2540,84316
-Broome,14,2160
+Bronx,2580,84316
+Broome,15,2160
 Cattaraugus,2,748
 Cayuga,2,898
 Chautauqua,1,1057
@@ -13,8 +13,8 @@ Clinton,4,685
 Columbia,14,1204
 Cortland,1,1064
 Delaware,2,691
-Dutchess,64,13649
-Erie,195,14503
+Dutchess,65,13649
+Erie,203,14503
 Essex,0,322
 Franklin,0,343
 Fulton,3,737
@@ -23,43 +23,43 @@ Greene,2,1041
 Hamilton,0,36
 Herkimer,3,736
 Jefferson,0,1454
-Kings,3882,103673
+Kings,3950,103673
 Lewis,4,296
 Livingston,1,955
 Madison,5,1156
-Manhattan,1501,NA
-Monroe,79,13016
+Manhattan,1532,NA
+Monroe,81,13016
 Montgomery,4,666
-Nassau,1620,90267
-New York,11746,62043
+Nassau,1647,90267
+New York,11960,62043
 Niagara,21,2260
-Oneida,11,3157
-Onondaga,23,9938
+Oneida,12,3157
+Onondaga,24,9938
 Ontario,4,1473
-Orange,219,25740
-Orleans,7,567
+Orange,228,25740
+Orleans,8,567
 Oswego,2,1508
 Otsego,3,1167
-Putnam,43,3769
-Queens,3823,112427
+Putnam,45,3769
+Queens,3898,112427
 Rensselaer,8,3075
-Richmond,541,31710
-Rockland,384,29374
+Richmond,549,31710
+Rockland,387,29374
 St. Lawrence,2,1465
 Saratoga,11,4719
-Schenectady,19,3744
+Schenectady,22,3744
 Schoharie,1,571
 Schuyler,0,390
 Seneca,2,438
-Steuben,17,1869
-Suffolk,1102,86499
-Sullivan,14,3527
+Steuben,18,1869
+Suffolk,1131,86499
+Sullivan,15,3527
 Tioga,3,747
 Tompkins,0,3373
-Ulster,20,7438
+Ulster,21,7438
 Warren,7,1256
 Washington,3,928
 Wayne,1,1140
-Westchester,962,89144
+Westchester,983,89144
 Wyoming,5,525
 Yates,1,244
