@@ -35,25 +35,35 @@ state_covid_testing <- left_join(state_covid_testing, population, by = c('NAME')
 state_covid_testing <- state_covid_testing %>% 
   mutate(tests_per_1000 = total_num_tests / Population)  # This is actual rate, not "per 1000"
 
+# Use current US rate
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
 
-#pSK.2 <- 9.1 / 1000  # See: https://bit.ly/2yMyjFX
-# pSK.2 <- 10.9 / 1000  # See: https://bit.ly/2yMyjFX  UPDATED: 04/20
-# pCH.2 <- 24.4 / 1000  # See: https://bit.ly/2yMyjFX   
-# pIT.2 <- 22.1 / 1000  # See: https://bit.ly/2yMyjFX   
-# pDE.2 <- 20.9 / 1000  # See: https://bit.ly/2yMyjFX   
-# pAT.2 <- 20.4 / 1000  # See: https://bit.ly/2yMyjFX   
-# pCA.2 <- 14.0 / 1000  # See: https://bit.ly/2yMyjFX   
+# Scraped values (updated every few days): see https://bit.ly/2yMyjFX
+# Checked: 30 Apr 2020
+#pUS.2 <- 18.5 / 1000
+pPR.2 <- 37.2 / 1000
+pIT.2 <- 31.6 / 1000
+pIR.2 <- 31.2 / 1000
+pDE.2 <- 30.4 / 1000
+pSP.2 <- 30.3 / 1000
+pCH.2 <- 30.1 / 1000
+pRU.2 <- 23.9 / 1000
+pCA.2 <- 20.7 / 1000
+pUK.2 <- 12.1 / 1000
 
-pUS.2 <- 17.2 / 1000
-pPR.2 <- 35.3 / 1000
-pCH.2 <- 29.6 / 1000
-pIT.2 <- 29.6 / 1000
-pSP.2 <- 28.8 / 1000
-pIR.2 <- 25.7 / 1000
-pDE.2 <- 24.7 / 1000
-pCA.2 <- 19.4 / 1000
-pUK.2 <- 10.6 / 1000
+# for drop-down
+country_testing_choices <- c("us","pr","ch","it","sp","ir","de","ca","ru","uk")
+
+names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2*1000),"/1000)"),
+                             paste0("Portugal ("      ,pPR.2*1000,"/1000)"),
+                             paste0("Switzerland ("   ,pCH.2*1000,"/1000)"),
+                             paste0("Italy ("         ,pIT.2*1000,"/1000)"),
+                             paste0("Spain ("         ,pSP.2*1000,"/1000)"),
+                             paste0("Ireland ("       ,pIR.2*1000,"/1000)"),
+                             paste0("Germany ("       ,pDE.2*1000,"/1000)"),
+                             paste0("Canada ("        ,pCA.2*1000,"/1000)"),
+                             paste0("Russia ("        ,pRU.2*1000,"/1000)"),
+                             paste0("United Kingdom (",pUK.2*1000,"/1000)"))
 
 # Calculate state DIs based on a country's selected rate
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
@@ -66,6 +76,7 @@ tests_ldi.ir <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x
 tests_ldi.de <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pDE.2)}))
 tests_ldi.ca <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCA.2)}))
 tests_ldi.uk <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pUK.2)}))
+tests_ldi.ru <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pRU.2)}))
 
 # Write to data frame
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.us)
@@ -77,6 +88,7 @@ state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ir)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.de)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ca)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.uk)
+state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ru)
 
 state_covid_testing <- state_covid_testing[match(states$NAME, state_covid_testing$NAME),]
 
@@ -91,6 +103,7 @@ state_covid_testing <- state_covid_testing %>%
   mutate(tests_ldi.ir = replace(tests_ldi.ir, tests_ldi.ir < -5, -5)) %>%
   mutate(tests_ldi.de = replace(tests_ldi.de, tests_ldi.de < -5, -5)) %>%
   mutate(tests_ldi.ca = replace(tests_ldi.ca, tests_ldi.ca < -5, -5)) %>%
+  mutate(tests_ldi.ru = replace(tests_ldi.ca, tests_ldi.ru < -5, -5)) %>%
   mutate(tests_ldi.uk = replace(tests_ldi.uk, tests_ldi.uk < -5, -5)) 
 
 states <- data.frame(states, "tests_per_1000"=state_covid_testing$tests_per_1000) # Append to states
@@ -105,7 +118,7 @@ states <- data.frame(states, "tests_ldi.ir"=state_covid_testing$tests_ldi.ir) # 
 states <- data.frame(states, "tests_ldi.de"=state_covid_testing$tests_ldi.de) # Append to states
 states <- data.frame(states, "tests_ldi.ca"=state_covid_testing$tests_ldi.ca) # Append to states
 states <- data.frame(states, "tests_ldi.uk"=state_covid_testing$tests_ldi.uk) # Append to states
-
+states <- data.frame(states, "tests_ldi.ru"=state_covid_testing$tests_ldi.ru) # Append to states
 
 ## At-risk Adults fixing
 

@@ -401,15 +401,7 @@ ui <-
                                HTML("<br><br>"),
                                selectInput(inputId = "country",
                                            label = "",
-                                           choices =  c("United States (approx. 17.2/1000)"="us",
-                                                        "Portugal (35.3/1000)"="pr",
-                                                        "Switzerland (29.6/1000)"="ch",
-                                                        "Italy (29.6/1000)"="it",
-                                                        "Spain (28.8/1000)"="sp",
-                                                        "Ireland (25.7/1000)"="ir",
-                                                        "Germany (24.7/1000)"="de",
-                                                        "Canada (19.4/1000)"="ca",
-                                                        "United Kingdom (10.6/1000)"="uk"),
+                                           choices = country_testing_choices,
                                            selected = "de"),
                                        leafletOutput(outputId = "map.testing", height="100%"), width=8)
                )
