@@ -13,6 +13,11 @@ download.file(owidURL, paste0("data/csv/", "owid_testing_raw.csv"))
 # Import raw into R
 todays_raw_owid_data <- read_csv(paste0("data/csv/", "owid_testing_raw.csv"))
 
+# Check in on Germany; WHY no testing rate?!?!
+todays_raw_owid_data %>% filter(iso_code == "DEU") %>%
+  select(iso_code, location, date, total_tests_per_thousand, new_tests_per_thousand) %>%
+  slice(which.max(as.Date(date, '%Y-%m-%d'))) 
+  
 # We only care about total tests and new tests
 todays_raw_owid_data <- todays_raw_owid_data %>%
   select(iso_code, location, date, total_tests_per_thousand, new_tests_per_thousand) %>%
