@@ -22,7 +22,10 @@ todays_raw_owid_data <- todays_raw_owid_data %>%
   arrange(desc(total_tests_per_thousand))
 
 # Check rates against our list (30 Apr)
-check_ico_codes <- c("PRT","ITA","RUS","USA","GBR","CAN","CHE")
+check_iso_codes <- c("PRT","ITA","RUS","USA","GBR","CAN","CHE")
+
+check_raw_owid_data <- todays_raw_owid_data %>%
+  filter(iso_code %in% check_iso_codes)
 
 # Make backup of existing data
 write_csv(read_csv("data/csv/state_covid_testing.csv"),"data/csv/owid_covid_testing.csv.bak")
