@@ -1,9 +1,9 @@
 county,deaths,date
-New York State,18321,2020-05-01
-Albany,31,2020-05-01
+New York State,18610,2020-05-01
+Albany,33,2020-05-01
 Allegany,2,2020-05-01
-Bronx,2673,2020-05-01
-Broome,15,2020-05-01
+Bronx,2704,2020-05-01
+Broome,17,2020-05-01
 Cattaraugus,2,2020-05-01
 Cayuga,2,2020-05-01
 Chautauqua,1,2020-05-01
@@ -13,38 +13,38 @@ Clinton,4,2020-05-01
 Columbia,14,2020-05-01
 Cortland,1,2020-05-01
 Delaware,2,2020-05-01
-Dutchess,69,2020-05-01
-Erie,214,2020-05-01
+Dutchess,70,2020-05-01
+Erie,220,2020-05-01
 Essex,0,2020-05-01
 Franklin,0,2020-05-01
 Fulton,3,2020-05-01
 Genesee,3,2020-05-01
-Greene,2,2020-05-01
+Greene,3,2020-05-01
 Hamilton,0,2020-05-01
 Herkimer,3,2020-05-01
 Jefferson,0,2020-05-01
-Kings,4091,2020-05-01
+Kings,4153,2020-05-01
 Lewis,4,2020-05-01
 Livingston,1,2020-05-01
 Madison,5,2020-05-01
-Manhattan,1581,2020-05-01
-Monroe,84,2020-05-01
+Manhattan,1609,2020-05-01
+Monroe,86,2020-05-01
 Montgomery,4,2020-05-01
-Nassau,1700,2020-05-01
-New York,12411,2020-05-01
-Niagara,23,2020-05-01
+Nassau,1720,2020-05-01
+New York,12592,2020-05-01
+Niagara,24,2020-05-01
 Oneida,14,2020-05-01
-Onondaga,28,2020-05-01
+Onondaga,30,2020-05-01
 Ontario,4,2020-05-01
-Orange,240,2020-05-01
+Orange,246,2020-05-01
 Orleans,8,2020-05-01
 Oswego,2,2020-05-01
 Otsego,3,2020-05-01
 Putnam,45,2020-05-01
-Queens,4066,2020-05-01
+Queens,4126,2020-05-01
 Rensselaer,12,2020-05-01
-Richmond,565,2020-05-01
-Rockland,398,2020-05-01
+Richmond,576,2020-05-01
+Rockland,403,2020-05-01
 St. Lawrence,2,2020-05-01
 Saratoga,13,2020-05-01
 Schenectady,22,2020-05-01
@@ -52,14 +52,14 @@ Schoharie,1,2020-05-01
 Schuyler,0,2020-05-01
 Seneca,2,2020-05-01
 Steuben,19,2020-05-01
-Suffolk,1177,2020-05-01
+Suffolk,1203,2020-05-01
 Sullivan,15,2020-05-01
 Tioga,6,2020-05-01
 Tompkins,0,2020-05-01
-Ulster,24,2020-05-01
+Ulster,26,2020-05-01
 Warren,8,2020-05-01
-Washington,3,2020-05-01
+Washington,5,2020-05-01
 Wayne,1,2020-05-01
-Westchester,1031,2020-05-01
+Westchester,1049,2020-05-01
 Wyoming,5,2020-05-01
 Yates,1,2020-05-01
