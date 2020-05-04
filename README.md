@@ -23,7 +23,7 @@
 <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
 
 ## Screen Shot (04 May 2020)
-![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/master/COVIDMinder_screenshot.png)
+![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/COVIDMinder_screenshot.png)
 
 ## Project structure
 
