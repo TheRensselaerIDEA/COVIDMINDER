@@ -402,10 +402,10 @@ ui <-
                                HTML("<br><br>"),
                                tags$div(class="select-bar",
                                selectInput(inputId = "country",
-                                           label = "",#NULL TODO
+                                           label = NULL,
                                            choices = country_testing_choices,
                                            selected = "de")),
-                                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
+                                       leafletOutput(outputId = "map.testing", height="95%"), width=8)
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
