@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "04-28-2020" # makes it easy to change all occurances when we update
+update_date <- "05-03-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -26,8 +26,11 @@ whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER
                                 effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
                                 COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
 
-comments_link <-"<div style='font-size:80%;line-height:1.3;'>Thanks for using <b>COVIDMINDER!</b> Please take a few moments to fill 
-                                out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></div>"
+comments_link <-"<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
+                                Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
+                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
+                                <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+                                of Accessibility</a></i>"
 
 # For URL parameterization
 url1 <- url2 <- ""
@@ -39,7 +42,7 @@ ui <-
       tags$title("COVIDMINDER: Where you live matters")
     ),
     navbarPage(
-      id="home",
+      id="tab",
       theme="style.css",
       title=tags$div(class="title-text",
                      img(class="logo", src="Rensselaer_round.png"),
@@ -399,18 +402,10 @@ ui <-
                                HTML("<br><br>"),
                                tags$div(class="select-bar",
                                selectInput(inputId = "country",
-                                           label = NULL,
-                                           choices =  c("United States (approx. 17.2/1000)"="us",
-                                                        "Portugal (35.3/1000)"="pr",
-                                                        "Switzerland (29.6/1000)"="ch",
-                                                        "Italy (29.6/1000)"="it",
-                                                        "Spain (28.8/1000)"="sp",
-                                                        "Ireland (25.7/1000)"="ir",
-                                                        "Germany (24.7/1000)"="de",
-                                                        "Canada (19.4/1000)"="ca",
-                                                        "United Kingdom (10.6/1000)"="uk"),
+                                           label = "",#NULL TODO
+                                           choices = country_testing_choices,
                                            selected = "de")),
-                                       leafletOutput(outputId = "map.testing", height="95%"), width=8)
+                                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -1563,65 +1558,77 @@ server <- function(input, output, session) {
     
   })
   
-  # For URL parameterization
-
-  values <- reactiveValues(myurl = c(), parent_tab = "")
+  ### The following code deals with setting or responding to parameterized URLs
+  observe(print(input$tab))
   
   observe({
-    
-    # WORK IN PROGRESS! Based on
-    # https://stackoverflow.com/questions/33021757/externally-link-to-specific-tabpanel-in-shiny-app
-    #
-    # make sure this is called on pageload (to look at the query string)
-    # and whenever any tab is successfully changed.
-    # If you want to stop running this code after the initial load was
-    # successful so that further manual tab changes don't run this,
-    # maybe just have some boolean flag for that.
-    
-    input$home
-    input$tab_sub_tabs
+    # This "does the right thing" for an incoming URL
+    # suppose url is http://127.0.0.1:5682/?tab=tab3c/plot
     query <- parseQueryString(session$clientData$url_search)
-    url <- query$url
-    if (is.null(url)) {
-      url <- ""
-    }
     
-    # "depth" is how many levels the url in the query string is
-    depth <- function(x) length(unlist(strsplit(x,"/")))
-    
-    # if we reached the end, done!
-    if (length(values$myurl) == depth(url)) {
-      return()
+    if(!is.null(query$tab)) {
+      url <- strsplit(query$tab,"/")[[1]]
+      url1 <<- url[1]
+      url2 <<- url[2]
+      updateTabsetPanel(session, 'tab', url1)
     }
-    # base case - need to tell it what the first main nav name is
-    else if (length(values$myurl) == 0) {
-      values$parent_tab <- "outcome_maps_menu"
-    }
-    # if we're waiting for a tab switch but the UI hasn't updated yet
-    else if (is.null(input[[values$parent_tab]])) {
-      return()
-    }
-    # same - waiting for a tab switch
-    else if (tail(values$myurl, 1) != input[[values$parent_tab]]) {
-      return()
-    }
-    # the UI is on the tab that we last switched to, and there are more
-    # tabs to switch inside the current tab
-    # make sure the tabs follow the naming scheme
-    else {
-      values$parent_tab <- paste0(tail(values$myurl, 1), "_tabs")
-    }
-    
-    # figure out the id/value of the next tab
-    new_tab <- unlist(strsplit(url, "/"))[length(values$myurl)+1]
-    
-    # easy peasy.
-    updateTabsetPanel(session, values$parent_tab, new_tab)
-    values$myurl <- c(values$myurl, new_tab)
-    
   })
   
+  
+  observe({
+    # Trigger this observer every time an input changes
+    params <- reactiveValuesToList(input)
+    session$doBookmark()
+  })
+  
+  onBookmarked(function(url) {
+    # Construct the replacement URL:
+    url.new <- paste0(
+      session$clientData$url_protocol,"//",
+      session$clientData$url_hostname,
+      session$clientData$url_pathname,
+      "?tab=",
+      session$clientData$url_port,
+      session$input$tab
+    )
+    #TODO: Special handling for tabs with selectors!
+    # browser()
+    updateQueryString(url.new)
+  })
+  
+  observe({ # this observer executes once, when the page loads
+    
+    data <- parseQueryString(session$clientData$url_search)
+    
+    # browser()
+    # the navbar tab and tabpanel variables are two variables 
+    # we have to pass to the client for the update to take place
+    # if nav is defined, send a message to the client to set the nav tab
+    if (! is.null(data$page)) {
+      session$sendCustomMessage(type='setNavbar', data)
+    }
+    
+    # if the tab variable is defined, send a message to client to update the tab
+    if (any(sapply(data[c('outcome_usa_mortality', 
+                          'outcome_usa_racial_disparity',
+                          'outcome_ny_mortality',
+                          'outcome_ny_cases', 
+                          'outcome_ny_racial_disparity',
+                          'outcome_ct_racial_disparity',
+                          'outcome_ny_cases_rate',
+                          'outcome_ny_cases_time',
+                          'mediation_usa_testing',
+                          'mediation_usa_hospital_beds',
+                          'determinant_usa_diabetes',
+                          'determinant_ny_diabetes'
+    )], 
+    Negate(is.null)))) {
+      # browser()
+      session$sendCustomMessage(type='setTab', data)
+    }
+    
+  })
 }
 
 #### Set up Shiny App ####
-shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server, enableBookmarking = "url")
