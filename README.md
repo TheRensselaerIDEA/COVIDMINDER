@@ -1,4 +1,5 @@
-# COVIDMINDER: Revealing regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic
+<h1 style="text-align:center;">COVIDMINDER</h1>
+##Revealing regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic
 
 <strong>COVIDMINDER</strong> reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. <i>Outcomes</i> are the direct effects of COVID-19. <i>Social and Economic Determinants</i> are pre-existing risk factors that impact COVID-19 outcomes. <i>Mediations</i> are resources and programs used to combat the pandemic.
 
@@ -14,16 +15,16 @@
 
 ## Data Sources: Updated daily! (See also `data` subdirectories)
 
-<a href='http://bit.ly/39PMWpD'>JHU CSSE</a>
-<a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a>
-<a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a>
-<a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>
-<a href='https://bit.ly/2V1Zl3I'>CDC</a>
-<a href='https://bit.ly/34mYLBP'>County Health Rankings</a>
-<a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
+<a href='http://bit.ly/39PMWpD'>JHU CSSE</a></br>
+<a href='https://bit.ly/2JRhDiX'>COVID Tracking Project</a></br>
+<a href='https://bit.ly/3aXpBmD'>Organisation for Economic Co-operation and Development</a></br>
+<a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a></br>
+<a href='https://bit.ly/2V1Zl3I'>CDC</a></br>
+<a href='https://bit.ly/34mYLBP'>County Health Rankings</a></br>
+<a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a></br>
 
 ## Screen Shot (04 May 2020)
-![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/COVIDMinder_screenshot.png)
+![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/readme/COVIDMinder_screenshot.png)
 
 ## Project structure
 
