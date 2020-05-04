@@ -17,7 +17,7 @@
 * https://olyerickson.shinyapps.io/covid-di-prototype/
 
 ### Local Installation
-To deploy locally, clone the repository and run app.R on RStudio. On the source code pane, simply select Run App on the top right corner. <div style="height:20px;float:left;">![Run App Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/readme/runapp.png)</div>
+To deploy locally, clone the repository and run app.R on RStudio. On the source code pane, simply select Run App on the top right corner. ![Run App Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/readme/runapp.png)
 
 ### Screen Shot (04 May 2020)
 ![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/readme/COVIDMinder_screenshot.png)
