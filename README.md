@@ -22,7 +22,7 @@
 <a href='https://bit.ly/34mYLBP'>County Health Rankings</a>
 <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov</a>
 
-## Screen Shot (06 Apr 2020)
+## Screen Shot (04 May 2020)
 ![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/master/COVIDMinder_screenshot.png)
 
 ## Project structure
