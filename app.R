@@ -15,7 +15,7 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
-                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
+                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;margin-right:5px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
@@ -120,15 +120,16 @@ ui <-
                    id = "mainpanel_us_mort_race",
                    tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
                    HTML("<br><br>"),
+                   tags$div(class = "select-bar",
                    selectInput(inputId = "race",
-                               label = "Race/Ethnicity",
+                               label = NULL,
                                choices =  c("Non-hispanic White"="nhw",
                                             "Non-hispanic American Indian/Alaska Native"="nhaian",
                                             "Non-hispanic Asian Pacific Islander"="nhapi",
                                             "Hispanic/Latino (total)"="hlt",
                                             "Non-hispanic Black/African American"="nhbaa"),
-                               selected = "nhbaa"),
-                   leafletOutput(outputId = "map.covid_deaths.race", height="100%"), width=8)
+                               selected = "nhbaa")),
+                   leafletOutput(outputId = "map.covid_deaths.race", height="95%"), width=8)
                ), 
                tags$script(src = "style.js")
       ), 
@@ -399,11 +400,12 @@ ui <-
                              mainPanel(id = "mainpanel_us_test",
                                tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country (",update_date,")")),
                                HTML("<br><br>"),
+                               tags$div(class="select-bar",
                                selectInput(inputId = "country",
-                                           label = "",
+                                           label = NULL,
                                            choices = country_testing_choices,
-                                           selected = "de"),
-                                       leafletOutput(outputId = "map.testing", height="100%"), width=8)
+                                           selected = "de")),
+                                       leafletOutput(outputId = "map.testing", height="95%"), width=8)
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",

@@ -72,6 +72,13 @@
   margin-bottom:0;
 }
 
+.select-bar {
+  position:absolute;
+  right:5px;
+  margin-top: 10px;
+  z-index: 999;
+}
+
 .leaflet-container {
   background:none;
 }
@@ -87,6 +94,8 @@
 .leaflet-top {
   z-index: 999;
 }
+
+
 @media screen and (min-width:1085px){
   /*
   .title-text {
