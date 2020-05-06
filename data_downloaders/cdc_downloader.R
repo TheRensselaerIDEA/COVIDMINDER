@@ -12,7 +12,7 @@ cdc_race_URL <- "https://data.cdc.gov/resource/pj7m-y5uh.csv"
 download.file(cdc_race_URL, paste0("data/csv/", "states_cdc_racial_raw.csv"))
 
 # Import raw into R
-todays_raw_racial_data.bak <- todays_raw_racial_data 
+#todays_raw_racial_data.bak <- todays_raw_racial_data 
 todays_raw_racial_data <- read_csv(paste0("data/csv/", "states_cdc_racial_raw.csv"))
 
 # Rename raw columns

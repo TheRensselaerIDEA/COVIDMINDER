@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "05-04-2020" # makes it easy to change all occurances when we update
+update_date <- "05-05-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -951,7 +951,8 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Case Rate DI: %.2g<br>
       COVID-19 Case Rate: %.1f /100k",
-      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
+#      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
+      NY.data$County, NY.data$case_rate_ldi, NY.data$case_rate*100000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
