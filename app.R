@@ -949,7 +949,8 @@ server <- function(input, output, session) {
       "<strong>%s</strong><br/>
       COVID-19 Case Rate DI: %.2g<br>
       COVID-19 Case Rate: %.1f /100k",
-      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
+#      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
+      NY.data$County, NY.data$case_rate_ldi, NY.data$case_rate*100000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
