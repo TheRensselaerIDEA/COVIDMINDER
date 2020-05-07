@@ -99,5 +99,5 @@ covid_quar_states_wr <- covid_quar_states_wr[,c("County","Quarantine","ITOL","Po
 write_csv(read_csv("data/csv/time_series/CountyQuarItol.csv"),"data/csv/time_series/CountyQuarItol.csv.bak")
 
 # write out new dataframe to file system
-write_csv(covid_TS_states_wr,"data/csv/time_series/CountyQuarItol.csv")
+write_csv(covid_quar_states_wr,"data/csv/time_series/CountyQuarItol.csv")
 
