@@ -26,8 +26,9 @@ todays_raw_racial_data <- todays_raw_racial_data %>%
   select(-footnote)
 
 # Rewrite indicator column
+# UPDATED: They changed an indicator name!!
 todays_raw_racial_data <- todays_raw_racial_data %>%
-  mutate(indicator = replace(indicator, indicator == "Distribution of COVID deaths (%)", "deaths_pct")) %>%
+  mutate(indicator = replace(indicator, indicator == "Distribution of COVID-19 deaths (%)", "deaths_pct")) %>%
   mutate(indicator = replace(indicator, indicator == "Weighted distribution of population (%)", "wd_pop_pct")) %>%
   mutate(indicator = replace(indicator, indicator == "Unweighted distribution of population (%)", "un_pop_pct"))
 
