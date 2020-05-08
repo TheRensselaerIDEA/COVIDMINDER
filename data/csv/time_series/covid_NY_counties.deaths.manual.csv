@@ -1,8 +1,8 @@
 county,deaths,date
-New York State,20597,2020-05-07
-Albany,63,2020-05-07
+New York State,20828,2020-05-07
+Albany,68,2020-05-07
 Allegany,2,2020-05-07
-Bronx,2888,2020-05-07
+Bronx,2910,2020-05-07
 Broome,24,2020-05-07
 Cattaraugus,2,2020-05-07
 Cayuga,2,2020-05-07
@@ -13,38 +13,38 @@ Clinton,4,2020-05-07
 Columbia,21,2020-05-07
 Cortland,1,2020-05-07
 Delaware,2,2020-05-07
-Dutchess,95,2020-05-07
-Erie,322,2020-05-07
+Dutchess,96,2020-05-07
+Erie,334,2020-05-07
 Essex,0,2020-05-07
 Franklin,0,2020-05-07
-Fulton,6,2020-05-07
+Fulton,7,2020-05-07
 Genesee,3,2020-05-07
-Greene,7,2020-05-07
-Hamilton,0,2020-05-07
+Greene,9,2020-05-07
+Hamilton,1,2020-05-07
 Herkimer,3,2020-05-07
 Jefferson,0,2020-05-07
-Kings,4345,2020-05-07
+Kings,4393,2020-05-07
 Lewis,5,2020-05-07
 Livingston,1,2020-05-07
 Madison,6,2020-05-07
-Manhattan,1792,2020-05-07
-Monroe,121,2020-05-07
+Manhattan,1805,2020-05-07
+Monroe,126,2020-05-07
 Montgomery,4,2020-05-07
-Nassau,1891,2020-05-07
-New York,13475,2020-05-07
-Niagara,37,2020-05-07
+Nassau,1904,2020-05-07
+New York,13601,2020-05-07
+Niagara,40,2020-05-07
 Oneida,22,2020-05-07
-Onondaga,45,2020-05-07
+Onondaga,46,2020-05-07
 Ontario,7,2020-05-07
-Orange,299,2020-05-07
-Orleans,15,2020-05-07
+Orange,302,2020-05-07
+Orleans,16,2020-05-07
 Oswego,2,2020-05-07
 Otsego,3,2020-05-07
 Putnam,55,2020-05-07
-Queens,4450,2020-05-07
+Queens,4493,2020-05-07
 Rensselaer,21,2020-05-07
-Richmond,640,2020-05-07
-Rockland,433,2020-05-07
+Richmond,647,2020-05-07
+Rockland,436,2020-05-07
 St. Lawrence,2,2020-05-07
 Saratoga,13,2020-05-07
 Schenectady,23,2020-05-07
@@ -52,14 +52,14 @@ Schoharie,1,2020-05-07
 Schuyler,0,2020-05-07
 Seneca,1,2020-05-07
 Steuben,24,2020-05-07
-Suffolk,1522,2020-05-07
+Suffolk,1547,2020-05-07
 Sullivan,23,2020-05-07
 Tioga,12,2020-05-07
 Tompkins,0,2020-05-07
-Ulster,46,2020-05-07
-Warren,19,2020-05-07
+Ulster,47,2020-05-07
+Warren,20,2020-05-07
 Washington,11,2020-05-07
 Wayne,2,2020-05-07
-Westchester,1167,2020-05-07
+Westchester,1184,2020-05-07
 Wyoming,5,2020-05-07
 Yates,3,2020-05-07
