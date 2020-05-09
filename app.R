@@ -770,12 +770,12 @@ server <- function(input, output, session) {
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
-      COVID-19 Mortality Rate: %.1f /100k<br><br>
-      Total COVID-19-related Executive Orders: %.0f<br>
-      Total COVID-19-related Bills: %.0f" ,
+      COVID-19 Mortality Rate: %.1f /100k<br><br>",
+      # Total COVID-19-related Executive Orders: %.0f<br>
+      # Total COVID-19-related Bills: %.0f" ,
         states$NAME, states$death_rate_ldi , 
-        states$covid_death_rate*100000 ,
-        states$covid_eo, states$covid_bills
+        states$covid_death_rate*100000
+#        states$covid_eo, states$covid_bills
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -845,13 +845,13 @@ server <- function(input, output, session) {
       paste0("<strong>%s</strong> (",toupper(race),")<br/>
       COVID-19 Mortality Pct DI: %.2g<br>
       COVID-19 Mortality Pct: %.1f<br>
-      Percentage of population (weighted): %.1f<br>
-      Total COVID-19-related Executive Orders: %.0f<br>
-      Total COVID-19-related Bills: %.0f"),
+      Percentage of population (weighted): %.1f<br><br>"),
+      # Total COVID-19-related Executive Orders: %.0f<br>
+      # Total COVID-19-related Bills: %.0f"),
       states$NAME, states$death_rate_ldi_race, 
       states$race_deaths_pct, 
-      states$race_wd_pop_pct,
-      states$covid_eo,states$covid_bills
+      states$race_wd_pop_pct
+      # states$covid_eo,states$covid_bills
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
