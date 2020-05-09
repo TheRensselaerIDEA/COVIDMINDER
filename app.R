@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "05-07-2020" # makes it easy to change all occurances when we update
+update_date <- "05-08-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -388,7 +388,7 @@ ui <-
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
                                <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate  in state/Testing Rate in selected country) <br>
+                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate in state/Testing Rate in selected country) <br>
                     <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
@@ -770,8 +770,12 @@ server <- function(input, output, session) {
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
-      COVID-19 Mortality Rate: %.1f /100k",
-      states$NAME, states$death_rate_ldi, states$covid_death_rate*100000
+      COVID-19 Mortality Rate: %.1f /100k<br><br>
+      Total COVID-19-related Executive Orders: %.0f<br>
+      Total COVID-19-related Bills: %.0f" ,
+        states$NAME, states$death_rate_ldi , 
+        states$covid_death_rate*100000 ,
+        states$covid_eo, states$covid_bills
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
@@ -841,8 +845,13 @@ server <- function(input, output, session) {
       paste0("<strong>%s</strong> (",toupper(race),")<br/>
       COVID-19 Mortality Pct DI: %.2g<br>
       COVID-19 Mortality Pct: %.1f<br>
-      Percentage of population (weighted): %.1f"),
-      states$NAME, states$death_rate_ldi_race, states$race_deaths_pct, states$race_wd_pop_pct
+      Percentage of population (weighted): %.1f<br>
+      Total COVID-19-related Executive Orders: %.0f<br>
+      Total COVID-19-related Bills: %.0f"),
+      states$NAME, states$death_rate_ldi_race, 
+      states$race_deaths_pct, 
+      states$race_wd_pop_pct,
+      states$covid_eo,states$covid_bills
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
