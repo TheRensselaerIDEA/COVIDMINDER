@@ -81,3 +81,7 @@ covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.
 
 # Import per-state per-race disparity data
 covid_racial_data_states.wide <- read_csv("data/csv/states_cdc_racial_wide.csv")
+
+# Important per-state legislative and EO data
+covid_eo_bills <- read_csv("data/csv/Covid_EO.csv")
+

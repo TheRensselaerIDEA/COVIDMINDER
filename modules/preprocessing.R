@@ -39,22 +39,24 @@ state_covid_testing <- state_covid_testing %>%
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
 
 # Scraped values (updated every few days): see https://bit.ly/2yMyjFX
-# Checked: 30 Apr 2020
-#pUS.2 <- 18.5 / 1000
-pPR.2 <- 37.2 / 1000
-pIT.2 <- 31.6 / 1000
+# Checked: 09 May 2020
+#pUS.2 <- 25.1 / 1000
+pPR.2 <- 47.7 / 1000
+pBE.2 <- 44.5 / 1000
+pSP.2 <- 41.3 / 1000
+pIT.2 <- 39.4 / 1000
+pRU.2 <- 34.1 / 1000
+pCH.2 <- 33.6 / 1000
+pDE.2 <- 32.9 / 1000
 pIR.2 <- 31.2 / 1000
-pDE.2 <- 30.4 / 1000
-pSP.2 <- 30.3 / 1000
-pCH.2 <- 30.1 / 1000
-pRU.2 <- 23.9 / 1000
-pCA.2 <- 20.7 / 1000
-pUK.2 <- 12.1 / 1000
+pCA.2 <- 26.6 / 1000
+pUK.2 <- 22.6 / 1000
 
 # for drop-down
-country_testing_choices <- c("us","pr","ch","it","sp","ir","de","ca","ru","uk")
+country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
 
 names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2*1000),"/1000)"),
+                             paste0("Belgium ("       ,pBE.2*1000,"/1000)"),
                              paste0("Portugal ("      ,pPR.2*1000,"/1000)"),
                              paste0("Switzerland ("   ,pCH.2*1000,"/1000)"),
                              paste0("Italy ("         ,pIT.2*1000,"/1000)"),
@@ -68,6 +70,7 @@ names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2*1000),
 # Calculate state DIs based on a country's selected rate
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
 tests_ldi.us <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pUS.2)}))
+tests_ldi.be <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pBE.2)}))
 tests_ldi.pr <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pPR.2)}))
 tests_ldi.ch <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCH.2)}))
 tests_ldi.it <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pIT.2)}))
@@ -80,6 +83,7 @@ tests_ldi.ru <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x
 
 # Write to data frame
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.us)
+state_covid_testing <- data.frame(state_covid_testing, tests_ldi.be)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.pr)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ch)
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.it)
@@ -96,6 +100,7 @@ state_covid_testing <- state_covid_testing[1:51,]
 
 state_covid_testing <- state_covid_testing %>% 
   mutate(tests_ldi.us = replace(tests_ldi.us, tests_ldi.us < -5, -5)) %>%
+  mutate(tests_ldi.be = replace(tests_ldi.pr, tests_ldi.be < -5, -5)) %>%
   mutate(tests_ldi.pr = replace(tests_ldi.pr, tests_ldi.pr < -5, -5)) %>%
   mutate(tests_ldi.ch = replace(tests_ldi.ch, tests_ldi.ch < -5, -5)) %>%
   mutate(tests_ldi.it = replace(tests_ldi.it, tests_ldi.it < -5, -5)) %>%
@@ -110,6 +115,7 @@ states <- data.frame(states, "tests_per_1000"=state_covid_testing$tests_per_1000
 states <- data.frame(states, "Population"=state_covid_testing$Population) # Append to states (reference)
 
 states <- data.frame(states, "tests_ldi.us"=state_covid_testing$tests_ldi.us) # Append to states
+states <- data.frame(states, "tests_ldi.be"=state_covid_testing$tests_ldi.be) # Append to states
 states <- data.frame(states, "tests_ldi.pr"=state_covid_testing$tests_ldi.pr) # Append to states
 states <- data.frame(states, "tests_ldi.ch"=state_covid_testing$tests_ldi.ch) # Append to states
 states <- data.frame(states, "tests_ldi.it"=state_covid_testing$tests_ldi.it) # Append to states
@@ -300,3 +306,15 @@ covid_NY_TS_counties_long.cases <- dplyr::inner_join(covid_NY_TS_counties_long.c
 #   group_by(date)
 # Do it this way to be safe:
 covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")
+
+# Legislative action 
+# Executive Orders (EO) and Total Bills
+
+# RE-order EO to match states ordering
+covid_eo_bills <- covid_eo_bills[match(states$NAME, covid_eo_bills$NAME),]
+
+# Append the new column to states
+covid_eo_bills <- covid_eo_bills[1:51,]
+
+states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO) # Append to states
+states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills) # Append to states
