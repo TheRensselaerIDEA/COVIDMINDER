@@ -1,4 +1,4 @@
-# COVIDMINDER Daily data downloader (6 of 6)
+# COVIDMINDER Daily data downloader (6 of 7)
 # SOURCE: Our World in Data: https://covid.ourworldindata.org/data/owid-covid-data.csv
 # FILES UPDATED BY THIS SCRIPT:
 # "data/csv/owid_testing_raw.csv"

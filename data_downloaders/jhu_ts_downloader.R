@@ -1,4 +1,4 @@
-# COVIDMINDER Daily data downloader (3 of 5)
+# COVIDMINDER Daily data downloader (3 of 7)
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
 # FILES UPDATED BY THIS SCRIPT:
 # "data/csv/time_series/time_series_covid19_deaths_US.csv"
