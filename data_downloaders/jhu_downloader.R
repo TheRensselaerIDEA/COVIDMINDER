@@ -1,4 +1,4 @@
-# COVIDMINDER Daily data downloader (2 of 5)
+# COVIDMINDER Daily data downloader (2 of 7)
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
 # FILES CREATED/UPDATED BY THIS SCRIPT:
 # "data/csv/04-XX-2020.csv"  (where 'XX' is the current day)

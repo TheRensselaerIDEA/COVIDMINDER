@@ -1,4 +1,4 @@
-# COVIDMINDER Daily data downloader (1 of 5)
+# COVIDMINDER Daily data downloader (1 of 7)
 # SOURCE: COVID Tracking Project (api): https://covidtracking.com/api/states.csv
 # FILES UPDATED BY THIS SCRIPT:
 # "data/csv/states_testing_raw.csv"

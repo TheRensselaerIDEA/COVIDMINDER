@@ -1,4 +1,4 @@
-# COVIDMINDER Daily data downloader (5 of 5)
+# COVIDMINDER Daily data downloader (5 of 7)
 # UPDATED: 30 April 2020
 # SOURCE: CDC Racial: "https://data.cdc.gov/resource/pj7m-y5uh.csv"
 # FILES UPDATED BY THIS SCRIPT:
