@@ -51,4 +51,5 @@ function resize_plot() {
 
 window.addEventListener("resize", resize_plot);
 window.addEventListener("click", resize_plot);
+window.addEventListener("scroll", resize_plot);
 resize_plot();
