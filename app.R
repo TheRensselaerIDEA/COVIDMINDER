@@ -80,7 +80,7 @@ ui <-
                    tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
                            leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
                ), 
-               tags$script(src = "style.js")
+               #tags$script(src = "style.js")
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
@@ -131,7 +131,6 @@ ui <-
                                selected = "nhbaa")),
                    leafletOutput(outputId = "map.covid_deaths.race", height="95%"), width=8)
                ), 
-               tags$script(src = "style.js")
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
@@ -164,7 +163,7 @@ ui <-
                  
                  mainPanel(id = "mainpanel_ny_mort",
                            tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.deaths", height="100%"), width=8)
+                           leafletOutput(outputId = "map.NY.deaths", height = "100%"), width=8)
                    )
                  ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -551,7 +550,8 @@ ui <-
                )
       )
       )
-    )
+    ), 
+    tags$script(src = "style.js")
   )
 #### Server Code ####
 server <- function(input, output, session) {
