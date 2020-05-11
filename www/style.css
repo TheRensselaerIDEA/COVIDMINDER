@@ -70,6 +70,7 @@
 
 .form-group{
   margin-bottom:0;
+  float:left;
 }
 
 .select-bar {
@@ -107,3 +108,8 @@
   }
 }
 
+@media screen and (max-width:925px){
+  .NY_case_plots {
+  height: Calc(90% - 140px);
+}
+}

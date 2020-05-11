@@ -219,11 +219,17 @@ ui <-
                    HTML(footer_text),
                    width=4),
                  
-                 mainPanel(id = "mainpanel_ny_CoT", 
+                 mainPanel(id = "mainpanel_ny_CoT",
+                           tags$div(
                            selectInput(inputId = "NYRegion",
                                        label = "NY Regions",
-                                       choices = cbind(c("All Regions"), NY_counties_regions$Region),
-                                       selected = "All Counties"),
+                                       choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
+                                       selected = 1),
+                           selectInput(inputId = "NYCounty",
+                                       label = "NY Counties",
+                                       choices = cbind(c("All Counties"), sort(unique(covid_NY_TS_plot.cases$County))),
+                                       selected = 1)
+                           ),
                            tags$div(class = "NY_case_plots",
                            plotOutput(outputId = "NY.cases.TS", height="100%", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
@@ -232,7 +238,7 @@ ui <-
                                         id = "NY.cases.TS_brush",
                                         resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;'>
+                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
@@ -260,10 +266,16 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates",
+                           tags$div(
                            selectInput(inputId = "NYRegion.rates",
                                        label = "NY Regions",
-                                       choices = cbind(c("All Regions"), NY_counties_regions$Region),
-                                       selected = "All Counties"),
+                                       choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
+                                       selected = 1),
+                           selectInput(inputId = "NYCounty.rates",
+                                       label = "NY Counties",
+                                       choices = cbind(c("All Counties"), sort(unique(covid_NY_TS_plot.cases$County))),
+                                       selected = 1)
+                           ),
                            tags$div(class = "NY_case_plots",
                            plotOutput(outputId = "NY.cases.TS.rates", height="100%",
                                       click = clickOpts(id ="NY.cases.TS.rates_click"),
@@ -272,7 +284,7 @@ ui <-
                                         id = "NY.cases.TS.rates_brush",
                                         resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;'>
+                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
@@ -1062,11 +1074,31 @@ server <- function(input, output, session) {
   output$NY.cases.TS <- renderPlot({
     # browser()
     selected.region <- input$NYRegion
+    selected.county <- input$NYCounty
+    
+    #if (is.null(selected.county)) {
+    #  selected.county <- "All Counties"
+    #}
     select.size <- 2
+    if (selected.county != "All Counties") {
+      selected.region <- "All Regions"
+    }
+
     if (selected.region == "All Regions") {
       selected.region <- NY_counties_regions$Region
-      select.size <- 1
+      if (selected.county == "All Counties") {
+        selected.county <- NY_counties_regions$County
+        select.size <- 1
+      }
     }
+    else {
+      selected.county <- NY_counties_regions$County
+    }
+
+    
+    #print(selected.region)
+    #print(selected.county)
+    
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
         County == "Albany" & date == as.Date("2020-04-26") |
@@ -1140,7 +1172,7 @@ server <- function(input, output, session) {
       dplyr::distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-    
+    #covid_NY_TS_plot.cases$highlight <- ifelse(,TRUE, FALSE)
     covid_NY_TS_plot.cases %>%
       ggplot(aes(date, 
                  cases, 
@@ -1155,7 +1187,7 @@ server <- function(input, output, session) {
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
       ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
-      gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      gghighlight(County %in% selected.county & Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
@@ -1173,10 +1205,25 @@ server <- function(input, output, session) {
   output$NY.cases.TS.rates <- renderPlot({
     # browser()
     selected.region <- input$NYRegion.rates
+    selected.county <- input$NYCounty.rates
+    
+    #if (is.null(selected.county)) {
+    #  selected.county <- "All Counties"
+    #}
     select.size <- 2
+    if (selected.county != "All Counties") {
+      selected.region <- "All Regions"
+    }
+    
     if (selected.region == "All Regions") {
       selected.region <- NY_counties_regions$Region
-      select.size <- 1
+      if (selected.county == "All Counties") {
+        selected.county <- NY_counties_regions$County
+        select.size <- 1
+      }
+    }
+    else {
+      selected.county <- NY_counties_regions$County
     }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
@@ -1263,8 +1310,8 @@ server <- function(input, output, session) {
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
-      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +   
-        gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +
+        gghighlight(County %in% selected.county & Region %in% selected.region, use_direct_label=FALSE) +
         geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=10) + 
       coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
