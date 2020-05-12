@@ -403,7 +403,7 @@ ui <-
                     <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
-                               <a href='https://bit.ly/2yMyjFX'>Statista.com (04/29/2020)</a>
+                               <a href='https://bit.ly/2yMyjFX'>Statista.com (05/12/2020)</a>
                                </div>")),
                                HTML(footer_text),
                                width=4),
