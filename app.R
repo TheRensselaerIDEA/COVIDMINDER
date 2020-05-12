@@ -247,6 +247,52 @@ ui <-
                    )
                    ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Regions)</div>")),
+               value="outcome_ny_cases_time_region",
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_ny_CoT_region",
+                   HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
+                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                   HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_ny_CoT",
+                           tags$div(
+                             selectInput(inputId = "NYRegion",
+                                         label = "NY Regions",
+                                         choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
+                                         selected = 1),
+                             selectInput(inputId = "NYCounty",
+                                         label = "NY Counties",
+                                         choices = cbind(c("All Counties"), sort(unique(covid_NY_TS_plot.cases$County))),
+                                         selected = 1)
+                           ),
+                           tags$div(class = "NY_case_plots",
+                                    plotOutput(outputId = "NY.cases.TS", height="85%", 
+                                               click = clickOpts(id ="NY.cases.TS_click"),
+                                               dblclick = "NY.cases.TS_dblclick",
+                                               brush = brushOpts(
+                                                 id = "NY.cases.TS_brush",
+                                                 resetOnNew = TRUE))
+                           ),
+                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>"),
+                           uiOutput("click_info"), 
+                           width = 8)
+               )
+      ),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
                value="outcome_ny_cases_rate",
                sidebarLayout(
@@ -1727,6 +1773,7 @@ server <- function(input, output, session) {
                           'outcome_ct_racial_disparity',
                           'outcome_ny_cases_rate',
                           'outcome_ny_cases_time',
+                          'outcome_ny_cases_time_region',
                           'mediation_usa_testing',
                           'mediation_usa_hospital_beds',
                           'determinant_usa_diabetes',
