@@ -1169,7 +1169,8 @@ server <- function(input, output, session) {
       dplyr::distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-    #covid_NY_TS_plot.cases$highlight <- ifelse(,TRUE, FALSE)
+    
+    if (length(selected.region) > 1) {
     covid_NY_TS_plot.cases %>%
       ggplot(aes(date, 
                  cases, 
@@ -1193,7 +1194,34 @@ server <- function(input, output, session) {
                             values = c(2), 
                             guide = guide_legend(override.aes = list(color = c("black")))) +
       NULL
-    
+    }
+    else {
+      covid_NY_TS_plot.cases %>%
+        group_by(Region, date) %>%
+        summarise(cases = mean(cases), log_cases = mean(log_cases), p_cases = mean(p_cases)) %>%
+        ggplot(aes(date, 
+                   cases, 
+                   color = Region)) +
+        scale_color_manual(values=NY_region_palette) +
+        geom_line(size=1) +
+        scale_y_continuous(
+          trans = "log10",
+          breaks = c(10,100,500,1000,5000,10000, 50000)
+        ) +
+        scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+        ylab("Cumulative Number of Cases") + 
+        ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+        gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
+        geom_line(size=select.size) + 
+        # TODO: Region specific labels
+        geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
+        coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
+        geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+        scale_linetype_manual(name = "Events", 
+                              values = c(2), 
+                              guide = guide_legend(override.aes = list(color = c("black")))) +
+        NULL
+    }
       })
   
   # This sets the range for zooming the following plot
@@ -1296,7 +1324,6 @@ server <- function(input, output, session) {
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
     
-    print(length(selected.region))
     if (length(selected.region) > 1) {
       covid_NY_TS_plot.cases %>% 
         dplyr::filter(p_cases >= 10) %>%
@@ -1321,7 +1348,6 @@ server <- function(input, output, session) {
         NULL
     }
     else {
-      print("Made it to else...")
       covid_NY_TS_plot.cases %>% 
         group_by(Region, date) %>%
         summarize(cases = mean(cases), log_cases = mean(log_cases), p_cases = mean(p_cases)) %>%
