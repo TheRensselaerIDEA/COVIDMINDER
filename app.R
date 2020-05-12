@@ -1076,23 +1076,20 @@ server <- function(input, output, session) {
     selected.region <- input$NYRegion
     selected.county <- input$NYCounty
     
-    #if (is.null(selected.county)) {
-    #  selected.county <- "All Counties"
-    #}
     select.size <- 2
     if (selected.county != "All Counties") {
       selected.region <- "All Regions"
     }
 
     if (selected.region == "All Regions") {
-      selected.region <- NY_counties_regions$Region
+      selected.region <- sort(unique(covid_NY_TS_plot.cases$Region))
       if (selected.county == "All Counties") {
-        selected.county <- NY_counties_regions$County
+        selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
         select.size <- 1
       }
     }
     else {
-      selected.county <- NY_counties_regions$County
+      selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
     }
 
     
@@ -1216,14 +1213,14 @@ server <- function(input, output, session) {
     }
     
     if (selected.region == "All Regions") {
-      selected.region <- NY_counties_regions$Region
+      selected.region <- sort(unique(covid_NY_TS_plot.cases$Region))
       if (selected.county == "All Counties") {
-        selected.county <- NY_counties_regions$County
+        selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
         select.size <- 1
       }
     }
     else {
-      selected.county <- NY_counties_regions$County
+      selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
     }
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
@@ -1298,7 +1295,9 @@ server <- function(input, output, session) {
       dplyr::distinct(Region,Color)
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
-
+    
+    print(length(selected.region))
+    if (length(selected.region) > 1) {
       covid_NY_TS_plot.cases %>% 
         dplyr::filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
@@ -1320,6 +1319,34 @@ server <- function(input, output, session) {
                               values = c(2), 
                               guide = guide_legend(override.aes = list(color = c("black")))) +
         NULL
+    }
+    else {
+      print("Made it to else...")
+      covid_NY_TS_plot.cases %>% 
+        group_by(Region, date) %>%
+        summarize(cases = mean(cases), log_cases = mean(log_cases), p_cases = mean(p_cases)) %>%
+        dplyr::filter(p_cases >= 10) %>%
+        ggplot(aes(x=date, y=p_cases, color = Region)) +
+        scale_color_manual(values=NY_region_palette) +
+        geom_line(size=1) +
+        scale_y_continuous(
+          trans = "log10",
+          breaks = c(10,50,100,500,1000,5000)
+        ) +
+        scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+        ylab("Cases per 100K Population") + 
+        ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +
+        gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
+        geom_line(size=select.size) + 
+        geom_label_repel(data=highlight_points,  aes(label=Region), segment.color="black", force=10) + 
+        # TODO: New highlight points for Regions
+        coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
+        geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+        scale_linetype_manual(name = "Events", 
+                              values = c(2), 
+                              guide = guide_legend(override.aes = list(color = c("black")))) +
+        NULL
+    }
 
   })
   
