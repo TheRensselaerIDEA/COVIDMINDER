@@ -1198,7 +1198,7 @@ server <- function(input, output, session) {
     else {
       covid_NY_TS_plot.cases %>%
         group_by(Region, date) %>%
-        summarise(cases = mean(cases), log_cases = mean(log_cases), p_cases = mean(p_cases)) %>%
+        summarise(cases = sum(cases), log_cases = sum(log_cases), p_cases = sum(p_cases)) %>%
         ggplot(aes(date, 
                    cases, 
                    color = Region)) +
