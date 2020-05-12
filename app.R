@@ -230,7 +230,7 @@ ui <-
                                        selected = 1)
                            ),
                            tags$div(class = "NY_case_plots",
-                           plotOutput(outputId = "NY.cases.TS", height="100%", 
+                           plotOutput(outputId = "NY.cases.TS", height="85%", 
                                       click = clickOpts(id ="NY.cases.TS_click"),
                                       dblclick = "NY.cases.TS_dblclick",
                                       brush = brushOpts(
@@ -276,7 +276,7 @@ ui <-
                                        selected = 1)
                            ),
                            tags$div(class = "NY_case_plots",
-                           plotOutput(outputId = "NY.cases.TS.rates", height="100%",
+                           plotOutput(outputId = "NY.cases.TS.rates", height="85%",
                                       click = clickOpts(id ="NY.cases.TS.rates_click"),
                                       dblclick = "NY.cases.TS.rates_dblclick",
                                       brush = brushOpts(
