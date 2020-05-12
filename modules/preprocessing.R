@@ -39,18 +39,18 @@ state_covid_testing <- state_covid_testing %>%
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
 
 # Scraped values (updated every few days): see https://bit.ly/2yMyjFX
-# Checked: 09 May 2020
-#pUS.2 <- 25.1 / 1000
-pPR.2 <- 47.7 / 1000
-pBE.2 <- 44.5 / 1000
-pSP.2 <- 41.3 / 1000
-pIT.2 <- 39.4 / 1000
-pRU.2 <- 34.1 / 1000
-pCH.2 <- 33.6 / 1000
+# Checked: 11 May 2020
+#pUS.2 <- 28.1 / 1000
+pPR.2 <- 50.5 / 1000
+pBE.2 <- 50.5 / 1000
+pSP.2 <- 52.8 / 1000
+pIT.2 <- 42.4 / 1000
+pRU.2 <- 38.6 / 1000
+pCH.2 <- 35.8 / 1000
 pDE.2 <- 32.9 / 1000
 pIR.2 <- 31.2 / 1000
-pCA.2 <- 26.6 / 1000
-pUK.2 <- 22.6 / 1000
+pCA.2 <- 30.1 / 1000
+pUK.2 <- 26.8 / 1000
 
 # for drop-down
 country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
