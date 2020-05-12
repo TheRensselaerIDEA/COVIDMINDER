@@ -268,8 +268,8 @@ ui <-
                                        choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
                                        selected = 1),
                            tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.TS.region", height="90%", 
-                                               click = clickOpts(id ="NY.cases.TS_click"),
+                                    plotOutput(outputId = "NY.cases.TS.region", height="85%", 
+                                               click = clickOpts(id ="NY.cases.TS_click_reg"),
                                                dblclick = "NY.cases.TS_dblclick",
                                                brush = brushOpts(
                                                  id = "NY.cases.TS_brush",
@@ -280,7 +280,7 @@ ui <-
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
                                 </div>"),
-                           uiOutput("click_info2"), 
+                           uiOutput("click_info_reg"), 
                            width = 8)
                )
       ),
@@ -355,7 +355,7 @@ ui <-
                                          selected = 1),
                            tags$div(class = "NY_case_plots",
                                     plotOutput(outputId = "NY.cases.TS.rates.reg", height="85%",
-                                               click = clickOpts(id ="NY.cases.TS.rates_click"),
+                                               click = clickOpts(id ="NY.cases.TS.rates_click.reg"),
                                                dblclick = "NY.cases.TS.rates_dblclick",
                                                brush = brushOpts(
                                                  id = "NY.cases.TS.rates_brush",
@@ -366,7 +366,7 @@ ui <-
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
                                 </div>"),
-                           uiOutput("click_info_rates2"), 
+                           uiOutput("click_info_rates_reg"), 
                            width = 8)
                )
       ),
@@ -1362,6 +1362,7 @@ server <- function(input, output, session) {
     else {
       selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
     }
+    
     highlight_points <- covid_NY_TS_plot.cases %>% 
       dplyr::filter( 
         County == "Albany" & date == as.Date("2020-04-26") |
@@ -1436,7 +1437,6 @@ server <- function(input, output, session) {
     
     NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
     
-    if (length(selected.region) > 1) {
       covid_NY_TS_plot.cases %>% 
         dplyr::filter(p_cases >= 10) %>%
         ggplot(aes(x=date, y=p_cases, color = Region, group=County)) +
@@ -1458,34 +1458,7 @@ server <- function(input, output, session) {
                               values = c(2), 
                               guide = guide_legend(override.aes = list(color = c("black")))) +
         NULL
-    }
-    else {
-      covid_NY_TS_plot.cases %>% 
-        group_by(Region, date) %>%
-        summarize(cases = mean(cases), log_cases = mean(log_cases), p_cases = mean(p_cases)) %>%
-        dplyr::filter(p_cases >= 10) %>%
-        ggplot(aes(x=date, y=p_cases, color = Region)) +
-        scale_color_manual(values=NY_region_palette) +
-        geom_line(size=1) +
-        scale_y_continuous(
-          trans = "log10",
-          breaks = c(10,50,100,500,1000,5000)
-        ) +
-        scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
-        ylab("Cases per 100K Population") + 
-        ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +
-        gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
-        geom_line(size=select.size) + 
-        geom_label_repel(data=highlight_points,  aes(label=Region), segment.color="black", force=10) + 
-        # TODO: New highlight points for Regions
-        coord_cartesian(xlim = ranges2$x, ylim = ranges2$y, expand = FALSE) +
-        geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
-        scale_linetype_manual(name = "Events", 
-                              values = c(2), 
-                              guide = guide_legend(override.aes = list(color = c("black")))) +
-        NULL
-    }
-
+    
   })
   
   output$NY.cases.TS.rates.reg <- renderPlot({
@@ -1553,8 +1526,8 @@ server <- function(input, output, session) {
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
 
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
-                        xvar="date", yvar="p_cases")
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
+                        xvar="date", yvar="cases")
     # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1576,23 +1549,26 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County,": ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
+        p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases as of ",point$date)))
       )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
         )
         
       }
   }
   })
   
-  output$click_info2 <- renderPrint({
-    hover <- input$NY.cases.TS_click
+  output$click_info_reg <- renderPrint({
+    hover <- input$NY.cases.TS_click_reg
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
-                        xvar="date", yvar="p_cases")
+    point <- covid_NY_TS_plot.cases %>%
+      group_by(Region, date) %>%
+      summarise(cases = sum(cases)) %>%
+      nearPoints(hover, threshold = 5, addDist = TRUE, maxpoints = 1,
+                        xvar="date", yvar="cases")
     # browser()
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1611,15 +1587,15 @@ server <- function(input, output, session) {
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
-      if (point$County == "New York State"){
+      if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
+          p(HTML(paste0(point$Region,": ",point$cases," COVID-19 cases as of ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$p_cases," COVID-19 cases/100k population as of ",point$date)))
+          p(HTML(paste0(point$Region," Region: ",point$cases," COVID-19 cases as of ",point$date)))
         )
         
       }
@@ -1629,8 +1605,8 @@ server <- function(input, output, session) {
   output$click_info_rates <- renderPrint({
     hover <- input$NY.cases.TS.rates_click
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
-                        xvar="date", yvar="cases")
+    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
+                        xvar="date", yvar="p_cases")
     
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1664,11 +1640,14 @@ server <- function(input, output, session) {
     }
   })
   
-  output$click_info_rates2 <- renderPrint({
-    hover <- input$NY.cases.TS.rates_click
+  output$click_info_rates_reg <- renderPrint({
+    hover <- input$NY.cases.TS.rates_click.reg
     
-    point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 20, addDist = TRUE, maxpoints = 1,
-                        xvar="date", yvar="cases")
+    point <- covid_NY_TS_plot.cases %>%
+      group_by(Region, date) %>%
+      summarise(p_cases = mean(p_cases)) %>%
+      nearPoints (hover, threshold = 5, addDist = TRUE, maxpoints = 1,
+                        xvar="date", yvar="p_cases")
     
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
@@ -1687,15 +1666,15 @@ server <- function(input, output, session) {
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
-      if (point$County == "New York State"){
+      if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$Region,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$Region," Region: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
         
       }
