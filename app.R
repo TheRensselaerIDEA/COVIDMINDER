@@ -1680,12 +1680,12 @@ server <- function(input, output, session) {
         filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.county,": ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.county,": ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.county," County: ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.county," County: ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
         )
       }
     }
@@ -1738,12 +1738,12 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.region,": ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.region," Region: ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
         )
       }
     }
