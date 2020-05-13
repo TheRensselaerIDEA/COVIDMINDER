@@ -1525,6 +1525,7 @@ server <- function(input, output, session) {
   
   output$click_info <- renderPrint({
     hover <- input$NY.cases.TS_click
+    selected.county <- input$NYCounty
 
     point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
                         xvar="date", yvar="cases")
@@ -1558,11 +1559,28 @@ server <- function(input, output, session) {
         )
         
       }
-  }
+    }
+    else if(selected.county != "All Counties") {
+      yesterday <- as.Date(update_date, format = "%m-%d-%Y") - 1
+      point <- covid_NY_TS_plot.cases %>%
+        filter(County == selected.county & date == yesterday)
+      if (selected.county == "New York State"){
+        wellPanel(
+          p(HTML(paste0(selected.county,": ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+        )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(selected.county," County: ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+        )
+        
+      }
+    }
   })
   
   output$click_info_reg <- renderPrint({
     hover <- input$NY.cases.TS_click_reg
+    selected.region <- input$NYRegion2
     
     point <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
@@ -1600,10 +1618,28 @@ server <- function(input, output, session) {
         
       }
     }
+    else if(selected.region != "All Regions") {
+      yesterday <- as.Date(update_date, format = "%m-%d-%Y") - 1
+      point <- covid_NY_TS_plot.cases %>%
+        group_by(Region, date)  %>%
+        summarise(cases = sum(cases)) %>%
+        filter(Region == selected.region & date == yesterday)
+      if (selected.region == "New York State"){
+        wellPanel(
+          p(HTML(paste0(selected.region,": ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+        )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(selected.region," Region: ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+        )
+      }
+    }
   })
   
   output$click_info_rates <- renderPrint({
     hover <- input$NY.cases.TS.rates_click
+    selected.county <- input$NYCounty.rates
     
     point <- nearPoints(covid_NY_TS_plot.cases, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
                         xvar="date", yvar="p_cases")
@@ -1638,10 +1674,26 @@ server <- function(input, output, session) {
         
       }
     }
+    else if(selected.county != "All Counties") {
+      yesterday <- as.Date(update_date, format = "%m-%d-%Y") - 1
+      point <- covid_NY_TS_plot.cases %>%
+        filter(County == selected.county & date == yesterday)
+      if (selected.county == "New York State"){
+        wellPanel(
+          p(HTML(paste0(selected.county,": ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+        )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(selected.county," County: ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+        )
+      }
+    }
   })
   
   output$click_info_rates_reg <- renderPrint({
     hover <- input$NY.cases.TS.rates_click.reg
+    selected.region <- input$NYRegion.rates.reg
     
     point <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
@@ -1676,7 +1728,23 @@ server <- function(input, output, session) {
           # style = style,
           p(HTML(paste0(point$Region," Region: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
         )
-        
+      }
+    }
+    else if(selected.region != "All Regions") {
+      yesterday <- as.Date(update_date, format = "%m-%d-%Y") - 1
+      point <- covid_NY_TS_plot.cases %>%
+        group_by(Region, date)  %>%
+        summarise(p_cases = mean(p_cases)) %>%
+        filter(Region == selected.region & date == yesterday)
+      if (selected.region == "New York State"){
+        wellPanel(
+          p(HTML(paste0(selected.region,": ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+        )
+      } else {
+        wellPanel(
+          # style = style,
+          p(HTML(paste0(selected.region," Region: ",round(point[1,]$p_cases)," COVID-19 cases as of ",yesterday)))
+        )
       }
     }
   })
