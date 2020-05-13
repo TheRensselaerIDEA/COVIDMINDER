@@ -1261,7 +1261,7 @@ server <- function(input, output, session) {
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+      ggtitle("New York State COVID-19 Cases per County (Mar-May 2020)")  +  
       gghighlight(County %in% selected.county & Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
@@ -1323,7 +1323,7 @@ server <- function(input, output, session) {
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cumulative Number of Cases") + 
-      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+      ggtitle("New York State COVID-19 Cases per Region (Mar-May 2020)")  +  
       gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       # TODO: Region specific labels
@@ -1448,7 +1448,7 @@ server <- function(input, output, session) {
         ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab("Cases per 100K Population") + 
-      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +
+      ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-May 2020)")  +
         gghighlight(County %in% selected.county & Region %in% selected.region, use_direct_label=FALSE) +
         geom_line(size=select.size) + 
       geom_label_repel(data=highlight_points,  aes(label=County), segment.color="black", force=10) + 
@@ -1509,7 +1509,7 @@ server <- function(input, output, session) {
         ) +
         scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
         ylab("Cases per 100K Population") + 
-        ggtitle("New York State COVID-19 Cases per 100K Population by County (Mar-Apr 2020)")  +
+        ggtitle("New York State COVID-19 Cases per 100K Population by Region (Mar-May 2020)")  +
         gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
         geom_line(size=select.size) + 
         geom_label_repel(data=highlight_points,  aes(label=Region), segment.color="black", force=10) + 
