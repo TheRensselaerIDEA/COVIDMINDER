@@ -39,32 +39,32 @@ state_covid_testing <- state_covid_testing %>%
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
 
 # Scraped values (updated every few days): see https://bit.ly/2yMyjFX
-# Checked: 11 May 2020
-#pUS.2 <- 28.1 / 1000
-pPR.2 <- 50.5 / 1000
-pBE.2 <- 50.5 / 1000
+# Checked: 13 May 2020
+#pUS.2 <- 30.0 / 1000
+pPR.2 <- 54.3 / 1000
 pSP.2 <- 52.8 / 1000
-pIT.2 <- 42.4 / 1000
-pRU.2 <- 38.6 / 1000
-pCH.2 <- 35.8 / 1000
+pBE.2 <- 51.4 / 1000
+pIT.2 <- 44.2 / 1000
+pRU.2 <- 39.8 / 1000
+pCH.2 <- 36.6 / 1000
 pDE.2 <- 32.9 / 1000
 pIR.2 <- 31.2 / 1000
-pCA.2 <- 30.1 / 1000
-pUK.2 <- 26.8 / 1000
+pCA.2 <- 30.4 / 1000
+pUK.2 <- 29.6 / 1000
 
 # for drop-down
 country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
 
 names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2*1000),"/1000)"),
-                             paste0("Belgium ("       ,pBE.2*1000,"/1000)"),
-                             paste0("Portugal ("      ,pPR.2*1000,"/1000)"),
+                                    paste0("Portugal ("      ,pPR.2*1000,"/1000)"),
+                                    paste0("Spain ("         ,pSP.2*1000,"/1000)"),
+                                    paste0("Belgium ("       ,pBE.2*1000,"/1000)"),
                              paste0("Switzerland ("   ,pCH.2*1000,"/1000)"),
                              paste0("Italy ("         ,pIT.2*1000,"/1000)"),
-                             paste0("Spain ("         ,pSP.2*1000,"/1000)"),
+                             paste0("Russia ("        ,pRU.2*1000,"/1000)"),
                              paste0("Ireland ("       ,pIR.2*1000,"/1000)"),
                              paste0("Germany ("       ,pDE.2*1000,"/1000)"),
                              paste0("Canada ("        ,pCA.2*1000,"/1000)"),
-                             paste0("Russia ("        ,pRU.2*1000,"/1000)"),
                              paste0("United Kingdom (",pUK.2*1000,"/1000)"))
 
 # Calculate state DIs based on a country's selected rate
