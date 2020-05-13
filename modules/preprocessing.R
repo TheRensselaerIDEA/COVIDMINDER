@@ -320,27 +320,6 @@ covid_NY_TS_plot.cases$diff <- ifelse(is.na(covid_NY_TS_plot.cases$diff), covid_
 covid_NY_TS_plot.cases$p_diff <- ifelse(is.na(covid_NY_TS_plot.cases$p_diff), covid_NY_TS_plot.cases$p_cases, covid_NY_TS_plot.cases$p_diff)
 
 
-  
-
-for(i in 1:nrow(covid_NY_TS_plot.cases)) {
-  county <- covid_NY_TS_plot.cases$County[i]
-  yesterday <- as.Date(covid_NY_TS_plot.cases$date[i] - 1)
-  covid_NY_TS_plot.cases$diff[i] <- covid_NY_TS_plot.cases$diff[i] - 
-    (covid_NY_TS_plot.cases %>%
-    filter(County == county & date == yesterday) %>%
-    select(cases))
-  covid_NY_TS_plot.cases$p_diff[i] <- covid_NY_TS_plot.cases$p_diff[i] - 
-    (covid_NY_TS_plot.cases %>%
-       filter(County == county & date == yesterday) %>%
-       select(p_cases))
-  if (length(covid_NY_TS_plot.cases$diff[[i]]) == 0) {
-    covid_NY_TS_plot.cases$diff[i] <- covid_NY_TS_plot.cases$cases[i]
-  }
-  if (length(covid_NY_TS_plot.cases$p_diff[[i]]) == 0) {
-    covid_NY_TS_plot.cases$p_diff[i] <- covid_NY_TS_plot.cases$p_cases[i]
-  }
-}
-
 # Legislative action 
 # Executive Orders (EO) and Total Bills
 
