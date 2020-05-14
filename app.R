@@ -666,7 +666,7 @@ server <- function(input, output, session) {
       paste0("<strong>%s</strong> State<br/>
       Testing Rate vs ", toupper(country)," DI: %.2g<br>
       Testing Rate: %.1f /1000"),
-      states$NAME, states$tests_ldi, states$tests_per_1000*1000
+      states$NAME, states$tests_ldi, states$tests_per_1000
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes, width="100%", height="100%") %>%

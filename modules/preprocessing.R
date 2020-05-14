@@ -34,6 +34,7 @@ state_covid_testing <- left_join(state_covid_testing, population, by = c('NAME')
 # TODO: This is really just the test rate, not "per 1000"
 state_covid_testing <- state_covid_testing %>% 
   mutate(tests_per_1000 = total_num_tests / Population)  # This is actual rate, not "per 1000"
+state_covid_testing$tests_per_1000 <- state_covid_testing$tests_per_1000 * 1000
 
 # Use current US rate
 pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United States"),"tests_per_1000"])
@@ -42,17 +43,17 @@ pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United 
 # Checked: 13 May 2020
 total_test_rates.df <- read_csv("data/csv/owid_glb_test_rates.csv")
 
-pUS.2 <- total_test_rates.df[total_test_rates.df$iso_code == "USA",]$total_tests_per_thousand / 1000
-pPR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "PRT",]$total_tests_per_thousand / 1000
-pSP.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ESP",]$total_tests_per_thousand / 1000
-pBE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "BEL",]$total_tests_per_thousand / 1000
-pIT.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ITA",]$total_tests_per_thousand / 1000
-pRU.2 <- total_test_rates.df[total_test_rates.df$iso_code == "RUS",]$total_tests_per_thousand / 1000
-pCH.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CHE",]$total_tests_per_thousand / 1000
-pDE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "DEU",]$total_tests_per_thousand / 1000
-pIR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "IRL",]$total_tests_per_thousand / 1000
-pCA.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CAN",]$total_tests_per_thousand / 1000
-pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests_per_thousand / 1000
+#pUS.2 <- total_test_rates.df[total_test_rates.df$iso_code == "USA",]$total_tests_per_thousand #/ 1000
+pPR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "PRT",]$total_tests_per_thousand #/ 1000
+pSP.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ESP",]$total_tests_per_thousand #/ 1000
+pBE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "BEL",]$total_tests_per_thousand #/ 1000
+pIT.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ITA",]$total_tests_per_thousand #/ 1000
+pRU.2 <- total_test_rates.df[total_test_rates.df$iso_code == "RUS",]$total_tests_per_thousand #/ 1000
+pCH.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CHE",]$total_tests_per_thousand #/ 1000
+pDE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "DEU",]$total_tests_per_thousand #/ 1000
+pIR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "IRL",]$total_tests_per_thousand #/ 1000
+pCA.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CAN",]$total_tests_per_thousand #/ 1000
+pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests_per_thousand #/ 1000
 
 #pUS.2 <- 30.0 / 1000
 #pPR.2 <- 54.3 / 1000
@@ -69,17 +70,17 @@ pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests
 # for drop-down
 country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
 
-names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2*1000),"/1000)"),
-                                    paste0("Portugal ("      ,round(pPR.2*1000),"/1000)"),
-                                    paste0("Spain ("         ,round(pSP.2*1000),"/1000)"),
-                                    paste0("Belgium ("       ,round(pBE.2*1000),"/1000)"),
-                             paste0("Switzerland ("   ,round(pCH.2*1000),"/1000)"),
-                             paste0("Italy ("         ,round(pIT.2*1000),"/1000)"),
-                             paste0("Russia ("        ,round(pRU.2*1000),"/1000)"),
-                             paste0("Ireland ("       ,round(pIR.2*1000),"/1000)"),
-                             paste0("Germany ("       ,round(pDE.2*1000),"/1000)"),
-                             paste0("Canada ("        ,round(pCA.2*1000),"/1000)"),
-                             paste0("United Kingdom (",round(pUK.2*1000),"/1000)"))
+names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2),"/1000)"),
+                                    paste0("Portugal ("      ,round(pPR.2),"/1000)"),
+                                    paste0("Spain ("         ,round(pSP.2),"/1000)"),
+                                    paste0("Belgium ("       ,round(pBE.2),"/1000)"),
+                             paste0("Switzerland ("   ,round(pCH.2),"/1000)"),
+                             paste0("Italy ("         ,round(pIT.2),"/1000)"),
+                             paste0("Russia ("        ,round(pRU.2),"/1000)"),
+                             paste0("Ireland ("       ,round(pIR.2),"/1000)"),
+                             paste0("Germany ("       ,round(pDE.2),"/1000)"),
+                             paste0("Canada ("        ,round(pCA.2),"/1000)"),
+                             paste0("United Kingdom (",round(pUK.2),"/1000)"))
 
 # Calculate state DIs based on a country's selected rate
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
