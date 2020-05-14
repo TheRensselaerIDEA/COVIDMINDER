@@ -68,7 +68,7 @@ pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests
 #pUK.2 <- 29.6 / 1000
 
 # for drop-down
-country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
+country_testing_choices <- c("us","pr","sp","be","ch","it","ru","ir","de","ca","uk")
 
 names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2),"/1000)"),
                                     paste0("Portugal ("      ,round(pPR.2),"/1000)"),
