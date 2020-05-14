@@ -307,6 +307,19 @@ covid_NY_TS_counties_long.cases <- dplyr::inner_join(covid_NY_TS_counties_long.c
 # Do it this way to be safe:
 covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")
 
+# Creates difference in cases from previous recorded date. First date is equal to case reported
+covid_NY_TS_plot.cases %>% group_by(County) %>% 
+  mutate(diff = ifelse(as.Date(date - 1) == lag(date), cases - lag(cases), cases)) -> 
+  covid_NY_TS_plot.cases
+
+covid_NY_TS_plot.cases %>% 
+  mutate(p_diff = ifelse(as.Date(date - 1) == lag(date), p_cases - lag(p_cases), p_cases)) %>%
+  ungroup() -> covid_NY_TS_plot.cases
+
+covid_NY_TS_plot.cases$diff <- ifelse(is.na(covid_NY_TS_plot.cases$diff), covid_NY_TS_plot.cases$cases, covid_NY_TS_plot.cases$diff)
+covid_NY_TS_plot.cases$p_diff <- ifelse(is.na(covid_NY_TS_plot.cases$p_diff), covid_NY_TS_plot.cases$p_cases, covid_NY_TS_plot.cases$p_diff)
+
+
 # Legislative action 
 # Executive Orders (EO) and Total Bills
 
