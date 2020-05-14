@@ -68,7 +68,7 @@ pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests
 #pUK.2 <- 29.6 / 1000
 
 # for drop-down
-country_testing_choices <- c("us","be","pr","ch","it","sp","ir","de","ca","ru","uk")
+country_testing_choices <- c("us","pr","sp","be","ch","it","ru","ir","de","ca","uk")
 
 names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2),"/1000)"),
                                     paste0("Portugal ("      ,round(pPR.2),"/1000)"),
@@ -296,6 +296,25 @@ diabetes_data_states <- diabetes_data_states[1:51,]
 
 states <- data.frame(states, "diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
 states <- data.frame(states, "pct_Adults_with_Diabetes"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
+
+### NEW: US Obesity Rates
+pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])
+
+obesity_rate_ldi <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/x)}))
+
+obesity_data_states <- data.frame(obesity_data_states, obesity_rate_ldi)
+
+obesity_data_states <- diabetes_data_states %>% 
+  mutate(obesity_rate_ldi = replace(obesity_rate_ldi, obesity_rate_ldi < -5, -5)) 
+
+# RE-order to match states ordering
+obesity_data_states <- obesity_data_states[match(states$NAME, obesity_data_states$State),]
+
+# Append the new column to states
+obesity_data_states <- obesity_data_states[1:51,]
+
+states <- data.frame(states, "obesity_rate_ldi"=obesity_data_states$obesity_rate_ldi) # Append to states
+states <- data.frame(states, "pct_Adults_with_Obesity"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
 
 
 ## Needed for NY TS plot
