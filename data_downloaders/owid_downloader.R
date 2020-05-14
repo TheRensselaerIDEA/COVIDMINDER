@@ -13,10 +13,28 @@ download.file(owidURL, paste0("data/csv/", "owid_testing_raw.csv"))
 # Import raw into R
 todays_raw_owid_data <- read_csv(paste0("data/csv/", "owid_testing_raw.csv"))
 
+
+
+# Check rates against our list (30 Apr)
+check_iso_codes <- c("PRT","ITA","RUS","USA","GBR","CAN","CHE")
+check_iso_codes2 <- c("USA","BEL","PRT","CHE","ITA","ESP","IRL","DEU","CAN","RUS","GBR")
+
+# Grab latest reported total test rate for each country - Jose
+owid_data.total.test.rate <-todays_raw_owid_data %>% 
+  filter(!is.na(total_tests_per_thousand) & iso_code %in% check_iso_codes2) %>%
+  select(iso_code, location, date, total_tests_per_thousand) %>%
+  group_by(iso_code) %>%
+  filter(date == max(date)) %>%
+  top_n(n=1)
+
+# write out new dataframe to file system 
+write_csv(owid_data.total.test.rate,"data/csv/owid_glb_test_rates.csv")
+rm(owid_data.total.test.rate)
+
 # Check in on Germany; WHY no testing rate?!?!
-todays_raw_owid_data %>% filter(iso_code == "DEU") %>%
-  select(iso_code, location, date, total_tests_per_thousand, new_tests_per_thousand) %>%
-  slice(which.max(as.Date(date, '%Y-%m-%d'))) 
+#todays_raw_owid_data %>% filter(iso_code == "DEU") %>%
+#  select(iso_code, location, date, total_tests_per_thousand, new_tests_per_thousand) %>%
+#  slice(which.max(as.Date(date, '%Y-%m-%d'))) 
   
 # We only care about total tests and new tests
 todays_raw_owid_data <- todays_raw_owid_data %>%
@@ -25,9 +43,6 @@ todays_raw_owid_data <- todays_raw_owid_data %>%
   group_by(iso_code) %>%
   slice(which.max(as.Date(date, '%Y-%m-%d'))) %>%
   arrange(desc(total_tests_per_thousand))
-
-# Check rates against our list (30 Apr)
-check_iso_codes <- c("PRT","ITA","RUS","USA","GBR","CAN","CHE")
 
 check_raw_owid_data <- todays_raw_owid_data %>%
   filter(iso_code %in% check_iso_codes)
