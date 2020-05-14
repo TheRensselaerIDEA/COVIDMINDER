@@ -304,7 +304,7 @@ obesity_rate_ldi <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, F
 
 obesity_data_states <- data.frame(obesity_data_states, obesity_rate_ldi)
 
-obesity_data_states <- diabetes_data_states %>% 
+obesity_data_states <- obesity_data_states %>% 
   mutate(obesity_rate_ldi = replace(obesity_rate_ldi, obesity_rate_ldi < -5, -5)) 
 
 # RE-order to match states ordering
