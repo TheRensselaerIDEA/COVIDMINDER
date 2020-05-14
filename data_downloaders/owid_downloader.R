@@ -29,7 +29,6 @@ owid_data.total.test.rate <-todays_raw_owid_data %>%
 
 # write out new dataframe to file system 
 write_csv(owid_data.total.test.rate,"data/csv/owid_glb_test_rates.csv")
-rm(owid_data.total.test.rate)
 
 # Check in on Germany; WHY no testing rate?!?!
 #todays_raw_owid_data %>% filter(iso_code == "DEU") %>%
