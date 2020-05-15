@@ -1,12 +1,12 @@
 iso_code,location,date,total_tests_per_thousand
-BEL,Belgium,2020-05-10,42.095
-CAN,Canada,2020-05-12,30.356
-CHE,Switzerland,2020-05-11,36.611
-DEU,Germany,2020-05-03,32.891
+BEL,Belgium,2020-05-12,43.892
+CAN,Canada,2020-05-14,31.074
+CHE,Switzerland,2020-05-13,37.917
+DEU,Germany,2020-05-10,37.57
 ESP,Spain,2020-05-07,34.76
-GBR,United Kingdom,2020-05-12,21.514
+GBR,United Kingdom,2020-05-14,23.479
 IRL,Ireland,2020-05-12,52.414
-ITA,Italy,2020-05-12,44.221
-PRT,Portugal,2020-05-10,54.317
-RUS,Russia,2020-05-12,39.781
-USA,United States,2020-05-11,28.243
+ITA,Italy,2020-05-14,46.434
+PRT,Portugal,2020-05-13,57.111
+RUS,Russia,2020-05-14,42.403
+USA,United States,2020-05-13,30.135
