@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "05-14-2020" # makes it easy to change all occurances when we update
+update_date <- "05-15-2020" # makes it easy to change all occurances when we update
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -222,11 +222,11 @@ ui <-
                            tags$div(
                            selectInput(inputId = "NYRegion",
                                        label = "NY Regions",
-                                       choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
-                                       selected = 1),
+                                       choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                       selected = "All Regions"),
                            selectInput(inputId = "NYCounty",
                                        label = "NY Counties",
-                                       choices = cbind(c("All Counties"), sort(unique(covid_NY_TS_plot.cases$County))),
+                                       choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
                                        selected = 1)
                            ),
                            tags$div(class = "NY_case_plots",
@@ -265,8 +265,8 @@ ui <-
                  mainPanel(id = "mainpanel_ny_CoT_region",
                            selectInput(inputId = "NYRegion2",
                                        label = "NY Regions",
-                                       choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
-                                       selected = 1),
+                                       choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                       selected = "All Regions"),
                            tags$div(class = "NY_case_plots",
                                     plotOutput(outputId = "NY.cases.TS.region", height="85%", 
                                                click = clickOpts(id ="NY.cases.TS_click_reg"),
@@ -306,11 +306,11 @@ ui <-
                            tags$div(
                            selectInput(inputId = "NYRegion.rates",
                                        label = "NY Regions",
-                                       choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
-                                       selected = 1),
+                                       choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                       selected = "All Regions"),
                            selectInput(inputId = "NYCounty.rates",
                                        label = "NY Counties",
-                                       choices = cbind(c("All Counties"), sort(unique(covid_NY_TS_plot.cases$County))),
+                                       choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
                                        selected = 1)
                            ),
                            tags$div(class = "NY_case_plots",
@@ -351,8 +351,8 @@ ui <-
                  mainPanel(id = "mainpanel_ny_CoT_rates_regions",
                              selectInput(inputId = "NYRegion.rates.reg",
                                          label = "NY Regions",
-                                         choices = cbind(c("All Regions"), sort(unique(covid_NY_TS_plot.cases$Region))),
-                                         selected = 1),
+                                         choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                         selected = "All Regions"),
                            tags$div(class = "NY_case_plots",
                                     plotOutput(outputId = "NY.cases.TS.rates.reg", height="85%",
                                                click = clickOpts(id ="NY.cases.TS.rates_click.reg"),
