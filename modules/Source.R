@@ -10,7 +10,9 @@
 # - leaflet.extras
 # - shiny
 # - tidyverse
-dependencies <- c("shiny", "dplyr", "gghighlight", "ggrepel", "geojsonio", "htmltools", "leaflet", "leaflet.extras", "tidyverse")
+# - zoo
+
+dependencies <- c("shiny", "dplyr", "gghighlight", "ggrepel", "geojsonio", "htmltools", "leaflet", "leaflet.extras", "tidyverse", "zoo")
 
 # Check and install packages not yet available
 install.dependencies <- dependencies[!(dependencies %in% installed.packages()[, "Package"])]
@@ -29,4 +31,5 @@ library(leaflet.extras)
 library(shiny)
 library(tidyverse)
 library(lubridate)
+library(zoo)
 #library(rsconnect) # required by JSE for pre-release deployment on shinyapps.io 
