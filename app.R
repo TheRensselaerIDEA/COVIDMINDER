@@ -523,13 +523,13 @@ ui <-
                     <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
-                               <a href='https://bit.ly/2yMyjFX'>Statista.com (05/12/2020)</a>
+                               <a href='https://ourworldindata.org/coronavirus'>Our World in Data</a>
                                </div>")),
                                HTML(footer_text),
                                width=4),
                              
                              mainPanel(id = "mainpanel_us_test",
-                               tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country (",update_date,")")),
+                               tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country")),
                                HTML("<br><br>"),
                                tags$div(class="select-bar",
                                selectInput(inputId = "country",
