@@ -1252,7 +1252,7 @@ server <- function(input, output, session) {
       geom_line(size=1) +
       scale_y_continuous(
         trans = "log10",
-        breaks = c(10,100,500,1000,5000,10000, 50000)
+        breaks = c(10,25,100,250,500,1000,2500,5000,10000)
       ) +
       scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
       ylab(y_lab) + 
@@ -1744,12 +1744,12 @@ server <- function(input, output, session) {
       avg_window <- as.Date(point$date, format = "%m-%d-%Y") - 2
       if (point$Region == "New York State"){
         wellPanel(
-          p(HTML(paste0(point$Region,": ",round(point$ma),per," avg new COVID-19 cases from ",avg_window, " to ", point$date)))
+          p(HTML(paste0(point$Region,": ",round(point$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",round(point$ma),per," avg new COVID-19 cases from ",avg_window, " to ", point$date)))
+          p(HTML(paste0(point$Region," Region: ",round(point$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
         )
         
       }
@@ -1761,12 +1761,12 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",round(point[1,]$ma),per," avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          p(HTML(paste0(selected.region,": ",round(point[1,]$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",round(point[1,]$ma),per," avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          p(HTML(paste0(selected.region," Region: ",round(point[1,]$ma),per," daily avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
         )
       }
     }
