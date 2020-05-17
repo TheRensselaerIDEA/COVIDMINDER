@@ -38,9 +38,8 @@ url1 <- url2 <- ""
 #### UI Code ####
 ui <- 
   tagList(
-    tags$head(
-      tags$title("COVIDMINDER: Where you live matters")
-    ),
+    tags$head(tags$title("COVIDMINDER: Where you live matters")),
+    tags$head(includeHTML("www/analytics.html")),
     navbarPage(
       id="tab",
       theme="style.css",
