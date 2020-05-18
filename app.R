@@ -20,8 +20,9 @@ footer_text <- "<br><div><b><span style='font-size:22px'>COVIDMINDER</span> anal
                                 <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;margin-right:5px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
-                                <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-                                of Accessibility</a></i></div>"
+                                "
+                                #<i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+                                #of Accessibility</a></i></div>"
 
 whatisit_text_abt <-"<div style='line-height:1.3;'><b><span style='font-size:22px'>COVIDMINDER</span></b> reveals the regional disparities 
                                 in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
@@ -1695,7 +1696,7 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
 
     # actual tooltip created as wellPanel
@@ -1769,7 +1770,7 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
     
     # actual tooltip created as wellPanel

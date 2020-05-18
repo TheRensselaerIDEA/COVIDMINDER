@@ -110,9 +110,7 @@
 
 @media screen and (min-width:1085px){
   /*
-  .title-text {
-    height: 70px;
-  }
+  
   */
   body {
     font-size: 15px;
@@ -122,6 +120,9 @@
 }
 
 @media screen and (max-width:925px){
+  .title-text {
+    height: 50px;
+  }
   .NY_case_plots {
   height: Calc(90% - 140px);
 }
