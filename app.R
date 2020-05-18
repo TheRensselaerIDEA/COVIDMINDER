@@ -11,7 +11,7 @@ moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of rep
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
+footer_text <- "<br><div><b><span style='font-size:22px'>COVIDMINDER</span> analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
@@ -23,10 +23,10 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
-#whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities 
-#                                in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
-#                                effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-#                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
+whatisit_text_abt <-"<div style='line-height:1.3;'><b><span style='font-size:22px'>COVIDMINDER</span></b> reveals the regional disparities 
+                                in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
+                                effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
+                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div>"
 
 whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
 
@@ -78,7 +78,7 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
                     ")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  mainPanel(
                    id = "mainpanel_us_mort",
@@ -119,7 +119,7 @@ ui <-
                           <strong>Date: </strong>",update_date,"<br><br>
                           <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
                           </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  mainPanel(
                    id = "mainpanel_us_mort_race",
@@ -163,7 +163,7 @@ ui <-
                                <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_mort",
@@ -195,7 +195,7 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_cases",
@@ -219,7 +219,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                              HTML(footer_text),
+                              #HTML(footer_text),
                               width = 4),
                  mainPanel(id = "mainpanel_ny_new_case",
                            tags$div(
@@ -263,7 +263,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT",
@@ -308,7 +308,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                              HTML(footer_text),
+                              #HTML(footer_text),
                               width = 4),
                  mainPanel(id = "mainpanel_ny_CoT_region",
                            selectInput(inputId = "NYRegion2",
@@ -347,7 +347,7 @@ ui <-
                          <strong>Date: </strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates",
@@ -393,7 +393,7 @@ ui <-
                          <strong>Date: </strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates_regions",
@@ -451,7 +451,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_race", 
@@ -492,7 +492,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ct_race", 
@@ -531,7 +531,7 @@ ui <-
                                <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
                                <a href='https://ourworldindata.org/coronavirus'>Our World in Data</a>
                                </div>")),
-                               HTML(footer_text),
+                               #HTML(footer_text),
                                width=4),
                              
                              mainPanel(id = "mainpanel_us_test",
@@ -572,7 +572,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_us_hosp",
@@ -608,7 +608,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
                           </div>"),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_us_db",
@@ -679,7 +679,7 @@ ui <-
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
                                </div>"),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_det",
@@ -687,13 +687,25 @@ ui <-
                            leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
                )
       )
+      ),
+      navbarMenu(menuName ="about_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>About</b><br>Project Information</div>"),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
+               value="about",
+               fluidRow(
+                 column(8,offset=2,class="about",
+                        HTML(whatisit_text_abt),
+                        HTML(footer_text))
+               )
+               )
       )
     ), 
     # Footer
     hr(),
     fluidRow(
       column(12, class = "footer",
-             HTML("<a href='#about'>About</a>&emsp;"),
+             HTML("<a href='?tab=about'>About</a>&emsp;"),
              HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
              HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
              HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
