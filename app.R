@@ -11,7 +11,7 @@ moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of rep
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and visualizations</b> by students and staff
+footer_text <- "<br><div><b><span style='font-size:22px'>COVIDMINDER</span> analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
@@ -20,13 +20,17 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;margin-right:5px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
-                                <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
-                                of Accessibility</a></i></div>"
+                                "
+                                #<i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
+                                #of Accessibility</a></i></div>"
 
-whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities 
+whatisit_text_abt <-"<div style='line-height:1.3;'><b><span style='font-size:22px'>COVIDMINDER</span></b> reveals the regional disparities 
                                 in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
                                 effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
+                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div>"
+
+whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
+
 
 comments_link <-"<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
@@ -46,6 +50,7 @@ ui <-
       id="tab",
       theme="style.css",
       title=tags$div(class="title-text",
+                     title = whatisit_text,
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
       navbarMenu(menuName = "outcome_maps_menu",
@@ -56,7 +61,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                    Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    when compared to the average USA rate? </div><br>
@@ -74,7 +79,7 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
                     ")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  mainPanel(
                    id = "mainpanel_us_mort",
@@ -89,7 +94,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("
                           <div style='font-weight:bold;line-height:1.3;'>
                           Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
@@ -115,7 +120,7 @@ ui <-
                           <strong>Date: </strong>",update_date,"<br><br>
                           <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
                           </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  mainPanel(
                    id = "mainpanel_us_mort_race",
@@ -139,7 +144,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_mort",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                                Outcome: What are the disparities between counties of New York
                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
@@ -159,7 +164,7 @@ ui <-
                                <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_mort",
@@ -173,7 +178,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_cases",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                                Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                cases per 100k population when compared to the average United States 
@@ -191,7 +196,7 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_cases",
@@ -206,7 +211,7 @@ ui <-
                value="outcome_ny_new_cases",
                sidebarLayout( 
                  sidebarPanel(id = "sidebar_ny_new_case",
-                              HTML(whatisit_text),
+                              #HTML(whatisit_text),
                               HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have new COVID-19 Cases been mitigated in New York State over time?</div> <br>"),
                               img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -215,7 +220,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                              HTML(footer_text),
+                              #HTML(footer_text),
                               width = 4),
                  mainPanel(id = "mainpanel_ny_new_case",
                            tags$div(
@@ -250,7 +255,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -259,7 +264,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT",
@@ -295,7 +300,7 @@ ui <-
                value="outcome_ny_cases_time_region",
                sidebarLayout(
                  sidebarPanel(id = "sidebar_ny_CoT_region",
-                              HTML(whatisit_text),
+                              #HTML(whatisit_text),
                               HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                               img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -304,7 +309,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                              HTML(footer_text),
+                              #HTML(footer_text),
                               width = 4),
                  mainPanel(id = "mainpanel_ny_CoT_region",
                            selectInput(inputId = "NYRegion2",
@@ -334,7 +339,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT_rates",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -343,7 +348,7 @@ ui <-
                          <strong>Date: </strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates",
@@ -380,7 +385,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT_rates_regions",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -389,7 +394,7 @@ ui <-
                          <strong>Date: </strong>",update_date,"<br><br>
                          <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                          </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_CoT_rates_regions",
@@ -420,7 +425,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: Do minorities make up a higher percentage of COVID-19 deaths when compared to 
                         their population percentage? Do New York City and the rest of New York State have 
@@ -447,7 +452,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_race", 
@@ -462,7 +467,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ct_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
                         their population percentage? </div><br>
@@ -488,7 +493,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ct_race", 
@@ -505,7 +510,7 @@ ui <-
                sidebarLayout(fluid=FALSE,
                              sidebarPanel(
                                id = "sidebar_us_test",
-                               HTML(whatisit_text),
+                               #HTML(whatisit_text),
                                HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between US states  in  their rates of COVID-19 testing per 1k population 
                               when compared to the average rates from other countries? When compared with the current average
@@ -527,7 +532,7 @@ ui <-
                                <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
                                <a href='https://ourworldindata.org/coronavirus'>Our World in Data</a>
                                </div>")),
-                               HTML(footer_text),
+                               #HTML(footer_text),
                                width=4),
                              
                              mainPanel(id = "mainpanel_us_test",
@@ -547,7 +552,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_hosp",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                      Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population when compared to the rate in Italy? </div><br>
@@ -568,7 +573,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
                                </div>")),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_us_hosp",
@@ -584,7 +589,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_db",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                     Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state when compared to the average United States rate? </div><br>
@@ -604,7 +609,7 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
                           </div>"),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_us_db",
@@ -653,7 +658,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_det",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
@@ -675,7 +680,7 @@ ui <-
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
                                </div>"),
-                   HTML(footer_text),
+                   #HTML(footer_text),
                    width=4),
                  
                  mainPanel(id = "mainpanel_ny_det",
@@ -683,8 +688,32 @@ ui <-
                            leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
                )
       )
+      ),
+      navbarMenu(menuName ="about_menu",
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>About</b><br>Project Information</div>"),
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
+               value="about",
+               fluidRow(
+                 column(8,offset=2,class="about",
+                        HTML(whatisit_text_abt),
+                        HTML(footer_text))
+               )
+               )
       )
     ), 
+    # Footer
+    hr(),
+    fluidRow(
+      column(12, class = "footer",
+             HTML("<a href='?tab=about'>About</a>&emsp;"),
+             HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
+             HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
+             HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
+             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
+                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>")
+             )
+    ),
     tags$script(src = "style.js")
   )
 #### Server Code ####
@@ -1667,7 +1696,7 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
 
     # actual tooltip created as wellPanel
@@ -1741,7 +1770,7 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
     
     # actual tooltip created as wellPanel

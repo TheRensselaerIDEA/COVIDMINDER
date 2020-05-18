@@ -22,12 +22,12 @@ var ids = {
 
 function resize_plot() {
   for (var key in ids) {
-  var sidebar0 = document.getElementById("sidebar_us_mort");
-  var sidebar1 = document.getElementById(key);
-  if(sidebar1) {
-    var positionInfo0 = sidebar0.getBoundingClientRect();
-    var positionInfo1 = sidebar1.getBoundingClientRect();
-    var height = Math.max(positionInfo0.height,positionInfo1.height);
+  //var sidebar0 = document.getElementById("sidebar_us_mort");
+  var sidebar = document.getElementById(key);
+  if(sidebar) {
+    //var positionInfo0 = sidebar0.getBoundingClientRect();
+    var positionInfo = sidebar.getBoundingClientRect();
+    var height = Math.max(600,positionInfo.height);
     $(ids[key]).height(height);
   }
   }
