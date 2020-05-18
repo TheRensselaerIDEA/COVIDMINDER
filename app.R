@@ -23,10 +23,13 @@ footer_text <- "<br><div style='font-size: 80%;'><b>COVIDMINDER analysis and vis
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 of Accessibility</a></i></div>"
 
-whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities 
-                                in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
-                                effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
+#whatisit_text <-"<div style='font-size:80%;line-height:1.3;'><strong>COVIDMINDER</strong> reveals the regional disparities 
+#                                in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
+#                                effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
+#                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div><br>"
+
+whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
+
 
 comments_link <-"<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
@@ -46,6 +49,7 @@ ui <-
       id="tab",
       theme="style.css",
       title=tags$div(class="title-text",
+                     title = whatisit_text,
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
       navbarMenu(menuName = "outcome_maps_menu",
@@ -56,7 +60,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                    Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    when compared to the average USA rate? </div><br>
@@ -89,7 +93,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_mort_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("
                           <div style='font-weight:bold;line-height:1.3;'>
                           Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
@@ -139,7 +143,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_mort",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                                Outcome: What are the disparities between counties of New York
                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
@@ -173,7 +177,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_cases",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                                Outcome: What are the disparities between New York counties in the rate of COVID-19 
                                cases per 100k population when compared to the average United States 
@@ -206,7 +210,7 @@ ui <-
                value="outcome_ny_new_cases",
                sidebarLayout( 
                  sidebarPanel(id = "sidebar_ny_new_case",
-                              HTML(whatisit_text),
+                              #HTML(whatisit_text),
                               HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have new COVID-19 Cases been mitigated in New York State over time?</div> <br>"),
                               img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -250,7 +254,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -295,7 +299,7 @@ ui <-
                value="outcome_ny_cases_time_region",
                sidebarLayout(
                  sidebarPanel(id = "sidebar_ny_CoT_region",
-                              HTML(whatisit_text),
+                              #HTML(whatisit_text),
                               HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                               img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -334,7 +338,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT_rates",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -380,7 +384,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_CoT_rates_regions",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                       Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -420,7 +424,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: Do minorities make up a higher percentage of COVID-19 deaths when compared to 
                         their population percentage? Do New York City and the rest of New York State have 
@@ -462,7 +466,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ct_race",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                         Outcome: Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
                         their population percentage? </div><br>
@@ -505,7 +509,7 @@ ui <-
                sidebarLayout(fluid=FALSE,
                              sidebarPanel(
                                id = "sidebar_us_test",
-                               HTML(whatisit_text),
+                               #HTML(whatisit_text),
                                HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                               Mediation: What are the disparities between US states  in  their rates of COVID-19 testing per 1k population 
                               when compared to the average rates from other countries? When compared with the current average
@@ -547,7 +551,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_hosp",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
                      Mediation: What are the disparities between states  in  the rate of hospital beds 
                                 per 100k population when compared to the rate in Italy? </div><br>
@@ -584,7 +588,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_db",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                     Determinant: What are the disparities between states in rate of diabetes patients 
                                 per 100k population per state when compared to the average United States rate? </div><br>
@@ -653,7 +657,7 @@ ui <-
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_ny_det",
-                   HTML(whatisit_text),
+                   #HTML(whatisit_text),
                    HTML("<div style='font-weight:bold;line-height:1.3;'>
                      Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
@@ -693,7 +697,7 @@ ui <-
              HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
              HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
              HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
-             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='width:30px;' >
+             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
                   <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>")
              )
     ),
