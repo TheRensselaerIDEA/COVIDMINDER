@@ -685,6 +685,18 @@ ui <-
       )
       )
     ), 
+    # Footer
+    hr(),
+    fluidRow(
+      column(12, class = "footer",
+             HTML("<a href='#about'>About</a>&emsp;"),
+             HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
+             HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
+             HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
+             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='width:30px;' >
+                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>")
+             )
+    ),
     tags$script(src = "style.js")
   )
 #### Server Code ####

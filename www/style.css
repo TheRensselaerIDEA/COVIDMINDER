@@ -39,11 +39,13 @@
 }
 
 .footer {
-  margin-left:0;
-  margin-right:0;
-  margin-bottom:0;
-  font-size:12px;
-  color:black;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+
+.footer a{
+  color: #777;
 }
 
 .navbar {
