@@ -5,6 +5,8 @@ source("modules/preprocessing.R")
 
 update_date <- "05-18-2020" # makes it easy to change all occurances when we update
 
+moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
+                       # (i.e. a 20 day window if Catskill Region has 19 report dates.)
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
@@ -200,7 +202,7 @@ ui <-
       navbarMenu(menuName = "outcome_plots_menu",
                  HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 NEW Cases over Time</div>")),
+                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Trends in new COVID-19 Cases</div>")),
                value="outcome_ny_new_cases",
                sidebarLayout( 
                  sidebarPanel(id = "sidebar_ny_new_case",
@@ -1206,17 +1208,19 @@ server <- function(input, output, session) {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(diff = sum(diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(diff, 3, align = "right")))
-      y_lab <- "New Cases"
-      gg_title <- "New York State NEW reported COVID-19 cases"
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+      y_lab <- paste0("New Cases (",moving.avg.window," day Average)")
+      gg_title <- paste0("New York State New COVID-19 Case Trends (",moving.avg.window," day Average)")
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(p_diff = sum(p_diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(p_diff, 3, align = "right")))
-      y_lab <- "New cases per 100k"
-      gg_title <- "New York State NEW COVID-19 cases per 100k"
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+      y_lab <- paste0("New Cases (",moving.avg.window," day Average) per 100k")
+      gg_title <- paste0("New York State New COVID-19 Case Trends per 100k (",moving.avg.window," day Average)")
     }
     
     highlight_points <- covid_NY_TS_plot.ma %>%
@@ -1671,12 +1675,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County,": ",point$cases," COVID-19 cases as of ",point$date)))
+        p(HTML(paste0(point$County,": ",format(point$cases,big.mark = ",")," COVID-19 cases as of ",point$date)))
       )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",point$cases," COVID-19 cases as of ",point$date)))
+          p(HTML(paste0(point$County," County: ",format(point$cases,big.mark = ",")," COVID-19 cases as of ",point$date)))
         )
         
       }
@@ -1687,12 +1691,12 @@ server <- function(input, output, session) {
         filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.county,": ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.county,": ",format(point[1,]$cases,big.mark = ",")," COVID-19 cases as of ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.county," County: ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.county," County: ",format(point[1,]$cases,big.mark = ",")," COVID-19 cases as of ",yesterday)))
         )
         
       }
@@ -1708,14 +1712,16 @@ server <- function(input, output, session) {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(diff = sum(diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       per <- ""
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(p_diff = sum(p_diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(p_diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       per <- "/100k "
     }
     
@@ -1740,32 +1746,32 @@ server <- function(input, output, session) {
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
-      avg_window <- as.Date(point$date, format = "%m-%d-%Y") - 2
+      avg_window <- as.Date(point$date, format = "%m-%d-%Y") - moving.avg.window + 1
       if (point$Region == "New York State"){
         wellPanel(
-          p(HTML(paste0(point$Region,": ",round(point$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          p(HTML(paste0(point$Region,": ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",round(point$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          p(HTML(paste0(point$Region," Region: ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
         )
         
       }
     }
     else if(selected.region != "All Regions") {
       yesterday <- as.Date(update_date, format = "%m-%d-%Y") - 1
-      avg_window <- as.Date(yesterday, format = "%m-%d-%Y") - 2
+      avg_window <- as.Date(yesterday, format = "%m-%d-%Y") - moving.avg.window + 1
       point <- covid_NY_TS_plot.ma %>%
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",round(point[1,]$ma),per," avg daily new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          p(HTML(paste0(selected.region,": ",format(round(point[1,]$ma), big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",round(point[1,]$ma),per," daily avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$ma), big.mark = ","),per," daily avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
         )
       }
     }
@@ -1801,12 +1807,12 @@ server <- function(input, output, session) {
       if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region,": ",point$cases," COVID-19 cases as of ",point$date)))
+          p(HTML(paste0(point$Region,": ",format(point$cases,big.mark = ",")," COVID-19 cases as of ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",point$cases," COVID-19 cases as of ",point$date)))
+          p(HTML(paste0(point$Region," Region: ",format(point$cases,big.mark = ",")," COVID-19 cases as of ",point$date)))
         )
         
       }
@@ -1819,12 +1825,12 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.region,": ",format(point[1,]$cases,big.mark = ",")," COVID-19 cases as of ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",point[1,]$cases," COVID-19 cases as of ",yesterday)))
+          p(HTML(paste0(selected.region," Region: ",format(point[1,]$cases,big.mark = ",")," COVID-19 cases as of ",yesterday)))
         )
       }
     }
@@ -1857,12 +1863,12 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$County,": ",format(round(point$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$County," County: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$County," County: ",format(round(point$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",point$date)))
         )
         
       }
@@ -1873,12 +1879,12 @@ server <- function(input, output, session) {
         filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.county,": ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
+          p(HTML(paste0(selected.county,": ",format(round(point[1,]$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.county," County: ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
+          p(HTML(paste0(selected.county," County: ",format(round(point[1,]$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",yesterday)))
         )
       }
     }
@@ -1914,12 +1920,12 @@ server <- function(input, output, session) {
       if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region,": ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$Region,": ",format(round(point$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",point$date)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",round(point$p_cases)," COVID-19 cases per 100K on ",point$date)))
+          p(HTML(paste0(point$Region," Region: ",format(round(point$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",point$date)))
         )
       }
     }
@@ -1931,12 +1937,12 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
+          p(HTML(paste0(selected.region,": ",format(round(point[1,]$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",round(point[1,]$p_cases)," COVID-19 cases per 100K on ",yesterday)))
+          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$p_cases),big.mark = ",")," COVID-19 cases per 100K on ",yesterday)))
         )
       }
     }
