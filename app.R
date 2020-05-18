@@ -1211,7 +1211,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)
       y_lab <- paste0("New Cases (",moving.avg.window," day Average)")
-      gg_title <- "New York State New COVID-19 Case Trends"
+      gg_title <- paste0("New York State New COVID-19 Case Trends (",moving.avg.window," day Average)")
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
@@ -1220,7 +1220,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)
       y_lab <- paste0("New Cases (",moving.avg.window," day Average) per 100k")
-      gg_title <- "New York State New COVID-19 Case Trends per 100k"
+      gg_title <- paste0("New York State New COVID-19 Case Trends per 100k (",moving.avg.window," day Average)")
     }
     
     highlight_points <- covid_NY_TS_plot.ma %>%
