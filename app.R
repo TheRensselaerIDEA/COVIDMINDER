@@ -5,6 +5,8 @@ source("modules/preprocessing.R")
 
 update_date <- "05-18-2020" # makes it easy to change all occurances when we update
 
+moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
+                       # (i.e. a 20 day window if Catskill Region has 19 report dates.)
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
@@ -1206,7 +1208,8 @@ server <- function(input, output, session) {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(diff = sum(diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       y_lab <- "New Cases"
       gg_title <- "New York State NEW reported COVID-19 cases"
     }
@@ -1214,7 +1217,8 @@ server <- function(input, output, session) {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(p_diff = sum(p_diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(p_diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       y_lab <- "New cases per 100k"
       gg_title <- "New York State NEW COVID-19 cases per 100k"
     }
@@ -1708,14 +1712,16 @@ server <- function(input, output, session) {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(diff = sum(diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       per <- ""
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
       group_by(Region, date) %>%
       summarise(p_diff = sum(p_diff)) %>%
-      mutate(ma = c(NA, NA, zoo::rollmean(p_diff, 3, align = "right")))
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
       per <- "/100k "
     }
     
