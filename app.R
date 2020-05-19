@@ -207,7 +207,7 @@ ui <-
       navbarMenu(menuName = "outcome_plots_menu",
                  HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Trends in new COVID-19 Cases</div>")),
+                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
                value="outcome_ny_new_cases",
                sidebarLayout( 
                  sidebarPanel(id = "sidebar_ny_new_case",
@@ -250,7 +250,7 @@ ui <-
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time</div>")),
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
                value="outcome_ny_cases_time",
                sidebarLayout(
                  sidebarPanel(
