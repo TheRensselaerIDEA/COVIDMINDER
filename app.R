@@ -698,7 +698,7 @@ ui <-
       )
       ),
       navbarMenu(menuName ="about_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>About</b><br>Project Information</div>"),
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
                value="about",
