@@ -103,15 +103,15 @@
   z-index: 999;
 }
 
-#rate {
+.shiny-options-group {
   padding-left:10px;
 }
 
+.shiny-input-container:not(.shiny-input-container-inline) {
+    width: 200px;
+}
 
 @media screen and (min-width:1085px){
-  /*
-  
-  */
   body {
     font-size: 15px;
     max-width: 1280px;
