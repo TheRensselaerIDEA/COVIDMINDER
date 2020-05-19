@@ -671,7 +671,7 @@ ui <-
                      Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
                                 States rate?</div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
+                                <div style='font-size:90%;line-height:1.3em;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in a county  is<br>
@@ -711,9 +711,9 @@ ui <-
       )
     ), 
     # Footer
-    hr(),
     fluidRow(
       column(12, class = "footer",
+             hr(),
              HTML("<a href='?tab=about'>About</a>&emsp;"),
              HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
              HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
