@@ -667,6 +667,11 @@ ui <-
                  
                  mainPanel(id = "mainpanel_us_ob",
                            tags$h4(class="map-title", "US Obesity Rate Disparities by State Compared to Average US Rate"),
+                           tags$div(class="select-bar",
+                                    selectInput(inputId = "country2",
+                                                label = NULL,
+                                                choices = country_obesity_choices,
+                                                selected = "de")),
                            leafletOutput(outputId = "map.obesity", height="100%"), width=8)
                )
       ),
@@ -881,21 +886,30 @@ server <- function(input, output, session) {
   })
   
   output$map.obesity <- renderLeaflet({
+    country <- input$country2 # selected country
+    
+    # modify states to have selected columns for our plot
+    obesity_ldi <- states %>% 
+      select(starts_with("obesity_ldi")) %>%
+      select(ends_with(country))
+    
+    states <- data.frame(states, "obesity_ldi"=unlist(obesity_ldi)) # Append to states
+    
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$obesity_rate_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$obesity_ldi, bins = bins, reverse=FALSE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
       Obesity Rate DI: %.2g<br/>
-      Obesity Rate: %.1f per 100k",
-      states$NAME, states$obesity_rate_ldi, states$pct_Adults_with_Obesity*1000
+      Obesity Rate: %.1f %%",
+      states$NAME, states$obesity_ldi, states$pct_Adults_with_Obesity
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
-        fillColor = ~pal2(states$obesity_rate_ldi),
+        fillColor = ~pal2(states$obesity_ldi),
         weight = 1,
         opacity = 1,
         color = "#330000",
@@ -913,7 +927,7 @@ server <- function(input, output, session) {
           textsize = "15px",
           direction = "auto")) %>% 
       addLegend(pal = pal2, 
-                values = ~states$obesity_rate_ldi, 
+                values = ~states$obesity_ldi, 
                 opacity = 0.7, title = "Disparity Index<br/>US Obesity Rate",
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
