@@ -21,9 +21,12 @@ check_iso_codes2 <- c("USA","BEL","PRT","CHE","ITA","ESP","IRL","DEU","CAN","RUS
 
 # Grab latest reported total test rate for each country - Jose
 owid_data.total.test.rate <-todays_raw_owid_data %>% 
-  filter(!is.na(total_tests_per_thousand) & iso_code %in% check_iso_codes2) %>%
-  select(iso_code, location, date, total_tests_per_thousand) %>%
+  #filter(!is.na(total_tests_per_thousand) & iso_code %in% check_iso_codes2) %>%
+  filter(!is.na(total_tests) & iso_code %in% check_iso_codes2) %>%
+  #select(iso_code, location, date, total_tests_per_thousand) %>%
+  select(iso_code, location, date, total_tests, population) %>%
   group_by(iso_code) %>%
+  mutate(total_tests_per_thousand = total_tests/population * 1000) %>%
   filter(date == max(date)) %>%
   top_n(n=1)
 
