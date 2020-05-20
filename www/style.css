@@ -1,6 +1,6 @@
 /* Page styles */
 .container-fluid {
-  padding: 0 5px;
+  padding: 5px;
 }
 
 /* Navbar styles */
@@ -9,13 +9,23 @@
   margin: 0;
 }
 
-.logo {
-  height: 100%;
-  padding-left: 15px;
+.navbar-default {
+  background-color: white;
+  border-color: white;
+  padding: 5px 10px;
 }
 
-.ny-map {
-  height: 20%;
+.navbar-nav .li a {
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.active {
+  color:black;
+}
+
+.logo {
+  height: 100%;
   padding-left: 15px;
 }
 
@@ -26,6 +36,11 @@
   height: 65px;
   padding-right: 10px;
   color:black;
+}
+
+.ny-map {
+  height: 20%;
+  padding-left: 15px;
 }
 
 .tab-title {
@@ -42,6 +57,8 @@
   text-align: center;
   margin-bottom: 20px;
   font-size: 12px;
+  position: absolute;
+  width:100%;
 }
 
 .footer a{
@@ -57,10 +74,6 @@
   margin-bottom:10px;
 }
 
-.navbar-nav .li a {
-  padding-left:10px;
-  padding-right:10px;
-}
 
 .map-title {
     width: 80%;
@@ -111,12 +124,14 @@
     width: 200px;
 }
 
-@media screen and (min-width:1085px){
-  body {
-    font-size: 15px;
-    max-width: 1280px;
-    margin: 0 auto;
+.tab-content {
+    min-height:75vh;
   }
+  
+@media screen and (min-width:1085px){
+  .navbar-nav {
+  float: right;
+}
 }
 
 @media screen and (max-width:925px){

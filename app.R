@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "05-19-2020" # makes it easy to change all occurances when we update
+update_date <- "05-20-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -46,6 +46,19 @@ ui <-
   tagList(
     tags$head(tags$title("COVIDMINDER: Where you live matters")),
     tags$head(includeHTML("www/analytics.html")),
+    
+    # WIDTH Getting code
+    # tags$head(tags$script('
+    #                     var width = 0;
+    #                     $(document).on("shiny:connected", function(e) {
+    #                       width = window.innerWidth;
+    #                       Shiny.onInputChange("width", width);
+    #                     });
+    #                     $(window).resize(function(e) {
+    #                       width = window.innerWidth;
+    #                       Shiny.onInputChange("width", width);
+    #                     });
+    #                     ')),
     navbarPage(
       id="tab",
       theme="style.css",
@@ -671,7 +684,7 @@ ui <-
                      Determinant: What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
                                 States rate?</div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
+                                <div style='font-size:90%;line-height:1.3em;'>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes patients per 100k in a county  is<br>
@@ -698,7 +711,7 @@ ui <-
       )
       ),
       navbarMenu(menuName ="about_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>About</b><br>Project Information</div>"),
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
                value="about",
@@ -711,9 +724,9 @@ ui <-
       )
     ), 
     # Footer
-    hr(),
     fluidRow(
       column(12, class = "footer",
+             hr(),
              HTML("<a href='?tab=about'>About</a>&emsp;"),
              HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
              HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
@@ -1234,6 +1247,8 @@ server <- function(input, output, session) {
     # browser()
     selected.region <- input$NYRegion3
     select.rate <- input$rate.ma
+    #width <- input$width
+    
     select.size <- 2
     
     if (selected.region == "All Regions") {
@@ -1258,6 +1273,14 @@ server <- function(input, output, session) {
       filter(ma > 0)
       y_lab <- paste0("New Cases (",moving.avg.window," day Average) per 100k")
       gg_title <- paste0("New York State New COVID-19 Case Trends per 100k (",moving.avg.window," day Average)")
+    }
+    
+    #if (width > 844) {
+    if (TRUE) {
+      tick.legend <- NULL
+    }
+    else {
+      tick.legend <- theme(legend.position = "none")
     }
     
     highlight_points <- covid_NY_TS_plot.ma %>%
@@ -1306,6 +1329,7 @@ server <- function(input, output, session) {
       scale_linetype_manual(name = "Events", 
                             values = c(2), 
                             guide = guide_legend(override.aes = list(color = c("black")))) +
+      tick.legend +
       NULL
     
   })
