@@ -639,6 +639,38 @@ ui <-
                )
       ),
       
+      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Obesity</div>")),
+               value="determinant_usa_obesity",
+               sidebarLayout(
+                 sidebarPanel(
+                   id = "sidebar_us_ob",
+                   #HTML(whatisit_text),
+                   HTML("<div style='font-weight:bold;line-height:1.3;'>
+                    Determinant: What are the disparities between states in rate of obese patients 
+                                per 100k population per state when compared to the average United States rate? </div><br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                               <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                               <div style='font-size:90%;line-height:1.2;'>
+                               <strong>Obesity Rate</strong> = number of obese patients per 100K population <br>
+                               <strong>Obesity Disparity Index</strong> = log(Obesity Rate in state/average Obesity Rate in US)<br>
+                               <strong>Date: </strong> 2020<br><br>
+                               
+                               <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                                  <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                          </div>"),
+                   #HTML(footer_text),
+                   width=4),
+                 
+                 mainPanel(id = "mainpanel_us_ob",
+                           tags$h4(class="map-title", "US Obesity Rate Disparities by State Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.obesity", height="100%"), width=8)
+               )
+      ),
+      
       # tabPanel(tags$div(class="tab-title",style="text-align:center;",
       #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
       #          sidebarLayout(
@@ -835,6 +867,54 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~states$diabetes_rate_ldi, 
                 opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+    #Remove personal API key
+  })
+  
+  output$map.obesity <- renderLeaflet({
+    
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$obesity_rate_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Obesity Rate DI: %.2g<br/>
+      Obesity Rate: %.1f per 100k",
+      states$NAME, states$obesity_rate_ldi, states$pct_Adults_with_Obesity*1000
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$obesity_rate_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$obesity_rate_ldi, 
+                opacity = 0.7, title = "Disparity Index<br/>US Obesity Rate",
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                 cuts[n] = paste0(cuts[n]," lower") 
@@ -2343,6 +2423,7 @@ server <- function(input, output, session) {
                           'mediation_usa_testing',
                           'mediation_usa_hospital_beds',
                           'determinant_usa_diabetes',
+                          'determinant_usa_obesity',
                           'determinant_ny_diabetes'
     )], 
     Negate(is.null)))) {
