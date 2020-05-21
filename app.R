@@ -69,7 +69,7 @@ ui <-
       navbarMenu(menuName = "outcome_maps_menu",
                  HTML("<div><b>OUTCOME (MAPS)</b></div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+                        HTML("<div><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
                value="outcome_usa_mortality",
                fluidPage(
                  fluidRow(class = "page_title",tags$h1("OUTCOME: USA Mortality Rates from COVID-19")),
@@ -102,7 +102,7 @@ ui <-
                #tags$script(src = "style.js")
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
+                        HTML("<div><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
                value="outcome_usa_racial_disparity",
                fluidPage(
                  fluidRow(class="page_title", tags$h1("OUTCOME: Racial/Ethnic Disparities of COVID-19 Mortality")),
@@ -154,7 +154,7 @@ ui <-
                ), 
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                value="outcome_ny_mortality",
                sidebarLayout(
                  sidebarPanel(
@@ -188,7 +188,7 @@ ui <-
                    )
                  ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
                value="outcome_ny_cases",
                sidebarLayout(
                  sidebarPanel(
@@ -223,7 +223,7 @@ ui <-
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
                  HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
                  tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
+                              HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
                value="outcome_ny_new_cases",
                sidebarLayout( 
                  sidebarPanel(id = "sidebar_ny_new_case",
@@ -266,7 +266,7 @@ ui <-
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
                value="outcome_ny_cases_time",
                sidebarLayout(
                  sidebarPanel(
@@ -316,7 +316,7 @@ ui <-
                    )
                    ),
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Regions)</div>")),
+                              HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Regions)</div>")),
                value="outcome_ny_cases_time_region",
                sidebarLayout(
                  sidebarPanel(id = "sidebar_ny_CoT_region",
@@ -444,7 +444,7 @@ ui <-
       #          )
       # ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ny_racial_disparity",
                sidebarLayout(
                  sidebarPanel(
@@ -486,7 +486,7 @@ ui <-
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
+                        HTML("<div><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ct_racial_disparity",
                sidebarLayout(
                  sidebarPanel(
@@ -530,7 +530,7 @@ ui <-
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
                  HTML("<div><b>MEDIATION</b></div>"),
                  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
+                        HTML("<div><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
                value="mediation_usa_testing",
                sidebarLayout(fluid=FALSE,
                              sidebarPanel(
@@ -572,7 +572,7 @@ ui <-
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
+                        HTML("<div><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
                value="mediation_usa_hospital_beds",
                sidebarLayout(
                  sidebarPanel(
@@ -610,7 +610,7 @@ ui <-
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
                  HTML("<div><b>DETERMINANT</b></div>"),
                  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+                        HTML("<div><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
                value="determinant_usa_diabetes",
                sidebarLayout(
                  sidebarPanel(
@@ -679,7 +679,7 @@ ui <-
       # ),
       
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
+                        HTML("<div><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
                value="determinant_ny_diabetes",
                sidebarLayout(
                  sidebarPanel(
@@ -719,7 +719,7 @@ ui <-
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
                  HTML("<div><b>ABOUT</b></div>"),
                  tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
+                        HTML("<div><b>About</b></div>")),
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
