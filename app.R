@@ -621,21 +621,17 @@ ui <-
                )
       )),
       navbarMenu(menuName ="determinant_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
+                 HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Examine USA or NY determinants</div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT</b></br>USA</div>")),
                value="determinant_usa_diabetes",
                sidebarLayout(
                  sidebarPanel(
                    id = "sidebar_us_db",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                    Determinant: What are the disparities between states in rate of diabetes patients 
-                                per 100k population per state when compared to the average United States rate? </div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
-                                Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
-                                so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
-                               The  rate of diabetes deaths per 100k in a state is<br>
+                               uiOutput("sb_us_det_output"),
+                               HTML(
+                               "<div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
@@ -652,47 +648,54 @@ ui <-
                    width=4),
                  
                  mainPanel(id = "mainpanel_us_db",
-                   tags$h4(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
+                   tags$h4(class="map-title", textOutput("us_det_output")),
+                   tags$br(),tags$br(),
+                   tags$div(class = "select-bar",
+                            selectInput(inputId = "determinant",
+                                        label = NULL,
+                                        choices = c("Diabetes", "Obesity"),
+                                        selected = "Diabetes"
+                            )),
+                           leafletOutput(outputId = "map.determinant", height="100%"), width=8)
                )
       ),
       
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Obesity</div>")),
-               value="determinant_usa_obesity",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_ob",
-                   #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                    Determinant: What are the disparities between states in rate of obese patients 
-                                per 100k population per state when compared to the average United States rate? </div><br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <div style='font-size:90%;line-height:1.2;'>
-                               <strong>Obesity Rate</strong> = number of obese patients per 100K population <br>
-                               <strong>Obesity Disparity Index</strong> = log(Obesity Rate in state/average Obesity Rate in US)<br>
-                               <strong>Date: </strong> 2020<br><br>
-                               
-                               <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-                                  <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                          </div>"),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_us_ob",
-                           tags$h4(class="map-title", "US Obesity Rate Disparities by State Compared to Average US Rate"),
-                           tags$div(class="select-bar",
-                                    selectInput(inputId = "country2",
-                                                label = NULL,
-                                                choices = country_obesity_choices,
-                                                selected = "de")),
-                           leafletOutput(outputId = "map.obesity", height="100%"), width=8)
-               )
-      ),
+      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Obesity</div>")),
+      #          value="determinant_usa_obesity",
+      #          sidebarLayout(
+      #            sidebarPanel(
+      #              id = "sidebar_us_ob",
+      #              #HTML(whatisit_text),
+      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
+      #               Determinant: What are the disparities between states in rate of obese patients 
+      #                           per 100k population per state when compared to the average United States rate? </div><br>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                          <i>Darker shades indicate greater disparity.</i><br><br>
+      #                          
+      #                          <div style='font-size:90%;line-height:1.2;'>
+      #                          <strong>Obesity Rate</strong> = number of obese patients per 100K population <br>
+      #                          <strong>Obesity Disparity Index</strong> = log(Obesity Rate in state/average Obesity Rate in US)<br>
+      #                          <strong>Date: </strong> 2020<br><br>
+      #                          
+      #                          <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+      #                             <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+      #                     </div>"),
+      #              #HTML(footer_text),
+      #              width=4),
+      #            
+      #            mainPanel(id = "mainpanel_us_ob",
+      #                      tags$h4(class="map-title", "US Obesity Rate Disparities by State Compared to Average US Rate"),
+      #                      tags$div(class="select-bar",
+      #                               selectInput(inputId = "country2",
+      #                                           label = NULL,
+      #                                           choices = country_obesity_choices,
+      #                                           selected = "de")),
+      #                      leafletOutput(outputId = "map.obesity", height="100%"), width=8)
+      #          )
+      # ),
       
       # tabPanel(tags$div(class="tab-title",style="text-align:center;",
       #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
@@ -855,7 +858,16 @@ server <- function(input, output, session) {
         id = "mapbox.light"))
   })
   
-  output$map.diabetes <- renderLeaflet({
+  get_determinant <- reactive({
+    if ("Diabetes" %in% input$determinant) return(map.diabetes)
+    if ("Obesity" %in% input$determinant) return(map.obesity)
+  })
+  
+  output$map.determinant <- renderLeaflet(
+    get_determinant()
+  )
+  
+  map.diabetes <- {
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -901,15 +913,17 @@ server <- function(input, output, session) {
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light"))
     #Remove personal API key
-  })
+  }
   
-  output$map.obesity <- renderLeaflet({
-    country <- input$country2 # selected country
+  #output$map.obesity <- renderLeaflet(map.obesity)
+  
+  map.obesity <- {
+    #country <- input$country2 # selected country
     
     # modify states to have selected columns for our plot
     obesity_ldi <- states %>% 
       select(starts_with("obesity_ldi")) %>%
-      select(ends_with(country))
+      select(ends_with("us"))
     
     states <- data.frame(states, "obesity_ldi"=unlist(obesity_ldi)) # Append to states
     
@@ -958,6 +972,31 @@ server <- function(input, output, session) {
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light"))
     #Remove personal API key
+  }
+  
+  output$us_det_output <- renderText ({
+    select.det <- input$determinant
+    paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate")
+  })
+  
+  output$sb_us_det_output <- renderUI ({
+    select.det <- input$determinant
+    if ( select.det == "Diabetes") {
+      tagList(
+      tags$h4("Determinant: What are the disparities between states in rate of diabetes patients 
+              per 100k population per state when compared to the average United States rate?"),
+      tags$p("Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+      so areas with higher diabetes rates may face increased COVID-19 burdens."),
+      tags$p("The  rate of diabetes deaths per 100k in a state is:")
+      )
+    }
+    else {
+      tagList(
+      tags$h4("Determinant: What are the disparities between states in percent of obese patients 
+              per state when compared to the average United States rate?"),
+      tags$p("The  rate of obesity in a state is:")
+      )
+    }
   })
 
   output$map.cardio.bnh <- renderLeaflet({
