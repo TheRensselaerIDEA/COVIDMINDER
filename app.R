@@ -75,7 +75,7 @@ ui <-
                  fluidRow(class = "page_title",tags$h1("OUTCOME: USA Mortality Rates from COVID-19")),
                  fluidRow(class = "page_title",tags$h2("What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
                    when compared to the average USA rate?")),
-                fluidRow(class = "map_container",
+                fluidRow(class = "map-container",
                column(8,
                         id = "mainpanel_us_mort",
                         tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
@@ -84,8 +84,7 @@ ui <-
                column(4,
                       id = "sidebar_us_mort",
                       #HTML(whatisit_text),
-                      HTML(paste0("<br><br><br>
-                    <div>The rate of COVID-19 deaths per 100k in a state is: <br>
+                      HTML(paste0("<div>The rate of COVID-19 deaths per 100k in a state is: <br>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2 </div>
@@ -105,25 +104,39 @@ ui <-
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
                value="outcome_usa_racial_disparity",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_mort_race",
-                   #HTML(whatisit_text),
-                   HTML(paste0("
-                          <div style='font-weight:bold;line-height:1.3;'>
-                          Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
-                          their population percentage?</div><br>
-                          
-                          <div style='font-size:90%;line-height:1.2;'>
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: Racial/Ethnic Disparities of COVID-19 Mortality")),
+                 fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
+                          their population percentage?")),
+                 fluidRow(class="map-container",
+                   column(8,
+                           id = "mainpanel_us_mort_race",
+                           tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
+                           #HTML("<br><br>"),
+                           tags$div(class = "select-bar",
+                                    selectInput(inputId = "race",
+                                                label = NULL,
+                                                choices =  c("Non-hispanic White"="nhw",
+                                                             "Non-hispanic American Indian/Alaska Native"="nhaian",
+                                                             "Non-hispanic Asian Pacific Islander"="nhapi",
+                                                             "Hispanic/Latino (total)"="hlt",
+                                                             "Non-hispanic Black/African American"="nhbaa"),
+                                                selected = "nhbaa")),
+                           leafletOutput(outputId = "map.covid_deaths.race", height="600px")),
+                          column(4,
+                                 id = "sidebar_us_mort_race",
+                                 #HTML(whatisit_text),
+                                 HTML(paste0("
+                          <div>
                           <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                           If the percentage of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                           group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                           impact on that group in that region. Social and economic determinants may contribute to this disparity.
                           <br><br>",
-                          
-                          "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                                             
+                                             "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                           <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
                           <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                           <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -133,23 +146,11 @@ ui <-
                           <br><br>
                           <strong>Date: </strong>",update_date,"<br><br>
                           <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
-                          </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 mainPanel(
-                   id = "mainpanel_us_mort_race",
-                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
-                   HTML("<br><br>"),
-                   tags$div(class = "select-bar",
-                   selectInput(inputId = "race",
-                               label = NULL,
-                               choices =  c("Non-hispanic White"="nhw",
-                                            "Non-hispanic American Indian/Alaska Native"="nhaian",
-                                            "Non-hispanic Asian Pacific Islander"="nhapi",
-                                            "Hispanic/Latino (total)"="hlt",
-                                            "Non-hispanic Black/African American"="nhbaa"),
-                               selected = "nhbaa")),
-                   leafletOutput(outputId = "map.covid_deaths.race", height="95%"), width=8)
+                          </div>"))
+                                 #HTML(footer_text),
+                          )
+                 
+                 )
                ), 
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",

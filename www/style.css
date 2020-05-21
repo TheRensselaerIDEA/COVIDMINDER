@@ -21,21 +21,21 @@ body, p {
 
 h1 {
   font-weight: 200;
-  font-size: 3rem;
+  font-size: 2.5rem;
   line-height: 1.1em;
   font-family: "Source Sans Pro", sans-serif;
 }
 
 h2 {
   font-weight:600;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   line-height: 1.1em;
   font-family: "Source Sans Pro", sans-serif;
 }
 
 h3 {
   line-height: 1.5em;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-family: "Source Sans Pro", sans-serif;
 }
 
@@ -131,12 +131,6 @@ p {
   margin-bottom:10px;
 }
 
-.map-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .map-title {
     width: 80%;
     z-index: 10;
@@ -158,7 +152,7 @@ p {
 .select-bar {
   position:absolute;
   right:25px;
-  margin-top: 10px;
+  margin-top: 60px;
   z-index: 999;
 }
 
@@ -182,19 +176,30 @@ p {
   padding-left:10px;
 }
 
-.shiny-input-container:not(.shiny-input-container-inline) {
-    width: 200px;
+.selectize-control.single .selectize-input {
+    width: 250px;
+    max-height: 50px;
 }
+
 
 .tab-content {
     min-height:75vh;
   }
-  
+
+@media screen and (min-width:768px){
+.map-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+}
+
 @media screen and (min-width:1085px){
   .navbar-nav {
   float: right;
 }
 }
+
 
 @media screen and (max-width:925px){
   .title-text {
