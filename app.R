@@ -67,21 +67,27 @@ ui <-
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
       navbarMenu(menuName = "outcome_maps_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (MAPS)</b><br>Select a USA or state outcome</div>"),
+                 HTML("<div><b>OUTCOME (MAPS)</b></div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
                value="outcome_usa_mortality",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_mort",
-                   #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                   Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
-                   when compared to the average USA rate? </div><br>
-                    <div style='font-size:90%;line-height:1.2;'>
-                    The  rate of COVID-19 deaths per 100k in a state is: <br>
+               fluidPage(
+                 fluidRow(class = "page_title",tags$h1("OUTCOME: USA Mortality Rates from COVID-19")),
+                 fluidRow(class = "page_title",tags$h2("What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
+                   when compared to the average USA rate?")),
+                fluidRow(class = "map_container",
+               column(8,
+                        id = "mainpanel_us_mort",
+                        tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+                        leafletOutput(outputId = "map.covid_deaths", height="600px"))
+               ,
+               column(4,
+                      id = "sidebar_us_mort",
+                      #HTML(whatisit_text),
+                      HTML(paste0("<br><br><br>
+                    <div>The rate of COVID-19 deaths per 100k in a state is: <br>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2 </div>
                     <i>Darker shades indicate greater disparity.</i><br><br>
                     
@@ -92,13 +98,8 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
                     ")),
-                   #HTML(footer_text),
-                   width=4),
-                 mainPanel(
-                   id = "mainpanel_us_mort",
-                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
-               ), 
+                      #HTML(footer_text),
+               ))), 
                #tags$script(src = "style.js")
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
@@ -218,8 +219,9 @@ ui <-
                    )
                  )),
       navbarMenu(menuName = "outcome_plots_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
-      tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
+                 HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
+                 tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
                               HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
                value="outcome_ny_new_cases",
                sidebarLayout( 
@@ -524,8 +526,9 @@ ui <-
       )
       ),
       navbarMenu(menuName = "mediation_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
+                 HTML("<div><b>MEDIATION</b></div>"),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
                value="mediation_usa_testing",
                sidebarLayout(fluid=FALSE,
@@ -603,8 +606,9 @@ ui <-
                )
       )),
       navbarMenu(menuName ="determinant_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
+                 HTML("<div><b>DETERMINANT</b></div>"),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
                value="determinant_usa_diabetes",
                sidebarLayout(
@@ -711,8 +715,9 @@ ui <-
       )
       ),
       navbarMenu(menuName ="about_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
+                 HTML("<div><b>ABOUT</b></div>"),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
                value="about",
                fluidRow(
