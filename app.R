@@ -157,7 +157,6 @@ ui <-
                         HTML("<div><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                value="outcome_ny_mortality",
                fluidPage(
-                 fluidRow(
                    fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Mortality")),
                    fluidRow(class="page_title", tags$h2("What are the disparities between counties of New York
                                in rates of COVID-19 deaths per 100k population when compared to the average USA rate?")),
@@ -185,7 +184,7 @@ ui <-
                                </div>"))
                           #HTML(footer_text),
                    ))
-                 )
+                 
                  
                  
                  )),
