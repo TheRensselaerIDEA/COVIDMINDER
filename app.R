@@ -191,15 +191,16 @@ ui <-
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
                value="outcome_ny_cases",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Cases")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between New York counties in the rate of COVID-19 
+                               cases per 100k population when compared to the average United States 
+                               rate?")),
+                 fluidRow(class = "map-container",
+                 column(4,
                    id = "sidebar_ny_cases",
                    #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                               Outcome: What are the disparities between New York counties in the rate of COVID-19 
-                               cases per 100k population when compared to the average United States 
-                               rate?  </div> <br>
-                               <div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
@@ -212,35 +213,26 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   #HTML(footer_text),
-                   width=4),
+                   ),
                  
-                 mainPanel(id = "mainpanel_ny_cases",
-                           tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
+                 column(8, id = "mainpanel_ny_cases",
+                           tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.cases", height="600px")))
                    )
                  )),
       navbarMenu(menuName = "outcome_plots_menu",
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
                  HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
-                 tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
+                 
+               tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                            HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
                value="outcome_ny_new_cases",
-               sidebarLayout( 
-                 sidebarPanel(id = "sidebar_ny_new_case",
-                              #HTML(whatisit_text),
-                              HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have new COVID-19 Cases been mitigated in New York State over time?</div> <br>"),
-                              img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                              HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                              #HTML(footer_text),
-                              width = 4),
-                 mainPanel(id = "mainpanel_ny_new_case",
-                           tags$div(
+               fluidPage( 
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York trends of new COVID-19 Cases")),
+                 fluidRow(class="page_title", tags$h2("How have new COVID-19 Cases been mitigated in New York State over time?")),
+                 fluidRow(class = "map-container",
+                 column(8,id = "mainpanel_ny_new_case",
+                           tags$div(class = "page_title",
                            selectInput(inputId = "NYRegion3",
                                        label = "NY Regions",
                                        choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
@@ -256,41 +248,46 @@ ui <-
                                         choices = c("Overall", "Per/100k"),
                                         selected = "Per/100k")),
                            tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.ma", height="85%", 
+                                    plotOutput(outputId = "NY.cases.ma", height="100%", 
                                                click = clickOpts(id ="NY.cases.TS_click_ma"),
                                                dblclick = "NY.cases.TS_dblclick",
                                                brush = brushOpts(
                                                  id = "NY.cases.TS_brush",
                                                  resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+                           HTML("<div style='position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info_ma"), 
-                           width = 8)
+                                For region details, single-click on line<br>
+                                </div>")
+                           ),
+                 column(4, id = "sidebar_ny_new_case",
+                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                        HTML(paste0("<div>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                        uiOutput("click_info_ma")
+                 ))
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
                value="outcome_ny_cases_time",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York total COVID-19 Cases over time")),
+                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                 fluidRow(class = "map-container",
+                 column(4,
                    id = "sidebar_ny_CoT",
-                   #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
+                               </div>"))),
                  
-                 mainPanel(id = "mainpanel_ny_CoT",
+                 column(8, id = "mainpanel_ny_CoT",
                            tags$div(
                            # selectInput(inputId = "NYRegion",
                            #             label = "NY Regions",
@@ -324,8 +321,7 @@ ui <-
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
                                 </div>"),
-                           uiOutput("click_info"), 
-                           width = 8)
+                           uiOutput("click_info")))
                    )
                    ),
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
@@ -1814,7 +1810,7 @@ server <- function(input, output, session) {
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+                    "right:", left_px + 2, "px; top:", top_px + 2, "px;")
 
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
@@ -1862,7 +1858,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)# %>%
       #filter(date >= date[1] & date <= date[2])
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
@@ -1871,7 +1867,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)# %>%
       #filter(date >= date[1] & date <= date[2])
-      per <- "/100k "
+      per <- "/100k: "
     }
     
     point <- covid_NY_TS_plot.ma %>%
@@ -1890,20 +1886,29 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); 
+                    width:30%; padding: 0; margin: 0;",
+                    "left:", 0, "px;")
+    # print(hover$x)
+    # print(hover$domain$left)
+    # print(hover$domain$right - hover$domain$left)
+    # print(hover$y)
+    # print(hover$domain$top)
+    # print(hover$range$bottom - hover$range$top)
+    
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
       avg_window <- as.Date(point$date, format = "%m-%d-%Y") - moving.avg.window + 1
       if (point$Region == "New York State"){
         wellPanel(
-          p(HTML(paste0(point$Region,": ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Average New Cases",per,format(round(point$ma),big.mark = ","),"<br>Window: ",avg_window, " to ", point$date)))
         )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(point$Region," Region: ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Average New Cases",per,format(round(point$ma),big.mark = ","),"<br>Window: ",avg_window, " to ", point$date)))
         )
         
       }
@@ -1915,12 +1920,13 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",format(round(point[1,]$ma), big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.region,"</b><br>Average New Cases",per,format(round(point[1,]$ma), big.mark = ","),"<br>Window: ",avg_window, " to ", yesterday)))
         )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$ma), big.mark = ","),per," daily avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.region," Region</b><br>Average New Cases",per,format(round(point[1,]$ma), big.mark = ","),"<br>Window: ",avg_window, " to ", yesterday)))
         )
       }
     }
