@@ -278,6 +278,41 @@ ui <-
                  fluidRow(class="page_title", tags$h1("OUTCOME: New York total COVID-19 Cases over time")),
                  fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
                  fluidRow(class = "map-container",
+                          
+                          column(8, id = "mainpanel_ny_CoT",
+                                 tags$div(
+                                   # selectInput(inputId = "NYRegion",
+                                   #             label = "NY Regions",
+                                   #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                   #             selected = "All Regions"),
+                                   selectInput(inputId = "NYCounty",
+                                               label = "NY Counties",
+                                               choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
+                                               selected = 1)
+                                 ),
+                                 dateRangeInput(inputId = "NYCoTDate",
+                                                label = "Date Range",
+                                                min = min(covid_NY_TS_plot.cases$date),
+                                                max = as.Date(update_date, format = "%m-%d-%Y") - 1,
+                                                start = as.Date(update_date, format = "%m-%d-%Y") - 62,
+                                                end = as.Date(update_date, format = "%m-%d-%Y") - 1),
+                                 radioButtons(inputId = "rate.CoT",
+                                              label = "",
+                                              choices = c("Overall", "Per/100k"),
+                                              selected = "Per/100k"),
+                                 tags$div(class = "NY_case_plots",
+                                          plotOutput(outputId = "NY.cases.TS", height="100%", 
+                                                     click = clickOpts(id ="NY.cases.TS_click"),
+                                                     dblclick = "NY.cases.TS_dblclick",
+                                                     brush = brushOpts(
+                                                       id = "NY.cases.TS_brush",
+                                                       resetOnNew = TRUE))
+                                 ),
+                                 HTML("<div style='position:absolute;bottom:0;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>")),
                  column(4,
                    id = "sidebar_ny_CoT",
                    img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
@@ -285,43 +320,9 @@ ui <-
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>"))),
-                 
-                 column(8, id = "mainpanel_ny_CoT",
-                           tags$div(
-                           # selectInput(inputId = "NYRegion",
-                           #             label = "NY Regions",
-                           #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-                           #             selected = "All Regions"),
-                           selectInput(inputId = "NYCounty",
-                                       label = "NY Counties",
-                                       choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
-                                       selected = 1)
-                           ),
-                           dateRangeInput(inputId = "NYCoTDate",
-                                          label = "Date Range",
-                                          min = min(covid_NY_TS_plot.cases$date),
-                                          max = as.Date(update_date, format = "%m-%d-%Y") - 1,
-                                          start = as.Date(update_date, format = "%m-%d-%Y") - 62,
-                                          end = as.Date(update_date, format = "%m-%d-%Y") - 1),
-                           radioButtons(inputId = "rate.CoT",
-                                        label = "",
-                                        choices = c("Overall", "Per/100k"),
-                                        selected = "Per/100k"),
-                           tags$div(class = "NY_case_plots",
-                           plotOutput(outputId = "NY.cases.TS", height="85%", 
-                                      click = clickOpts(id ="NY.cases.TS_click"),
-                                      dblclick = "NY.cases.TS_dblclick",
-                                      brush = brushOpts(
-                                        id = "NY.cases.TS_brush",
-                                        resetOnNew = TRUE))
-                           ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info")))
+                               </div>")),
+                   uiOutput("click_info"))
+                 )
                    )
                    ),
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
@@ -1786,13 +1787,13 @@ server <- function(input, output, session) {
     if (select.rate == "Overall") {
       covid_NY_TS <- covid_NY_TS_plot.cases %>%
         mutate(y = cases)
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS <- covid_NY_TS_plot.cases %>%
         mutate(y = p_cases) %>%
         filter(y >= 10)
-      per <- "/100k "
+      per <- "/100k: "
     }
     point <- nearPoints(covid_NY_TS, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
                         xvar="date", yvar="y")
@@ -1817,12 +1818,13 @@ server <- function(input, output, session) {
       if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County,": ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+        class = "gg_tooltip",
+        h3(HTML(paste0("<b>",point$County,"</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
       )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(point$County," County: ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$County," County</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
         )
         
       }
@@ -1833,12 +1835,14 @@ server <- function(input, output, session) {
         filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.county,": ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.county,"</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.county," County: ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.county," County</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
         
       }
