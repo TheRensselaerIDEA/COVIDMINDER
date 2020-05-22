@@ -275,7 +275,7 @@ ui <-
                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
                value="outcome_ny_cases_time",
                fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York total COVID-19 Cases over time")),
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Counties total COVID-19 Cases over time")),
                  fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
                  fluidRow(class = "map-container",
                           
@@ -328,20 +328,11 @@ ui <-
       tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
                               HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Regions)</div>")),
                value="outcome_ny_cases_time_region",
-               sidebarLayout(
-                 sidebarPanel(id = "sidebar_ny_CoT_region",
-                              #HTML(whatisit_text),
-                              HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
-                              img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                              HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                              #HTML(footer_text),
-                              width = 4),
-                 mainPanel(id = "mainpanel_ny_CoT_region",
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Regions total COVID-19 Cases over time")),
+                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_ny_CoT_region",
                            selectInput(inputId = "NYRegion2",
                                        label = "NY Regions",
                                        choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
@@ -364,13 +355,20 @@ ui <-
                                                  id = "NY.cases.TS_brush",
                                                  resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+                           HTML("<div style='position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info_reg"), 
-                           width = 8)
+                                </div>")),
+                 column(4, id = "sidebar_ny_CoT_region",
+                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                        HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                        uiOutput("click_info_reg"))
+                 )
                )
       ),
       #tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -1949,12 +1947,12 @@ server <- function(input, output, session) {
     if (select.region == "Overall") {
       covid_NY_TS.reg <- covid_NY_TS.reg %>%
         mutate(y = cases)
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS.reg <- covid_NY_TS.reg %>%
         mutate(y = p_cases)
-      per <- "/100k "
+      per <- "/100k: "
     }
     
     point <- covid_NY_TS.reg %>%
@@ -1981,12 +1979,14 @@ server <- function(input, output, session) {
       if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region,": ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
-        )
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
+          )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
         )
         
       }
@@ -1997,13 +1997,15 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
-        )
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
+          )
       }
     }
   })
