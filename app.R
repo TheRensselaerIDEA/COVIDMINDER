@@ -465,7 +465,7 @@ ui <-
                  fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths when compared to 
                         their population percentage? Do New York City and the rest of New York State have 
                         different disparities in minority COVID-19 deaths?")),
-                 fluidRow(
+                 fluidRow(class = "map-container",
                  column(8, id = "mainpanel_ny_race", 
                           plotOutput(outputId = "NY.race.nys", height="50%"), 
                           plotOutput(outputId = "NY.race.nyc", height="50%")),
@@ -501,21 +501,25 @@ ui <-
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ct_racial_disparity",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: Connecticut Racial Disparities of COVID-19 mortality")),
+                 fluidRow(class="page_title", tags$h2("Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_ct_race", 
+                          plotOutput(outputId = "NY.race.ct", height="100%")),
+                 column(4, 
                    id = "sidebar_ct_race",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
-                        their population percentage? </div><br>
-                        <div style='font-size:90%;line-height:1.2;'>
+                   HTML("
+                        <div>
                         <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                         If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                         group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                         impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
                    HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -525,20 +529,14 @@ ui <-
                                <br>
                         </div>"
                    ),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ct_race", 
-                           plotOutput(outputId = "NY.race.ct", height="100%"), 
-                           width = 8)
+                               </div>")))
                )
       )
-      ),
+      )),
       navbarMenu(menuName = "mediation_menu",
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
                  HTML("<div><b>MEDIATION</b></div>"),
