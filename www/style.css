@@ -6,13 +6,13 @@
  */
 
 html {
- font-size: 16px;
+ font-size: 14px;
 }
 
 body, p {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 14px;
   color: #222;
   line-height: 1.3em;
   letter-spacing: normal;
@@ -197,6 +197,13 @@ p {
 @media screen and (min-width:1085px){
   .navbar-nav {
   float: right;
+}
+  
+}
+
+@media screen and (min-width:1600px) {
+  html, body {
+  font-size: 16px;
 }
 }
 

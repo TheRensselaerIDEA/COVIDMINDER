@@ -156,15 +156,19 @@ ui <-
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                value="outcome_ny_mortality",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_mort",
-                   #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                               Outcome: What are the disparities between counties of New York
-                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
-                               <div style='font-size:90%;line-height:1.2;'>
-                               
+               fluidPage(
+                 fluidRow(
+                   fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Mortality")),
+                   fluidRow(class="page_title", tags$h2("What are the disparities between counties of New York
+                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?")),
+                   fluidRow(class="map-container",
+                   column(8,id = "mainpanel_ny_mort",
+                           tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.deaths", height = "600px")),
+                   column(4,
+                          id = "sidebar_ny_mort",
+                          #HTML(whatisit_text),
+                          HTML(paste0("<div>
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
@@ -178,15 +182,13 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
+                               </div>"))
+                          #HTML(footer_text),
+                   ))
+                 )
                  
-                 mainPanel(id = "mainpanel_ny_mort",
-                           tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.deaths", height = "100%"), width=8)
-                   )
-                 ),
+                 
+                 )),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
                value="outcome_ny_cases",
