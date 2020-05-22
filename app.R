@@ -7,11 +7,13 @@ update_date <- "05-22-2020" # makes it easy to change all occurances when we upd
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
+height <- "500px"# plot heights
+
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<br><div><b><span style='font-size:22px'>COVIDMINDER</span> analysis and visualizations</b> by students and staff
+footer_text <- "<h3><br><div>COVID<b>MINDER analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
@@ -19,15 +21,15 @@ footer_text <- "<br><div><b><span style='font-size:22px'>COVIDMINDER</span> anal
                                 for more information. <br><br>
                                 <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;margin-right:5px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
-                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
+                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></h3><br><br>
                                 "
                                 #<i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 #of Accessibility</a></i></div>"
 
-whatisit_text_abt <-"<div style='line-height:1.3;'><b><span style='font-size:22px'>COVIDMINDER</span></b> reveals the regional disparities 
+whatisit_text_abt <-"<div><h3>COVID<b>MINDER</b> reveals the regional disparities 
                                 in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
                                 effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</div>"
+                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</h3></div>"
 
 whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
 
@@ -67,21 +69,26 @@ ui <-
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
       navbarMenu(menuName = "outcome_maps_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (MAPS)</b><br>Select a USA or state outcome</div>"),
+                 HTML("<div><b>OUTCOME (MAPS)</b></div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
+                        HTML("<div><b>OUTCOME (USA)</b></br>Mortality Rate</div>")),
                value="outcome_usa_mortality",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_mort",
-                   #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                   Outcome: What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
-                   when compared to the average USA rate? </div><br>
-                    <div style='font-size:90%;line-height:1.2;'>
-                    The  rate of COVID-19 deaths per 100k in a state is: <br>
+               fluidPage(
+                 fluidRow(class = "page_title",tags$h1("OUTCOME: USA COVID-19 Mortality Rates Disparities")),
+                 fluidRow(class = "page_title",tags$h2("What are the disparities between states  in  rates of COVID-19 deaths per 100k population 
+                   when compared to the average USA rate?")),
+                fluidRow(class = "map-container",
+               column(8,
+                        id = "mainpanel_us_mort",
+                        tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
+                        leafletOutput(outputId = "map.covid_deaths", height=height))
+               ,
+               column(4,
+                      id = "sidebar_us_mort",
+                      #HTML(whatisit_text),
+                      HTML(paste0("<div>The rate of COVID-19 deaths per 100k in a state is: <br>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                    <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2 </div>
                     <i>Darker shades indicate greater disparity.</i><br><br>
                     
@@ -92,37 +99,46 @@ ui <-
                     <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a><br>
                     </div>
                     ")),
-                   #HTML(footer_text),
-                   width=4),
-                 mainPanel(
-                   id = "mainpanel_us_mort",
-                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.covid_deaths", height="100%"), width=8)
-               ), 
+                      #HTML(footer_text),
+               ))), 
                #tags$script(src = "style.js")
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
+                        HTML("<div><b>OUTCOME (USA)</b></br>Racial/Ethnic Disparity</div>")),
                value="outcome_usa_racial_disparity",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_us_mort_race",
-                   #HTML(whatisit_text),
-                   HTML(paste0("
-                          <div style='font-weight:bold;line-height:1.3;'>
-                          Outcome: Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
-                          their population percentage?</div><br>
-                          
-                          <div style='font-size:90%;line-height:1.2;'>
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: Racial/Ethnic Disparities of COVID-19 Mortality")),
+                 fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths across the United States when compared to 
+                          their population percentage?")),
+                 fluidRow(class="map-container",
+                   column(8,
+                           id = "mainpanel_us_mort_race",
+                           tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
+                           #HTML("<br><br>"),
+                           tags$div(class = "select-bar",
+                                    selectInput(inputId = "race",
+                                                label = NULL,
+                                                choices =  c("Non-hispanic White"="nhw",
+                                                             "Non-hispanic American Indian/Alaska Native"="nhaian",
+                                                             "Non-hispanic Asian Pacific Islander"="nhapi",
+                                                             "Hispanic/Latino (total)"="hlt",
+                                                             "Non-hispanic Black/African American"="nhbaa"),
+                                                selected = "nhbaa")),
+                           leafletOutput(outputId = "map.covid_deaths.race", height=height)),
+                          column(4,
+                                 id = "sidebar_us_mort_race",
+                                 #HTML(whatisit_text),
+                                 HTML(paste0("
+                          <div>
                           <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                           If the percentage of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                           group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                           impact on that group in that region. Social and economic determinants may contribute to this disparity.
                           <br><br>",
-                          
-                          "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                                             
+                                             "For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                           <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
                           <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                           <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -132,37 +148,28 @@ ui <-
                           <br><br>
                           <strong>Date: </strong>",update_date,"<br><br>
                           <b>DATA SOURCE:</b> <a href='https://data.cdc.gov/resource/pj7m-y5uh.csv'>data.cdc.gov</a><br>
-                          </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 mainPanel(
-                   id = "mainpanel_us_mort_race",
-                   tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by State by Race/Ethnicity"),
-                   HTML("<br><br>"),
-                   tags$div(class = "select-bar",
-                   selectInput(inputId = "race",
-                               label = NULL,
-                               choices =  c("Non-hispanic White"="nhw",
-                                            "Non-hispanic American Indian/Alaska Native"="nhaian",
-                                            "Non-hispanic Asian Pacific Islander"="nhapi",
-                                            "Hispanic/Latino (total)"="hlt",
-                                            "Non-hispanic Black/African American"="nhbaa"),
-                               selected = "nhbaa")),
-                   leafletOutput(outputId = "map.covid_deaths.race", height="95%"), width=8)
+                          </div>"))
+                                 #HTML(footer_text),
+                          )
+                 
+                 )
                ), 
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
                value="outcome_ny_mortality",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_mort",
-                   #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                               Outcome: What are the disparities between counties of New York
-                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?</div><br>  
-                               <div style='font-size:90%;line-height:1.2;'>
-                               
+               fluidPage(
+                   fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Mortality")),
+                   fluidRow(class="page_title", tags$h2("What are the disparities between counties of New York
+                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?")),
+                   fluidRow(class="map-container",
+                   column(8,id = "mainpanel_ny_mort",
+                           tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                           leafletOutput(outputId = "map.NY.deaths", height = height)),
+                   column(4,
+                          id = "sidebar_ny_mort",
+                          #HTML(whatisit_text),
+                          HTML(paste0("<div>
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
@@ -176,27 +183,29 @@ ui <-
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
                                <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
                                
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
+                               </div>"))
+                          #HTML(footer_text),
+                   ))
                  
-                 mainPanel(id = "mainpanel_ny_mort",
-                           tags$h4(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.deaths", height = "100%"), width=8)
-                   )
-                 ),
+                 
+                 
+                 )),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
                value="outcome_ny_cases",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Cases")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between New York counties in the rate of COVID-19 
+                               cases per 100k population when compared to the average United States 
+                               rate?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_ny_cases",
+                         tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
+                         leafletOutput(outputId = "map.NY.cases", height=height)),
+                 column(4,
                    id = "sidebar_ny_cases",
                    #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                               Outcome: What are the disparities between New York counties in the rate of COVID-19 
-                               cases per 100k population when compared to the average United States 
-                               rate?  </div> <br>
-                               <div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                
                                The rate of COVID-19 deaths per 100k in a county is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
@@ -209,34 +218,23 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_cases",
-                           tags$h4(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.cases", height="100%"), width=8)
+                   )
+                 )
                    )
                  )),
       navbarMenu(menuName = "outcome_plots_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
-      tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
+                 HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
+                 
+               tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                            HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
                value="outcome_ny_new_cases",
-               sidebarLayout( 
-                 sidebarPanel(id = "sidebar_ny_new_case",
-                              #HTML(whatisit_text),
-                              HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have new COVID-19 Cases been mitigated in New York State over time?</div> <br>"),
-                              img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                              HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                              #HTML(footer_text),
-                              width = 4),
-                 mainPanel(id = "mainpanel_ny_new_case",
-                           tags$div(
+               fluidPage( 
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York trends of new COVID-19 Cases")),
+                 fluidRow(class="page_title", tags$h2("How have new COVID-19 Cases been mitigated in New York State over time?")),
+                 fluidRow(class = "map-container",
+                 column(8, style=paste0("height:",height,";"), id = "mainpanel_ny_new_case",
+                           tags$div(class = "page_title",
                            selectInput(inputId = "NYRegion3",
                                        label = "NY Regions",
                                        choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
@@ -252,95 +250,91 @@ ui <-
                                         choices = c("Overall", "Per/100k"),
                                         selected = "Per/100k")),
                            tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.ma", height="85%", 
+                                    plotOutput(outputId = "NY.cases.ma", height="100%", 
                                                click = clickOpts(id ="NY.cases.TS_click_ma"),
                                                dblclick = "NY.cases.TS_dblclick",
                                                brush = brushOpts(
                                                  id = "NY.cases.TS_brush",
                                                  resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+                           HTML("<div style='position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info_ma"), 
-                           width = 8)
+                                For region details, single-click on line<br>
+                                </div>")
+                           ),
+                 column(4, id = "sidebar_ny_new_case",
+                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                        HTML(paste0("<div>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                        uiOutput("click_info_ma")
+                 ))
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
                value="outcome_ny_cases_time",
-               sidebarLayout(
-                 sidebarPanel(
-                   id = "sidebar_ny_CoT",
-                   #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
-                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_CoT",
-                           tags$div(
-                           # selectInput(inputId = "NYRegion",
-                           #             label = "NY Regions",
-                           #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-                           #             selected = "All Regions"),
-                           selectInput(inputId = "NYCounty",
-                                       label = "NY Counties",
-                                       choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
-                                       selected = 1)
-                           ),
-                           dateRangeInput(inputId = "NYCoTDate",
-                                          label = "Date Range",
-                                          min = min(covid_NY_TS_plot.cases$date),
-                                          max = as.Date(update_date, format = "%m-%d-%Y") - 1,
-                                          start = as.Date(update_date, format = "%m-%d-%Y") - 62,
-                                          end = as.Date(update_date, format = "%m-%d-%Y") - 1),
-                           radioButtons(inputId = "rate.CoT",
-                                        label = "",
-                                        choices = c("Overall", "Per/100k"),
-                                        selected = "Per/100k"),
-                           tags$div(class = "NY_case_plots",
-                           plotOutput(outputId = "NY.cases.TS", height="85%", 
-                                      click = clickOpts(id ="NY.cases.TS_click"),
-                                      dblclick = "NY.cases.TS_dblclick",
-                                      brush = brushOpts(
-                                        id = "NY.cases.TS_brush",
-                                        resetOnNew = TRUE))
-                           ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Counties total COVID-19 Cases over time")),
+                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                 fluidRow(class = "map-container",
+                          
+                          column(8, style=paste0("height:",height,";"),id = "mainpanel_ny_CoT",
+                                 tags$div(
+                                   # selectInput(inputId = "NYRegion",
+                                   #             label = "NY Regions",
+                                   #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                   #             selected = "All Regions"),
+                                   selectInput(inputId = "NYCounty",
+                                               label = "NY Counties",
+                                               choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
+                                               selected = 1)
+                                 ),
+                                 dateRangeInput(inputId = "NYCoTDate",
+                                                label = "Date Range",
+                                                min = min(covid_NY_TS_plot.cases$date),
+                                                max = as.Date(update_date, format = "%m-%d-%Y") - 1,
+                                                start = as.Date(update_date, format = "%m-%d-%Y") - 62,
+                                                end = as.Date(update_date, format = "%m-%d-%Y") - 1),
+                                 radioButtons(inputId = "rate.CoT",
+                                              label = "",
+                                              choices = c("Overall", "Per/100k"),
+                                              selected = "Per/100k"),
+                                 tags$div(class = "NY_case_plots",
+                                          plotOutput(outputId = "NY.cases.TS", height="100%", 
+                                                     click = clickOpts(id ="NY.cases.TS_click"),
+                                                     dblclick = "NY.cases.TS_dblclick",
+                                                     brush = brushOpts(
+                                                       id = "NY.cases.TS_brush",
+                                                       resetOnNew = TRUE))
+                                 ),
+                                 HTML("<div style='position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info"), 
-                           width = 8)
-                   )
-                   ),
-      tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Regions)</div>")),
-               value="outcome_ny_cases_time_region",
-               sidebarLayout(
-                 sidebarPanel(id = "sidebar_ny_CoT_region",
-                              #HTML(whatisit_text),
-                              HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: How have COVID-19 Cases increased across New York State over time?</div> <br>"),
-                              img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                              HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                                </div>")),
+                 column(4,
+                   id = "sidebar_ny_CoT",
+                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                   HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                              #HTML(footer_text),
-                              width = 4),
-                 mainPanel(id = "mainpanel_ny_CoT_region",
+                   uiOutput("click_info"))
+                 )
+                   )
+                   ),
+      tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                              HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Region)</div>")),
+               value="outcome_ny_cases_time_region",
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Region total COVID-19 Cases over time")),
+                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                 fluidRow(class = "map-container",
+                 column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_CoT_region",
                            selectInput(inputId = "NYRegion2",
                                        label = "NY Regions",
                                        choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
@@ -356,20 +350,27 @@ ui <-
                                         choices = c("Overall", "Per/100k"),
                                         selected = "Per/100k"),
                            tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.TS.region", height="85%", 
+                                    plotOutput(outputId = "NY.cases.TS.region", height="100%", 
                                                click = clickOpts(id ="NY.cases.TS_click_reg"),
                                                dblclick = "NY.cases.TS_dblclick",
                                                brush = brushOpts(
                                                  id = "NY.cases.TS_brush",
                                                  resetOnNew = TRUE))
                            ),
-                           HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
+                           HTML("<div style='position:absolute;bottom:0;'>
                                 <br>To zoom plot, click and drag, then double-click in select box<br>
                                 To un-zoom, double-click in plot<br>
                                 For county details, single-click on line<br>
-                                </div>"),
-                           uiOutput("click_info_reg"), 
-                           width = 8)
+                                </div>")),
+                 column(4, id = "sidebar_ny_CoT_region",
+                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                        HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                        uiOutput("click_info_reg"))
+                 )
                )
       ),
       #tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -459,24 +460,29 @@ ui <-
       #          )
       # ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
+                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ny_racial_disparity",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Racial Disparities of COVID-19 mortality")),
+                 fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage? Do New York City and the rest of New York State have 
+                        different disparities in minority COVID-19 deaths?")),
+                 fluidRow(class = "map-container",
+                 column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_race", 
+                          plotOutput(outputId = "NY.race.nys", height="50%"), 
+                          plotOutput(outputId = "NY.race.nyc", height="50%")),
+                 column(4,
                    id = "sidebar_ny_race",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: Do minorities make up a higher percentage of COVID-19 deaths when compared to 
-                        their population percentage? Do New York City and the rest of New York State have 
-                        different disparities in minority COVID-19 deaths?</div><br>
-                        <div style='font-size:90%;line-height:1.2;'>
+                   HTML("
+                        <div>
                         <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                         If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                         group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                         impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
                    HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -486,38 +492,36 @@ ui <-
                                <br>
                         </div>"
                    ),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ny_race", 
-                           plotOutput(outputId = "NY.race.nys", height="50%"), 
-                           plotOutput(outputId = "NY.race.nyc", height="50%"), 
-                           width = 8)
+                               </div>")))
+                 )
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
+                        HTML("<div><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ct_racial_disparity",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("OUTCOME: Connecticut Racial Disparities of COVID-19 mortality")),
+                 fluidRow(class="page_title", tags$h2("Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_ct_race", 
+                          plotOutput(outputId = "NY.race.ct", height=height)),
+                 column(4, 
                    id = "sidebar_ct_race",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                        Outcome: Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
-                        their population percentage? </div><br>
-                        <div style='font-size:90%;line-height:1.2;'>
+                   HTML("
+                        <div>
                         <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
                         If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
                         group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
                         impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
                    HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -527,81 +531,81 @@ ui <-
                                <br>
                         </div>"
                    ),
-                   HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_ct_race", 
-                           plotOutput(outputId = "NY.race.ct", height="100%"), 
-                           width = 8)
+                               </div>")))
                )
       )
-      ),
+      )),
       navbarMenu(menuName = "mediation_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
+                 HTML("<div><b>MEDIATION</b></div>"),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div><b>MEDIATION (USA)</b></br>COVID-19 Testing</div>")),
                value="mediation_usa_testing",
-               sidebarLayout(fluid=FALSE,
-                             sidebarPanel(
-                               id = "sidebar_us_test",
-                               #HTML(whatisit_text),
-                               HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                              Mediation: What are the disparities between US states  in  their rates of COVID-19 testing per 1k population 
-                              when compared to the average rates from other countries? When compared with the current average
-                              US rate?</div><br>
-                              <div style='font-size:90%;line-height:1.2;'>
-                              Several countries significantly effected by COVID-19 can be used as testing reference rates. 
-                              Some of these countries are regarded as having successfully  used testing to “flatten the curve”,
-                              while others are still in the midst of dealing with the crisis.<br><br>
-                               The rate of testing per 1k in a state is: <br>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than selected country testing rate for disparity index &gt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to selected country testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than selected country testing rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
-                               <strong>Testing Rate Disparity Index</strong> = log(Testing Rate in state/Testing Rate in selected country) <br>
-                    <strong>Date: </strong>",update_date,"<br><br>
-                               
-                               <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
-                               <a href='https://ourworldindata.org/coronavirus'>Our World in Data</a>
-                               </div>")),
-                               #HTML(footer_text),
-                               width=4),
-                             
-                             mainPanel(id = "mainpanel_us_test",
-                               tags$h4(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country")),
-                               HTML("<br><br>"),
-                               tags$div(class="select-bar",
-                               selectInput(inputId = "country",
-                                           label = NULL,
-                                           choices = country_testing_choices,
-                                           selected = "de")),
-                                       leafletOutput(outputId = "map.testing", height="95%"), width=8)
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("MEDIATION: Nationwide testing disparities compared to top testing countries")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between US states  in  their rates of COVID-19 testing per 1k population 
+                  when compared to the average rates from other countries? When compared with the current average
+                  US rate?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_us_test",
+                        tags$h3(class="map-title", paste0("COVID-19 Testing Rate Disparities by State Compared to Selected Country")),
+                        HTML("<br><br>"),
+                        tags$div(class="select-bar",
+                                 selectInput(inputId = "country",
+                                             label = NULL,
+                                             choices = country_testing_choices,
+                                             selected = "de")),
+                        leafletOutput(outputId = "map.testing", height=height)),
+                 column(4,
+                   id = "sidebar_us_test",
+                   #HTML(whatisit_text),
+                   HTML(paste0("
+                  <div>
+                  Several countries significantly effected by COVID-19 can be used as testing reference rates. 
+                  Some of these countries are regarded as having successfully  used testing to “flatten the curve”,
+                  while others are still in the midst of dealing with the crisis.<br><br>
+                   The rate of testing per 1k in a state is: <br>
+                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than selected country testing rate for disparity index &gt; 0.2</div>
+                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to selected country testing rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                     <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than selected country testing rate for disparity index &lt; -0.2</div>
+                   <i>Darker shades indicate greater disparity.</i><br><br>
+                   
+                   <strong>Testing Rate</strong> = number of COVID-19 tests per 1K population <br>
+                   <strong>Testing Rate Disparity Index</strong> = log(Testing Rate in state/Testing Rate in selected country) <br>
+        <strong>Date: </strong>",update_date,"<br><br>
+                   
+                   <b>DATA SOURCES:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a>, 
+                   <a href='https://ourworldindata.org/coronavirus'>Our World in Data</a>
+                   </div>")))
+                 )
                )
       ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
+                        HTML("<div><b>MEDIATION (USA)</b></br>Hospital Beds</div>")),
                value="mediation_usa_hospital_beds",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("MEDIATION: Nationwide Hospital Bed Disparities vs Italy")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between states  in  the rate of hospital beds 
+                                per 100k population when compared to the rate in Italy?")),
+                 fluidRow(class = "map-container",
+                 column(8,id = "mainpanel_us_hosp",
+                       tags$h3(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
+                       leafletOutput(outputId = "map.hospital", height=height)),
+                 column(4,
                    id = "sidebar_us_hosp",
                    #HTML(whatisit_text),
-                   HTML(paste0("<div style='font-weight:bold;line-height:1.3;'>
-                     Mediation: What are the disparities between states  in  the rate of hospital beds 
-                                per 100k population when compared to the rate in Italy? </div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
+                   HTML(paste0("
+                                <div>
                                 Italy has a higher hospital 
                                 bed rate than the US, yet still faced challenges meeting peak COVID bed needs. Thus we use 
                                 Italy’s rate as a minimum target rate.<br><br>
                                 The rate of hospital beds per 100k in a state is<br>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than Italian rate for disparity index &gt; 0.2</div>
-                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to Italian rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                                 <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to Italian rate for -0.2 &lt;disparity index &lt; 0.2</div>
                                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than Italian rate for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -611,33 +615,33 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a><br>
 
-                               </div>")),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_us_hosp",
-                   tags$h4(class="map-title", "COVID-19 Hospital Bed Rate Disparities by State Compared to Average Italian Rate"),
-                           leafletOutput(outputId = "map.hospital", height="100%"), width=8)
+                               </div>")))
+                 )
                )
       )),
       navbarMenu(menuName ="determinant_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>DETERMINANT</b><br>Select a USA determinant</div>"),
+                 HTML("<div><b>DETERMINANT</b></div>"),
+               tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                      HTML("<div><b>DETERMINANT (USA)</b></br>Diabetes</div>")),
                value="determinant_usa_diabetes",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("DETERMINANT: Nationwide Diabetes Disparities")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between states in rate of diabetes patients 
+                                per 100k population per state when compared to the average United States rate?")),
+                 fluidRow(class = "map-container",
+                 column(8,id = "mainpanel_us_db",
+                       tags$h3(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
+                       leafletOutput(outputId = "map.diabetes", height=height)),
+                 column(4,
                    id = "sidebar_us_db",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                    Determinant: What are the disparities between states in rate of diabetes patients 
-                                per 100k population per state when compared to the average United States rate? </div><br>
-                                <div style='font-size:90%;line-height:1.2;'>
+                   HTML("<div>
                                 Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
                                 so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
                                The  rate of diabetes deaths per 100k in a state is<br>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br>
                                
@@ -647,13 +651,8 @@ ui <-
                                
                                <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
                                   <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-                          </div>"),
-                   #HTML(footer_text),
-                   width=4),
-                 
-                 mainPanel(id = "mainpanel_us_db",
-                   tags$h4(class="map-title", "US Diabetes Rate Disparities by State Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.diabetes", height="100%"), width=8)
+                          </div>")),
+                 )
                )
       ),
       
@@ -692,46 +691,48 @@ ui <-
       # ),
       
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
+                        HTML("<div><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
                value="determinant_ny_diabetes",
-               sidebarLayout(
-                 sidebarPanel(
+               fluidPage(
+                 fluidRow(class="page_title", tags$h1("DETERMINANT: New York Diabetes Disparities")),
+                 fluidRow(class="page_title", tags$h2("What are the disparities between New York counties in the rate 
+                                of diabetes patients per 100k population when compared to the average United 
+                                States rate?")),
+                 fluidRow(class = "map-container",
+                 column(8, id = "mainpanel_ny_det",
+                   tags$h3(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
+                   leafletOutput(outputId = "map.NY.diabetes", height=height)),
+                 column(4,
                    id = "sidebar_ny_det",
                    #HTML(whatisit_text),
-                   HTML("<div style='font-weight:bold;line-height:1.3;'>
-                     Determinant: What are the disparities between New York counties in the rate 
-                                of diabetes patients per 100k population when compared to the average United 
-                                States rate?</div><br>
-                                <div style='font-size:90%;line-height:1.3em;'>
-                                Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
-                                so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
-                               The  rate of diabetes patients per 100k in a county  is<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
-                               <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                               <strong>Date: </strong> 2020<br><br>
-                               
-                               <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-                                  <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+                   HTML("
+                        <div>
+                        Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+                        so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
+                       The  rate of diabetes patients per 100k in a county  is<br>
+                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                       <i>Darker shades indicate greater disparity.</i><br><br>
+                       
+                       <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
+                       <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
+                       <strong>Date: </strong> 2020<br><br>
+                       
+                       <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+                          <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
 
-                               </div>"),
-                   #HTML(footer_text),
-                   width=4),
+                       </div>"))
                  
-                 mainPanel(id = "mainpanel_ny_det",
-                   tags$h4(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
-                           leafletOutput(outputId = "map.NY.diabetes", height="100%"), width=8)
+                 )
                )
       )
       ),
       navbarMenu(menuName ="about_menu",
-                 HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div style='font-size:80%;line-height:1.3;'><b>About</b></div>")),
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
+                 HTML("<div><b>ABOUT</b></div>"),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                        HTML("<div><b>About</b></div>")),
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
@@ -752,8 +753,8 @@ ui <-
              HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
                   <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>")
              )
-    ),
-    tags$script(src = "style.js")
+    )
+    #,tags$script(src = "style.js")
   )
 #### Server Code ####
 server <- function(input, output, session) {
@@ -1783,13 +1784,13 @@ server <- function(input, output, session) {
     if (select.rate == "Overall") {
       covid_NY_TS <- covid_NY_TS_plot.cases %>%
         mutate(y = cases)
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS <- covid_NY_TS_plot.cases %>%
         mutate(y = p_cases) %>%
         filter(y >= 10)
-      per <- "/100k "
+      per <- "/100k: "
     }
     point <- nearPoints(covid_NY_TS, hover, threshold = 5, addDist = TRUE, maxpoints = 1,
                         xvar="date", yvar="y")
@@ -1807,19 +1808,20 @@ server <- function(input, output, session) {
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+                    "right:", left_px + 2, "px; top:", top_px + 2, "px;")
 
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
       if (point$County == "New York State"){
         wellPanel(
         # style = style,
-        p(HTML(paste0(point$County,": ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+        class = "gg_tooltip",
+        h3(HTML(paste0("<b>",point$County,"</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
       )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(point$County," County: ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$County," County</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
         )
         
       }
@@ -1830,12 +1832,14 @@ server <- function(input, output, session) {
         filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.county,": ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.county,"</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.county," County: ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.county," County</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
         
       }
@@ -1855,7 +1859,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)# %>%
       #filter(date >= date[1] & date <= date[2])
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS_plot.ma <- covid_NY_TS_plot.cases %>%
@@ -1864,7 +1868,7 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)# %>%
       #filter(date >= date[1] & date <= date[2])
-      per <- "/100k "
+      per <- "/100k: "
     }
     
     point <- covid_NY_TS_plot.ma %>%
@@ -1883,20 +1887,29 @@ server <- function(input, output, session) {
     # create style property for tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); height:15%;",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); 
+                    width:30%; padding: 0; margin: 0;",
+                    "left:", 0, "px;")
+    # print(hover$x)
+    # print(hover$domain$left)
+    # print(hover$domain$right - hover$domain$left)
+    # print(hover$y)
+    # print(hover$domain$top)
+    # print(hover$range$bottom - hover$range$top)
+    
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
       avg_window <- as.Date(point$date, format = "%m-%d-%Y") - moving.avg.window + 1
       if (point$Region == "New York State"){
         wellPanel(
-          p(HTML(paste0(point$Region,": ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Average New Cases",per,format(round(point$ma),big.mark = ","),"<br>Window: ",avg_window, " to ", point$date)))
         )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(point$Region," Region: ",format(round(point$ma),big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Average New Cases",per,format(round(point$ma),big.mark = ","),"<br>Window: ",avg_window, " to ", point$date)))
         )
         
       }
@@ -1908,12 +1921,13 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",format(round(point[1,]$ma), big.mark = ","),per," avg daily new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.region,"</b><br>Average New Cases",per,format(round(point[1,]$ma), big.mark = ","),"<br>Window: ",avg_window, " to ", yesterday)))
         )
       } else {
         wellPanel(
-          # style = style,
-          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$ma), big.mark = ","),per," daily avg new COVID-19 cases from ",avg_window, " to ", yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",selected.region," Region</b><br>Average New Cases",per,format(round(point[1,]$ma), big.mark = ","),"<br>Window: ",avg_window, " to ", yesterday)))
         )
       }
     }
@@ -1932,12 +1946,12 @@ server <- function(input, output, session) {
     if (select.region == "Overall") {
       covid_NY_TS.reg <- covid_NY_TS.reg %>%
         mutate(y = cases)
-      per <- ""
+      per <- ": "
     }
     else {
       covid_NY_TS.reg <- covid_NY_TS.reg %>%
         mutate(y = p_cases)
-      per <- "/100k "
+      per <- "/100k: "
     }
     
     point <- covid_NY_TS.reg %>%
@@ -1964,12 +1978,14 @@ server <- function(input, output, session) {
       if (point$Region == "New York State"){
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region,": ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
-        )
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
+          )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(point$Region," Region: ",format(round(point$y),big.mark = ","),per," COVID-19 cases as of ",point$date)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Total Cases",per,format(round(point$y),big.mark = ","),"<br>Date: ",point$date)))
         )
         
       }
@@ -1980,13 +1996,15 @@ server <- function(input, output, session) {
         filter(Region == selected.region & date == yesterday)
       if (selected.region == "New York State"){
         wellPanel(
-          p(HTML(paste0(selected.region,": ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region,"</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
         )
       } else {
         wellPanel(
           # style = style,
-          p(HTML(paste0(selected.region," Region: ",format(round(point[1,]$y),big.mark = ","),per," COVID-19 cases as of ",yesterday)))
-        )
+          class = "gg_tooltip",
+          h3(HTML(paste0("<b>",point$Region," Region</b><br>Total Cases",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
+          )
       }
     }
   })
