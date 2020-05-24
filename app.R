@@ -630,7 +630,6 @@ ui <-
                  fluidRow(class = "map-container",
                  column(4,
                    id = "sidebar_us_db",
-                   #HTML(whatisit_text),
                                uiOutput("sb_us_det_output"),
                                HTML(
                                "<div>
