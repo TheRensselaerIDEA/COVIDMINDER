@@ -1,56 +1,56 @@
 NAME,covid19_cases,covid19_deaths,covid19_recovered
-United States,1576904,94691,298418
-Alabama,13288,529,0
-Alaska,401,10,0
-Arizona,15348,764,0
-Arkansas,5458,110,0
-California,88031,3583,0
-Colorado,23191,1310,0
-Connecticut,39208,3583,0
-Delaware,8386,317,0
-District of Columbia,7788,412,0
-Florida,48675,2144,0
-Georgia,40663,1775,0
+United States,1622369,97076,361239
+Alabama,14117,549,0
+Alaska,407,10,0
+Arizona,16053,801,0
+Arkansas,5775,115,0
+California,92539,3738,0
+Colorado,23964,1327,0
+Connecticut,40022,3675,0
+Delaware,8529,322,0
+District of Columbia,7966,427,0
+Florida,50127,2233,0
+Georgia,42242,1822,0
 Guam,165,5,0
-Hawaii,647,17,0
-Idaho,2506,77,0
-Illinois,102688,4607,0
-Indiana,29936,1913,0
-Iowa,16170,410,0
-Kansas,8625,204,0
-Kentucky,8286,386,0
-Louisiana,36504,2629,0
-Maine,1877,73,0
-Maryland,43531,2159,0
-Massachusetts,90084,6148,0
-Michigan,53510,5129,0
-Minnesota,18200,818,0
-Mississippi,12222,580,0
-Missouri,11689,668,0
+Hawaii,643,17,0
+Idaho,2595,79,0
+Illinois,107796,4790,0
+Indiana,30901,1964,0
+Iowa,16898,446,0
+Kansas,8946,205,0
+Kentucky,8571,391,0
+Louisiana,36925,2668,0
+Maine,2013,77,0
+Maryland,45495,2243,0
+Massachusetts,91662,6304,0
+Michigan,54365,5223,0
+Minnesota,19845,861,0
+Mississippi,13005,616,0
+Missouri,11966,682,0
 Montana,479,16,0
-Nebraska,11427,138,0
-Nevada,7400,383,0
-New Hampshire,3935,199,0
-New Jersey,151586,10846,0
-New Mexico,6472,294,0
-New York,356458,28743,0
-North Carolina,20512,728,0
-North Dakota,2229,51,0
-Ohio,30167,1837,0
-Oklahoma,5680,304,0
-Oregon,3817,145,0
-Pennsylvania,69252,4869,0
-Puerto Rico,2913,126,0
-Recovered,0,0,298418
-Rhode Island,13571,556,0
-South Carolina,9381,416,0
-South Dakota,4177,48,0
-Tennessee,18961,313,0
-Texas,53053,1460,0
-Utah,7874,92,0
-Vermont,950,54,0
-Virginia,34137,1100,0
-Washington,19117,1044,0
-West Virginia,1593,70,0
-Wisconsin,13885,487,0
-Wyoming,801,12,0
+Nebraska,11963,147,0
+Nevada,7526,387,0
+New Hampshire,4089,208,0
+New Jersey,153140,11082,0
+New Mexico,6625,302,0
+New York,359926,29031,0
+North Carolina,22864,778,0
+North Dakota,2365,52,0
+Ohio,31408,1956,0
+Oklahoma,5960,311,0
+Oregon,3888,147,0
+Pennsylvania,71009,5112,0
+Puerto Rico,3100,127,0
+Recovered,0,0,361239
+Rhode Island,13952,597,0
+South Carolina,9895,425,0
+South Dakota,4464,50,0
+Tennessee,19785,329,0
+Texas,54776,1478,0
+Utah,8260,97,0
+Vermont,954,54,0
+Virginia,35749,1159,0
+Washington,19265,1050,0
+West Virginia,1705,72,0
+Wisconsin,14877,507,0
+Wyoming,813,12,0
