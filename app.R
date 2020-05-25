@@ -7,7 +7,7 @@ update_date <- "05-25-2020" # makes it easy to change all occurances when we upd
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
-height <- "500px"# plot heights
+height <- "600px"# plot heights
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
