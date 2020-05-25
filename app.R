@@ -7,7 +7,7 @@ update_date <- "05-25-2020" # makes it easy to change all occurances when we upd
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
-height <- "500px"# plot heights
+height <- "600px"# plot heights
 
 # Leaving this in case we need it
 # TODO: Implement other text as strings like this...
@@ -628,6 +628,16 @@ ui <-
                  fluidRow(class="page_title", uiOutput("us_det_title")),
                  fluidRow(class="page_title", uiOutput("us_det_subtitle")),
                  fluidRow(class = "map-container",
+                column(8, id = "mainpanel_us_db",
+                       tags$h3(class="map-title", textOutput("us_det_output")),
+                       tags$br(),tags$br(),
+                       tags$div(class = "select-bar",
+                                selectInput(inputId = "determinant",
+                                            label = NULL,
+                                            choices = c("Diabetes", "Obesity", "Heart Disease"),
+                                            selected = "Diabetes"
+                                )),
+                       leafletOutput(outputId = "map.determinant", height=height)),
                  column(4,
                    id = "sidebar_us_db",
                                uiOutput("sb_us_det_output"),
@@ -637,18 +647,7 @@ ui <-
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
                                <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
                                <i>Darker shades indicate greater disparity.</i><br><br></div>"),
-                               uiOutput("sb_us_det_footer")),
-                 
-                 column(8, id = "mainpanel_us_db",
-                   tags$h3(class="map-title", textOutput("us_det_output")),
-                   tags$br(),tags$br(),
-                   tags$div(class = "select-bar",
-                            selectInput(inputId = "determinant",
-                                        label = NULL,
-                                        choices = c("Diabetes", "Obesity", "Heart Disease"),
-                                        selected = "Diabetes"
-                            )),
-                           leafletOutput(outputId = "map.determinant", height=height)))
+                               uiOutput("sb_us_det_footer")))
                )
       ),
       
