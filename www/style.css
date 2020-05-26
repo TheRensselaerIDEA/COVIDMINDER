@@ -216,7 +216,7 @@ p {
 }
 
 
-@media screen and (max-width:925px){
+@media screen and (max-width:1160px){
   .title-text {
     height: 50px;
   }
