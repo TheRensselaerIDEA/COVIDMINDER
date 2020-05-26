@@ -623,13 +623,13 @@ ui <-
                  HTML("<div><b>DETERMINANT</b></div>"),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
                      HTML("<div><b>DETERMINANT</b></br>USA</div>")),
-               value="determinant_usa_diabetes",
+               value="determinant_usa",
                fluidPage(
                  fluidRow(class="page_title", uiOutput("us_det_title")),
                  fluidRow(class="page_title", uiOutput("us_det_subtitle")),
                  fluidRow(class = "map-container",
                 column(8, id = "mainpanel_us_db",
-                       tags$h3(class="map-title", textOutput("us_det_output")),
+                       tags$h3(class="map-title", textOutput("us_det_map_title")),
                        tags$br(),tags$br(),
                        tags$div(class = "select-bar",
                                 selectInput(inputId = "determinant",
@@ -650,112 +650,34 @@ ui <-
                                uiOutput("sb_us_det_footer")))
                )
       ),
-      
-      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Obesity</div>")),
-      #          value="determinant_usa_obesity",
-      #          sidebarLayout(
-      #            sidebarPanel(
-      #              id = "sidebar_us_ob",
-      #              #HTML(whatisit_text),
-      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
-      #               Determinant: What are the disparities between states in rate of obese patients 
-      #                           per 100k population per state when compared to the average United States rate? </div><br>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-      #                          <i>Darker shades indicate greater disparity.</i><br><br>
-      #                          
-      #                          <div style='font-size:90%;line-height:1.2;'>
-      #                          <strong>Obesity Rate</strong> = number of obese patients per 100K population <br>
-      #                          <strong>Obesity Disparity Index</strong> = log(Obesity Rate in state/average Obesity Rate in US)<br>
-      #                          <strong>Date: </strong> 2020<br><br>
-      #                          
-      #                          <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-      #                             <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-      #                     </div>"),
-      #              #HTML(footer_text),
-      #              width=4),
-      #            
-      #            mainPanel(id = "mainpanel_us_ob",
-      #                      tags$h4(class="map-title", "US Obesity Rate Disparities by State Compared to Average US Rate"),
-      #                      tags$div(class="select-bar",
-      #                               selectInput(inputId = "country2",
-      #                                           label = NULL,
-      #                                           choices = country_obesity_choices,
-      #                                           selected = "de")),
-      #                      leafletOutput(outputId = "map.obesity", height="100%"), width=8)
-      #          )
-      # ),
-      
-      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>DETERMINANT (USA)</b></br>Heart Disease</div>")),
-      #          value = "heart_disease",
-      #          sidebarLayout(
-      #            sidebarPanel(
-      #              id = "sidebar_us_cardio",
-      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
-      #               Determinant: What are the disparities between states in rate of deaths (black non-hispanic) due to heart disease
-      #                           per 100k population per state when compared to the average United States rate? </div><br>
-      #                           <div style='font-size:90%;line-height:1.2;'>
-      #                           Heart disease patients at increased risk of contracting and dying from COVID-19,
-      #                           so areas with a history of higher heart disease mortality may face increased COVID-19 burdens.
-      #                           Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups. <br><br>
-      #                          The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is<br>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-      #                          <i>Darker shades indicate greater disparity.</i><br><br>
-      # 
-      #                          <strong>Heart Disease Death Rate (BNH)</strong> = number of heart disease deaths (black non-hispanic) per 100K population <br>
-      #                          <strong>Heart Disease Death Disparity Index (BNH)</strong> = log(Heart Disease Death Rate (BNH) in state/average Heart Disease Death Rate in US)<br>
-      #                          <strong>Date: </strong> 2015<br><br>
-      # 
-      #                          <b>DATA SOURCE:</b> <a href='https://sortablestats.cdc.gov/#/indicator'>CDC</a><br>
-      #                     </div>"),
-      #              width=4),
-      # 
-      #            mainPanel(id = "mainpanel_us_cardio",
-      #                      tags$h4(class="map-title", "US Heart Disease Death Rate Disparities (Black Non-Hispanic) by State Compared to Average US Rate"),
-      #                      leafletOutput(outputId = "map.cardio.bnh", height="100%"), width=8)
-      #          )
-      # ),
-      
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>DETERMINANT (NY)</b></br>Diabetes</div>")),
-               value="determinant_ny_diabetes",
+                        HTML("<div><b>DETERMINANT</b></br>NY</div>")),
+               value="determinant_ny",
                fluidPage(
-                 fluidRow(class="page_title", tags$h1("DETERMINANT: New York Diabetes Disparities")),
-                 fluidRow(class="page_title", tags$h2("What are the disparities between New York counties in the rate 
-                                of diabetes patients per 100k population when compared to the average United 
-                                States rate?")),
+                 fluidRow(class="page_title", uiOutput("ny_det_title")),
+                 fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
                  fluidRow(class = "map-container",
                  column(8, id = "mainpanel_ny_det",
-                   tags$h3(class="map-title", "COVID-19 Diabetes Rate Disparities by County in New York Compared to Average US Rate"),
+                   tags$h3(class="map-title", textOutput("ny_det_map_title")),
+                   tags$br(),tags$br(),
+                   tags$div(class = "select-bar",
+                            selectInput(inputId = "determinant",
+                                        label = NULL,
+                                        choices = c("Diabetes"), # , "Obesity", "Heart Disease"
+                                        selected = "Diabetes"
+                            )),
                    leafletOutput(outputId = "map.NY.diabetes", height=height)),
                  column(4,
                    id = "sidebar_ny_det",
-                   #HTML(whatisit_text),
+                   uiOutput("sb_ny_det_output"),
                    HTML("
                         <div>
-                        Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
-                        so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
-                       The  rate of diabetes patients per 100k in a county  is<br>
                        <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
                        <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
                        <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
                        <i>Darker shades indicate greater disparity.</i><br><br>
-                       
-                       <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
-                       <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
-                       <strong>Date: </strong> 2020<br><br>
-                       
-                       <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
-                          <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
-
-                       </div>"))
-                 
-                 )
+                       </div>"),
+                   uiOutput("sb_ny_det_footer")))
                )
       )
       ),
@@ -967,14 +889,24 @@ server <- function(input, output, session) {
     #Remove personal API key
   }
   
-  output$us_det_output <- renderText ({
+  output$us_det_map_title <- renderText ({
     select.det <- input$determinant
     paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate")
+  })
+  
+  output$ny_det_map_title <- renderText ({
+    select.det <- input$determinant
+    paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate")
   })
   
   output$us_det_title <- renderUI ({
     select.det <- input$determinant
     tags$h1(paste0("DETERMINANT: Nationwide ",select.det," Disparities"))
+  })
+  
+  output$ny_det_title <- renderUI ({
+    select.det <- input$determinant
+    tags$h1(paste0("DETERMINANT: New York ",select.det," Disparities"))
   })
   
   output$us_det_subtitle <- renderUI ({
@@ -993,19 +925,35 @@ server <- function(input, output, session) {
     }
   })
   
+  output$ny_det_subtitle <- renderUI ({
+    select.det <- input$determinant
+    if ( select.det == "Diabetes") {
+      tags$h2("What are the disparities between New York counties in the rate 
+                                of diabetes patients per 100k population when compared to the average United 
+                                States rate?")
+    }
+    else if ( select.det == "Obesity") {
+      
+    }
+    else if ( select.det == "Heart Disease") {
+      
+    }
+  })
+  
+  
   output$sb_us_det_output <- renderUI ({
     select.det <- input$determinant
     if ( select.det == "Diabetes") {
       tagList(
-      tags$p("Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+        tags$p("Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
       so areas with higher diabetes rates may face increased COVID-19 burdens."),
-      tags$p("The  rate of diabetes deaths per 100k in a state is:")
+        tags$p("The  rate of diabetes deaths per 100k in a state is:")
       )
     }
     else if ( select.det == "Obesity") {
       tagList(
-      tags$p("Obesity puts patients at increased risk of contracting and dying from COVID-19, so areas with higher rates of obesity may face increased COVID-19 burdens."),
-      tags$p("The  rate of obesity in a state is:")
+        tags$p("Obesity puts patients at increased risk of contracting and dying from COVID-19, so areas with higher rates of obesity may face increased COVID-19 burdens."),
+        tags$p("The  rate of obesity in a state is:")
       )
     }
     else if ( select.det == "Heart Disease") {
@@ -1015,6 +963,31 @@ server <- function(input, output, session) {
                                  Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups."),
         tags$p("The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is:")
       )
+    }
+  })
+  
+  output$sb_ny_det_output <- renderUI ({
+    select.det <- input$determinant
+    if ( select.det == "Diabetes") {
+      tagList(
+        tags$p("Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+                so areas with higher diabetes rates may face increased COVID-19 burdens."),
+        tags$p("The rate of diabetes patients per 100k in a county is:")
+      )
+    }
+    else if ( select.det == "Obesity") {
+      #tagList(
+      #  tags$p("Obesity puts patients at increased risk of contracting and dying from COVID-19, so areas with higher rates of obesity may face increased COVID-19 burdens."),
+      #  tags$p("The  rate of obesity in a state is:")
+      #)
+    }
+    else if ( select.det == "Heart Disease") {
+      #tagList(
+      #  tags$p("Heart disease patients at increased risk of contracting and dying from COVID-19,
+      #                           so areas with a history of higher heart disease mortality may face increased COVID-19 burdens.
+      #                           Furthermore, some ethnic groups have higher mortality rates due to heart disease than other groups."),
+      #  tags$p("The rate of deaths due to heart disease (black non-hispanic) per 100k in a state is:")
+      #)
     }
   })
   
@@ -1051,6 +1024,26 @@ server <- function(input, output, session) {
       ))
     }
   })
+  output$sb_ny_det_footer <- renderUI ({
+    select.det <- input$determinant
+    if ( select.det == "Diabetes") {
+      tagList(
+        tags$div(HTML(paste0(
+          "  <strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
+             <strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
+             <strong>Date: </strong> 2020<br><br>
+             <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+             <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>")))
+      )
+    }
+    else if ( select.det == "Obesity") {
+    }
+    else if ( select.det == "Heart Disease") {
+    }
+  })
+  
+
+    
 
   map.cardio.bnh <- {
     
@@ -2585,9 +2578,9 @@ server <- function(input, output, session) {
                           'outcome_ny_cases_time_region',
                           'mediation_usa_testing',
                           'mediation_usa_hospital_beds',
-                          'determinant_usa_diabetes',
-                          'determinant_usa_obesity',
-                          'determinant_ny_diabetes'
+                          'determinant_usa',
+                          #'determinant_usa_obesity',
+                          'determinant_ny'
     )], 
     Negate(is.null)))) {
       # browser()
