@@ -33,6 +33,18 @@ owid_data.total.test.rate <-todays_raw_owid_data %>%
 # write out new dataframe to file system 
 write_csv(owid_data.total.test.rate,"data/csv/owid_glb_test_rates.csv")
 
+
+# Obesity data
+
+raw_owid_data.ob <- read_csv(paste0("data/csv/", "share-of-adults-defined-as-obese.csv"))
+owid_data.obesity.rate <- raw_owid_data.ob %>%
+  filter(Code %in% check_iso_codes2) %>%
+  group_by(Code) %>%
+  filter(Year == max(Year)) %>%
+  top_n(n=1)
+write_csv(owid_data.obesity.rate,"data/csv/owid_obese_pct_2016.csv")
+
+
 # Check in on Germany; WHY no testing rate?!?!
 #todays_raw_owid_data %>% filter(iso_code == "DEU") %>%
 #  select(iso_code, location, date, total_tests_per_thousand, new_tests_per_thousand) %>%

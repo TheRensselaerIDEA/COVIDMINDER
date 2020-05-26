@@ -16,7 +16,8 @@ var ids = {
   "sidebar_ny_race": "#mainpanel_ny_race", 
   "sidebar_us_mort_race": "#mainpanel_us_mort_race", 
   "sidebar_ct_race": "#mainpanel_ct_race",
-  "sidebar_ny_new_case": "#mainpanel_ny_new_case"
+  "sidebar_ny_new_case": "#mainpanel_ny_new_case",
+  "sidebar_us_ob":"#mainpanel_us_ob"
 };
 
 

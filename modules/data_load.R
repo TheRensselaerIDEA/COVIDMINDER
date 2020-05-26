@@ -89,3 +89,9 @@ covid_racial_data_states.wide <- read_csv("data/csv/states_cdc_racial_wide.csv")
 # Important per-state legislative and EO data
 covid_eo_bills <- read_csv("data/csv/Covid_EO.csv")
 
+# Test rates from countries we are comparing to 
+total_test_rates.df <- read_csv("data/csv/owid_glb_test_rates.csv")
+
+# Obesity rates from countries we are comparing to
+owid_data.obesity.rate <- read.csv("data/csv/owid_obese_pct_2016.csv")
+colnames(owid_data.obesity.rate) <- c("Entity", "Code", "Year", "Pct_obese_adult")
