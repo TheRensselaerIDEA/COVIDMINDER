@@ -373,92 +373,6 @@ ui <-
                  )
                )
       ),
-      #tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                  HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time</div>")),
-      #         value="outcome_ny_cases_rate",
-      #         sidebarLayout(
-      #           sidebarPanel(
-      #             id = "sidebar_ny_CoT_rates",
-      #             #HTML(whatisit_text),
-      #             HTML("<div style='font-weight:bold;line-height:1.3;'>
-      #                Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
-      #             img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-      #             HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-      #                   <br><br>
-      #                   <strong>Date: </strong>",update_date,"<br><br>
-      #                   <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-      #                   </div>")),
-      #             #HTML(footer_text),
-      #             width=4),
-      #           
-      #           mainPanel(id = "mainpanel_ny_CoT_rates",
-      #                      tags$div(
-      #                      selectInput(inputId = "NYRegion.rates",
-      #                                  label = "NY Regions",
-      #                                  choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-      #                                  selected = "All Regions"),
-      #                      selectInput(inputId = "NYCounty.rates",
-      #                                  label = "NY Counties",
-      #                                  choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
-      #                                  selected = 1)
-      #                      ),
-      #                      tags$div(class = "NY_case_plots",
-      #                      plotOutput(outputId = "NY.cases.TS.rates", height="85%",
-      #                                 click = clickOpts(id ="NY.cases.TS.rates_click"),
-      #                                 dblclick = "NY.cases.TS.rates_dblclick",
-      #                                 brush = brushOpts(
-      #                                   id = "NY.cases.TS.rates_brush",
-      #                                   resetOnNew = TRUE))
-      #                      ),
-      #                      HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
-      #                           <br>To zoom plot, click and drag, then double-click in select box<br>
-      #                           To un-zoom, double-click in plot<br>
-      #                           For county details, single-click on line<br>
-      #                           </div>"),
-      #                      uiOutput("click_info_rates"), 
-      #                      width = 8)
-      #          )
-      # ), 
-      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                   HTML("<div style='font-size:80%;line-height:1.3;'><b>OUTCOME (NY)</b></br>COVID-19 Cases/100K over Time (Regions)</div>")),
-      #          value="outcome_ny_cases_rate_regions",
-      #          sidebarLayout(
-      #            sidebarPanel(
-      #              id = "sidebar_ny_CoT_rates_regions",
-      #              #HTML(whatisit_text),
-      #              HTML("<div style='font-weight:bold;line-height:1.3;'>
-      #                 Outcome: How have COVID-19 Cases per 100K population increased across New York State over time?</div> <br>"),
-      #              img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-      #              HTML(paste0("<div style='font-size:90%;line-height:1.2;'>
-      #                    <br><br>
-      #                    <strong>Date: </strong>",update_date,"<br><br>
-      #                    <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-      #                    </div>")),
-      #              #HTML(footer_text),
-      #              width=4),
-      #            
-      #            mainPanel(id = "mainpanel_ny_CoT_rates_regions",
-      #                        selectInput(inputId = "NYRegion.rates.reg",
-      #                                    label = "NY Regions",
-      #                                    choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-      #                                    selected = "All Regions"),
-      #                      tags$div(class = "NY_case_plots",
-      #                               plotOutput(outputId = "NY.cases.TS.rates.reg", height="85%",
-      #                                          click = clickOpts(id ="NY.cases.TS.rates_click.reg"),
-      #                                          dblclick = "NY.cases.TS.rates_dblclick",
-      #                                          brush = brushOpts(
-      #                                            id = "NY.cases.TS.rates_brush",
-      #                                            resetOnNew = TRUE))
-      #                      ),
-      #                      HTML("<div style='font-size:80%;line-height:1.3;position:absolute;bottom:0;'>
-      #                           <br>To zoom plot, click and drag, then double-click in select box<br>
-      #                           To un-zoom, double-click in plot<br>
-      #                           For county details, single-click on line<br>
-      #                           </div>"),
-      #                      uiOutput("click_info_rates_reg"), 
-      #                      width = 8)
-      #          )
-      # ),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
                value="outcome_ny_racial_disparity",
@@ -709,6 +623,7 @@ ui <-
     )
     #,tags$script(src = "style.js")
   )
+
 #### Server Code ####
 server <- function(input, output, session) {
   # Leaflet plot colors
@@ -1284,7 +1199,6 @@ server <- function(input, output, session) {
     }
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$ldi, bins = bins, reverse=FALSE)
-    
     labels <- sprintf(
       paste0("<strong>%s</strong><br/>",
       det," Rate DI: %.2g<br>",
@@ -1439,24 +1353,10 @@ server <- function(input, output, session) {
     #print(range)
     
     select.size <- 2
-    #if (selected.county != "All Counties") {
-    #  selected.region <- "All Regions"
-    #}
     if (selected.county == "All Counties") {
       selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
       select.size <- 1
     }
-    
-    # if (selected.region == "All Regions") {
-    #   selected.region <- sort(unique(covid_NY_TS_plot.cases$Region))
-    #   if (selected.county == "All Counties") {
-    #     selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
-    #     select.size <- 1
-    #   }
-    # }
-    # else {
-    #   selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
-    # }
     
     if (select.rate=="Overall") {
       covid_NY_TS <- covid_NY_TS_plot.cases %>%
@@ -1960,13 +1860,6 @@ server <- function(input, output, session) {
     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); 
                     width:30%; padding: 0; margin: 0;",
                     "left:", 0, "px;")
-    # print(hover$x)
-    # print(hover$domain$left)
-    # print(hover$domain$right - hover$domain$left)
-    # print(hover$y)
-    # print(hover$domain$top)
-    # print(hover$range$bottom - hover$range$top)
-    
     
     # actual tooltip created as wellPanel
     if (nrow(point) != 0) {
