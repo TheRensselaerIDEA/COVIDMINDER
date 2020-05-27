@@ -1,5 +1,4 @@
 county,deaths,date
-New York State,23564,5/26/20
 Albany,98,5/26/20
 Allegany,2,5/26/20
 Bronx,3194,5/26/20
@@ -27,11 +26,11 @@ Kings,4846,5/26/20
 Lewis,5,5/26/20
 Livingston,3,5/26/20
 Madison,8,5/26/20
-Manhattan,1991,5/26/20
 Monroe,186,5/26/20
 Montgomery,4,5/26/20
 Nassau,2108,5/26/20
-New York,15637,5/26/20
+New York,1991,5/26/20
+New York State,23564,5/26/20
 Niagara,59,5/26/20
 Oneida,45,5/26/20
 Onondaga,109,5/26/20
@@ -45,12 +44,12 @@ Queens,4886,5/26/20
 Rensselaer,25,5/26/20
 Richmond,720,5/26/20
 Rockland,492,5/26/20
-St. Lawrence,2,5/26/20
 Saratoga,14,5/26/20
 Schenectady,27,5/26/20
 Schoharie,2,5/26/20
 Schuyler,0,5/26/20
 Seneca,1,5/26/20
+St. Lawrence,2,5/26/20
 Steuben,27,5/26/20
 Suffolk,1851,5/26/20
 Sullivan,30,5/26/20

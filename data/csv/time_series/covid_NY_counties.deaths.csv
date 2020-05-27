@@ -1,5 +1,4 @@
 county,deaths
-New York State,23564
 Albany,98
 Allegany,2
 Bronx,3194
@@ -27,11 +26,11 @@ Kings,4846
 Lewis,5
 Livingston,3
 Madison,8
-Manhattan,1991
 Monroe,186
 Montgomery,4
 Nassau,2108
-New York,15637
+New York,1991
+New York State,23564
 Niagara,59
 Oneida,45
 Onondaga,109
@@ -45,12 +44,12 @@ Queens,4886
 Rensselaer,25
 Richmond,720
 Rockland,492
-St. Lawrence,2
 Saratoga,14
 Schenectady,27
 Schoharie,2
 Schuyler,0
 Seneca,1
+St. Lawrence,2
 Steuben,27
 Suffolk,1851
 Sullivan,30
