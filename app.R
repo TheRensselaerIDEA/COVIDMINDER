@@ -776,36 +776,28 @@ server <- function(input, output, session) {
         id = "mapbox.light"))
   })
   
-  get_determinant <- reactive({
-    if ("Diabetes" %in% input$determinant) return(map.diabetes)
-    if ("Obesity" %in% input$determinant) return(map.obesity)
-    if ("Heart Disease" %in% input$determinant) return(map.cardio.bnh)
-  })
-  
   output$map.determinant <- renderLeaflet({
     det <- input$determinant
     if ("Diabetes" %in% det) {
       states$ldi <- states$diabetes_rate_ldi
-      labels2 <- sprintf(
-        "<strong>%s</strong><br/>
-        Diabetes Rate DI: %.2g<br/>
-        Diabetes Rate: %.1f per 100k",
-        states$NAME, states$ldi, states$pct_Adults_with_Diabetes*1000
-      ) %>% lapply(htmltools::HTML)
+      states$pct <- states$pct_Adults_with_Diabetes*1000
     }
     else if ("Obesity" %in% det) {
       states$ldi <- states$obesity_ldi.us
-      labels2 <- sprintf(
-        "<strong>%s</strong><br/>
-        Obesity Rate DI: %.2g<br/>
-        Obesity Rate: %.1f %%",
-        states$NAME, states$ldi, states$pct_Adults_with_Obesity
-      ) %>% lapply(htmltools::HTML)
+      states$pct <- states$pct_Adults_with_Obesity * 1000
     }
-    else if ("Heart Disease" %in% input$determinant) {
-      
+    else if ("Heart Disease" %in% det) {
+      states$ldi <- states$cardio_death_rate_BNH_ldi
+      states$pct <- states$cardio_deaths_p_Black_Non_Hispanic
+      det <- paste0(det, " Death")
     }
     
+    labels2 <- sprintf(
+      paste0("<strong>%s</strong><br/>",
+        det, " Rate DI: %.2g<br/>",
+        det, " Rate: %.1f per 100k"),
+      states$NAME, states$ldi, states$pct
+    ) %>% lapply(htmltools::HTML)
     pal2 <- leaflet::colorBin(colors, domain = states$ldi, bins = bins, reverse=FALSE)
     
     leaflet(states.shapes) %>%
