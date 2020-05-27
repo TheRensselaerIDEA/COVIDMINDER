@@ -713,6 +713,7 @@ ui <-
 server <- function(input, output, session) {
   # Leaflet plot colors
   colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+  bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
   
   # Join NY shape and data, may move to processing 
   
@@ -728,7 +729,7 @@ server <- function(input, output, session) {
     
     states <- data.frame(states, "tests_ldi"=unlist(tests_ldi)) # Append to states
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    
     pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=TRUE)
 #    browser()
     labels2 <- sprintf(
@@ -781,25 +782,36 @@ server <- function(input, output, session) {
     if ("Heart Disease" %in% input$determinant) return(map.cardio.bnh)
   })
   
-  output$map.determinant <- renderLeaflet(
-    get_determinant()
-  )
-  
-  map.diabetes <- {
+  output$map.determinant <- renderLeaflet({
+    det <- input$determinant
+    if ("Diabetes" %in% det) {
+      states$ldi <- states$diabetes_rate_ldi
+      labels2 <- sprintf(
+        "<strong>%s</strong><br/>
+        Diabetes Rate DI: %.2g<br/>
+        Diabetes Rate: %.1f per 100k",
+        states$NAME, states$ldi, states$pct_Adults_with_Diabetes*1000
+      ) %>% lapply(htmltools::HTML)
+    }
+    else if ("Obesity" %in% det) {
+      states$ldi <- states$obesity_ldi.us
+      labels2 <- sprintf(
+        "<strong>%s</strong><br/>
+        Obesity Rate DI: %.2g<br/>
+        Obesity Rate: %.1f %%",
+        states$NAME, states$ldi, states$pct_Adults_with_Obesity
+      ) %>% lapply(htmltools::HTML)
+    }
+    else if ("Heart Disease" %in% input$determinant) {
+      
+    }
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$diabetes_rate_ldi, bins = bins, reverse=FALSE)
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      Diabetes Rate DI: %.2g<br/>
-      Diabetes Rate: %.1f per 100k",
-      states$NAME, states$diabetes_rate_ldi, states$pct_Adults_with_Diabetes*1000
-    ) %>% lapply(htmltools::HTML)
+    pal2 <- leaflet::colorBin(colors, domain = states$ldi, bins = bins, reverse=FALSE)
     
     leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
-        fillColor = ~pal2(states$diabetes_rate_ldi),
+        fillColor = ~pal2(states$ldi),
         weight = 1,
         opacity = 1,
         color = "#330000",
@@ -818,7 +830,7 @@ server <- function(input, output, session) {
           direction = "auto")) %>% 
       addLegend(pal = pal2, 
                 values = ~states$diabetes_rate_ldi, 
-                opacity = 0.7, title = "Disparity Index<br/>US Diabetes Rate",
+                opacity = 0.7, title = paste0("Disparity Index<br/>US ",det, " Rate"),
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                 cuts[n] = paste0(cuts[n]," lower") 
@@ -829,66 +841,8 @@ server <- function(input, output, session) {
                 }) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light"))
-    #Remove personal API key
   }
-  
-  #output$map.obesity <- renderLeaflet(map.obesity)
-  
-  map.obesity <- {
-    #country <- input$country2 # selected country
-    
-    # modify states to have selected columns for our plot
-    obesity_ldi <- states %>% 
-      select(starts_with("obesity_ldi")) %>%
-      select(ends_with("us"))
-    
-    states <- data.frame(states, "obesity_ldi"=unlist(obesity_ldi)) # Append to states
-    
-    
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$obesity_ldi, bins = bins, reverse=FALSE)
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      Obesity Rate DI: %.2g<br/>
-      Obesity Rate: %.1f %%",
-      states$NAME, states$obesity_ldi, states$pct_Adults_with_Obesity
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(states$obesity_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~states$obesity_ldi, 
-                opacity = 0.7, title = "Disparity Index<br/>US Obesity Rate",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
-  }
+  )
   
   output$us_det_map_title <- renderText ({
     select.det <- input$determinant
@@ -1052,57 +1006,7 @@ server <- function(input, output, session) {
     else if ( select.det == "Heart Disease") {
     }
   })
-  
 
-    
-
-  map.cardio.bnh <- {
-    
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
-    pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_BNH_ldi, bins = bins, reverse=FALSE)
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      Heart Disease Death Rate DI (BNH): %.2g<br/>
-      Heart Disease Death Rate (BNH): %.1f per 100k",
-      states$NAME, states$cardio_death_rate_BNH_ldi, states$cardio_deaths_p_Black_Non_Hispanic
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(states$cardio_death_rate_BNH_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~states$cardio_death_rate_BNH_ldi, 
-                opacity = 0.7, title = "Disparity Index<br/>US Heart Disease Death Rate (BNH)",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
-  }
-  
   output$map.hospital <- renderLeaflet({
     
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -1286,9 +1190,6 @@ server <- function(input, output, session) {
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
     
-    #NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
-    #NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
-    
     labels <- sprintf(
       "<strong>%s</strong><br/>
       COVID-19 Mortality Rate DI: %.2g<br>
@@ -1338,9 +1239,6 @@ server <- function(input, output, session) {
     
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
-    
-    #NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
-    #NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
     
     labels <- sprintf(
       "<strong>%s</strong><br/>
@@ -1399,12 +1297,7 @@ server <- function(input, output, session) {
   )
   
   map.NY.diabetes <- {
-    
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
-    
-    #NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
-    #NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
     
     labels <- sprintf(
       "<strong>%s</strong><br/>
@@ -1452,12 +1345,7 @@ server <- function(input, output, session) {
   }
   
   map.NY.obesity <- {
-
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$obesity_ldi, bins = bins, reverse=FALSE)
-
-    #NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
-    #NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
 
     labels <- sprintf(
       "<strong>%s</strong><br/>
@@ -2407,7 +2295,6 @@ server <- function(input, output, session) {
       arrange(desc(Race.Ethnicity))
     
     # Setup: COVIDMINDER Colors and DI bins
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     di_pal <- leaflet::colorBin(colors, domain = NYS_Dis_m.df$Dis, bins = bins, reverse=FALSE)
     
     # Create color column with correct mapping
@@ -2469,7 +2356,6 @@ server <- function(input, output, session) {
       arrange(desc(Race.Ethnicity))
     
     # Setup: COVIDMINDER Colors and DI bins
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     di_pal <- leaflet::colorBin(colors, domain = NYC_Dis_m.df$Dis, bins = bins, reverse=FALSE)
     
     # Create color column with correct mapping
@@ -2530,7 +2416,6 @@ server <- function(input, output, session) {
       mutate(Dis = -log(Percent.of.Pop/Percent.of.Fatalities))
     
     # Setup: COVIDMINDER Colors and DI bins
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     di_pal <- leaflet::colorBin(colors, domain = CT_Dis_m.df$Dis, bins = bins, reverse=FALSE)
     
     
