@@ -889,7 +889,6 @@ server <- function(input, output, session) {
     }
   })
   
-  
   output$sb_us_det_output <- renderUI ({
     select.det <- input$determinant
     if ( select.det == "Diabetes") {
@@ -1001,7 +1000,6 @@ server <- function(input, output, session) {
 
   output$map.hospital <- renderLeaflet({
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=TRUE)
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -1049,7 +1047,6 @@ server <- function(input, output, session) {
   
   output$map.covid_deaths <- renderLeaflet({
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
     
     labels2 <- sprintf(
@@ -1122,7 +1119,6 @@ server <- function(input, output, session) {
     states <- data.frame(states, "race_deaths_pct"=unlist(race_deaths_pct)) # Append to states
     states <- data.frame(states, "race_wd_pop_pct"=unlist(race_wd_pop_pct)) # Append to states
 
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi_race, bins = bins, reverse=FALSE)
     
     labels2 <- sprintf(
@@ -1178,7 +1174,6 @@ server <- function(input, output, session) {
   
   output$map.NY.deaths <- renderLeaflet({
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     
     pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
     
@@ -1229,7 +1224,6 @@ server <- function(input, output, session) {
   
   output$map.NY.cases <- renderLeaflet({
     
-    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
     pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
     
     labels <- sprintf(
@@ -1284,24 +1278,30 @@ server <- function(input, output, session) {
     #if ("Heart Disease" %in% input$determinant_NY) return(map.cardio.bnh)
   })
   
-  output$map.NY.determinant <- renderLeaflet(
-    get_NY_determinant()
-  )
-  
-  map.NY.diabetes <- {
-    pal2 <- leaflet::colorBin(colors, domain = NY.data$diabetes_ldi, bins = bins, reverse=FALSE)
+  output$map.NY.determinant <- renderLeaflet({
+    det <- input$determinant_NY
+    if ("Diabetes" %in% det) {
+      NY.data$ldi <- NY.data$diabetes_ldi
+      NY.data$pct <-  NY.data$pct_Adults_with_Diabetes*1000
+    }
+    else if ("Obesity" %in% det) {
+      NY.data$ldi <- NY.data$obesity_ldi
+      NY.data$pct <-  NY.data$pct_Adults_with_Obesity*1000
+    }
+    
+    pal2 <- leaflet::colorBin(colors, domain = NY.data$ldi, bins = bins, reverse=FALSE)
     
     labels <- sprintf(
-      "<strong>%s</strong><br/>
-      Diabetes Rate DI: %.2g<br>
-      Diabetes Rate: %.1f per 100k",
-      NY.data$County, NY.data$diabetes_ldi, NY.data$pct_Adults_with_Diabetes*1000
+      paste0("<strong>%s</strong><br/>",
+      det," Rate DI: %.2g<br>",
+      det," Rate: %.1f per 100k"),
+      NY.data$County, NY.data$ldi, NY.data$pct
     ) %>% lapply(htmltools::HTML)
     
     leaflet(NY.shape) %>%
       setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
       addPolygons(
-        fillColor = ~pal2(NY.data$diabetes_ldi),
+        fillColor = ~pal2(NY.data$ldi),
         weight = 1,
         opacity = 1,
         color = "#330000",
@@ -1321,7 +1321,7 @@ server <- function(input, output, session) {
       addLegend(pal = pal2, 
                 values = ~NY.data$diabetes_ldi, 
                 opacity = 0.7, 
-                title = "Disparity Index<br/>NY Diabetes Rates",
+                title = paste0("Disparity Index<br/>NY ",det," Rates"),
                 position = "bottomright",
                 labFormat = function(type, cuts, p) { n = length(cuts) 
                 cuts[n] = paste0(cuts[n]," lower") 
@@ -1333,57 +1333,8 @@ server <- function(input, output, session) {
       ) %>%
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light"))
-    #Remove personal API key
-  }
-  
-  map.NY.obesity <- {
-    pal2 <- leaflet::colorBin(colors, domain = NY.data$obesity_ldi, bins = bins, reverse=FALSE)
+  })
 
-    labels <- sprintf(
-      "<strong>%s</strong><br/>
-      Obesity Rate DI: %.2g<br>
-      Obesity Rate: %.1f per 100k",
-      NY.data$County, NY.data$obesity_ldi, NY.data$pct_Adults_with_Obesity*1000
-    ) %>% lapply(htmltools::HTML)
-
-    leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
-      addPolygons(
-        fillColor = ~pal2(NY.data$obesity_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>%
-      addLegend(pal = pal2,
-                values = ~NY.data$obesity_ldi,
-                opacity = 0.7,
-                title = "Disparity Index<br/>NY Obesity Rates",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts)
-                cuts[n] = paste0(cuts[n]," lower")
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")}
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")}
-                cuts[2] = paste0(cuts[2]," higher")
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-      ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
-  }
-  
   # This sets the range for zooming the following plot
   ranges <- reactiveValues(x = NULL, y = NULL)
   
