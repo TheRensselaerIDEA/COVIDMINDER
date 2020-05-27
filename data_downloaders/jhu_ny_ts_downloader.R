@@ -292,6 +292,10 @@ covid_NY_TS_plot.cases$log_cases <- log10(covid_NY_TS_plot.cases$cases)
 
 # Append population
 NY_population <- read_csv("data/csv/time_series/NY_population.csv")
+NYC_pop <- sum(NY_population %>%
+                 filter(County %in% c("New York", "Bronx", "Kings", "Queens", "Richmond")) %>%
+                 select(Population))
+NY_population[NY_population$County == "New York", "Population"] <- NYC_pop
 
 covid_NY_TS_plot.cases <- dplyr::inner_join(covid_NY_TS_plot.cases, as.data.frame(NY_population), by = c("County" = "County"))
 covid_NY_TS_plot.cases <- covid_NY_TS_plot.cases %>% 
