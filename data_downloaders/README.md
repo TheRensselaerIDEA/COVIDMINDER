@@ -8,7 +8,7 @@
 
     * Navigate to (Fatalities): https://on.ny.gov/2VehafT
     * Update: `data/csv/time_series/covid_NY_counties.deaths.manual.csv`
-    * Note: The "New York" value is "Bronx" + "Kings" + "Manhattan" + "Queens" + "Richmond"(B5 + B26 + B30 + B44 + B46)
+    * Note: The "New York" value is Manhattan here
     * Note: Should be run before updater scripts
 
 3. Run updater scripts:
