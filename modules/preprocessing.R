@@ -428,3 +428,7 @@ covid_eo_bills <- covid_eo_bills[1:51,]
 
 states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO) # Append to states
 states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills) # Append to states
+
+# Join moved to processing
+NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
+NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
