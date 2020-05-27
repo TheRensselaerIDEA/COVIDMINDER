@@ -1272,12 +1272,6 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
-  get_NY_determinant <- reactive({
-    if ("Diabetes" %in% input$determinant_NY) return(map.NY.diabetes)
-    if ("Obesity" %in% input$determinant_NY) return(map.NY.obesity)
-    #if ("Heart Disease" %in% input$determinant_NY) return(map.cardio.bnh)
-  })
-  
   output$map.NY.determinant <- renderLeaflet({
     det <- input$determinant_NY
     if ("Diabetes" %in% det) {
