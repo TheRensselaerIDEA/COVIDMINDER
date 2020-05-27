@@ -242,6 +242,7 @@ states <- dplyr::left_join(states, covid_racial_data_states.wide[,-1], by = c("N
 pNY.6.deaths <- sum(NY.data$deaths)/sum(NY.data$Population)
 pNY.6.cases <- sum(NY.data$cases)/sum(NY.data$Population)
 pNY.6.diabetes <- as.numeric(NY_counties_diabetes[1,"pct_Adults_with_Diabetes"])
+pNY.6.obesity <- as.numeric(NY_counties_diabetes[1,"pct_Adults_with_Obesity"])
 
 NY.data <- transform(NY.data, death_rate = deaths/Population)
 #NY.data <- transform(NY.data, case_rate = cases/Population) # We already do this
@@ -254,16 +255,19 @@ NY.data$death_rate_ldi <- unlist(lapply(NY.data$death_rate, FUN=function(x){-log
 
 NY.data$case_rate_ldi <- unlist(lapply(NY.data$case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 
-# Need this for NY Diabetes...
+# Need this for NY Diabetes and obesity...
 pUS.7.diabetes <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
+pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])
 
 NY.data$diabetes_ldi <- unlist(lapply(NY.data$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/x)}))
+NY.data$obesity_ldi <- unlist(lapply(NY.data$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/x)}))
 
 # Clean up the ranges
 NY.data <- NY.data %>% 
   mutate(death_rate_ldi = replace(death_rate_ldi, death_rate_ldi < -5, -5)) %>%
   mutate(case_rate_ldi = replace(case_rate_ldi, case_rate_ldi < -5, -5)) %>%
-  mutate(diabetes_ldi = replace(diabetes_ldi, diabetes_ldi < -5, -5)) 
+  mutate(diabetes_ldi = replace(diabetes_ldi, diabetes_ldi < -5, -5)) %>%
+  mutate(obesity_ldi = replace(obesity_ldi, obesity_ldi < -5, -5))
 
 ### NEW: US Diabetes Rates
 #pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])

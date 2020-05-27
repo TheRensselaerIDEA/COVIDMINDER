@@ -24,7 +24,7 @@ NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.dea
 
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
 
-NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_diabetes[,2:3]), by = c("County" = "County"))
+NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_diabetes[,c(2,3,6)]), by = c("County" = "County"))
 
 NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_regions), by = c("County" = "County"))
 
