@@ -661,12 +661,12 @@ ui <-
                    tags$h3(class="map-title", textOutput("ny_det_map_title")),
                    tags$br(),tags$br(),
                    tags$div(class = "select-bar",
-                            selectInput(inputId = "determinant",
+                            selectInput(inputId = "determinant_NY",
                                         label = NULL,
-                                        choices = c("Diabetes"), # , "Obesity", "Heart Disease"
+                                        choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
                                         selected = "Diabetes"
                             )),
-                   leafletOutput(outputId = "map.NY.diabetes", height=height)),
+                   leafletOutput(outputId = "map.NY.determinant", height=height)),
                  column(4,
                    id = "sidebar_ny_det",
                    uiOutput("sb_ny_det_output"),
@@ -895,7 +895,7 @@ server <- function(input, output, session) {
   })
   
   output$ny_det_map_title <- renderText ({
-    select.det <- input$determinant
+    select.det <- input$determinant_NY
     paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate")
   })
   
@@ -905,7 +905,7 @@ server <- function(input, output, session) {
   })
   
   output$ny_det_title <- renderUI ({
-    select.det <- input$determinant
+    select.det <- input$determinant_NY
     tags$h1(paste0("DETERMINANT: New York ",select.det," Disparities"))
   })
   
@@ -926,14 +926,16 @@ server <- function(input, output, session) {
   })
   
   output$ny_det_subtitle <- renderUI ({
-    select.det <- input$determinant
+    select.det <- input$determinant_NY
     if ( select.det == "Diabetes") {
       tags$h2("What are the disparities between New York counties in the rate 
                                 of diabetes patients per 100k population when compared to the average United 
                                 States rate?")
     }
     else if ( select.det == "Obesity") {
-      
+      tags$h2("What are the disparities between New York counties in the rate 
+                                of people with Obesitys per 100k population when compared to the average United 
+                                States rate?")
     }
     else if ( select.det == "Heart Disease") {
       
@@ -967,7 +969,7 @@ server <- function(input, output, session) {
   })
   
   output$sb_ny_det_output <- renderUI ({
-    select.det <- input$determinant
+    select.det <- input$determinant_NY
     if ( select.det == "Diabetes") {
       tagList(
         tags$p("Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
@@ -976,10 +978,10 @@ server <- function(input, output, session) {
       )
     }
     else if ( select.det == "Obesity") {
-      #tagList(
-      #  tags$p("Obesity puts patients at increased risk of contracting and dying from COVID-19, so areas with higher rates of obesity may face increased COVID-19 burdens."),
-      #  tags$p("The  rate of obesity in a state is:")
-      #)
+      tagList(
+        tags$p("Obesity puts patients at increased risk of contracting and dying from COVID-19, so areas with higher rates of obesity may face increased COVID-19 burdens."),
+        tags$p("The  rate of obesity in a county is:")
+      )
     }
     else if ( select.det == "Heart Disease") {
       #tagList(
@@ -1025,7 +1027,7 @@ server <- function(input, output, session) {
     }
   })
   output$sb_ny_det_footer <- renderUI ({
-    select.det <- input$determinant
+    select.det <- input$determinant_NY
     if ( select.det == "Diabetes") {
       tagList(
         tags$div(HTML(paste0(
@@ -1037,6 +1039,14 @@ server <- function(input, output, session) {
       )
     }
     else if ( select.det == "Obesity") {
+      tagList(
+        tags$div(HTML(paste0(
+          "  <strong>Obesity Rate</strong> = number of self reported Obese people per 100K population <br>
+             <strong>Obesity Disparity Index</strong> = log(Obesity Rate in state/average Obesity Rate in US)<br>
+             <strong>Date: </strong> 2016<br><br>
+             <b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+             <a href='https://bit.ly/2V1Zl3I'>CDC</a><br>")))
+      )
     }
     else if ( select.det == "Heart Disease") {
     }
@@ -1383,7 +1393,17 @@ server <- function(input, output, session) {
     #Remove personal API key
   })
   
-  output$map.NY.diabetes <- renderLeaflet({
+  get_NY_determinant <- reactive({
+    if ("Diabetes" %in% input$determinant_NY) return(map.NY.diabetes)
+    if ("Obesity" %in% input$determinant_NY) return(map.NY.obesity)
+    #if ("Heart Disease" %in% input$determinant_NY) return(map.cardio.bnh)
+  })
+  
+  output$map.NY.determinant <- renderLeaflet(
+    get_NY_determinant()
+  )
+  
+  map.NY.diabetes <- {
     
     colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
     bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
@@ -1435,7 +1455,61 @@ server <- function(input, output, session) {
       addProviderTiles("MapBox", options = providerTileOptions(
         id = "mapbox.light"))
     #Remove personal API key
-  })
+  }
+  
+  map.NY.obesity <- {
+
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = NY.data$obesity_ldi, bins = bins, reverse=FALSE)
+
+    NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
+    #NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
+
+    labels <- sprintf(
+      "<strong>%s</strong><br/>
+      Obesity Rate DI: %.2g<br>
+      Obesity Rate: %.1f per 100k",
+      NY.data$County, NY.data$obesity_ldi, NY.data$pct_Adults_with_Obesity*1000
+    ) %>% lapply(htmltools::HTML)
+
+    leaflet(NY.shape) %>%
+      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
+      addPolygons(
+        fillColor = ~pal2(NY.data$obesity_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>%
+      addLegend(pal = pal2,
+                values = ~NY.data$obesity_ldi,
+                opacity = 0.7,
+                title = "Disparity Index<br/>NY Obesity Rates",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts)
+                cuts[n] = paste0(cuts[n]," lower")
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")}
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")}
+                cuts[2] = paste0(cuts[2]," higher")
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+      ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+    #Remove personal API key
+  }
   
   # This sets the range for zooming the following plot
   ranges <- reactiveValues(x = NULL, y = NULL)
