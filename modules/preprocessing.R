@@ -322,29 +322,9 @@ names(country_obesity_choices) <- c(paste0("United States (" ,pUS.8.obesity,"%)"
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
 
 obesity_ldi.us <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/x)}))
-obesity_ldi.be <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pBE.8.obesity/x)}))
-obesity_ldi.pr <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pPR.8.obesity/x)}))
-obesity_ldi.ch <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pCH.8.obesity/x)}))
-obesity_ldi.it <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pIT.8.obesity/x)}))
-obesity_ldi.sp <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pSP.8.obesity/x)}))
-obesity_ldi.ir <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pIR.8.obesity/x)}))
-obesity_ldi.de <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pDE.8.obesity/x)}))
-obesity_ldi.ca <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pCA.8.obesity/x)}))
-obesity_ldi.uk <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pUK.8.obesity/x)}))
-obesity_ldi.ru <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pRU.8.obesity/x)}))
 
 # Write to data frame
 obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.us)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.be)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.pr)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.ch)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.it)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.sp)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.ir)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.de)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.ca)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.uk)
-obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.ru)
 
 # RE-order to match states ordering
 obesity_data_states <- obesity_data_states[match(states$NAME, obesity_data_states$State),]
@@ -353,32 +333,12 @@ obesity_data_states <- obesity_data_states[match(states$NAME, obesity_data_state
 obesity_data_states <- obesity_data_states[1:51,]
 
 obesity_data_states <- obesity_data_states %>% 
-  mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5)) %>%
-  mutate(obesity_ldi.be = replace(obesity_ldi.be, obesity_ldi.be < -5, -5)) %>%
-  mutate(obesity_ldi.pr = replace(obesity_ldi.pr, obesity_ldi.pr < -5, -5)) %>%
-  mutate(obesity_ldi.ch = replace(obesity_ldi.ch, obesity_ldi.ch < -5, -5)) %>%
-  mutate(obesity_ldi.it = replace(obesity_ldi.it, obesity_ldi.it < -5, -5)) %>%
-  mutate(obesity_ldi.sp = replace(obesity_ldi.sp, obesity_ldi.sp < -5, -5)) %>%
-  mutate(obesity_ldi.ir = replace(obesity_ldi.ir, obesity_ldi.ir < -5, -5)) %>%
-  mutate(obesity_ldi.de = replace(obesity_ldi.de, obesity_ldi.de < -5, -5)) %>%
-  mutate(obesity_ldi.ca = replace(obesity_ldi.ca, obesity_ldi.ca < -5, -5)) %>%
-  mutate(obesity_ldi.uk = replace(obesity_ldi.uk, obesity_ldi.uk < -5, -5)) %>%
-  mutate(obesity_ldi.ru = replace(obesity_ldi.ru, obesity_ldi.ru < -5, -5)) 
+  mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5))
 
 
 states <- data.frame(states, "pct_Adults_with_Obesity"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
 
 states <- data.frame(states, "obesity_ldi.us"=obesity_data_states$obesity_ldi.us) # Append to states
-states <- data.frame(states, "obesity_ldi.be"=obesity_data_states$obesity_ldi.be) # Append to states
-states <- data.frame(states, "obesity_ldi.pr"=obesity_data_states$obesity_ldi.pr) # Append to states
-states <- data.frame(states, "obesity_ldi.ch"=obesity_data_states$obesity_ldi.ch) # Append to states
-states <- data.frame(states, "obesity_ldi.it"=obesity_data_states$obesity_ldi.it) # Append to states
-states <- data.frame(states, "obesity_ldi.sp"=obesity_data_states$obesity_ldi.sp) # Append to states
-states <- data.frame(states, "obesity_ldi.ir"=obesity_data_states$obesity_ldi.ir) # Append to states
-states <- data.frame(states, "obesity_ldi.de"=obesity_data_states$obesity_ldi.de) # Append to states
-states <- data.frame(states, "obesity_ldi.ca"=obesity_data_states$obesity_ldi.ca) # Append to states
-states <- data.frame(states, "obesity_ldi.uk"=obesity_data_states$obesity_ldi.uk) # Append to states
-states <- data.frame(states, "obesity_ldi.ru"=obesity_data_states$obesity_ldi.ru) # Append to states
 
 ## Needed for NY TS plot
 
