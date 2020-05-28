@@ -97,6 +97,7 @@ ui <-
                                 </div>")
                                      ),
                                      column(4, id = "sidebar_ny_new_case",
+                                            tags$h2("New York Regions Map"),
                                             img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <strong>Date: </strong>",update_date,"<br><br>
@@ -157,6 +158,7 @@ ui <-
                                 </div>")),
                                      column(4,
                                             id = "sidebar_ny_CoT",
+                                            tags$h2("New York Regions Map"),
                                             img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <br><br>
@@ -211,6 +213,7 @@ ui <-
                                 For county details, single-click on line<br>
                                 </div>")),
                                      column(4, id = "sidebar_ny_CoT_region",
+                                            tags$h2("New York Regions Map"),
                                             img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <br><br>
@@ -1263,11 +1266,11 @@ server <- function(input, output, session) {
     range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     
     #width <- input$width
-    select.size <- 2
+    select.size <- 3
     
     if (selected.region == "All Regions") {
       selected.region <- sort(unique(covid_NY_TS_plot.cases$Region))
-      select.size <- 1
+      select.size <- 1.5
     }
     
     if (select.rate=="Overall") {
@@ -1328,6 +1331,7 @@ server <- function(input, output, session) {
       ylab(y_lab) + 
       xlab("Date") +
       ggtitle(gg_title)  +  
+      theme(legend.key.size = unit(1.5, "lines")) + 
       gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(
@@ -1361,10 +1365,10 @@ server <- function(input, output, session) {
     range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     #print(range)
     
-    select.size <- 2
+    select.size <- 3
     if (selected.county == "All Counties") {
       selected.county <- sort(unique(covid_NY_TS_plot.cases$County))
-      select.size <- 1
+      select.size <- 1.5
     }
     
     if (select.rate=="Overall") {
@@ -1471,6 +1475,7 @@ server <- function(input, output, session) {
       ylab(y_lab) + 
       xlab("Date") +
       ggtitle(title)  +  
+      theme(legend.key.size = unit(1.5, "lines")) + 
       gghighlight(County %in% selected.county, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(
@@ -1497,14 +1502,14 @@ server <- function(input, output, session) {
   output$NY.cases.TS.region <- renderPlot({
     # browser()
     selected.region <- input$NYRegion2
-    select.size <- 2
+    select.size <- 3
     select.rate <- input$rate.CoT.reg
     select.date <- input$NYRegionDate
     range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     
     if (selected.region == "All Regions") {
       selected.region <- sort(unique(covid_NY_TS_plot.cases$Region))
-      select.size <- 1
+      select.size <- 1.5
     }
     
     
@@ -1562,6 +1567,7 @@ server <- function(input, output, session) {
       ylab(y_lab) + 
       xlab("Date") +
       ggtitle(title)  +  
+      theme(legend.key.size = unit(1.5, "lines")) + 
       gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
       geom_label_repel(
