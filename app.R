@@ -1302,7 +1302,7 @@ server <- function(input, output, session) {
             Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
             Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
             Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-            Region == "Nourth Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+            Region == "North Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
             Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
             Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
             Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
@@ -1540,7 +1540,7 @@ server <- function(input, output, session) {
           Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
           Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
           Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-          Region == "Nourth Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+          Region == "North Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
           Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
           Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
           Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
