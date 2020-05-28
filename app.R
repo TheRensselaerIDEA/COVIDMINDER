@@ -97,12 +97,12 @@ ui <-
                                 </div>")
                                      ),
                                      column(4, id = "sidebar_ny_new_case",
-                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("<h2>Phase One: Capital Region, Central New York, Finger Lakes, Long Island, Mid-Hudson, Mohawk Valley, North Country, Southern Tier and Western New York are allowed to reopen </h2>"),
                                             HTML("Construction<br>
                         Agriculture, Forestry, Fishing and Hunting<br>
                         Retail - (Limited to curbside or in-store pickup or drop off)<br>
@@ -157,13 +157,13 @@ ui <-
                                 </div>")),
                                      column(4,
                                             id = "sidebar_ny_CoT",
-                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("<h2>Phase One: Capital Region, Central New York, Finger Lakes, Long Island, Mid-Hudson, Mohawk Valley, North Country, Southern Tier and Western New York are allowed to reopen </h2>"),
                                             HTML("Construction<br>
                         Agriculture, Forestry, Fishing and Hunting<br>
                         Retail - (Limited to curbside or in-store pickup or drop off)<br>
@@ -211,13 +211,13 @@ ui <-
                                 For county details, single-click on line<br>
                                 </div>")),
                                      column(4, id = "sidebar_ny_CoT_region",
-                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;"),
                                             HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("<h2>Phase One: Capital Region, Central New York, Finger Lakes, Long Island, Mid-Hudson, Mohawk Valley, North Country, Southern Tier and Western New York are allowed to reopen </h2>"),
                                             HTML("Construction<br>
                         Agriculture, Forestry, Fishing and Hunting<br>
                         Retail - (Limited to curbside or in-store pickup or drop off)<br>
@@ -1291,18 +1291,18 @@ server <- function(input, output, session) {
     
     highlight_points <- covid_NY_TS_plot.ma %>%
       dplyr::filter( 
-          Region == "Adirondack" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
-            Region == "Capital District" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-            Region == "Catskill" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-            Region == "Central New York" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-            Region == "Chautauqua-Alleghany" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-            Region == "Eastern Hudson Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-            Region == "Finger Lakes" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-            Region == "Long Island" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-            Region == "New York City" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-            Region == "New York State" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-            Region == "Niagara Frontier" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-            Region == "Thousand Island" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
+          Region == "Capital" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
+            Region == "Central New York" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
+            Region == "Finger Lakes" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
+            Region == "Long Island" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
+            Region == "Mid-Hudson" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
+            Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
+            Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
+            Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
+            Region == "Nourth Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+            Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
+            Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
+            Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
@@ -1330,7 +1330,16 @@ server <- function(input, output, session) {
       ggtitle(gg_title)  +  
       gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
-      geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
+      geom_label_repel(
+        data=highlight_points,  
+        aes(label=Region,fill=Region), 
+        box.padding = unit(1.75, 'lines'),
+        color = "black",
+        segment.color = "black",
+        size = 5,
+        show.legend = FALSE
+        ) +
+      scale_color_manual(values=NY_region_palette, aesthetics = c("fill", "box.padding")) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
@@ -1464,7 +1473,16 @@ server <- function(input, output, session) {
       ggtitle(title)  +  
       gghighlight(County %in% selected.county, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
-      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
+      geom_label_repel(
+        data=highlight_points,  
+        aes(label=County,fill=Region), 
+        box.padding = unit(1.75, 'lines'),
+        color = "black",
+        segment.color = "black",
+        size = 5,
+        show.legend = FALSE
+      ) +
+      scale_color_manual(values=NY_region_palette, aesthetics = c("fill", "box.padding")) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
@@ -1509,18 +1527,18 @@ server <- function(input, output, session) {
     
     highlight_points <- covid_NY_TS.reg %>%
       dplyr::filter( 
-        Region == "Adirondack" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
-          Region == "Capital District" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-          Region == "Catskill" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-          Region == "Central New York" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-          Region == "Chautauqua-Alleghany" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-          Region == "Eastern Hudson Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-          Region == "Finger Lakes" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-          Region == "Long Island" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-          Region == "New York City" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-          Region == "New York State" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-          Region == "Niagara Frontier" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-          Region == "Thousand Island" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
+        Region == "Capital" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
+          Region == "Central New York" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
+          Region == "Finger Lakes" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
+          Region == "Long Island" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
+          Region == "Mid-Hudson" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
+          Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
+          Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
+          Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
+          Region == "Nourth Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+          Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
+          Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
+          Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
@@ -1546,8 +1564,16 @@ server <- function(input, output, session) {
       ggtitle(title)  +  
       gghighlight(Region %in% selected.region, use_direct_label=FALSE) +
       geom_line(size=select.size) + 
-      # TODO: Region specific labels
-      geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
+      geom_label_repel(
+        data=highlight_points,  
+        aes(label=Region,fill=Region), 
+        box.padding = unit(1.75, 'lines'),
+        color = "black",
+        segment.color = "black",
+        size = 5,
+        show.legend = FALSE
+      ) +
+      scale_color_manual(values=NY_region_palette, aesthetics = c("fill", "box.padding")) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
       geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
