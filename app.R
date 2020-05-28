@@ -48,19 +48,6 @@ ui <-
   tagList(
     tags$head(tags$title("COVIDMINDER: Where you live matters")),
     tags$head(includeHTML("www/analytics.html")),
-    
-    # WIDTH Getting code
-    # tags$head(tags$script('
-    #                     var width = 0;
-    #                     $(document).on("shiny:connected", function(e) {
-    #                       width = window.innerWidth;
-    #                       Shiny.onInputChange("width", width);
-    #                     });
-    #                     $(window).resize(function(e) {
-    #                       width = window.innerWidth;
-    #                       Shiny.onInputChange("width", width);
-    #                     });
-    #                     ')),
     navbarPage(
       id="tab",
       theme="style.css",
@@ -1280,15 +1267,6 @@ server <- function(input, output, session) {
       gg_title <- paste0("New York State New COVID-19 Case Trends per 100k (",moving.avg.window," day Average)")
     }
     
-    #if (width > 844) {
-    if (TRUE) {
-      tick.legend <- NULL
-    }
-    else {
-      tick.legend <- theme(legend.position = "none")
-    }
-    
-    
     highlight_points <- covid_NY_TS_plot.ma %>%
       dplyr::filter( 
           Region == "Adirondack" & date == select.date[1] + ((12*((range%/%11)+1)) %% range) |
@@ -1336,7 +1314,6 @@ server <- function(input, output, session) {
       scale_linetype_manual(name = "Events", 
                             values = c(2), 
                             guide = guide_legend(override.aes = list(color = c("black")))) +
-      tick.legend +
       NULL
     
   })
