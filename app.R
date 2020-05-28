@@ -256,6 +256,13 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
+                        HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                        HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
                         uiOutput("click_info_ma")
                  ))
                )
@@ -310,7 +317,15 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
-                   uiOutput("click_info"))
+                   HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                   HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                   uiOutput("click_info")
+                   )
                  )
                    )
                    ),
@@ -356,6 +371,13 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
                                </div>")),
+                        HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                        HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
                         uiOutput("click_info_reg"))
                  )
                )
@@ -1311,9 +1333,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
     
   })
@@ -1444,9 +1467,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
       })
   
@@ -1526,9 +1550,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
     
   })
