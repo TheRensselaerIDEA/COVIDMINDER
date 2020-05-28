@@ -3,7 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 
-update_date <- "05-27-2020" # makes it easy to change all occurances when we update
+update_date <- "05-28-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -1291,18 +1291,18 @@ server <- function(input, output, session) {
     
     highlight_points <- covid_NY_TS_plot.ma %>%
       dplyr::filter( 
-          Region == "Adirondack" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
-            Region == "Capital District" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-            Region == "Catskill" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-            Region == "Central New York" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-            Region == "Chautauqua-Alleghany" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-            Region == "Eastern Hudson Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-            Region == "Finger Lakes" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-            Region == "Long Island" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-            Region == "New York City" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-            Region == "New York State" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-            Region == "Niagara Frontier" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-            Region == "Thousand Island" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
+          Region == "Adirondack" & date == select.date[1] + ((12*((range%/%11)+1)) %% range) |
+            Region == "Capital District" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
+            Region == "Catskill" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
+            Region == "Central New York" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+            Region == "Chautauqua-Alleghany" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
+            Region == "Eastern Hudson Valley" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
+            Region == "Finger Lakes" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
+            Region == "Long Island" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
+            Region == "New York City" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
+            Region == "New York State" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
+            Region == "Niagara Frontier" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
+            Region == "Thousand Island" & date == select.date[1] + ((1*((range%/%11)+1)) %% range)
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
