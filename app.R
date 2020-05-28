@@ -55,6 +55,259 @@ ui <-
                      title = whatisit_text,
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
+      navbarMenu(menuName = "outcome_plots_menu",
+                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
+                 HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
+                 
+                 tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
+                          value="outcome_ny_new_cases",
+                          fluidPage( 
+                            fluidRow(class="page_title", tags$h1("OUTCOME: New York trends of new COVID-19 Cases")),
+                            fluidRow(class="page_title", tags$h2("How have new COVID-19 Cases been mitigated in New York State over time?")),
+                            fluidRow(class = "map-container",
+                                     column(8, style=paste0("height:",height,";"), id = "mainpanel_ny_new_case",
+                                            tags$div(class = "page_title",
+                                                     selectInput(inputId = "NYRegion3",
+                                                                 label = "NY Regions",
+                                                                 choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                                                 selected = "All Regions"),
+                                                     dateRangeInput(inputId = "NYDate.ma",
+                                                                    label = "Date Range",
+                                                                    min = min(covid_NY_TS_plot.cases$date),
+                                                                    max = as.Date(update_date, format = "%m-%d-%Y") - 1,
+                                                                    start = as.Date(update_date, format = "%m-%d-%Y") - 31,
+                                                                    end = as.Date(update_date, format = "%m-%d-%Y") - 1),
+                                                     radioButtons(inputId = "rate.ma",
+                                                                  label = "",
+                                                                  choices = c("Overall", "Per/100k"),
+                                                                  selected = "Per/100k")),
+                                            tags$div(class = "NY_case_plots",
+                                                     plotOutput(outputId = "NY.cases.ma", height="100%", 
+                                                                click = clickOpts(id ="NY.cases.TS_click_ma"),
+                                                                dblclick = "NY.cases.TS_dblclick",
+                                                                brush = brushOpts(
+                                                                  id = "NY.cases.TS_brush",
+                                                                  resetOnNew = TRUE))
+                                            ),
+                                            HTML("<div style='position:absolute;bottom:0;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For region details, single-click on line<br>
+                                </div>")
+                                     ),
+                                     column(4, id = "sidebar_ny_new_case",
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            HTML(paste0("<div>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                                            uiOutput("click_info_ma")
+                                     ))
+                          )
+                 ),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                                   HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
+                          value="outcome_ny_cases_time",
+                          fluidPage(
+                            fluidRow(class="page_title", tags$h1("OUTCOME: New York Counties total COVID-19 Cases over time")),
+                            fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                            fluidRow(class = "map-container",
+                                     
+                                     column(8, style=paste0("height:",height,";"),id = "mainpanel_ny_CoT",
+                                            tags$div(
+                                              # selectInput(inputId = "NYRegion",
+                                              #             label = "NY Regions",
+                                              #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                              #             selected = "All Regions"),
+                                              selectInput(inputId = "NYCounty",
+                                                          label = "NY Counties",
+                                                          choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
+                                                          selected = 1)
+                                            ),
+                                            dateRangeInput(inputId = "NYCoTDate",
+                                                           label = "Date Range",
+                                                           min = min(covid_NY_TS_plot.cases$date),
+                                                           max = as.Date(update_date, format = "%m-%d-%Y") - 1,
+                                                           start = as.Date(update_date, format = "%m-%d-%Y") - 62,
+                                                           end = as.Date(update_date, format = "%m-%d-%Y") - 1),
+                                            radioButtons(inputId = "rate.CoT",
+                                                         label = "",
+                                                         choices = c("Overall", "Per/100k"),
+                                                         selected = "Per/100k"),
+                                            tags$div(class = "NY_case_plots",
+                                                     plotOutput(outputId = "NY.cases.TS", height="100%", 
+                                                                click = clickOpts(id ="NY.cases.TS_click"),
+                                                                dblclick = "NY.cases.TS_dblclick",
+                                                                brush = brushOpts(
+                                                                  id = "NY.cases.TS_brush",
+                                                                  resetOnNew = TRUE))
+                                            ),
+                                            HTML("<div style='position:absolute;bottom:0;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>")),
+                                     column(4,
+                                            id = "sidebar_ny_CoT",
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                                            uiOutput("click_info")
+                                     )
+                            )
+                          )
+                 ),
+                 tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
+                                         HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Region)</div>")),
+                          value="outcome_ny_cases_time_region",
+                          fluidPage(
+                            fluidRow(class="page_title", tags$h1("OUTCOME: New York Region total COVID-19 Cases over time")),
+                            fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
+                            fluidRow(class = "map-container",
+                                     column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_CoT_region",
+                                            selectInput(inputId = "NYRegion2",
+                                                        label = "NY Regions",
+                                                        choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                                                        selected = "All Regions"),
+                                            dateRangeInput(inputId = "NYRegionDate",
+                                                           label = "Date Range",
+                                                           min = min(covid_NY_TS_plot.cases$date),
+                                                           max = as.Date(update_date, format = "%m-%d-%Y") - 1,
+                                                           start = as.Date(update_date, format = "%m-%d-%Y") - 62,
+                                                           end = as.Date(update_date, format = "%m-%d-%Y") - 1),
+                                            radioButtons(inputId = "rate.CoT.reg",
+                                                         label = "",
+                                                         choices = c("Overall", "Per/100k"),
+                                                         selected = "Per/100k"),
+                                            tags$div(class = "NY_case_plots",
+                                                     plotOutput(outputId = "NY.cases.TS.region", height="100%", 
+                                                                click = clickOpts(id ="NY.cases.TS_click_reg"),
+                                                                dblclick = "NY.cases.TS_dblclick",
+                                                                brush = brushOpts(
+                                                                  id = "NY.cases.TS_brush",
+                                                                  resetOnNew = TRUE))
+                                            ),
+                                            HTML("<div style='position:absolute;bottom:0;'>
+                                <br>To zoom plot, click and drag, then double-click in select box<br>
+                                To un-zoom, double-click in plot<br>
+                                For county details, single-click on line<br>
+                                </div>")),
+                                     column(4, id = "sidebar_ny_CoT_region",
+                                            img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
+                                            HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               </div>")),
+                                            HTML("<h2>Phase One: Capital Region (Minus Albany), Central New York, Finger Lakes, Chautauqua-Alleghany, Thousand Island, Adirondack, and Niagra Frontier, are allowed to reopen</h2>"),
+                                            HTML("Construction<br>
+                        Agriculture, Forestry, Fishing and Hunting<br>
+                        Retail - (Limited to curbside or in-store pickup or drop off)<br>
+                        Manufacturing<br>
+                        Wholesale Trade<br>
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                                            uiOutput("click_info_reg"))
+                            )
+                          )
+                 ),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                                   HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
+                          value="outcome_ny_racial_disparity",
+                          fluidPage(
+                            fluidRow(class="page_title", tags$h1("OUTCOME: New York Racial Disparities of COVID-19 mortality")),
+                            fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage? Do New York City and the rest of New York State have 
+                        different disparities in minority COVID-19 deaths?")),
+                            fluidRow(class = "map-container",
+                                     column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_race", 
+                                            plotOutput(outputId = "NY.race.nys", height="50%"), 
+                                            plotOutput(outputId = "NY.race.nyc", height="50%")),
+                                     column(4,
+                                            id = "sidebar_ny_race",
+                                            #HTML(whatisit_text),
+                                            HTML("
+                        <div>
+                        <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
+                        If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
+                        group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
+                        impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
+                                            HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
+                               <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                               <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
+                               <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
+                               <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
+                               <br>
+                        </div>"
+                                            ),
+                                            HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
+                               </div>")))
+                            )
+                          )
+                 ),
+                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                                   HTML("<div><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
+                          value="outcome_ct_racial_disparity",
+                          fluidPage(
+                            fluidRow(class="page_title", tags$h1("OUTCOME: Connecticut Racial Disparities of COVID-19 mortality")),
+                            fluidRow(class="page_title", tags$h2("Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
+                        their population percentage?")),
+                            fluidRow(class = "map-container",
+                                     column(8, id = "mainpanel_ct_race", 
+                                            plotOutput(outputId = "NY.race.ct", height=height)),
+                                     column(4, 
+                                            id = "sidebar_ct_race",
+                                            #HTML(whatisit_text),
+                                            HTML("
+                        <div>
+                        <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
+                        If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
+                        group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
+                        impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
+                                            HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
+                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
+                               <i>Darker shades indicate greater disparity.</i><br><br>
+                               
+                               <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
+                               <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
+                               <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
+                               <br>
+                        </div>"
+                                            ),
+                                            HTML(paste0("<div>
+                               <br><br>
+                               <strong>Date: </strong>",update_date,"<br><br>
+                               <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
+                               </div>")))
+                            )
+                          )
+                 )),
       navbarMenu(menuName = "outcome_maps_menu",
                  HTML("<div><b>OUTCOME (MAPS)</b></div>"),
       tabPanel(tags$div(class="tab-title",style="text-align:center;", #For some reason, unresponsive to class
@@ -209,237 +462,6 @@ ui <-
                  )
                    )
                  )),
-      navbarMenu(menuName = "outcome_plots_menu",
-                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
-                 HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
-                 
-               tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                            HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Trends in new Cases (Region)</div>")),
-               value="outcome_ny_new_cases",
-               fluidPage( 
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York trends of new COVID-19 Cases")),
-                 fluidRow(class="page_title", tags$h2("How have new COVID-19 Cases been mitigated in New York State over time?")),
-                 fluidRow(class = "map-container",
-                 column(8, style=paste0("height:",height,";"), id = "mainpanel_ny_new_case",
-                           tags$div(class = "page_title",
-                           selectInput(inputId = "NYRegion3",
-                                       label = "NY Regions",
-                                       choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-                                       selected = "All Regions"),
-                           dateRangeInput(inputId = "NYDate.ma",
-                                          label = "Date Range",
-                                          min = min(covid_NY_TS_plot.cases$date),
-                                          max = as.Date(update_date, format = "%m-%d-%Y") - 1,
-                                          start = as.Date(update_date, format = "%m-%d-%Y") - 31,
-                                          end = as.Date(update_date, format = "%m-%d-%Y") - 1),
-                           radioButtons(inputId = "rate.ma",
-                                        label = "",
-                                        choices = c("Overall", "Per/100k"),
-                                        selected = "Per/100k")),
-                           tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.ma", height="100%", 
-                                               click = clickOpts(id ="NY.cases.TS_click_ma"),
-                                               dblclick = "NY.cases.TS_dblclick",
-                                               brush = brushOpts(
-                                                 id = "NY.cases.TS_brush",
-                                                 resetOnNew = TRUE))
-                           ),
-                           HTML("<div style='position:absolute;bottom:0;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For region details, single-click on line<br>
-                                </div>")
-                           ),
-                 column(4, id = "sidebar_ny_new_case",
-                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                        HTML(paste0("<div>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                        uiOutput("click_info_ma")
-                 ))
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (County)</div>")),
-               value="outcome_ny_cases_time",
-               fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Counties total COVID-19 Cases over time")),
-                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
-                 fluidRow(class = "map-container",
-                          
-                          column(8, style=paste0("height:",height,";"),id = "mainpanel_ny_CoT",
-                                 tags$div(
-                                   # selectInput(inputId = "NYRegion",
-                                   #             label = "NY Regions",
-                                   #             choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-                                   #             selected = "All Regions"),
-                                   selectInput(inputId = "NYCounty",
-                                               label = "NY Counties",
-                                               choices = c("All Counties", sort(unique(covid_NY_TS_plot.cases$County))),
-                                               selected = 1)
-                                 ),
-                                 dateRangeInput(inputId = "NYCoTDate",
-                                                label = "Date Range",
-                                                min = min(covid_NY_TS_plot.cases$date),
-                                                max = as.Date(update_date, format = "%m-%d-%Y") - 1,
-                                                start = as.Date(update_date, format = "%m-%d-%Y") - 62,
-                                                end = as.Date(update_date, format = "%m-%d-%Y") - 1),
-                                 radioButtons(inputId = "rate.CoT",
-                                              label = "",
-                                              choices = c("Overall", "Per/100k"),
-                                              selected = "Per/100k"),
-                                 tags$div(class = "NY_case_plots",
-                                          plotOutput(outputId = "NY.cases.TS", height="100%", 
-                                                     click = clickOpts(id ="NY.cases.TS_click"),
-                                                     dblclick = "NY.cases.TS_dblclick",
-                                                     brush = brushOpts(
-                                                       id = "NY.cases.TS_brush",
-                                                       resetOnNew = TRUE))
-                                 ),
-                                 HTML("<div style='position:absolute;bottom:0;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>")),
-                 column(4,
-                   id = "sidebar_ny_CoT",
-                   img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                   HTML(paste0("<div>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                   uiOutput("click_info"))
-                 )
-                   )
-                   ),
-      tabPanel(title=tags$div(class="tab-title",style="text-align:center;",
-                              HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases over Time (Region)</div>")),
-               value="outcome_ny_cases_time_region",
-               fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Region total COVID-19 Cases over time")),
-                 fluidRow(class="page_title", tags$h2("How have COVID-19 Cases increased across New York State over time?")),
-                 fluidRow(class = "map-container",
-                 column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_CoT_region",
-                           selectInput(inputId = "NYRegion2",
-                                       label = "NY Regions",
-                                       choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
-                                       selected = "All Regions"),
-                           dateRangeInput(inputId = "NYRegionDate",
-                                          label = "Date Range",
-                                          min = min(covid_NY_TS_plot.cases$date),
-                                          max = as.Date(update_date, format = "%m-%d-%Y") - 1,
-                                          start = as.Date(update_date, format = "%m-%d-%Y") - 62,
-                                          end = as.Date(update_date, format = "%m-%d-%Y") - 1),
-                           radioButtons(inputId = "rate.CoT.reg",
-                                        label = "",
-                                        choices = c("Overall", "Per/100k"),
-                                        selected = "Per/100k"),
-                           tags$div(class = "NY_case_plots",
-                                    plotOutput(outputId = "NY.cases.TS.region", height="100%", 
-                                               click = clickOpts(id ="NY.cases.TS_click_reg"),
-                                               dblclick = "NY.cases.TS_dblclick",
-                                               brush = brushOpts(
-                                                 id = "NY.cases.TS_brush",
-                                                 resetOnNew = TRUE))
-                           ),
-                           HTML("<div style='position:absolute;bottom:0;'>
-                                <br>To zoom plot, click and drag, then double-click in select box<br>
-                                To un-zoom, double-click in plot<br>
-                                For county details, single-click on line<br>
-                                </div>")),
-                 column(4, id = "sidebar_ny_CoT_region",
-                        img(src="New-York-Regional-Map.png",style="width: 90%;padding-left: 10%;"),
-                        HTML(paste0("<div>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
-                               </div>")),
-                        uiOutput("click_info_reg"))
-                 )
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Racial Disparity</div>")),
-               value="outcome_ny_racial_disparity",
-               fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York Racial Disparities of COVID-19 mortality")),
-                 fluidRow(class="page_title", tags$h2("Do minorities make up a higher percentage of COVID-19 deaths when compared to 
-                        their population percentage? Do New York City and the rest of New York State have 
-                        different disparities in minority COVID-19 deaths?")),
-                 fluidRow(class = "map-container",
-                 column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_race", 
-                          plotOutput(outputId = "NY.race.nys", height="50%"), 
-                          plotOutput(outputId = "NY.race.nyc", height="50%")),
-                 column(4,
-                   id = "sidebar_ny_race",
-                   #HTML(whatisit_text),
-                   HTML("
-                        <div>
-                        <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
-                        If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
-                        group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
-                        impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
-                   HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
-                               <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
-                               <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
-                               <br>
-                        </div>"
-                   ),
-                   HTML(paste0("<div>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
-                               </div>")))
-                 )
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (CT)</b></br>COVID-19 Racial Disparity</div>")),
-               value="outcome_ct_racial_disparity",
-               fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: Connecticut Racial Disparities of COVID-19 mortality")),
-                 fluidRow(class="page_title", tags$h2("Do minorities in Connecticut make up a higher percentage of COVID-19 deaths when compared to 
-                        their population percentage?")),
-                 fluidRow(class = "map-container",
-                 column(8, id = "mainpanel_ct_race", 
-                          plotOutput(outputId = "NY.race.ct", height=height)),
-                 column(4, 
-                   id = "sidebar_ct_race",
-                   #HTML(whatisit_text),
-                   HTML("
-                        <div>
-                        <a href='https://bit.ly/2Krl5RG'>Evidence suggests</a> that COVID-19 deaths may be higher for certain racial/ethnic groups.<br><br>
-                        If the percentage  of COVID-19 deaths experienced by a racial/ethnic group is higher than that 
-                        group’s population percentage for a region, this suggests that COVID-19 may have a disparate 
-                        impact on that group in that region. Social and economic determinants may contribute to this disparity. <br><br>"),
-                   HTML("For each racial/ethnic group, the proportion of COVID-19 deaths for that group is:<br>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than population percentage for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to the population percentage for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than population percentage for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               
-                               <strong>Group COVID-19 Death Percentage</strong> = number of COVID-19 deaths for group/total COVID-19 deaths<br>
-                               <strong>Population Percentage</strong> = number of residents from that group/ total number of residents<br>
-                               <strong>Death Rate Disparity Index</strong> = log(Group COVID-19 Death Percentage/Population Percentage)
-                               <br>
-                        </div>"
-                   ),
-                   HTML(paste0("<div>
-                               <br><br>
-                               <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://bit.ly/3bJ77GZ'>ct.gov</a><br>
-                               </div>")))
-               )
-      )
-      )),
       navbarMenu(menuName = "mediation_menu",
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>MEDIATION</b><br>Select a USA mediation</div>"),
                  HTML("<div><b>MEDIATION</b></div>"),
@@ -1269,18 +1291,18 @@ server <- function(input, output, session) {
     
     highlight_points <- covid_NY_TS_plot.ma %>%
       dplyr::filter( 
-          Region == "Adirondack" & date == select.date[1] + ((12*((range%/%11)+1)) %% range) |
-            Region == "Capital District" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-            Region == "Catskill" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-            Region == "Central New York" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-            Region == "Chautauqua-Alleghany" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-            Region == "Eastern Hudson Valley" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-            Region == "Finger Lakes" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-            Region == "Long Island" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-            Region == "New York City" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-            Region == "New York State" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-            Region == "Niagara Frontier" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-            Region == "Thousand Island" & date == select.date[1] + ((1*((range%/%11)+1)) %% range)
+          Region == "Adirondack" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
+            Region == "Capital District" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
+            Region == "Catskill" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
+            Region == "Central New York" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
+            Region == "Chautauqua-Alleghany" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
+            Region == "Eastern Hudson Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
+            Region == "Finger Lakes" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
+            Region == "Long Island" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
+            Region == "New York City" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
+            Region == "New York State" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
+            Region == "Niagara Frontier" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
+            Region == "Thousand Island" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
       )
     
     NY_region_palette.df <- NY_counties_regions %>%
@@ -1311,9 +1333,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
     
   })
@@ -1444,9 +1467,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
       })
   
@@ -1526,9 +1550,10 @@ server <- function(input, output, session) {
       geom_label_repel(data=highlight_points,  aes(label=Region), box.padding = unit(1.75, 'lines')) +
       coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
       geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      geom_vline(aes(xintercept=as_datetime("2020-05-15"), linetype="Gov. Cuomo issues Phase 1 Reopening (5 Regions)"), color = "blue") + 
       scale_linetype_manual(name = "Events", 
-                            values = c(2), 
-                            guide = guide_legend(override.aes = list(color = c("black")))) +
+                            values = c(2,2), 
+                            guide = guide_legend(override.aes = list(color = c("blue","black")))) +
       NULL
     
   })
