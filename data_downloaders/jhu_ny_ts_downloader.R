@@ -2,14 +2,14 @@
 # Source: JHU Daily Reports (github): https://bit.ly/3dMWRP6
 # FILES UPDATED BY THIS SCRIPT:
 # "data/csv/time_series/time_series_covid19_confirmed_US.csv"
-# "data/csv/time_series/time_series_covid19_deaths_US.csv"
+# "data/csv/time_series/time_series_covid19_deaths_US.csv" - Updates ended 5/29
 # "data/csv/time_series/NY_county_data.csv"
-# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"
-# "data/csv/time_series/covid_NY_counties.deaths.csv"
-# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak"
-# "data/csv/time_series/covid_NY_counties.deaths.csv.bak"
-# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"
-# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak"
+# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv" - Updates ended 5/29
+# "data/csv/time_series/covid_NY_counties.deaths.csv" - Updates ended 5/29
+# "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak" - Updates ended 5/29
+# "data/csv/time_series/covid_NY_counties.deaths.csv.bak" - Updates ended 5/29
+# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv" - Updates ended 5/29
+# "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak" - Updates ended 5/29
 # "data/csv/time_series/covid_NY_counties.csv"
 # "data/csv/time_series/covid_NY_counties.csv.bak"
 # "data/csv/time_series/covid_NY_TS_counties_long.cases.csv"
@@ -28,19 +28,19 @@ library(ggrepel)
 
 # curl newest TIME SERIES data from JHU github
 dateURL.1.cases <- "time_series_covid19_confirmed_US.csv"   # download cases
-dateURL.1.deaths <- "time_series_covid19_deaths_US.csv"        # download deaths
+#dateURL.1.deaths <- "time_series_covid19_deaths_US.csv"        # download deaths
 dateURL.2 <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/"
 
 # Write raw data to file system; use JHU syntax as above
 download.file(paste0(dateURL.2,dateURL.1.cases), paste0("data/csv/time_series/", dateURL.1.cases))
-download.file(paste0(dateURL.2,dateURL.1.deaths), paste0("data/csv/time_series/", dateURL.1.deaths))
+#download.file(paste0(dateURL.2,dateURL.1.deaths), paste0("data/csv/time_series/", dateURL.1.deaths))
 
 # NEW: Download NY daily testing results
 download.file("https://health.data.ny.gov/resource/xdss-u53e.csv",paste0("data/csv/time_series/NY_daily_testing.csv"))
 
 # Import raw into R (JHU)
 todays_TS_data.cases <- read_csv(paste0("data/csv/time_series/", dateURL.1.cases))
-todays_TS_data.deaths <- read_csv(paste0("data/csv/time_series/", dateURL.1.deaths))
+#todays_TS_data.deaths <- read_csv(paste0("data/csv/time_series/", dateURL.1.deaths))
 
 # Prep NY TS data (JHU); this has one column per test date
 todays_TS_data.NY.cases <- todays_TS_data.cases %>% 
@@ -112,90 +112,90 @@ write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
 
 # NEW YORK STATE DEATHS
 # Transform to match our structure: NY deaths
-covid_NY_TS_counties.deaths <- todays_TS_data.deaths %>%
-  dplyr::filter(Country_Region == "US") %>%
-  dplyr::filter(Province_State == "New York") %>%
-  dplyr::select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
-  dplyr::group_by(FIPS, Admin2, Province_State) %>%
-  dplyr::select(-Lat, -Long_, -Population) %>%
-  dplyr::summarize_all(sum)
-
-# Change colnames to match app
-colnames(covid_NY_TS_counties.deaths)[2] <- "County"
-
-colnames(covid_NY_TS_counties.deaths)[3] <- "State"
-
-# Create a "New York State" row
-covid_TS_New_York.deaths <- covid_NY_TS_counties.deaths[,-c(1,2)] %>%
-  dplyr::group_by(State) %>%
-  dplyr::summarize_all(sum)
-
-colnames(covid_TS_New_York.deaths)[1] <- 'County'
-covid_TS_New_York.deaths[1,1] <- "New York State"
-
-# Prepend New York State summary to counties summary
-# THIS IS "WIDE"!
-covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[,-c(1,3)]))
-
-# The "right most" column is the cumulative tally to-date
-# DISABLED until JHU gets their act togethter
-# covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
-# colnames(covid_NY_counties.deaths) <- c("county","deaths")
-
-# UPDATE: Manually curated, from NYSDOH
-# Disable this when JHU gets their act together on NYS...
-# UPDATE: critical to only use `county` and `deaths` from this!
-covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv") %>%
-          select(county, deaths)
-
-# Make backup of existing WIDE data
-write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
-write_csv(read_csv("data/csv/time_series/covid_NY_counties.deaths.csv"),"data/csv/time_series/covid_NY_counties.deaths.csv.bak")
-
-# write out new WIDE dataframe to file system
-write_csv(covid_NY_TS_counties.deaths,"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
-write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.deaths.csv")
-
-# NOW "gather" to create "LONG" version
-covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties.deaths %>%
-  tidyr::gather(date,deaths,2:ncol(covid_NY_TS_counties.deaths))
-
-# Make date column an actual R date_time
-covid_NY_TS_counties_long.deaths$date <- str_sub(covid_NY_TS_counties_long.deaths$date, 2,-1)
-covid_NY_TS_counties_long.deaths$date <- parse_date_time(covid_NY_TS_counties_long.deaths$date, c("%m.%d.%y"))
-
-covid_NY_TS_counties_long.deaths$County <- factor(covid_NY_TS_counties_long.deaths$County)
-
-# Make backup of existing LONG data
-write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak")
-
-# write out new LONG dataframe to file system
-write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
-
-#### Quickie plot to verify
-
-# # Set number to clean up plot; comment out when running to update data!
- covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
-   dplyr::filter(deaths >= 2)%>%
-   dplyr::filter(County != "Unassigned")
-
- covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
-   dplyr::group_by(date)
-
- covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
-
-# ## Test: NY Deaths plot
-p.log.deaths <- covid_NY_TS_plot.deaths %>%
-  dplyr::mutate(
-    County = County,     # use County to define separate curves
-    Date = update(date, year = 1)  # use a constant year for the x-axis
-  ) %>%
-  ggplot(aes(Date, log_deaths, color = County)) +
-  geom_line() +
-  ylab("log(Cumulative Number of Deaths") + 
-  ggtitle("New York State COVID-19 Deaths (log scale) (Mar-Apr 2020) (4/13/2020)")
-
-p.log.deaths
+# covid_NY_TS_counties.deaths <- todays_TS_data.deaths %>%
+#   dplyr::filter(Country_Region == "US") %>%
+#   dplyr::filter(Province_State == "New York") %>%
+#   dplyr::select(-UID, -iso2, -iso3, -code3, -Combined_Key,-Country_Region) %>%
+#   dplyr::group_by(FIPS, Admin2, Province_State) %>%
+#   dplyr::select(-Lat, -Long_, -Population) %>%
+#   dplyr::summarize_all(sum)
+# 
+# # Change colnames to match app
+# colnames(covid_NY_TS_counties.deaths)[2] <- "County"
+# 
+# colnames(covid_NY_TS_counties.deaths)[3] <- "State"
+# 
+# # Create a "New York State" row
+# covid_TS_New_York.deaths <- covid_NY_TS_counties.deaths[,-c(1,2)] %>%
+#   dplyr::group_by(State) %>%
+#   dplyr::summarize_all(sum)
+# 
+# colnames(covid_TS_New_York.deaths)[1] <- 'County'
+# covid_TS_New_York.deaths[1,1] <- "New York State"
+# 
+# # Prepend New York State summary to counties summary
+# # THIS IS "WIDE"!
+# covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[,-c(1,3)]))
+# 
+# # The "right most" column is the cumulative tally to-date
+# # DISABLED until JHU gets their act togethter
+# # covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
+# # colnames(covid_NY_counties.deaths) <- c("county","deaths")
+# 
+# # UPDATE: Manually curated, from NYSDOH
+# # Disable this when JHU gets their act together on NYS...
+# # UPDATE: critical to only use `county` and `deaths` from this!
+# covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv") %>%
+#           select(county, deaths)
+# 
+# # Make backup of existing WIDE data
+# write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
+# write_csv(read_csv("data/csv/time_series/covid_NY_counties.deaths.csv"),"data/csv/time_series/covid_NY_counties.deaths.csv.bak")
+# 
+# # write out new WIDE dataframe to file system
+# write_csv(covid_NY_TS_counties.deaths,"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
+# write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.deaths.csv")
+# 
+# # NOW "gather" to create "LONG" version
+# covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties.deaths %>%
+#   tidyr::gather(date,deaths,2:ncol(covid_NY_TS_counties.deaths))
+# 
+# # Make date column an actual R date_time
+# covid_NY_TS_counties_long.deaths$date <- str_sub(covid_NY_TS_counties_long.deaths$date, 2,-1)
+# covid_NY_TS_counties_long.deaths$date <- parse_date_time(covid_NY_TS_counties_long.deaths$date, c("%m.%d.%y"))
+# 
+# covid_NY_TS_counties_long.deaths$County <- factor(covid_NY_TS_counties_long.deaths$County)
+# 
+# # Make backup of existing LONG data
+# write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak")
+# 
+# # write out new LONG dataframe to file system
+# write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
+# 
+# #### Quickie plot to verify
+# 
+# # # Set number to clean up plot; comment out when running to update data!
+#  covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
+#    dplyr::filter(deaths >= 2)%>%
+#    dplyr::filter(County != "Unassigned")
+# 
+#  covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
+#    dplyr::group_by(date)
+# 
+#  covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
+# 
+# # ## Test: NY Deaths plot
+# p.log.deaths <- covid_NY_TS_plot.deaths %>%
+#   dplyr::mutate(
+#     County = County,     # use County to define separate curves
+#     Date = update(date, year = 1)  # use a constant year for the x-axis
+#   ) %>%
+#   ggplot(aes(Date, log_deaths, color = County)) +
+#   geom_line() +
+#   ylab("log(Cumulative Number of Deaths") + 
+#   ggtitle("New York State COVID-19 Deaths (log scale) (Mar-Apr 2020) (4/13/2020)")
+# 
+# p.log.deaths
 
 # NEW YORK STATE CASES
 # Transform to match our structure: NY cases
@@ -255,6 +255,7 @@ write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.cases.csv"),"
 # write out new LONG dataframe to file system
 write_csv(covid_NY_TS_counties_long.cases,"data/csv/time_series/covid_NY_TS_counties_long.cases.csv")
 
+covid_NY_TS_counties_long.deaths <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
 # Create COMBINED data frame
 covid_NY_TS_counties_long <- left_join(covid_NY_TS_counties_long.deaths, covid_NY_TS_counties_long.cases, by = c('County', 'date'))
 
@@ -264,6 +265,7 @@ write_csv(covid_NY_TS_counties_long,"data/csv/time_series/covid_NY_TS_counties_l
 # Create COMBINED data frame
 # UPDATE: We want to use the NY API data for cases: NY_county_data
 # covid_NY_counties <- left_join(covid_NY_counties.deaths, covid_NY_counties.cases, by = c('county'))
+covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.csv")
 covid_NY_counties <- left_join(covid_NY_counties.deaths, NY_county_data[,c(2,8)], by = c('county'='County'))
 
 # Adjust to match app
