@@ -424,7 +424,7 @@ ui <-
                                <strong>Date: </strong>",update_date,"<br><br>
                                
                                <b>DATA SOURCE:</b> <a href='http://bit.ly/39PMWpD'>JHU CSSE (daily)</a> and 
-                               <a href='https://on.ny.gov/2VehafT'>New York State Dept. of Health COVIDTracker (daily)</a><br>
+                               <a href='https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/'>USA Facts</a><br>
                                
                                </div>"))
                           #HTML(footer_text),
