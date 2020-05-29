@@ -98,12 +98,12 @@ covid_TS_New_York.deaths[1,1] <- "New York State"
 
 # Prepend New York State summary to counties summary
 # THIS IS "WIDE"!
-covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[,-c(1,3)]))
+covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[-c(1,2),-c(1,3)]))
 
 # The "right most" column is the cumulative tally to-date
-covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.cases))] 
+covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
 
-colnames(covid_NY_counties.deaths) <- c("county","cases")
+colnames(covid_NY_counties.deaths) <- c("county","deaths")
 
 # Make backup of existing WIDE data
 write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
@@ -115,7 +115,7 @@ write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.death
 
 # LONG county ts
 covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties.deaths %>%
-  tidyr::gather(date,cases,2:ncol(covid_NY_TS_counties.deaths))
+  tidyr::gather(date,deaths,2:ncol(covid_NY_TS_counties.deaths))
 
 # Make date column an actual R date_time
 covid_NY_TS_counties_long.deaths$date <- str_sub(covid_NY_TS_counties_long.deaths$date, 2,-1)

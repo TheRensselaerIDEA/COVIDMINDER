@@ -20,7 +20,7 @@ NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
 # Import NY Diabetes 
 NY_counties_diabetes <- read_csv("data/csv/time_series/NY_counties_diabetes.csv")
 
-NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
+#NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
 
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
 

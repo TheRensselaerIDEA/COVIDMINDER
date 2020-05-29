@@ -1,13 +1,13 @@
 county,deaths,cases
-New York State,23722,1944130
+New York State,28943,1944130
 Albany,99,23483
 Allegany,2,1720
-Bronx,3206,179594
+Bronx,4272,179594
 Broome,46,13970
 Cattaraugus,3,4293
 Cayuga,2,3932
 Chautauqua,2,4439
-Chemung,2,5732
+Chemung,3,5732
 Chenango,5,3691
 Clinton,4,3251
 Columbia,39,3999
@@ -23,15 +23,15 @@ Greene,13,2686
 Hamilton,1,419
 Herkimer,3,3615
 Jefferson,0,5595
-Kings,4862,258650
+Kings,6561,258650
 Lewis,5,1975
 Livingston,3,3452
 Madison,8,4100
 Monroe,195,49304
 Montgomery,4,2926
 Nassau,2114,168524
-New York,2002,162148
-Niagara,63,12861
+New York,2747,162148
+Niagara,65,12861
 Oneida,52,17009
 Onondaga,114,35489
 Ontario,18,5943
@@ -40,16 +40,16 @@ Orleans,35,2224
 Oswego,2,5562
 Otsego,4,3525
 Putnam,59,8683
-Queens,4905,247772
+Queens,6149,247772
 Rensselaer,25,9478
-Richmond,724,57841
+Richmond,936,57841
 Rockland,494,51163
+St. Lawrence,2,8718
 Saratoga,14,12266
 Schenectady,27,11769
 Schoharie,2,1405
 Schuyler,0,1373
 Seneca,1,1965
-St. Lawrence,2,8718
 Steuben,27,5356
 Suffolk,1871,172508
 Sullivan,30,7625
