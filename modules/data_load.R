@@ -10,9 +10,9 @@ NY.tests <- read_csv("data/csv/time_series/NY_county_data.csv")
 
 NY.deaths.cases <- read_csv("data/csv/time_series/covid_NY_counties.csv")
 
-# Update with manual deaths; don't use new date field (yet)
-covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv") %>%
-  select(county, deaths)
+# Update with manual deaths; don't use new date field (yet) - Testing without
+#covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.manual.csv") %>%
+#  select(county, deaths)
 
 # Import county regions and join them is
 NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
@@ -20,7 +20,7 @@ NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
 # Import NY Diabetes 
 NY_counties_diabetes <- read_csv("data/csv/time_series/NY_counties_diabetes.csv")
 
-NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
+#NY.deaths.cases <- dplyr::inner_join(NY.deaths.cases[,-2], covid_NY_counties.deaths, by = c("county" = "county"))
 
 NY.data <- dplyr::inner_join(as.data.frame(NY.tests), as.data.frame(NY.deaths.cases), by = c("County" = "county"))
 
