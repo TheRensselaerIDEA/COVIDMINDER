@@ -376,6 +376,19 @@ covid_NY_TS_plot.cases %>%
 covid_NY_TS_plot.cases$diff <- ifelse(is.na(covid_NY_TS_plot.cases$diff), covid_NY_TS_plot.cases$cases, covid_NY_TS_plot.cases$diff)
 covid_NY_TS_plot.cases$p_diff <- ifelse(is.na(covid_NY_TS_plot.cases$p_diff), covid_NY_TS_plot.cases$p_cases, covid_NY_TS_plot.cases$p_diff)
 
+covid_NY_TS_plot.deaths <- read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv")
+# Creates difference in deaths from previous recorded date. First date is equal to deaths reported
+covid_NY_TS_plot.deaths %>% group_by(County) %>% 
+  mutate(diff = ifelse(as.Date(date - 1) == lag(date), deaths - lag(deaths), deaths)) -> 
+  covid_NY_TS_plot.deaths
+
+covid_NY_TS_plot.deaths %>% 
+  mutate(p_diff = ifelse(as.Date(date - 1) == lag(date), p_deaths - lag(p_deaths), p_deaths)) %>%
+  ungroup() -> covid_NY_TS_plot.deaths
+
+covid_NY_TS_plot.deaths$diff <- ifelse(is.na(covid_NY_TS_plot.deaths$diff), covid_NY_TS_plot.deaths$deaths, covid_NY_TS_plot.deaths$diff)
+covid_NY_TS_plot.deaths$p_diff <- ifelse(is.na(covid_NY_TS_plot.deaths$p_diff), covid_NY_TS_plot.deaths$p_deaths, covid_NY_TS_plot.deaths$p_diff)
+
 
 # Legislative action 
 # Executive Orders (EO) and Total Bills
