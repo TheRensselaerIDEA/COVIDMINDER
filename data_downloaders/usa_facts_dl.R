@@ -14,6 +14,8 @@
 # "data/csv/time_series/covid_NY_counties.deaths.csv.bak"
 # "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"
 # "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak"
+# "data/csv/time_series/covid_NY_TS_plot.deaths.csv"
+# "data/csv/time_series/covid_NY_TS_plot.deaths.csv.bak"
 
 library(dplyr)
 library(stringr)
@@ -128,6 +130,33 @@ write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),
 
 # write out new LONG dataframe to file system
 write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
+
+covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
+  dplyr::filter(deaths > 0)%>%
+  dplyr::filter(County != "Unassigned")
+covid_NY_TS_plot.deaths <- covid_NY_TS_counties_long.deaths %>%
+  dplyr::group_by(date)
+covid_NY_TS_plot.deaths$log_deaths <- log10(covid_NY_TS_plot.deaths$deaths)
+NY_population <- read_csv("data/csv/time_series/NY_population.csv")
+covid_NY_TS_plot.deaths <- dplyr::inner_join(covid_NY_TS_plot.deaths, as.data.frame(NY_population), by = c("County" = "County"))
+covid_NY_TS_plot.deaths <- covid_NY_TS_plot.deaths %>% 
+  dplyr::select(-FIPS)
+
+# Append death rates per county!
+covid_NY_TS_plot.deaths <- covid_NY_TS_plot.deaths %>%
+  dplyr::mutate(p_deaths = (deaths/Population)*100000) %>%
+  dplyr::mutate(log_p_deaths = log10(p_deaths)) 
+
+# Regions for plots
+NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
+
+covid_NY_TS_plot.deaths <- dplyr::inner_join(covid_NY_TS_plot.deaths, as.data.frame(NY_counties_regions), by = c("County" = "County"))
+
+# Make backup of existing LONG data
+write_csv(read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv"),"data/csv/time_series/covid_NY_TS_plot.deaths.csv.bak")
+
+# make sure we have the same version for our app plot!
+write_csv(covid_NY_TS_plot.deaths, "data/csv/time_series/covid_NY_TS_plot.deaths.csv")
 
 
 
