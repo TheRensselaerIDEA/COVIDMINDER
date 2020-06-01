@@ -163,7 +163,9 @@ ui <-
                                             HTML(paste0("<div>
                                <br><br>
                                <strong>Date: </strong>",update_date,"<br><br>
-                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a><br>
+                               <b>DATA SOURCE:</b> <a href='https://on.ny.gov/39VXuCO'>heath.data.ny.gov (daily)</a> and 
+                               <a href='https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/'>USA Facts</a><br>
+                               <br>
                                </div>")),
                                             HTML("<h2>Phase One: Capital Region, Central New York, Finger Lakes, Long Island, Mid-Hudson, Mohawk Valley, North Country, Southern Tier and Western New York are allowed to reopen </h2>"),
                                             HTML("Construction<br>
@@ -171,7 +173,9 @@ ui <-
                         Retail - (Limited to curbside or in-store pickup or drop off)<br>
                         Manufacturing<br>
                         Wholesale Trade<br>
-                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a> and 
+                        <a href='https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/'>USA Facts</a><br>
+                               "),
                                             uiOutput("click_info")
                                      )
                             )
@@ -226,7 +230,8 @@ ui <-
                         Retail - (Limited to curbside or in-store pickup or drop off)<br>
                         Manufacturing<br>
                         Wholesale Trade<br>
-                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a>"),
+                        <b>Data Source:</b> <a href='https://forward.ny.gov/industries-reopening-phase'>NY Gov</a> and 
+                                                 <a href='https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/'>USA Facts</a><br>"),
                                             uiOutput("click_info_reg"))
                             )
                           )
