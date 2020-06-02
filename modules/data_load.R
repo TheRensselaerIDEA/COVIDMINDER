@@ -30,6 +30,9 @@ NY.data <- dplyr::inner_join(NY.data, as.data.frame(NY_counties_regions), by = c
 
 NY.data$FIPS <- as.character(NY.data$FIPS)
 
+#Dataset for all state mortality/cases at county level
+todays.case.data <- read_csv("data/csv/todays_case_data.csv")
+
 # Convert to dataframe state data
 states <- states.shapes
 states <- data.frame(states)

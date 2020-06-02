@@ -193,6 +193,14 @@ pUS.6.deaths <- as.numeric(covid_data_states[which(covid_data_states$NAME=="Unit
 case_rate_ldi <- unlist(lapply(covid_data_states$calc_case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){-log(pUS.6.deaths/x)}))
 
+#ldi's for individual state report cards - Jose
+todays.case.data$Case_rate_ldi <- unlist(lapply(todays.case.data$Case_rate, FUN=function(x){-log(pUS.6.cases/x)})) 
+todays.case.data <- todays.case.data %>%
+  mutate(Case_rate_ldi = replace(Case_rate_ldi, Case_rate_ldi < -5, -5))
+todays.case.data$Mortality_rate_ldi <- unlist(lapply(todays.case.data$Mortality_rate, FUN=function(x){-log(pUS.6.deaths/x)}))
+todays.case.data <- todays.case.data %>%
+  mutate(Mortality_rate_ldi = replace(Mortality_rate_ldi, Mortality_rate_ldi < -5, -5))
+
 covid_data_states <- data.frame(covid_data_states, death_rate_ldi)
 covid_data_states <- data.frame(covid_data_states, case_rate_ldi)
 

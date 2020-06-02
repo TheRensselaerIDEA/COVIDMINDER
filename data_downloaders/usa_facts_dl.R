@@ -16,6 +16,8 @@
 # "data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak"
 # "data/csv/time_series/covid_NY_TS_plot.deaths.csv"
 # "data/csv/time_series/covid_NY_TS_plot.deaths.csv.bak"
+# "data/csv/todays_case_data.csv"
+# "data/csv/todays_case_data.csv.bak"
 
 library(dplyr)
 library(stringr)
@@ -34,13 +36,15 @@ download.file(paste0(base.url,death.file), paste0(file.dir,death.file))
 # download.file(paste0(base.url,pop.file), paste0(file.dir,pop.file))
 
 # Read in latest data
-#cases.TS <- read_csv(paste0(file.dir,case.file))
+cases.TS <- read_csv(paste0(file.dir,case.file))
 deaths.TS <- read_csv(paste0(file.dir,death.file))
 population <- read_csv(paste0(file.dir,pop.file))
 
 #cases.TS$population <- population$population
 #deaths.TS$population <- population$population
 
+
+# PLOT implimentation
 deaths.TS <- deaths.TS %>%
   mutate(`County Name` = str_remove_all(`County Name`, regex(" County", ignore_case = T)))
 
@@ -159,7 +163,31 @@ write_csv(read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv"),"data/csv
 # make sure we have the same version for our app plot!
 write_csv(covid_NY_TS_plot.deaths, "data/csv/time_series/covid_NY_TS_plot.deaths.csv")
 
+# State report card implimentation
+todays.case.data <- cases.TS %>%
+  filter(countyFIPS > 1000) %>%
+  select(countyFIPS, `County Name`, State, ncol(cases.TS)) %>%
+  rename(c("County" = "County Name"))
+colnames(todays.case.data)[4] <- "Cases"
 
+# Filter population data for non-county reports
+population <- population %>%
+  filter(countyFIPS > 1000)
 
+todays.case.data <- inner_join(todays.case.data, population[c(1,4)], by=c("countyFIPS" = "countyFIPS")) %>%
+  filter(population > 0)
+
+todays.death.data <- deaths.TS %>%
+  filter(countyFIPS > 1000) %>%
+  select(1, ncol(deaths.TS))
+colnames(todays.death.data)[2] <- "Mortality"
+
+todays.case.data <- inner_join(todays.case.data, todays.death.data, by=c("countyFIPS" = "countyFIPS"))
+todays.case.data$Case_rate <- todays.case.data$Cases/todays.case.data$population
+todays.case.data$Mortality_rate <- todays.case.data$Mortality/todays.case.data$population
+
+# Backup case data
+write_csv(read_csv("data/csv/todays_case_data.csv"), "data/csv/todays_case_data.csv.bak")
+write_csv(todays.case.data, "data/csv/todays_case_data.csv")
 
 
