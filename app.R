@@ -2,6 +2,7 @@
 source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
+source("modules/leaflet_gen.R")
 
 update_date <- "06-02-2020" # makes it easy to change all occurances when we update
 
@@ -388,15 +389,20 @@ ui <-
                ), 
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (NY)</b></br>Mortality Rate</div>")),
-               value="outcome_ny_mortality",
+                        HTML("<div><b>OUTCOME (State)</b></br>Mortality Rate</div>")),
+               value="outcome_state_mortality",
                fluidPage(
-                   fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Mortality")),
-                   fluidRow(class="page_title", tags$h2("What are the disparities between counties of New York
-                               in rates of COVID-19 deaths per 100k population when compared to the average USA rate?")),
+                   fluidRow(class="page_title", uiOutput("state_mort_heading")),
                    fluidRow(class="map-container",
                    column(8,id = "mainpanel_ny_mort",
-                           tags$h3(class="map-title", "COVID-19 Mortality Rate Disparities by County in New York Compared to Average US Rate"),
+                          uiOutput("state_mort_map_title"),
+                          tags$div(class = "select-bar",
+                                   selectInput(
+                                     inputId = "state_mort",
+                                     label = NULL,
+                                     choices = state.abr$abr,
+                                     selected = "NY"    
+                                   )),
                            leafletOutput(outputId = "map.NY.deaths", height = height)),
                    column(4,
                           id = "sidebar_ny_mort",
@@ -423,17 +429,21 @@ ui <-
                  
                  )),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (NY)</b></br>COVID-19 Cases</div>")),
-               value="outcome_ny_cases",
+                        HTML("<div><b>OUTCOME (State)</b></br>COVID-19 Cases</div>")),
+               value="outcome_state_cases",
                fluidPage(
-                 fluidRow(class="page_title", tags$h1("OUTCOME: New York rates of COVID-19 Cases")),
-                 fluidRow(class="page_title", tags$h2("What are the disparities between New York counties in the rate of COVID-19 
-                               cases per 100k population when compared to the average United States 
-                               rate?")),
+                 fluidRow(class="page_title", uiOutput("state_case_heading")),
                  fluidRow(class = "map-container",
                  column(8, id = "mainpanel_ny_cases",
-                         tags$h3(class="map-title", "COVID-19 Case Rate Disparities by County in New York  Compared to Average US Rate"),
-                         leafletOutput(outputId = "map.NY.cases", height=height)),
+                        uiOutput("state_case_map_title"),
+                        tags$div(class = "select-bar",
+                                 selectInput(
+                                   inputId = "state_case",
+                                   label = NULL,
+                                   choices = state.abr$abr,
+                                   selected = "NY"    
+                                 )), 
+                        leafletOutput(outputId = "map.NY.cases", height=height)),
                  column(4,
                    id = "sidebar_ny_cases",
                    #HTML(whatisit_text),
@@ -760,6 +770,38 @@ server <- function(input, output, session) {
   output$ny_det_map_title <- renderText ({
     select.det <- input$determinant_NY
     paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate")
+  })
+  
+  output$state_mort_heading <- renderUI({
+    state <- input$state_mort
+    name <- state.abr[state.abr$abr==state,"name"]
+    tagList(
+    tags$h1(paste0("OUTCOME: ",name," rates of COVID-19 Mortality")),
+    tags$h2(paste0("What are the disparities between counties of ",name," in rates of COVID-19 deaths 
+                   per 100k population when compared to the average USA rate?"))
+    )
+  })
+  output$state_mort_map_title <- renderUI({
+    state <- input$state_mort
+    name <- state.abr[state.abr$abr==state,"name"]
+    tags$h3(class="map-title", paste0("COVID-19 Mortality Rate Disparities by County in ",name," 
+                                      Compared to Average US Rate"))
+  })
+  
+  output$state_case_heading <- renderUI({
+    state <- input$state_case
+    name <- state.abr[state.abr$abr==state,"name"]
+    tagList(
+      tags$h1(paste0("OUTCOME: ",name," rates of COVID-19 Cases")),
+      tags$h2(paste0("What are the disparities between counties of ",name," in rates of COVID-19 cases 
+                   per 100k population when compared to the average USA rate?"))
+    )
+  })
+  output$state_case_map_title <- renderUI({
+    state <- input$state_case
+    name <- state.abr[state.abr$abr==state,"name"]
+    tags$h3(class="map-title", paste0("COVID-19 Case Rate Disparities by County in ",name," 
+                                      Compared to Average US Rate"))
   })
   
   output$us_det_title <- renderUI ({
@@ -1089,103 +1131,15 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.deaths <- renderLeaflet({
-    
-    
-    pal2 <- leaflet::colorBin(colors, domain = NY.data$death_rate_ldi, bins = bins, reverse=FALSE)
-    
-    labels <- sprintf(
-      "<strong>%s</strong><br/>
-      COVID-19 Mortality Rate DI: %.2g<br>
-      COVID-19 Mortality Rate: %.1f /100k",
-      NY.data$County, NY.data$death_rate_ldi, (NY.data$deaths/NY.data$Population)*100000
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
-      addPolygons(
-        fillColor = ~pal2(NY.data$death_rate_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~NY.data$death_rate_ldi, 
-                opacity = 0.7, 
-                title = "Disparity Index<br/>NY COVID-19 Mortality Rates",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-      ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
+    selected_state <- input$state_mort
+    selected_feature <- "Mortality"
+    geo.plot(selected_state, selected_feature)
   })
   
   output$map.NY.cases <- renderLeaflet({
-    
-    pal2 <- leaflet::colorBin(colors, domain = NY.data$case_rate_ldi, bins = bins, reverse=FALSE)
-    
-    labels <- sprintf(
-      "<strong>%s</strong><br/>
-      COVID-19 Case Rate DI: %.2g<br>
-      COVID-19 Case Rate: %.1f /100k",
-#      NY.data$County, NY.data$case_rate_ldi, (NY.data$cases/NY.data$Population)*100000
-      NY.data$County, NY.data$case_rate_ldi, NY.data$case_rate*100000
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
-      addPolygons(
-        fillColor = ~pal2(NY.data$case_rate_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~NY.data$case_rate_ldi, 
-                opacity = 0.7, 
-                title = "Disparity Index<br/>NY COVID-19 Cases",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-      ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
+    selected_state <- input$state_case
+    selected_feature <- "Case"
+    geo.plot(selected_state, selected_feature)
   })
   
   output$map.NY.determinant <- renderLeaflet({
@@ -2117,8 +2071,8 @@ server <- function(input, output, session) {
     # if the tab variable is defined, send a message to client to update the tab
     if (any(sapply(data[c('outcome_usa_mortality', 
                           'outcome_usa_racial_disparity',
-                          'outcome_ny_mortality',
-                          'outcome_ny_cases', 
+                          'outcome_state_mortality',
+                          'outcome_state_cases', 
                           'outcome_ny_racial_disparity',
                           'outcome_ct_racial_disparity',
                           'outcome_ny_new_cases',
