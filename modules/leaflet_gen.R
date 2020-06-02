@@ -40,9 +40,11 @@ geo.plot <- function(state.choice, feature, reverse=F) {
     COVID-19 ",feature," Rate: %.1f /100k"),
     dataset$County, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
   ) %>% lapply(htmltools::HTML)
-  
+  lat <- state.abr[state.abr$abr == state.choice, "lat"]
+  lon <- state.abr[state.abr$abr == state.choice, "lon"]
   
   return (leaflet(shapes) %>%
+            setView(lat, lon, 6) %>%
             addPolygons(
               fillColor = ~pal2(dataset[,ldi_feature[1]]),
               weight = 1,
