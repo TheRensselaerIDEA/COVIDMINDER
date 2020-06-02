@@ -19,6 +19,7 @@
 
 library(dplyr)
 library(stringr)
+library(lubridate)
 
 base.url <- "https://usafactsstatic.blob.core.windows.net/public/data/covid-19/"
 case.file <- "covid_confirmed_usafacts.csv"
