@@ -21,6 +21,18 @@ get_ldi <- function(feature) {
   return(c(ldi, rate))
 }
 
+get_zoom <- function(state.choice) {
+  if (state.choice %in% c("TX", "CA")) {
+    zoom = 5
+  }
+  else if(state.choice %in% "AK") {
+    zoom = 3
+  }
+  else {
+    zoom = 6
+  }
+}
+
 geo.plot <- function(state.choice, feature, reverse=F) {
   # Feature: Case, Mortality...
   ldi_feature <- get_ldi(feature)
@@ -43,8 +55,10 @@ geo.plot <- function(state.choice, feature, reverse=F) {
   lat <- state.abr[state.abr$abr == state.choice, "lat"]
   lon <- state.abr[state.abr$abr == state.choice, "lon"]
   
+  zoom <- get_zoom(state.choice)
+  
   return (leaflet(shapes) %>%
-            setView(lat, lon, 6) %>%
+            setView(lat, lon, zoom) %>%
             addPolygons(
               fillColor = ~pal2(dataset[,ldi_feature[1]]),
               weight = 1,
