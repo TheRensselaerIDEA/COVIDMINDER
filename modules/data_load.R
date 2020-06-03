@@ -35,13 +35,13 @@ todays.case.data <- read_csv("data/csv/todays_case_data.csv")
 
 library(datasets)
 state.abr <- cbind.data.frame(state.abb, state.name, state.center$x, state.center$y)
-colnames(state.abr) <- c("abr", "name", "lat", "lon")
-state.abr[state.abr$abr == "AK", "lat"] <- -153.4937
-state.abr[state.abr$abr == "AK", "lon"] <- 64.2008
-state.abr[state.abr$abr == "HI", "lat"] <- -157.532
-state.abr[state.abr$abr == "HI", "lon"] <- 20.57503
-state.abr[state.abr$abr == "MI", "lat"] <- -86.41704
-state.abr[state.abr$abr == "MI", "lon"] <- 44.9534
+colnames(state.abr) <- c("abr", "name", "lon", "lat")
+state.abr[state.abr$abr == "AK", "lon"] <- -153.4937
+state.abr[state.abr$abr == "AK", "lat"] <- 64.2008
+state.abr[state.abr$abr == "HI", "lon"] <- -157.532
+state.abr[state.abr$abr == "HI", "lat"] <- 20.57503
+state.abr[state.abr$abr == "MI", "lon"] <- -86.41704
+state.abr[state.abr$abr == "MI", "lat"] <- 44.9534
 
 
 

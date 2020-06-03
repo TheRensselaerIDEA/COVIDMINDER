@@ -58,7 +58,7 @@ geo.plot <- function(state.choice, feature, reverse=F) {
   zoom <- get_zoom(state.choice)
   
   return (leaflet(shapes) %>%
-            setView(lat, lon, zoom) %>%
+            setView(lon, lat, zoom) %>%
             addPolygons(
               fillColor = ~pal2(dataset[,ldi_feature[1]]),
               weight = 1,
