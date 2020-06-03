@@ -389,7 +389,7 @@ ui <-
                ), 
       ), 
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (State)</b></br>Mortality Rate</div>")),
+                        HTML("<div><b>OUTCOME (STATE)</b></br>Mortality Rate</div>")),
                value="outcome_state_mortality",
                fluidPage(
                    fluidRow(class="page_title", uiOutput("state_mort_heading")),
@@ -429,7 +429,7 @@ ui <-
                  
                  )),
       tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>OUTCOME (State)</b></br>COVID-19 Cases</div>")),
+                        HTML("<div><b>OUTCOME (STATE)</b></br>COVID-19 Cases</div>")),
                value="outcome_state_cases",
                fluidPage(
                  fluidRow(class="page_title", uiOutput("state_case_heading")),
