@@ -181,7 +181,12 @@ ui <-
                                      column(8,style=paste0("height:",height,";"), id = "mainpanel_ny_CoT_region",
                                             selectInput(inputId = "NYCounty",
                                                         label = "NY Counties",
-                                                        choices = c("All Counties", sort(unique(covid_NY_TS_plot.deaths$County))),
+                                                        choices = c("All Counties", sort(covid_NY_TS_plot.deaths %>%
+                                                                                           filter(Region != "New York City") %>%
+                                                                                           select(County) %>%
+                                                                                           unlist() %>%
+                                                                                           unique() %>%
+                                                                                           c("New York City"))),
                                                         selected = "All Counties"),
                                             dateRangeInput(inputId = "NYcDoTDate",
                                                            label = "Date Range",
@@ -1741,6 +1746,7 @@ server <- function(input, output, session) {
       filter(Region != "New York City") %>%
       rbind.data.frame(NYC)
     
+    
     if (select.rate=="Overall") {
       covid_NY_TS <- covid_NY_TS %>%
         mutate(y = deaths) %>%
@@ -1793,7 +1799,7 @@ server <- function(input, output, session) {
     else if(selected.county != "All Counties") {
       yesterday <- select.date[2]
       point <- covid_NY_TS %>%
-        filter(Region == selected.county & date == yesterday)
+        filter(County == selected.county & date == yesterday)
       if (selected.county == "New York State"){
         wellPanel(
           class = "gg_tooltip",
@@ -1803,7 +1809,7 @@ server <- function(input, output, session) {
         wellPanel(
           # style = style,
           class = "gg_tooltip",
-          h3(HTML(paste0("<b>",point$Region," County</b><br>Total Deaths",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
+          h3(HTML(paste0("<b>",point$County," County</b><br>Total Deaths",per,format(round(point[1,]$y),big.mark = ","),"<br>Date: ",yesterday)))
           )
       }
     }
