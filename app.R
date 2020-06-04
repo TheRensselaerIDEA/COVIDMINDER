@@ -1211,7 +1211,7 @@ server <- function(input, output, session) {
     selected.region <- input$NYRegion3
     select.rate <- input$rate.ma
     select.date <- input$NYDate.ma
-    range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
+    #range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     
     #width <- input$width
     select.size <- 3
@@ -1240,21 +1240,24 @@ server <- function(input, output, session) {
       gg_title <- paste0("New York State New COVID-19 Case Trends per 100k (",moving.avg.window," day Average)")
     }
     
+    region.num <- unique(covid_NY_TS_plot.ma$Region) %>% as.data.frame()
+    colnames(region.num) <- c("Region")
+    region.num <- region.num %>%
+      mutate(num = row_number()) %>%
+      mutate(Region = as.character(Region))
+    
+    n_region <- nrow(region.num)
+    
     highlight_points <- covid_NY_TS_plot.ma %>%
-      dplyr::filter( 
-          Region == "Capital" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
-            Region == "Central New York" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-            Region == "Finger Lakes" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-            Region == "Long Island" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-            Region == "Mid-Hudson" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-            Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-            Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-            Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-            Region == "North Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-            Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-            Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-            Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
-      )
+      ungroup() %>%
+      filter(date >= select.date[1] & date <= select.date[2]) %>%
+      left_join(region.num, by=c("Region" = "Region")) %>%
+      group_by(Region) %>%
+      mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date))))  %>% 
+      mutate(max_date = as.Date(max(date))) %>%
+      mutate(max_date = max_date - ((num*((range%/%n_region) + 1))%%range))  %>%
+      filter(as.Date(date) == max_date) %>%
+      top_n(1, wt=date)
     
     NY_region_palette.df <- NY_counties_regions %>%
       dplyr::select(Region,Color) %>% 
@@ -1308,7 +1311,7 @@ server <- function(input, output, session) {
     #selected.county <- input$NYCounty
     select.rate <- input$rate.DoT
     select.date <- input$NYDoTDate
-    range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
+    #range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     
     #width <- input$width
     select.size <- 3
@@ -1344,21 +1347,24 @@ server <- function(input, output, session) {
         )
     }
     
+    region.num <- unique(covid_NY_TS_plot.ma$Region) %>% as.data.frame()
+    colnames(region.num) <- c("Region")
+    region.num <- region.num %>%
+      mutate(num = row_number()) %>%
+      mutate(Region = as.character(Region))
+    
+    n_region <- nrow(region.num)
+    
     highlight_points <- covid_NY_TS_plot.ma %>%
-      dplyr::filter( 
-        Region == "Capital" & date == select.date[1] + ((1*((range%/%11)+1)) %% range) |
-          Region == "Central New York" & date == select.date[1] + ((2*((range%/%11)+1)) %% range) |
-          Region == "Finger Lakes" & date == select.date[1] + ((3*((range%/%11)+1)) %% range) |
-          Region == "Long Island" & date == select.date[1] + ((4*((range%/%11)+1)) %% range) |
-          Region == "Mid-Hudson" & date == select.date[1] + ((5*((range%/%11)+1)) %% range) |
-          Region == "Mohawk Valley" & date == select.date[1] + ((6*((range%/%11)+1)) %% range) |
-          Region == "New York City" & date == select.date[1] + ((7*((range%/%11)+1)) %% range) |
-          Region == "New York State" & date == select.date[1] + ((8*((range%/%11)+1)) %% range) |
-          Region == "North Country" & date == select.date[1] + ((9*((range%/%11)+1)) %% range) |
-          Region == "Southern Tier" & date == select.date[1] + ((10*((range%/%11)+1)) %% range) |
-          Region == "Tug Hill Seaway" & date == select.date[1] + ((11*((range%/%11)+1)) %% range) |
-          Region == "Western New York" & date == select.date[1] + ((12*((range%/%11)+1)) %% range)
-      )
+      ungroup() %>%
+      filter(date >= select.date[1] & date <= select.date[2]) %>%
+      left_join(region.num, by=c("Region" = "Region")) %>%
+      group_by(Region) %>%
+      mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date))))  %>% 
+      mutate(max_date = as.Date(max(date))) %>%
+      mutate(max_date = max_date - ((num*((range%/%n_region) + 1))%%range))  %>%
+      filter(as.Date(date) == max_date) %>%
+      top_n(1, wt=date)
     
     NY_region_palette.df <- NY_counties_regions %>%
       dplyr::select(Region,Color) %>% 
@@ -1410,7 +1416,7 @@ server <- function(input, output, session) {
     select.rate <- input$rate.cDoT
     select.date <- input$NYcDoTDate
     
-    range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
+    #range <- as.numeric(select.date[2]) - as.numeric(select.date[1])
     #print(range)
     
     NYC <- covid_NY_TS_plot.deaths %>%
@@ -1450,73 +1456,23 @@ server <- function(input, output, session) {
       title <- "New York State COVID-19 Deaths per 100K Population by County (Mar-June 2020)"
     }
     
-    highlight_points <- covid_NY_TS %>% 
-      dplyr::filter( 
-        County == "Albany" & date == select.date[1] + ((1*((range%/%40)+1)) %% range) |
-          #County == "Allegany" & date == as.Date("2020-03-29") |
-          #County == "Bronx" & date == select.date[1] + ((3*((range%/%40)+1)) %% range) |
-          County == "Broome" & date == select.date[1] + ((4*((range%/%40)+1)) %% range) |
-          #County == "Cattaraugus" & date == as.Date("2020-03-30") |
-          #County == "Cayuga" & date == select.date[1] + ((6*((range%/%40)+1)) %% range) |
-          #County == "Chautauqua" & date ==select.date[1] + ((7*((range%/%40)+1)) %% range) |
-          #County == "Chemung" & date == as.Date("2020-04-10") |
-          #County == "Chenango" & date == select.date[1] + ((9*((range%/%40)+1)) %% range) |
-          #County == "Clinton" & date == select.date[1] + ((10*((range%/%40)+1)) %% range) |
-          County == "Columbia" & date == select.date[1] + ((11*((range%/%40)+1)) %% range) |
-          #County == "Cortland" & date == select.date[1] + ((12*((range%/%40)+1)) %% range) |
-          #County == "Delaware" & date == as.Date("2020-04-02") |
-          County == "Dutchess" & date == select.date[1] + ((14*((range%/%40)+1)) %% range)|
-          County == "Erie" & date == select.date[1] + ((15*((range%/%40)+1)) %% range) |
-          # County == "Essex" & date == as.Date("2020-04-10") |
-          # County == "Franklin" & date == as.Date("2020-04-10") |
-          # County == "Fulton" & date == as.Date("2020-04-12") |
-          #County == "Genesee" & date == select.date[1] + ((19*((range%/%40)+1)) %% range) |
-          # County == "Greene" & date == as.Date("2020-03-29") |
-          #County == "Hamilton" & date == select.date[1] + ((20*((range%/%40)+1)) %% range) |
-          #County == "Herkimer" & date == select.date[1] + ((21*((range%/%40)+1)) %% range) |
-          # County == "Jefferson" & date == as.Date("2020-03-30") |
-          #County == "Kings" & date ==select.date[1] + ((23*((range%/%40)+1)) %% range) |
-          # County == "Lewis" & date == as.Date("2020-04-10") |
-          # County == "Livingston" & date == as.Date("2020-04-10") |
-          #County == "Madison" & date == select.date[1] + ((26*((range%/%40)+1)) %% range) |
-          County == "Monroe" & date == select.date[1] + ((27*((range%/%40)+1)) %% range) |
-          # County == "Montgomery" & date == as.Date("2020-03-29") |
-          County == "Nassau" & date == select.date[1] + ((27*((range%/%40)+1)) %% range) |
-          County == "New York City" & date == select.date[1] + ((28*((range%/%40)+1)) %% range) |
-          County == "New York State" & date == select.date[1] + ((29*((range%/%40)+1)) %% range) |
-          #County == "Manhattan" & date == select.date[1] + ((30*((range%/%40)+1)) %% range) |
-          County == "Niagara" & date == select.date[1] + ((31*((range%/%40)+1)) %% range) |
-          County == "Oneida" & date == select.date[1] + ((32*((range%/%40)+1)) %% range) |
-          County == "Onondaga" & date == select.date[1] + ((33*((range%/%40)+1)) %% range) |
-          # County == "Ontario" & date == as.Date("2020-04-12") |
-          County == "Orange" & date == select.date[1] + ((35*((range%/%40)+1)) %% range) |
-          County == "Orleans" & date == select.date[1] + ((36*((range%/%40)+1)) %% range) |
-          #County == "Oswego" & date == select.date[1] + ((37*((range%/%40)+1)) %% range) |
-          #County == "Otsego" & date == select.date[1] + ((38*((range%/%40)+1)) %% range) |
-          County == "Putnam" & date == select.date[1] + ((39*((range%/%40)+1)) %% range) |
-          #County == "Queens" & date == select.date[1] + ((40*((range%/%40)+1)) %% range) |
-          County == "Rensselaer" & date == select.date[1] + ((41*((range%/%40)+1)) %% range) |
-          #County == "Richmond" & date == select.date[1] + ((42*((range%/%40)+1)) %% range) |
-          County == "Rockland" & date == select.date[1] + ((43*((range%/%40)+1)) %% range) |
-          #County == "St. Lawrence" & date == select.date[1] + ((44*((range%/%40)+1)) %% range) |
-          #County == "Saratoga" & date == select.date[1] + ((45*((range%/%40)+1)) %% range) |
-          County == "Schenectady" & date == select.date[1] + ((46*((range%/%40)+1)) %% range) |
-          #County == "Schoharie" & date == select.date[1] + ((47*((range%/%40)+1)) %% range) |
-          #County == "Schuyler" & date == select.date[1] + ((48*((range%/%40)+1)) %% range) |
-          #County == "Seneca" & date == select.date[1] + ((49*((range%/%40)+1)) %% range) |
-          County == "Steuben" & date == select.date[1] + ((50*((range%/%40)+1)) %% range) |
-          County == "Suffolk" & date == select.date[1] + ((51*((range%/%40)+1)) %% range) |
-          County == "Sullivan" & date == select.date[1] + ((52*((range%/%40)+1)) %% range) |
-          # County == "Tioga" & date == as.Date("2020-03-26") |
-          #County == "Tompkins" & date == select.date[1] + ((53*((range%/%40)+1)) %% range) |
-          County == "Ulster" & date == select.date[1] + ((54*((range%/%40)+1)) %% range) |
-          County == "Warren" & date == select.date[1] + ((55*((range%/%40)+1)) %% range) |
-          # County == "Washington" & date == as.Date("2020-03-30") |
-          # County == "Wayne" & date == as.Date("2020-04-02") |
-          County == "Westchester" & date == select.date[1] + ((58*((range%/%40)+1)) %% range)# |
-          # County == "Wyoming" & date == as.Date("2020-04-10") |
-          #County == "Yates" & date == select.date[1] + ((60*((range%/%40)+1)) %% range)
-      )
+    county.num <- unique(covid_NY_TS$County) %>% as.data.frame()
+    colnames(county.num) <- c("County")
+    county.num <- county.num %>%
+      mutate(num = row_number()) %>%
+      mutate(County = as.character(County))
+    
+    n_county <- nrow(county.num)
+    
+    highlight_points <- covid_NY_TS %>%
+      filter(date >= select.date[1] & date <= select.date[2]) %>%
+      left_join(county.num, by=c("County" = "County")) %>%
+      group_by(County) %>%
+      mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date))))  %>% 
+      mutate(max_date = as.Date(max(date))) %>%
+      mutate(max_date = max_date - ((num*((range%/%n_county) + 1))%%range))  %>%
+      filter(as.Date(date) == max_date) %>%
+      top_n(1, wt=date)
     
     NY_region_palette.df <- NY_counties_regions %>%
       dplyr::select(Region,Color) %>% 
