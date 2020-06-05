@@ -1,56 +1,56 @@
 NAME,covid19_cases,covid19_deaths,covid19_recovered
-United States,1831576,106169,463868
-Alabama,18766,653,0
-Alaska,486,10,0
-Arizona,21264,943,0
-Arkansas,7818,136,0
-California,117215,4305,0
-Colorado,26774,1474,0
-Connecticut,42979,3972,0
-Delaware,9685,373,0
-District of Columbia,8886,470,0
-Florida,57447,2530,0
-Georgia,48207,2102,0
-Guam,175,5,0
+United States,1851274,107150,479258
+Alabama,18851,653,0
+Alaska,504,10,0
+Arizona,22356,983,0
+Arkansas,8067,142,0
+California,119348,4374,0
+Colorado,27046,1494,0
+Connecticut,43091,3989,0
+Delaware,9712,375,0
+District of Columbia,9016,473,0
+Florida,58764,2566,0
+Georgia,48894,2123,0
+Guam,177,5,0
 Hawaii,653,17,0
 Idaho,2933,83,0
-Illinois,122848,5525,0
-Indiana,35237,2197,0
-Iowa,20019,561,0
-Kansas,9965,222,0
-Kentucky,10185,442,0
-Louisiana,40746,2835,0
-Maine,2377,94,0
-Maryland,54175,2597,0
-Massachusetts,101163,7085,0
-Michigan,57731,5553,0
-Minnesota,25508,1082,0
-Mississippi,16041,767,0
-Missouri,14015,786,0
-Montana,523,17,0
-Nebraska,14616,170,0
-Nevada,8858,417,0
-New Hampshire,4749,256,0
-New Jersey,161545,11771,0
-New Mexico,8024,367,0
-New York,373040,29968,0
-North Carolina,30023,961,0
-North Dakota,2646,65,0
-Ohio,36350,2259,0
-Oklahoma,6692,339,0
-Oregon,4335,157,0
-Pennsylvania,77225,5667,0
-Puerto Rico,3935,138,0
-Recovered,0,0,463868
-Rhode Island,15112,732,0
+Illinois,123830,5621,0
+Indiana,35712,2207,0
+Iowa,20300,574,0
+Kansas,10092,226,0
+Kentucky,10410,450,0
+Louisiana,41133,2870,0
+Maine,2418,95,0
+Maryland,54982,2641,0
+Massachusetts,101592,7152,0
+Michigan,58035,5570,0
+Minnesota,25870,1097,0
+Mississippi,16322,782,0
+Missouri,14189,791,0
+Montana,525,17,0
+Nebraska,14885,170,0
+Nevada,8951,431,0
+New Hampshire,4795,265,0
+New Jersey,162068,11880,0
+New Mexico,8140,375,0
+New York,374085,30019,0
+North Carolina,31276,999,0
+North Dakota,2679,66,0
+Ohio,36792,2300,0
+Oklahoma,6805,341,0
+Oregon,4399,159,0
+Pennsylvania,77780,5742,0
+Puerto Rico,4023,140,0
+Recovered,0,0,479258
+Rhode Island,15219,742,0
 South Carolina,12415,501,0
-South Dakota,5067,62,0
-Tennessee,24342,381,0
-Texas,67310,1716,0
-Utah,10202,113,0
-Vermont,988,55,0
-Virginia,46239,1407,0
-Washington,22157,1129,0
-West Virginia,2056,78,0
-Wisconsin,18917,607,0
-Wyoming,912,17,0
+South Dakota,5162,62,0
+Tennessee,24833,388,0
+Texas,68877,1744,0
+Utah,10497,117,0
+Vermont,990,55,0
+Virginia,46905,1428,0
+Washington,22484,1135,0
+West Virginia,2077,78,0
+Wisconsin,19400,616,0
+Wyoming,915,17,0
