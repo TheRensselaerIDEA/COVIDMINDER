@@ -1,24 +1,24 @@
 county,cases
-New York State,374085
-Albany,1920
+New York State,375133
+Albany,1930
 Allegany,49
 Bronx,0
-Broome,589
-Cattaraugus,90
+Broome,593
+Cattaraugus,91
 Cayuga,96
-Chautauqua,89
+Chautauqua,95
 Chemung,137
 Chenango,133
 Clinton,97
-Columbia,399
+Columbia,400
 Cortland,41
 Delaware,82
-Dutchess,3951
-Erie,6234
+Dutchess,3962
+Erie,6308
 Essex,38
 Franklin,23
-Fulton,213
-Genesee,202
+Fulton,215
+Genesee,205
 Greene,241
 Hamilton,5
 Herkimer,113
@@ -27,39 +27,39 @@ Kings,0
 Lewis,20
 Livingston,120
 Madison,319
-Monroe,3048
-Montgomery,94
-Nassau,40644
-New York,204872
-Niagara,1067
-Oneida,1058
-Onondaga,2256
-Ontario,215
-Orange,10460
-Orleans,246
+Monroe,3081
+Montgomery,96
+Nassau,40713
+New York,205406
+Niagara,1085
+Oneida,1069
+Onondaga,2295
+Ontario,218
+Orange,10471
+Orleans,247
 Oswego,112
 Otsego,73
-Putnam,1264
+Putnam,1268
 Queens,0
 Rensselaer,495
 Richmond,0
-Rockland,13259
-St. Lawrence,206
-Saratoga,489
+Rockland,13280
+St. Lawrence,207
+Saratoga,493
 Schenectady,701
 Schoharie,51
 Schuyler,12
 Seneca,60
-Steuben,243
-Suffolk,40062
-Sullivan,1393
+Steuben,245
+Suffolk,40153
+Sullivan,1405
 Tioga,133
 Tompkins,165
-Ulster,1701
+Ulster,1704
 Warren,256
 Washington,238
-Wayne,120
-Westchester,33691
+Wayne,121
+Westchester,33767
 Wyoming,87
 Yates,39
 Out of NY,0
