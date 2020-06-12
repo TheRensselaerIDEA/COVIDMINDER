@@ -1,4 +1,5 @@
 #' Leaflet output for COVIDMINDER
+#' Jose Figueroa
 #' 
 #'  This script assumes todats.case.data has already been imported by parent script.
 #'  @usage get_ldi
