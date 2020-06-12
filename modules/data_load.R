@@ -111,6 +111,15 @@ covid_racial_data_states.wide <- read_csv("data/csv/states_cdc_racial_wide.csv")
 # Important per-state legislative and EO data
 covid_eo_bills <- read_csv("data/csv/Covid_EO.csv")
 
+# State Policy Processing
+state_policy <- read_csv("Summer_2020_notebooks/state_policy.csv")
+state_policy.df <- state_policy[5:55,] # Raw data points
+state_policy.md <- state_policy[1:4,] # Metadata
+
+# Properly format all data defined as date data.
+state_policy.df[as.vector(state_policy.md[4,] == "date")] <- lapply(state_policy.df[as.vector(state_policy.md[4,] == "date")], 
+                                                                    function(x){parse_date_time(x, c("%m/%d/%y"))})
+
 # Test rates from countries we are comparing to 
 total_test_rates.df <- read_csv("data/csv/owid_glb_test_rates.csv")
 
