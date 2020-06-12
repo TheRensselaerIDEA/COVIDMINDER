@@ -265,16 +265,16 @@ write_csv(covid_NY_TS_counties_long,"data/csv/time_series/covid_NY_TS_counties_l
 # Create COMBINED data frame
 # UPDATE: We want to use the NY API data for cases: NY_county_data
 # covid_NY_counties <- left_join(covid_NY_counties.deaths, covid_NY_counties.cases, by = c('county'))
-covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.csv")
-covid_NY_counties <- left_join(covid_NY_counties.deaths, NY_county_data[,c(2,8)], by = c('county'='County'))
+#covid_NY_counties.deaths <- read_csv("data/csv/time_series/covid_NY_counties.deaths.csv")
+#covid_NY_counties <- left_join(covid_NY_counties.deaths, NY_county_data[,c(2,8)], by = c('county'='County'))
 
 # Adjust to match app
-colnames(covid_NY_counties) <- c("county","deaths","cases")
+#colnames(covid_NY_counties) <- c("county","deaths","cases")
 # Need cumulative
-covid_NY_counties[1,3] <- sum(na.omit(covid_NY_counties$cases))
+#covid_NY_counties[1,3] <- sum(na.omit(covid_NY_counties$cases))
 
-write_csv(read_csv("data/csv/time_series/covid_NY_counties.csv"),"data/csv/time_series/covid_NY_counties.csv.bak")
-write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
+#write_csv(read_csv("data/csv/time_series/covid_NY_counties.csv"),"data/csv/time_series/covid_NY_counties.csv.bak")
+#write_csv(covid_NY_counties,"data/csv/time_series/covid_NY_counties.csv")
 
 #### Quickie plot to verify
 # Set number to clean up plot; comment out when running to update data!
