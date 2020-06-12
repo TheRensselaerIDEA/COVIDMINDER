@@ -112,7 +112,7 @@ covid_racial_data_states.wide <- read_csv("data/csv/states_cdc_racial_wide.csv")
 covid_eo_bills <- read_csv("data/csv/Covid_EO.csv")
 
 # State Policy Processing
-state_policy <- read_csv("Summer_2020_notebooks/state_policy.csv")
+state_policy <- read_csv("data/csv/state_policy.csv")
 state_policy.df <- state_policy[5:55,] # Raw data points
 state_policy.md <- state_policy[1:4,] # Metadata
 
@@ -126,3 +126,9 @@ total_test_rates.df <- read_csv("data/csv/owid_glb_test_rates.csv")
 # Obesity rates from countries we are comparing to
 owid_data.obesity.rate <- read.csv("data/csv/owid_obese_pct_2016.csv")
 colnames(owid_data.obesity.rate) <- c("Entity", "Code", "Year", "Pct_obese_adult")
+
+# Time series data for nationwide, counties and states
+covid_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_TS_counties_long.cases.csv")
+covid_TS_state_long.cases <- read_csv("data/csv/time_series/covid_TS_state_long.cases.csv")
+covid_TS_US_long.cases <- read_csv("data/csv/time_series/covid_TS_US_long.cases.csv")
+

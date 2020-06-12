@@ -430,6 +430,20 @@ covid_eo_bills <- covid_eo_bills[1:51,]
 states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO) # Append to states
 states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills) # Append to states
 
-# Join moved to processing
-#NY.shape$county_fips <- paste(as.data.frame(NY.shape)$STATEFP, as.data.frame(NY.shape)$COUNTYFP, sep = '')
-#NY.data <- dplyr::left_join(as.data.frame(NY.shape), as.data.frame(NY.data), by = c("county_fips" = "FIPS"))
+# State Ranking
+time.period <- 14
+ranking <- covid_TS_state_long.cases %>%
+  group_by(State) %>%
+  filter(State != "DC") %>%
+  top_n(time.period, wt=date) %>%
+  summarise(
+    population = max(population),
+    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
+    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
+  ) %>%
+  #mutate(points = 0.5*(cases.delta + deaths.delta)) %>%
+  mutate(points = cases.delta) %>%
+  arrange(points) %>%
+  mutate(rank = row_number()) %>%
+  left_join(state.abr[c("abr", "name")],
+            by = c("State" = "abr"))
