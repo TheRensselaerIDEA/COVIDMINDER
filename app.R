@@ -3,6 +3,7 @@ source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
 source("modules/leaflet_gen.R")
+source("modules/ggplot_gen.R")
 
 update_date <- "06-12-2020" # makes it easy to change all occurances when we update
 
