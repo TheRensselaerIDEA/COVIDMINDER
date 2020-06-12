@@ -3,7 +3,7 @@
 # FILES UPDATED BY THIS SCRIPT:
 # "data/csv/time_series/time_series_covid19_confirmed_US.csv"
 # "data/csv/time_series/time_series_covid19_deaths_US.csv" - Updates ended 5/29
-# "data/csv/time_series/NY_county_data.csv"
+# "data/csv/time_series/NY_county_data.csv" - Updates ended 6/12
 # "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv" - Updates ended 5/29
 # "data/csv/time_series/covid_NY_counties.deaths.csv" - Updates ended 5/29
 # "data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak" - Updates ended 5/29
@@ -36,7 +36,7 @@ download.file(paste0(dateURL.2,dateURL.1.cases), paste0("data/csv/time_series/",
 #download.file(paste0(dateURL.2,dateURL.1.deaths), paste0("data/csv/time_series/", dateURL.1.deaths))
 
 # NEW: Download NY daily testing results
-download.file("https://health.data.ny.gov/resource/xdss-u53e.csv",paste0("data/csv/time_series/NY_daily_testing.csv"))
+#download.file("https://health.data.ny.gov/resource/xdss-u53e.csv",paste0("data/csv/time_series/NY_daily_testing.csv"))
 
 # Import raw into R (JHU)
 todays_TS_data.cases <- read_csv(paste0("data/csv/time_series/", dateURL.1.cases))
@@ -83,7 +83,7 @@ todays_TS_data.NY.cases.long <- data.frame(rbind(TS_New_York_State.cases.long, t
 
 # Read in from NY API (long): This gives correct NYC-area data! 
 # Starts at 03-28-2020
-todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
+#todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
 
 # todays_TS_data.NY.cases.adj <- todays_TS_data.NY.cases.long %>% 
 #   mutate(test_date = test_date - 60*60*24) # JHU's dates are 1 day "behind"
@@ -93,22 +93,22 @@ todays_TS_NY_testing <- read_csv("data/csv/time_series/NY_daily_testing.csv")
 #   mutate(cumulative_number_of_positives = ifelse(is.na(cumulative_number_of_positives), cases, cumulative_number_of_positives)) 
 
 # Force it to most recent day (for now)
-todays_NY_testing <- todays_TS_NY_testing %>% 
-  dplyr::filter(test_date == (max(test_date))) 
+#todays_NY_testing <- todays_TS_NY_testing %>% 
+#  dplyr::filter(test_date == (max(test_date))) 
 
-todays_NY_testing$county <- as.factor(todays_NY_testing$county)
+#todays_NY_testing$county <- as.factor(todays_NY_testing$county)
 
 # Read in NY county population list 
-NY_county_data <- read_csv("data/csv/time_series/NY_population.csv")
+#NY_county_data <- read_csv("data/csv/time_series/NY_population.csv")
 
 # Join above County data with daily testing results
-NY_county_data <- inner_join(NY_county_data, todays_NY_testing, by = c("County" = "county"))
+#NY_county_data <- inner_join(NY_county_data, todays_NY_testing, by = c("County" = "county"))
 
 # Add cumulative case rate
-NY_county_data$case_rate <- NY_county_data$cumulative_number_of_positives/NY_county_data$Population
+#NY_county_data$case_rate <- NY_county_data$cumulative_number_of_positives/NY_county_data$Population
 
 # Write it out 
-write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
+#write_csv(NY_county_data, "data/csv/time_series/NY_county_data.csv")
 
 # NEW YORK STATE DEATHS
 # Transform to match our structure: NY deaths

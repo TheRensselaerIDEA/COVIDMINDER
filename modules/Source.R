@@ -5,6 +5,7 @@
 # - gghighlight
 # - ggrepel
 # - geojsonio
+# - gt
 # - htmltools
 # - leaflet
 # - leaflet.extras
@@ -12,7 +13,7 @@
 # - tidyverse
 # - zoo
 
-dependencies <- c("shiny", "dplyr", "gghighlight", "ggrepel", "geojsonio", "htmltools", "leaflet", "leaflet.extras", "tidyverse", "zoo")
+dependencies <- c("shiny", "dplyr", "gghighlight", "ggrepel", "geojsonio", "gt", "htmltools", "leaflet", "leaflet.extras", "tidyverse", "zoo")
 
 # Check and install packages not yet available
 install.dependencies <- dependencies[!(dependencies %in% installed.packages()[, "Package"])]
@@ -28,6 +29,7 @@ library(ggrepel)
 library(htmltools)
 library(leaflet)
 library(leaflet.extras)
+library(gt)
 library(shiny)
 library(tidyverse)
 library(lubridate)

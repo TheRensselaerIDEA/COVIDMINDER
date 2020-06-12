@@ -1148,59 +1148,9 @@ server <- function(input, output, session) {
   })
   
   output$map.NY.determinant <- renderLeaflet({
-    det <- input$determinant_NY
-    if ("Diabetes" %in% det) {
-      NY.data$ldi <- NY.data$diabetes_ldi
-      NY.data$pct <-  NY.data$pct_Adults_with_Diabetes*1000
-    }
-    else if ("Obesity" %in% det) {
-      NY.data$ldi <- NY.data$obesity_ldi
-      NY.data$pct <-  NY.data$pct_Adults_with_Obesity*1000
-    }
-    
-    pal2 <- leaflet::colorBin(colors, domain = NY.data$ldi, bins = bins, reverse=FALSE)
-    labels <- sprintf(
-      paste0("<strong>%s</strong><br/>",
-      det," Rate DI: %.2g<br>",
-      det," Rate: %.1f per 100k"),
-      NY.data$County, NY.data$ldi, NY.data$pct
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(NY.shape) %>%
-      setView(-76.071782, 42.991989, 6) %>%  # Set to the geographic center of NY
-      addPolygons(
-        fillColor = ~pal2(NY.data$ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~NY.data$diabetes_ldi, 
-                opacity = 0.7, 
-                title = paste0("Disparity Index<br/>NY ",det," Rates"),
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-      ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
+    selected_state <- "NY"
+    selected_feature <- input$determinant_NY
+    geo.plot(selected_state, selected_feature)
   })
 
   # This sets the range for zooming the following plot
