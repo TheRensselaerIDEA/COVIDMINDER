@@ -5,7 +5,7 @@ source("modules/preprocessing.R")
 source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 
-update_date <- "06-13-2020" # makes it easy to change all occurances when we update
+update_date <- "06-14-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
