@@ -15,8 +15,13 @@
 #'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
 #'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
 #'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
-
-
+#'  
+#'  @usage ggbar.overall
+#'  @field selected.state \code{character} The 2 character initial representing the state of choice.
+#'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
+#'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
+#'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
+  
 get_y_label <- function(y.value) {
   if (y.value == "cases") {
     return("COVID-19 Cases")
@@ -57,9 +62,9 @@ get_dif <- function(y.value) {
 }
 
 ggplot.state <- function(selected.state="NY", 
-                         y.value="cases", 
+                         y.value="diff", 
                          moving.avg.window=7, 
-                         case.cut=200, 
+                         case.cut=100, 
                          remove.title = F,
                          max.labels=10 # To be implimented
                          ){
@@ -194,4 +199,85 @@ ggplot.state <- function(selected.state="NY",
     gg_title +
     NULL
   return(g)
+}
+
+ggbar.overall <- function(selected.state = "NY", 
+                          y.value="p_cases", 
+                          moving.avg.window=14, 
+                          remove.title = F) {
+  state <- covid_TS_state_long.cases %>%
+    filter(State == selected.state)
+  
+  my_diff <- get_dif(y.value)
+  category <- get_y_label(y.value)
+  
+  if (remove.title) {
+    gg_title <- NULL
+  }
+  else {
+    gg_title <- ggtitle(paste0(selected.state, " ", category, " over time"))
+  }
+  
+  
+  state_cases <- state[c("date", y.value, my_diff)]
+  state_cases <- state_cases %>%
+    rename(Values = all_of(y.value)) %>%
+    rename(diff = all_of(my_diff)) %>%
+    mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
+    mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
+  state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 10, "pct_increase"] <- 10
+  state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
+  state_cases$Type <- "State MA"
+  
+  US.ma <- covid_TS_US_long.cases[c("date", y.value, my_diff)] %>%
+    rename(Values = all_of(y.value)) %>%
+    rename(diff = all_of(my_diff)) %>%
+    mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
+    mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+    filter(ma > 0) %>%
+    filter(date > min(state_cases$date))
+  US.ma$Type <- "US MA"
+  state.us.ma <- rbind.data.frame(state_cases, US.ma)
+  
+  END_STHM <- paste0(selected.state," ends stay at home order")
+  STHM <- paste0(selected.state," begins stay at home order")
+  
+  return(state_cases %>%
+           ggplot() +
+           geom_col(aes(x=date, y=Values, fill = pct_increase)) +
+           scale_fill_gradient(high = "#ff0000", 
+                               low = "#ffffff",
+                               limit = c(0,10),
+                               breaks = c(5,10),
+                               labels = c("5%","10%+"),
+                               na.value = "skyblue",
+                               guide = guide_colorbar(title = paste0("Percentage change in ", category),
+                                                      title.hjust = 0.5,
+                                                      title.position = "top", 
+                                                      label.hjust = 0.5, 
+                                                      barwidth = 15,
+                                                      frame.colour = "black")) +
+           geom_point(data = state_cases, aes(x=date, y=Values, size = ""), shape = NA, colour = "skyblue") +
+           guides(size=guide_legend(title = "No Change", 
+                                    override.aes=list(shape=15, size = 8), 
+                                    title.position = "top",
+                                    title.hjust = 0.5)) +
+           geom_line(data = state.us.ma,aes( x=date, y=ma, color=Type, group=Type), arrow=arrow(ends="last"), show.legend = F)  + 
+           geom_line(data = state.us.ma,aes( x=date, y=ma, color=Type, group=Type)) +
+           geom_vline(aes(xintercept=state_policy.df[state_policy.df$POSTCODE == selected.state,]$END_STHM, color = END_STHM), linetype="longdash", size = 1, show.legend = F) +
+           geom_vline(aes(xintercept=state_policy.df[state_policy.df$POSTCODE == selected.state,]$STAYHOME, color= STHM), linetype="longdash", size = 1, show.legend = F) +
+           scale_color_manual(name = "Line Types", 
+                              values = c("blue", "red", "black", "steelblue"),
+                              guide = guide_legend(title.position = "top",
+                                                   title.hjust = 0.5,
+                                                   direction = "vertical")) +
+           scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+           ylab(get_y_label(y.value)) + 
+           xlab("Date") +
+           theme(legend.position = "bottom",legend.direction = "horizontal") +
+           gg_title + 
+           NULL
+  )
 }
