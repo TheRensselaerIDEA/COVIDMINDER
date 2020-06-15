@@ -15,12 +15,14 @@
 #'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
 #'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
 #'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
+#'  @return \code{ggplot} GGplot object with a county level time series.
 #'  
 #'  @usage ggbar.overall
 #'  @field selected.state \code{character} The 2 character initial representing the state of choice.
 #'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
 #'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
 #'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
+#'  @return \code{ggplot} GGplot object with cumilative bar chart as well as moving average lines.
   
 get_y_label <- function(y.value) {
   if (y.value == "cases") {
