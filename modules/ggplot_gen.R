@@ -1,9 +1,14 @@
-#' GGPLOT output for COVIDMINDER
+#'  @title GGPLOT output for COVIDMINDER
+#'  @author Jose Figueroa
 #' 
 #'  This script assumes state.abr, covid_TS_counties_long.cases has already been imported by parent script.
 #'  @usage get_y_label
 #'  @field y.value \code{character} The name of the data to be displayed on the y axis of ggplot.
 #'  @return \{list(character)} Returns user ledgible string to be written in on plot.
+#'  
+#'  @usage get_diff
+#'  @field y.value \code{character} The name of the data to be displayed on the y axis of ggplot.
+#'  @return \{list(character)} Returns correlating 'diff' column name to y.value.
 #'  
 #'  @usage ggplot.state
 #'  @field selected.state \code{character} The 2 character initial representing the state of choice.
@@ -33,6 +38,21 @@ get_y_label <- function(y.value) {
   }
   else {
     return("")
+  }
+}
+
+get_dif <- function(y.value) {
+  if (y.value == "cases") {
+    return("diff")
+  }
+  if (y.value == "deaths") {
+    return("d_diff")
+  }
+  if (y.value == "p_cases") {
+    return("p_diff")
+  }
+  if (y.value == "p_deaths") {
+    return("p.d_diff")
   }
 }
 
