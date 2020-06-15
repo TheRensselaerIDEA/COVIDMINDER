@@ -72,9 +72,9 @@ ui <-
                                     tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past 14 days."),
                                     offset=2)),
                     fluidRow(column(6, style="text-align:center;",uiOutput("state.CoT.title"),
-                                    plotOutput(outputId = "state.CoT", height = "600px")),
+                                    plotOutput(outputId = "state.CoT", height = height)),
                              column(6, style="text-align:center;",uiOutput("state.DoT.title"),
-                                    plotOutput(outputId = "state.DoT", height = "600px"))),
+                                    plotOutput(outputId = "state.DoT", height = height))),
                     fluidRow(column(8, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
                                     tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -86,13 +86,13 @@ ui <-
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
                     fluidRow(column(10, style="text-align:center;",uiOutput("state.trends.title"),
-                                    plotOutput(outputId = "state.trends", height="600px"), offset = 1)),
+                                    plotOutput(outputId = "state.trends", height=height), offset = 1)),
                     fluidRow(column(6,
                                     uiOutput("state.county.cases"),
-                                    leafletOutput("map.cases")),
+                                    leafletOutput("map.cases", height = height)),
                              column(6,
                                     uiOutput("state.county.deaths"),
-                                    leafletOutput("map.deaths"))),
+                                    leafletOutput("map.deaths", height = height))),
                     tags$br(),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("Comorbidities"))),
@@ -697,11 +697,7 @@ ui <-
                )
       )
       ),
-      navbarMenu(menuName ="about_menu",
-                 #HTML("<div style='font-size:90%;line-height:1.3;'><b>ABOUT</b><br>Project Information</div>"),
-                 HTML("<div><b>ABOUT</b></div>"),
-                 tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>About</b></div>")),
+      tabPanel(HTML("<div><b>ABOUT</b></div>"),
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
@@ -709,7 +705,6 @@ ui <-
                         HTML(footer_text))
                )
                )
-      )
     ), 
     # Footer
     fluidRow(
