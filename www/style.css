@@ -182,13 +182,13 @@ p {
 }
 
 .selectize-control.single .selectize-input {
-    width: 250px;
+    width: 100%;
     max-height: 50px;
 }
+
 .shiny-input-container:not(.shiny-input-container-inline) {
     width: 250px;
 }
-
 
 .tab-content {
     min-height:75vh;

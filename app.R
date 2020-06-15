@@ -4,6 +4,7 @@ source("modules/data_load.R")
 source("modules/preprocessing.R")
 source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
+source("modules/gt_gen.R")
 
 update_date <- "06-15-2020" # makes it easy to change all occurances when we update
 
@@ -57,6 +58,90 @@ ui <-
                      title = whatisit_text,
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
+      tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
+               value = "state_report_cards",
+                  fluidPage(
+                    fluidRow(column(12, style="text-align:center;",
+                                    selectInput(inputId = "state_name",
+                                                label = "State Selector",
+                                                choices = state.abr$name,
+                                                selected = as.character(unlist(ranking[ranking$rank==50, "name"]))))),
+                    fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
+                    tags$br(),
+                    fluidRow(column(8, style="text-align:center;",
+                                    tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past 14 days."),
+                                    offset=2)),
+                    fluidRow(column(6, style="text-align:center;",uiOutput("state.CoT.title"),
+                                    plotOutput(outputId = "state.CoT", height = "600px")),
+                             column(6, style="text-align:center;",uiOutput("state.DoT.title"),
+                                    plotOutput(outputId = "state.DoT", height = "600px"))),
+                    fluidRow(column(8, style="text-align:center;",
+                                    tags$h2("Flattening the Curve"),
+                                    tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
+                                    tags$b("Data Source: "), tags$a("CDC", href="https://wwwnc.cdc.gov/eid/article/26/8/20-1093_article"), offset=2)),
+                    tags$br(),
+                    tags$br(),
+                    fluidRow(column(8,gt_output("state.report"),
+                                    offset = 2)),
+                    fluidRow(column(12, style="text-align:center;",
+                                    tags$h1("County Level Breakdown"))),
+                    fluidRow(column(10, style="text-align:center;",uiOutput("state.trends.title"),
+                                    plotOutput(outputId = "state.trends", height="600px"), offset = 1)),
+                    fluidRow(column(6,
+                                    uiOutput("state.county.cases"),
+                                    leafletOutput("map.cases")),
+                             column(6,
+                                    uiOutput("state.county.deaths"),
+                                    leafletOutput("map.deaths"))),
+                    tags$br(),
+                    fluidRow(column(12, style="text-align:center;",
+                                    tags$h1("Comorbidities"))),
+                    fluidRow(column(12, style="text-align:center;",
+                                    uiOutput("determinant.title")),
+                             column(6,
+                                    selectInput(inputId = "determinant",
+                                                label = NULL,
+                                                choices = c("Diabetes", "Obesity"),
+                                                selected = "Obesity"),
+                                    leafletOutput("maps.determinant"), offset = 3),
+                             column(8, style="text-align:center;",
+                                    tags$p(textOutput("determinant.text"),
+                                           tags$br(),
+                                           tags$b("Data Source: "), tags$a("CDC", href="www.cdc.gov/diabetes/data"), ", ",
+                                           tags$a("CHR", href = 
+                                                    "https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/health-behaviors/diet-exercise/adult-obesity")), 
+                                    offset = 2
+                             )),
+                    fluidRow(column(8, style="text-align:center;",
+                                    HTML("Respective rates per 100k people on maps are: 
+                <div>
+               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+               <i>Darker shades indicate greater disparity.</i><br><br>
+               </div>"), offset=2)),
+                    tags$br(),
+                    tags$br()
+                    ,fluidRow(column(12, style="text-align:center;",
+                                     tags$h1("Rankings")),
+                              tags$a(name = "ranking"),
+                              column(8,
+                                     fluidRow(style="float:right;width:250px;",
+                                              selectInput(inputId = "entries",
+                                                          label = "Entries",
+                                                          choices = c(`Show 10` = 10, 
+                                                                      `Show 25` = 25,
+                                                                      `Show 50` = 50),
+                                                          selected = 10,
+                                                          width = "50%"),
+                                              radioButtons(inputId = "rank.order",
+                                                           label = "Order",
+                                                           choices = c("Ascending", "Descending"),
+                                                           selected = "Ascending",
+                                                           width="50%")),
+                                     gt_output("ranking.table"), offset = 2))
+                 )
+      ),
       navbarMenu(menuName = "outcome_plots_menu",
                  #HTML("<div style='font-size:90%;line-height:1.3;'><b>OUTCOME (GRAPHS)</b><br>Select a state outcome</div>"),
                  HTML("<div><b>OUTCOME (GRAPHS)</b></div>"),
@@ -1931,6 +2016,112 @@ server <- function(input, output, session) {
     
   })
   
+  ### State Report Cards Code ###
+  
+  output$main_title <- renderUI({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    tagList(
+      tags$h1(paste0(state_name, " Overview")),
+      tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
+    )
+  })
+  
+  output$state.CoT.title <- renderUI({
+    state_name <- input$state_name
+    tags$h3(paste0(state_name, " COVID-19 Cases Over Time per 100k"))
+  })
+  
+  output$state.DoT.title <- renderUI({
+    state_name <- input$state_name
+    tags$h3(paste0(state_name, " COVID-19 Deaths Over Time per 100k"))
+  })
+  
+  output$state.trends.title <- renderUI({
+    state_name <- input$state_name
+    tags$h3(paste0(state_name, " ", get_y_label("diff"), " over time (7 day average)"))
+  })
+  
+  output$state.county.cases <- renderUI({
+    state_name <- input$state_name
+    tags$h3(paste0(state_name, " COVID-19 Case disparities compared to US Average"))
+  })
+  
+  output$state.county.deaths <- renderUI({
+    state_name <- input$state_name
+    tags$h3(paste0(state_name, " COVID-19 Mortality disparities compared to US Average"))
+  })
+  
+  output$determinant.title <- renderUI({
+    state_name <- input$state_name
+    det <- input$determinant
+    tags$h3(paste0(state_name, " ", det, " Rate Disparities Compared to the national average"))
+  })
+  
+  output$determinant.text <- renderText({
+    det <- input$determinant
+    paste0("Nationwide, ",det," has been observed as a leading comorbidity of COVID-19.")
+  })
+  
+  output$state.report <- render_gt({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    stats.table(state_initial)
+  })
+  
+  output$map.cases <- renderLeaflet({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    geo.plot(state_initial, "Case")
+  })
+  
+  output$map.deaths <- renderLeaflet({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    geo.plot(state_initial, "Mortality")
+  })
+  
+  output$maps.determinant <- renderLeaflet({
+    state_name <- input$state_name
+    det <- input$determinant
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    geo.plot(state_initial, det)
+  })
+  
+  output$state.CoT <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    ggbar.overall(state_initial, y.value = "p_cases", remove.title = T)
+  })
+  
+  output$state.DoT <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    ggbar.overall(state_initial, y.value = "p_deaths", remove.title = T)
+  })
+  
+  output$state.trends <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    n_case_cut <- 500
+    if (state_initial %in% c("MT", "WV", "AK", "HI", "SD", "WY")) {
+      n_case_cut <- 100
+    }
+    ggplot.state(state_initial, y.value = "diff", case.cut = n_case_cut,remove.title = T)
+  })
+  
+  output$ranking.table <- render_gt({
+    entries <- input$entries
+    if ("Ascending" %in% input$rank.order) {
+      order <- function(x){x}
+    }
+    if ("Descending" %in% input$rank.order) {
+      order <- dplyr::desc
+    }
+    gt.ranking(as.numeric(entries), order)
+  })
+  
+  
   ### The following code deals with setting or responding to parameterized URLs
   observe(print(input$tab))
   
@@ -1982,7 +2173,8 @@ server <- function(input, output, session) {
     }
     
     # if the tab variable is defined, send a message to client to update the tab
-    if (any(sapply(data[c('outcome_usa_mortality', 
+    if (any(sapply(data[c("state_report_cards",
+                          'outcome_usa_mortality', 
                           'outcome_usa_racial_disparity',
                           'outcome_state_mortality',
                           'outcome_state_cases', 
