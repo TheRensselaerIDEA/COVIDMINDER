@@ -228,9 +228,9 @@ ggbar.overall <- function(selected.state = "NY",
     mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
     mutate(pct_increase =diff.ma/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
-  state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 10, "pct_increase"] <- 10
+  state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
   state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
-  state_cases$Type <- "State MA"
+  state_cases$Type <- "State Moving Average"
   
   US.ma <- covid_TS_US_long.cases[c("date", y.value, my_diff)] %>%
     rename(Values = all_of(y.value)) %>%
@@ -240,7 +240,7 @@ ggbar.overall <- function(selected.state = "NY",
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
     filter(ma > 0) %>%
     filter(date > min(state_cases$date))
-  US.ma$Type <- "US MA"
+  US.ma$Type <- "US Moving Average"
   state.us.ma <- rbind.data.frame(state_cases, US.ma)
   
   END_STHM <- paste0(selected.state," ends stay at home order")
@@ -251,11 +251,11 @@ ggbar.overall <- function(selected.state = "NY",
            geom_col(aes(x=date, y=Values, fill = pct_increase)) +
            scale_fill_gradient(high = "#ff0000", 
                                low = "#ffffff",
-                               limit = c(0,10),
-                               breaks = c(5,10),
-                               labels = c("5%","10%+"),
+                               limit = c(0,5),
+                               breaks = c(2.5,5),
+                               labels = c("2.5%","5%+"),
                                na.value = "skyblue",
-                               guide = guide_colorbar(title = paste0("Percentage change in ", category),
+                               guide = guide_colorbar(title = paste0("1-Day Percentage change in ", category),
                                                       title.hjust = 0.5,
                                                       title.position = "top", 
                                                       label.hjust = 0.5, 
