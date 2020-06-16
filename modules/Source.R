@@ -13,6 +13,8 @@
 # - tidyverse
 # - zoo
 
+options(repos=structure(c(CRAN="http://cran.rstudio.com"))) # Needed for Rstudio server side
+
 dependencies <- c("shiny", "dplyr", "gghighlight", "ggrepel", "geojsonio", "gt", "htmltools", "leaflet", "leaflet.extras", "tidyverse", "zoo")
 
 # Check and install packages not yet available
