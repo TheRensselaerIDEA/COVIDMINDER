@@ -185,6 +185,9 @@ states <- data.frame(states, "cardio_deaths_p_Black_Non_Hispanic"=cardio_deaths_
 states <- data.frame(states, "cardio_death_rate_ALL_ldi"=cardio_deaths_2015$cardio_death_rate_ALL_ldi) # Append to states
 states <- data.frame(states, "cardio_death_rate_BNH_ldi"=cardio_deaths_2015$cardio_death_rate_BNH_ldi) # Append to states
 
+
+
+
 # COVID-19 Deaths per COVID-19 Case - UPDATE: Moved to USA Facts data
 US.pop <-  population[population$NAME == "United States",]$Population
 us_covid_data <- todays.case.data %>%
@@ -368,6 +371,15 @@ todays.case.data$Obesity_rate_ldi <- unlist(lapply(todays.case.data$Obesity_rate
 todays.case.data <- todays.case.data %>%
   mutate(Obesity_rate_ldi = replace(Obesity_rate_ldi, Obesity_rate_ldi < -5, -5))
 
+# NEW: US chronic respiratory disease mortality
+pUS.9.CRD <- CRD_data_counties[CRD_data_counties$CNTY == "United States",]$MortalityRate2014/100000
+states <- states %>%
+  left_join(CRD_data_counties[c("CNTY", "MortalityRate2014")],
+            by = c("NAME" = "CNTY")) %>%
+  mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
+  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
+  mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
 ## Needed for NY TS plot
 
@@ -428,8 +440,8 @@ covid_eo_bills <- covid_eo_bills[match(states$NAME, covid_eo_bills$NAME),]
 # Append the new column to states
 covid_eo_bills <- covid_eo_bills[1:51,]
 
-states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO) # Append to states
-states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills) # Append to states
+states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO, check.names = F) # Append to states
+states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills, check.names = F) # Append to states
 
 # State Ranking
 time.period <- 14

@@ -174,7 +174,7 @@ ui <-
                         column(6,
                                selectInput(inputId = "US.determinant",
                                            label = NULL,
-                                           choices = c("Diabetes", "Obesity"),
+                                           choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                            selected = "Diabetes"),
                                leafletOutput("US.maps.determinant"), offset = 3),
                         column(8, style="text-align:center;",
@@ -722,7 +722,7 @@ ui <-
                        tags$div(class = "select-bar",
                                 selectInput(inputId = "determinant",
                                             label = NULL,
-                                            choices = c("Diabetes", "Obesity"), #, "Heart Disease" (To re-add)
+                                            choices = c("Diabetes", "Obesity", "CRD Mortality"), #, "Heart Disease" (To re-add)
                                             selected = "Diabetes"
                                 )),
                        leafletOutput(outputId = "map.determinant", height=height)),
@@ -862,11 +862,14 @@ server <- function(input, output, session) {
   
   output$map.determinant <- renderLeaflet({
     det <- input$determinant
-    geo.plot("US",  "Diabetes")
+    geo.plot("US", det)
   })
   
   output$us_det_map_title <- renderText ({
     select.det <- input$determinant
+    if (select.det == "CRD Mortality") {
+      select.det <- "Cronic Respiratory Disease (CRD) Mortality"
+    }
     paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate")
   })
   
@@ -2099,7 +2102,7 @@ server <- function(input, output, session) {
   
   output$maps.determinant <- renderLeaflet({
     state_name <- input$state_name
-    det <- input$determinant
+    det <- input$state.determinant
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     geo.plot(state_initial, det)
   })
@@ -2157,6 +2160,9 @@ server <- function(input, output, session) {
   
   output$US.determinant.title <- renderUI({
     det <- input$US.determinant
+    if (det == "CRD Mortality") {
+      det <- "Cronic Respiratory Disease (CRD) Mortality"
+    }
     tags$h3(paste0("US ", det, " Rate Disparities Compared to the national average"))
   })
   
