@@ -318,8 +318,8 @@ diabetes_data_states <- diabetes_data_states[match(states$NAME, diabetes_data_st
 # Append the new column to states
 diabetes_data_states <- diabetes_data_states[1:51,]
 
-states <- data.frame(states, "diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
-states <- data.frame(states, "pct_Adults_with_Diabetes"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
+states <- data.frame(states, "Diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
+states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
 
 # State report card version (county level)
 todays.case.data <- inner_join(todays.case.data, 
@@ -354,8 +354,8 @@ obesity_data_states <- obesity_data_states %>%
   mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5))
 
 
-states <- data.frame(states, "pct_Adults_with_Obesity"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
-states <- data.frame(states, "obesity_ldi.us"=obesity_data_states$obesity_ldi.us) # Append to states
+states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
+states <- data.frame(states, "Obesity_rate_ldi"=obesity_data_states$obesity_ldi.us) # Append to states
 
 # State Report Cards - Obesity
 obesity_data_counties$FIPS <- as.numeric(obesity_data_counties$FIPS)
