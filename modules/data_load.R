@@ -100,6 +100,11 @@ diabetes_data_counties <- read_csv("data/csv/diabetes_data_counties.csv")
 obesity_data_states <- read_csv("data/csv/obesity_data_states.csv")
 obesity_data_counties <- read_csv("data/csv/obesity_data_counties.csv")
 
+# Import US cronic respiratory disease (CRD) mortality data: 
+# http://ghdx.healthdata.org/record/ihme-data/united-states-chronic-respiratory-disease-mortality-rates-county-1980-2014
+CRD_data_counties <- read_csv("data/csv/chronicrespiratorydiseases_counties.csv")
+CRD_data_counties$FIPS <- as.numeric(CRD_data_counties$FIPS)
+
 # Import NYS TS cases (for plotting) 
 covid_NY_TS_counties_long <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.csv")
 covid_NY_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_NY_TS_counties_long.cases.csv")
