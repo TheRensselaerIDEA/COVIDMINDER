@@ -2235,7 +2235,7 @@ server <- function(input, output, session) {
     updateQueryString(url.new)
   })
   
-  observe({ # this observer executes once, when the page loads
+  observe({ # this observer executes once, when the page loads " 
     
     data <- parseQueryString(session$clientData$url_search)
     
