@@ -34,32 +34,39 @@ get_zoom <- function(state.choice) {
   }
 }
 
-geo.plot <- function(state.choice, feature, reverse=F) {
+geo.plot <- function(state.choice, 
+                     feature, 
+                     reverse=F) {
   # Feature: Case, Mortality...
+  # US Data: ....
   ldi_feature <- get_ldi(feature)
-  
-  dataset <- todays.case.data %>%
-    filter(State == state.choice)
-  shapes <- readRDS(paste("data/shape_files/", state.choice, ".Rds", sep = ""))
-  shapes$countyFIPS <- as.numeric(paste(as.data.frame(shapes)$STATEFP, as.data.frame(shapes)$COUNTYFP, sep = ''))
-  
-  dataset <- dplyr::left_join(as.data.frame(shapes), as.data.frame(dataset), by = c("countyFIPS" = "countyFIPS"))
+  if (state.choice == "US") {
+    shapes <- states.shapes 
+    dataset <- states
+    dataset$Name <- dataset$NAME
+    m.a.w <- "14-Day "
+  }
+  else {
+    dataset <- todays.case.data %>%
+      filter(State == state.choice)
+    shapes <- readRDS(paste("data/shape_files/", state.choice, ".Rds", sep = ""))
+    shapes$countyFIPS <- as.numeric(paste(as.data.frame(shapes)$STATEFP, as.data.frame(shapes)$COUNTYFP, sep = ''))
+    dataset <- dplyr::left_join(as.data.frame(shapes), as.data.frame(dataset), by = c("countyFIPS" = "countyFIPS")) 
+    dataset$Name <- dataset$County
+    m.a.w <- ""
+  }
   
   pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
   
   labels <- sprintf(
     paste0("<strong>%s</strong><br/>
-    COVID-19 ",feature," Rate DI: %.2g<br>
-    COVID-19 ",feature," Rate: %.1f /100k"),
-    dataset$County, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
+    COVID-19 ",m.a.w,feature," Rate DI: %.2g<br>
+    COVID-19 ",m.a.w,feature," Rate: %.1f /100k"),
+    dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
   ) %>% lapply(htmltools::HTML)
-  lat <- state.abr[state.abr$abr == state.choice, "lat"]
-  lon <- state.abr[state.abr$abr == state.choice, "lon"]
   
-  zoom <- get_zoom(state.choice)
   
   return (leaflet(shapes) %>%
-            setView(lon, lat, zoom) %>%
             addPolygons(
               fillColor = ~pal2(dataset[,ldi_feature[1]]),
               weight = 1,
@@ -81,7 +88,7 @@ geo.plot <- function(state.choice, feature, reverse=F) {
             addLegend(pal = pal2, 
                       values = ~dataset[ldi_feature[1]], 
                       opacity = 0.7, 
-                      title = paste0("Disparity Index<br/>",state.choice," COVID-19 ",feature," Rates"),
+                      title = paste0("Disparity Index<br/>",state.choice," COVID-19 ",m.a.w,feature," Rates"),
                       position = "bottomright",
                       labFormat = function(type, cuts, p) { n = length(cuts) 
                       cuts[n] = paste0(cuts[n]," lower") 
