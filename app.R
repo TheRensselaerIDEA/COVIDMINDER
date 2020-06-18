@@ -650,7 +650,7 @@ ui <-
                        tags$div(class = "select-bar",
                                 selectInput(inputId = "determinant",
                                             label = NULL,
-                                            choices = c("Diabetes", "Obesity", "Heart Disease"),
+                                            choices = c("Diabetes", "Obesity"), #, "Heart Disease" (To re-add)
                                             selected = "Diabetes"
                                 )),
                        leafletOutput(outputId = "map.determinant", height=height)),
@@ -790,63 +790,8 @@ server <- function(input, output, session) {
   
   output$map.determinant <- renderLeaflet({
     det <- input$determinant
-    if ("Diabetes" %in% det) {
-      states$ldi <- states$diabetes_rate_ldi
-      states$pct <- states$pct_Adults_with_Diabetes*1000
-    }
-    else if ("Obesity" %in% det) {
-      states$ldi <- states$obesity_ldi.us
-      states$pct <- states$pct_Adults_with_Obesity * 1000
-    }
-    else if ("Heart Disease" %in% det) {
-      states$ldi <- states$cardio_death_rate_BNH_ldi
-      states$pct <- states$cardio_deaths_p_Black_Non_Hispanic
-      det <- paste0(det, " Death")
-    }
-    
-    labels2 <- sprintf(
-      paste0("<strong>%s</strong><br/>",
-        det, " Rate DI: %.2g<br/>",
-        det, " Rate: %.1f per 100k"),
-      states$NAME, states$ldi, states$pct
-    ) %>% lapply(htmltools::HTML)
-    pal2 <- leaflet::colorBin(colors, domain = states$ldi, bins = bins, reverse=FALSE)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(states$ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~states$diabetes_rate_ldi, 
-                opacity = 0.7, title = paste0("Disparity Index<br/>US ",det, " Rate"),
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-  }
-  )
+    geo.plot("US",  "Diabetes")
+  })
   
   output$us_det_map_title <- renderText ({
     select.det <- input$determinant
