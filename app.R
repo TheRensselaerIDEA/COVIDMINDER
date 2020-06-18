@@ -101,7 +101,7 @@ ui <-
                              column(6,
                                     selectInput(inputId = "state.determinant",
                                                 label = NULL,
-                                                choices = c("Diabetes", "Obesity"),
+                                                choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
                                     leafletOutput("maps.determinant"), offset = 3),
                              column(8, style="text-align:center;",
@@ -2074,6 +2074,9 @@ server <- function(input, output, session) {
   output$determinant.title <- renderUI({
     state_name <- input$state_name
     det <- input$determinant
+    if(det ==  "CRD Mortality") {
+      det <- "Cronic Respiratory Disease (CRD) Mortality"
+    }
     tags$h3(paste0(state_name, " ", det, " Rate Disparities Compared to the national average"))
   })
   

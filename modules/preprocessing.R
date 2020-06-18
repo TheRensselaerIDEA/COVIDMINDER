@@ -381,6 +381,14 @@ states <- states %>%
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
+todays.case.data <- left_join(todays.case.data,
+                               CRD_data_counties[c("FIPS", "MortalityRate2014")],
+                               by = c("countyFIPS" = "FIPS")) %>%
+  mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
+  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
+  mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
+
 ## Needed for NY TS plot
 
 # Pre-filter to remove small numbers
