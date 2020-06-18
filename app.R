@@ -143,6 +143,7 @@ ui <-
                  )
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
+               value = "national_report_card",
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(6, style="text-align:center;",tags$h3("United States COVID-19 Cases Over Time"),
@@ -2248,6 +2249,7 @@ server <- function(input, output, session) {
     
     # if the tab variable is defined, send a message to client to update the tab
     if (any(sapply(data[c("state_report_cards",
+                          "national_report_card",
                           'outcome_usa_mortality', 
                           'outcome_usa_racial_disparity',
                           'outcome_state_mortality',
