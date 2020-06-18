@@ -186,10 +186,11 @@ states <- data.frame(states, "cardio_death_rate_ALL_ldi"=cardio_deaths_2015$card
 states <- data.frame(states, "cardio_death_rate_BNH_ldi"=cardio_deaths_2015$cardio_death_rate_BNH_ldi) # Append to states
 
 # COVID-19 Deaths per COVID-19 Case - UPDATE: Moved to USA Facts data
+US.pop <-  population[population$NAME == "United States",]$Population
 us_covid_data <- todays.case.data %>%
   summarise(
     Cases = sum(Cases),
-    Population = sum(population),
+    Population = US.pop,
     Mortality = sum(Mortality)
   ) %>%
   mutate(Case_rate = Cases/Population) %>%
@@ -317,8 +318,8 @@ diabetes_data_states <- diabetes_data_states[match(states$NAME, diabetes_data_st
 # Append the new column to states
 diabetes_data_states <- diabetes_data_states[1:51,]
 
-states <- data.frame(states, "diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
-states <- data.frame(states, "pct_Adults_with_Diabetes"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
+states <- data.frame(states, "Diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
+states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
 
 # State report card version (county level)
 todays.case.data <- inner_join(todays.case.data, 
@@ -353,8 +354,8 @@ obesity_data_states <- obesity_data_states %>%
   mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5))
 
 
-states <- data.frame(states, "pct_Adults_with_Obesity"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
-states <- data.frame(states, "obesity_ldi.us"=obesity_data_states$obesity_ldi.us) # Append to states
+states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
+states <- data.frame(states, "Obesity_rate_ldi"=obesity_data_states$obesity_ldi.us) # Append to states
 
 # State Report Cards - Obesity
 obesity_data_counties$FIPS <- as.numeric(obesity_data_counties$FIPS)
@@ -447,3 +448,24 @@ ranking <- covid_TS_state_long.cases %>%
   mutate(rank = row_number()) %>%
   left_join(state.abr[c("abr", "name")],
             by = c("State" = "abr"))
+
+# US LDI from rankings
+US.ranking <- covid_TS_US_long.cases %>%
+  top_n(time.period, wt=date) %>%
+  summarise(
+    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
+    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
+  )
+
+ranking.ldi <- ranking %>%
+  mutate(Case_rate_ldi = -log(US.ranking$cases.delta/cases.delta)) %>%
+  mutate(Case_rate_ldi = replace(Case_rate_ldi, Case_rate_ldi < -5, -5)) %>%
+  mutate(Mortality_rate_ldi = -log(US.ranking$deaths.delta/deaths.delta)) %>%
+  mutate(Mortality_rate_ldi = replace(Mortality_rate_ldi, Mortality_rate_ldi < -5, -5)) %>%
+  rename(Case_rate = cases.delta) %>%
+  rename(Mortality_rate = deaths.delta)
+
+states <- states %>%
+  left_join(ranking.ldi[c("name", "Case_rate", "Case_rate_ldi", "Mortality_rate", "Mortality_rate_ldi")],
+            by = c("NAME" = "name"))
+

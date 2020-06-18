@@ -41,6 +41,7 @@ state.abr[state.abr$abr == "HI", "lon"] <- -157.532
 state.abr[state.abr$abr == "HI", "lat"] <- 20.57503
 state.abr[state.abr$abr == "MI", "lon"] <- -86.41704
 state.abr[state.abr$abr == "MI", "lat"] <- 44.9534
+state.abr$Region <- state.region
 
 
 todays.case.data <- todays.case.data %>%

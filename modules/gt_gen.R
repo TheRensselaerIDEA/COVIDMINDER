@@ -121,3 +121,52 @@ stats.table <- function(selected_state="NY") {
                 container.width = "100%",
                 table.width = "100%")
 }
+
+US.stats.table <- function() {
+  # TODO: Instead of row numbers, add aditional column specifying data type (For number formating)
+  name <- "United States"
+  
+  stats <- covid_TS_US_long.cases %>%
+    top_n(n=1, wt=date) %>%
+    select(cases, p_cases, deaths, p_deaths) %>%
+    t()
+  
+  tests <- state_covid_testing %>%
+    select(total_num_tests) %>%
+    summarise(total_num_tests = sum(total_num_tests)) %>%
+    mutate(tests_per_100k = total_num_tests/US.pop * 100000) %>%
+    t()
+  
+  STHM.count <- state_policy.df %>%
+    filter(!is.na(STAYHOME) & is.na(END_STHM)) %>% 
+    tally() 
+  STHM.count <- STHM.count$n
+  
+  stats <- stats %>%
+    rbind.data.frame(tests, STHM.count)
+  
+  state.title <- paste0(name, " COVID-19 Stats")
+  stats$features <- c("Overall Cases",  "Overall Cases per 100k", "Overall Deaths", "Overall Deaths per 100k", "Overall Tests", "Overall Tests per 100k", 'Number of States with active "Stay at Home" orders')
+  
+  stats %>%
+    mutate(row_num = row_number()) %>%
+    gt() %>%
+    fmt(c("features"), row = row_num < 5, fns = sup_fmt) %>%
+    fmt(c("features"), row = row_num >= 5 & row_num < 7, fns = sup2_fmt) %>%
+    fmt(c("features"), row = row_num >= 7, fns = sup3_fmt) %>%
+    cols_move_to_start(c("features")) %>%
+    tab_header(
+      title = md(paste0("**", state.title, "**"))
+    ) %>%
+    tab_source_note(
+      source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
+    ) %>%
+    tab_source_note(
+      source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](www.tinyurl.com/statepolicies)")
+    ) %>%
+    fmt(c("V1"),fns = numeric_fmt) %>%
+    cols_hide(c("row_num")) %>%
+    tab_options(column_labels.hidden = T,
+                container.width = "100%",
+                table.width = "100%")
+}

@@ -17,12 +17,24 @@
 #'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
 #'  @return \code{ggplot} GGplot object with a county level time series.
 #'  
-#'  @usage ggbar.overall
+#'  @usage ggplot.US
+#'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
+#'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
+#'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
+#'  @return \code{ggplot} GGplot object with a state level time series.
+#'  
+#'  @usage ggbar.overall   (TODO: Should change to ggbar.state)
 #'  @field selected.state \code{character} The 2 character initial representing the state of choice.
 #'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
 #'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
 #'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
 #'  @return \code{ggplot} GGplot object with cumilative bar chart as well as moving average lines.
+#'  
+#'  @usage ggbar.US
+#'  @field y.value \code{character} The feature to be represented on the y axis of the time series.
+#'  @field moving.avg.window \code{integer} Window for moving average smoothing factor (to the left of data point).
+#'  @field remove.title \code{boolean} Optional boolean variable to remove title in time series. Default is False.
+#'  @return \code{ggplot} GGplot object with cumilative bar chart for United States as well as moving average lines.
   
 get_y_label <- function(y.value) {
   if (y.value == "cases") {
@@ -282,4 +294,174 @@ ggbar.overall <- function(selected.state = "NY",
            gg_title + 
            NULL
   )
+}
+
+ggbar.US <- function(y.value="cases", 
+                     moving.avg.window=14, 
+                     remove.title = F) {
+  my_diff <- get_dif(y.value)
+  category <- get_y_label(y.value)
+  
+  if (remove.title) {
+    gg_title <- NULL
+  }
+  else {
+    gg_title <- ggtitle(paste0("United States ", category, " over time"))
+  }
+  
+  
+  US.ma <- covid_TS_US_long.cases %>%
+    rename(Values = all_of(y.value)) %>%
+    rename(my_diff = all_of(my_diff)) %>%
+    mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
+    mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+    filter(ma > 0)
+  US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+  US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- NA
+  US.ma$Type <- "US Moving Average"
+  
+  return(US.ma %>%
+           ggplot() +
+           geom_col(aes(x=date, y=Values, fill = pct_increase)) +
+           scale_fill_gradient(high = "#ff0000", 
+                               low = "#ffffff",
+                               limit = c(0,5),
+                               breaks = c(2.5,5),
+                               labels = c("2.5%","5%+"),
+                               na.value = "skyblue",
+                               guide = guide_colorbar(title = paste0("Percentage change in ", category),
+                                                      title.hjust = 0.5,
+                                                      title.position = "top", 
+                                                      label.hjust = 0.5, 
+                                                      barwidth = 15,
+                                                      frame.colour = "black")) +
+           geom_point(aes(x=date, y=Values, size = ""), shape = NA, colour = "skyblue") +
+           guides(size=guide_legend(title = "No Change", 
+                                    override.aes=list(shape=15, size = 8), 
+                                    title.position = "top",
+                                    title.hjust = 0.5)) +
+           geom_line(aes(x=date, y=ma), color="black", arrow=arrow(ends="last"), show.legend = F)  + 
+           geom_line(aes( x=date, y=ma, linetype=Type), color="black") +
+           guides(linetype = guide_legend(title = "Line Type",
+                                          title.position = "top",
+                                          title.hjust = 0.5)) +
+           scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+           ylab(get_y_label(y.value)) + 
+           xlab("Date") +
+           theme(legend.position = "bottom",legend.direction = "horizontal") +
+           gg_title + 
+           NULL
+  )
+}
+
+ggplot.US <- function(y.value="cases", 
+                      moving.avg.window=7, 
+                      case.cut=200, 
+                      max.labels=10, 
+                      remove.title = F) {
+  
+  y_label <- get_y_label(y.value)
+  m.a.w <- ""
+  if (y.value == "diff" | y.value == "p_diff") {
+    m.a.w <- paste0(" (",moving.avg.window," day Average)")
+  }
+  
+  if (remove.title) {
+    gg_title <- NULL
+  }
+  else {
+    gg_title <- ggtitle(paste0("United States ", y_label, " over time",m.a.w))
+  }
+  
+  
+  covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
+    select(-c(population)) %>%
+    filter(! (State %in% "DC")) %>%
+    group_by(State) %>% 
+    filter(n() >= moving.avg.window) %>%
+    mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+    mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+    ungroup()
+  
+  US <- covid_TS_US_long.cases %>%
+    mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+    mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right")))
+  
+  US$State = "US"
+  
+  covid_TS_state.cases.plot <-  covid_TS_state.cases.plot %>%
+    group_by(State) %>%
+    filter(max(cases) > case.cut) %>%
+    ungroup() %>%
+    rbind.data.frame(US) %>%
+    filter(get(y.value) > 1)
+  
+  
+  state.num <- covid_TS_state.cases.plot %>% 
+    select(State) %>%
+    unique() %>%
+    left_join(state.abr[c("abr", "name", "Region")], by=c("State" = "abr")) %>%
+    mutate(name = as.character(unlist(name))) %>%
+    mutate(Region = as.character(unlist(Region))) %>%
+    mutate(num = row_number())
+  state.num[state.num$State == "US", "name"] <- "United States"
+  state.num[state.num$State == "US", "Region"] <- "United States"
+  
+  covid_TS_state.cases.plot <- covid_TS_state.cases.plot  %>%
+    left_join(state.num, by=c("State" = "State"))
+  
+  n_state <- nrow(state.num)
+  highlight_points <- covid_TS_state.cases.plot  %>%
+    group_by(name) %>%
+    mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date)))) %>%
+    mutate(max_date = as.Date(max(date))) %>%
+    mutate(max_date = max_date - ((num*((range%/%n_state) + 1))%%range))  %>%
+    filter(date == max_date) %>%
+    top_n(1, wt=max_date) %>%
+    ungroup()
+  
+  #n_region <- length(unique(state.num$Region)) # 5
+  library(RColorBrewer)
+  qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+  col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+  state.num$Color <- "black"
+  state.num[state.num$Region == "West", "Color"] <- col_vector[1]
+  state.num[state.num$Region == "South", "Color"] <- col_vector[7]
+  state.num[state.num$Region == "North Central", "Color"] <- col_vector[5]
+  state.num[state.num$Region == "Northeast", "Color"] <- col_vector[6]
+  
+  region_palette <- setNames(as.character(state.num$Color), as.character(state.num$Region))
+  
+  g <- covid_TS_state.cases.plot %>%
+    ggplot(aes_string(
+      x="date",
+      y=y.value,
+      color = "Region",
+      group = "name")) +
+    scale_color_manual(values=region_palette, guide=guide_legend(title.position = "top",title.hjust = 0.5)) +
+    geom_line(size=1.5) +
+    scale_y_continuous(
+      trans = "log10",
+      breaks = c(10,100,500,1000,5000,10000, 50000)
+    ) +
+    scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+    ylab(y_label) + 
+    xlab("Date") +
+    #theme(legend.position = "none") +
+    geom_label_repel(
+      data=highlight_points,  
+      aes(label=name, color=Region), 
+      box.padding = unit(1.75, 'lines'),
+      segment.color = "black",
+      size = 5,
+      show.legend = FALSE
+    ) +
+    scale_color_manual(values=region_palette, aesthetics = c("color")) +
+    guides(color = guide_legend(title = "Region",
+                                title.position = "left")) +
+    theme(legend.position = "bottom") +
+    gg_title +
+    NULL
+  return(g)
 }
