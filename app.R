@@ -2145,7 +2145,8 @@ server <- function(input, output, session) {
     left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
     top_px <- click$range$top + top_pct * (click$range$bottom - click$range$top)
     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+                    "left:", (left_px + 2)%/%2, "px; top:", (top_px + 2)%/%2, "px;")
+    # TODO: Check for retina displays
     state_cases <- covid_TS_state_long.cases %>%
       filter(State == state_initial) %>%
       rename(Values = all_of(y.value)) %>%
