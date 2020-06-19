@@ -2073,7 +2073,7 @@ server <- function(input, output, session) {
   
   output$determinant.title <- renderUI({
     state_name <- input$state_name
-    det <- input$determinant
+    det <- input$state.determinant
     if(det ==  "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
