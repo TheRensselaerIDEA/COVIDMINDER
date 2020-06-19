@@ -161,6 +161,7 @@ states <- data.frame(states, "older_at_risk_ldi"=at_risk_adults$older_at_risk_ld
 
 # Cardio mortality (NEW)
 # UPDATED: 16 Apr (new source and math corrections)
+cardio_deaths_2015$p_Overall <- cardio_deaths_2015$p_Overall/100000
 pUS.5 <- as.numeric(cardio_deaths_2015[which(cardio_deaths_2015$NAME=="United States"),"p_Overall"])
 
 #cardio_death_rate_ldi <- unlist(lapply(cardio_deaths_2017$cardio_deaths_p_100000, FUN=function(x){log((x/(1-x))/(pUS.5/(1-pUS.5)))}))
@@ -172,7 +173,7 @@ cardio_deaths_2015 <- data.frame(cardio_deaths_2015, cardio_death_rate_BNH_ldi)
 
 cardio_deaths_2015 <- cardio_deaths_2015 %>% 
   mutate(cardio_death_rate_ALL_ldi = replace(cardio_death_rate_ALL_ldi, cardio_death_rate_ALL_ldi < -5, -5)) %>%
-  mutate(cardio_death_rate_ALL_ldi = replace(cardio_death_rate_BNH_ldi, cardio_death_rate_BNH_ldi < -5, -5)) 
+  mutate(cardio_death_rate_BNH_ldi = replace(cardio_death_rate_BNH_ldi, cardio_death_rate_BNH_ldi < -5, -5)) 
 
 # RE-order to match states ordering
 cardio_deaths_2015 <- cardio_deaths_2015[match(states$NAME, cardio_deaths_2015$NAME),]
@@ -180,10 +181,10 @@ cardio_deaths_2015 <- cardio_deaths_2015[match(states$NAME, cardio_deaths_2015$N
 cardio_deaths_2015 <- cardio_deaths_2015[1:51,]
 
 # Append the new Cardio columns to states
-states <- data.frame(states, "cardio_deaths_p_Overall"=cardio_deaths_2015$p_Overall) # Append to states
-states <- data.frame(states, "cardio_deaths_p_Black_Non_Hispanic"=cardio_deaths_2015$p_Black_Non_Hispanic) # Append to states
-states <- data.frame(states, "cardio_death_rate_ALL_ldi"=cardio_deaths_2015$cardio_death_rate_ALL_ldi) # Append to states
-states <- data.frame(states, "cardio_death_rate_BNH_ldi"=cardio_deaths_2015$cardio_death_rate_BNH_ldi) # Append to states
+states <- data.frame(states, "Heart Disease Mortality_rate"=cardio_deaths_2015$p_Overall, check.names = F) # Append to states
+states <- data.frame(states, "cardio_deaths_p_Black_Non_Hispanic"=cardio_deaths_2015$p_Black_Non_Hispanic, check.names = F) # Append to states
+states <- data.frame(states, "Heart Disease Mortality_rate_ldi"=cardio_deaths_2015$cardio_death_rate_ALL_ldi, check.names = F) # Append to states
+states <- data.frame(states, "cardio_death_rate_BNH_ldi"=cardio_deaths_2015$cardio_death_rate_BNH_ldi, check.names = F) # Append to states
 
 
 
@@ -242,8 +243,8 @@ covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$name
 # Append the new column to states
 covid_data_states <- covid_data_states[1:51,]
 
-states <- data.frame(states, "death_rate_ldi"=covid_data_states$Mortality_rate_ldi) # Append to states
-states <- data.frame(states, "covid_death_rate"=covid_data_states$Mortality_rate) # Append to states
+states <- data.frame(states, "death_rate_ldi"=covid_data_states$Mortality_rate_ldi, check.names = F) # Append to states
+states <- data.frame(states, "covid_death_rate"=covid_data_states$Mortality_rate, check.names = F) # Append to states
 
 ##### US Racial Disparity
 # DI's based on covid_racial_data_states.wide
@@ -321,8 +322,8 @@ diabetes_data_states <- diabetes_data_states[match(states$NAME, diabetes_data_st
 # Append the new column to states
 diabetes_data_states <- diabetes_data_states[1:51,]
 
-states <- data.frame(states, "Diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi) # Append to states
-states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes) # Append to states
+states <- data.frame(states, "Diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi, check.names = F) # Append to states
+states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes, check.names = F) # Append to states
 
 # State report card version (county level)
 todays.case.data <- inner_join(todays.case.data, 
@@ -357,8 +358,8 @@ obesity_data_states <- obesity_data_states %>%
   mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5))
 
 
-states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity) # Append to states
-states <- data.frame(states, "Obesity_rate_ldi"=obesity_data_states$obesity_ldi.us) # Append to states
+states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity, check.names = F) # Append to states
+states <- data.frame(states, "Obesity_rate_ldi"=obesity_data_states$obesity_ldi.us, check.names = F) # Append to states
 
 # State Report Cards - Obesity
 obesity_data_counties$FIPS <- as.numeric(obesity_data_counties$FIPS)

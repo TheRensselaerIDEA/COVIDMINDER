@@ -174,7 +174,7 @@ ui <-
                         column(6,
                                selectInput(inputId = "US.determinant",
                                            label = NULL,
-                                           choices = c("Diabetes", "Obesity", "CRD Mortality"),
+                                           choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                            selected = "Diabetes"),
                                leafletOutput("US.maps.determinant"), offset = 3),
                         column(8, style="text-align:center;",
@@ -722,7 +722,7 @@ ui <-
                        tags$div(class = "select-bar",
                                 selectInput(inputId = "determinant",
                                             label = NULL,
-                                            choices = c("Diabetes", "Obesity", "CRD Mortality"), #, "Heart Disease" (To re-add)
+                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                             selected = "Diabetes"
                                 )),
                        leafletOutput(outputId = "map.determinant", height=height)),
