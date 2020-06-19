@@ -259,6 +259,7 @@ ggbar.overall <- function(selected.state = "NY",
   STHM <- paste0(selected.state," begins stay at home order")
   
   return(state_cases %>%
+           filter(Values > 0) %>%
            ggplot() +
            geom_col(aes(x=date, y=Values, fill = pct_increase)) +
            scale_fill_gradient(high = "#ff0000", 
@@ -291,8 +292,7 @@ ggbar.overall <- function(selected.state = "NY",
            ylab(get_y_label(y.value)) + 
            xlab("Date") +
            theme(legend.position = "bottom",legend.direction = "horizontal") +
-           gg_title + 
-           NULL
+           gg_title
   )
 }
 

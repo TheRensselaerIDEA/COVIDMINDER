@@ -71,10 +71,16 @@ ui <-
                     fluidRow(column(8, style="text-align:center;",
                                     tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past 14 days."),
                                     offset=2)),
-                    fluidRow(column(6, style="text-align:center;",uiOutput("state.CoT.title"),
-                                    plotOutput(outputId = "state.CoT", height = height)),
-                             column(6, style="text-align:center;",uiOutput("state.DoT.title"),
-                                    plotOutput(outputId = "state.DoT", height = height))),
+                    fluidRow(column(6, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
+                                    plotOutput(outputId = "state.CoT", 
+                                               height = height, 
+                                               click = clickOpts(id = "state.CoT.click")),
+                                    uiOutput("state.CoT.tooltip")),
+                             column(6, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
+                                    plotOutput(outputId = "state.DoT", 
+                                               height = height, 
+                                               click = clickOpts(id = "state.DoT.click")),
+                                    uiOutput("state.DoT.tooltip"))),
                     fluidRow(column(8, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
                                     tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -2050,7 +2056,6 @@ server <- function(input, output, session) {
   })
   
   
-  
   output$state.DoT.title <- renderUI({
     state_name <- input$state_name
     tags$h3(paste0(state_name, " COVID-19 Deaths Over Time per 100k"))
@@ -2110,10 +2115,82 @@ server <- function(input, output, session) {
     geo.plot(state_initial, det)
   })
   
+  #reactive.line <- reactiveValues(x = NULL)
+  
+  #observeEvent(input$state.CoT.click, {
+  #  click <- input$state.CoT.click
+  #  if (!is.null(click)) {
+  #    #browser()
+  #    reactive.line$x <- as.POSIXct(click$x, origin="1970-01-01")
+  #    
+  #  } else {
+  #    reactive.line$x <- NULL
+  #  }
+  #})
+  
+  barplot.tooltip <- function(click, 
+                              state_initial,
+                              y.value="p_cases", 
+                              moving.avg.window=14) {
+    if(is.null(click)) {return(NULL)}
+    my_diff <- get_dif(y.value)
+    category <- get_y_label(y.value)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (click$x - click$domain$left) / (click$domain$right - click$domain$left)
+    top_pct <- (click$domain$top - click$y) / (click$domain$top - click$domain$bottom)
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
+    top_px <- click$range$top + top_pct * (click$range$bottom - click$range$top)
+    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+    state_cases <- covid_TS_state_long.cases %>%
+      filter(State == state_initial) %>%
+      rename(Values = all_of(y.value)) %>%
+      rename(Value_diff = all_of(my_diff)) %>%
+      mutate(diff.ma =  c(Value_diff[1:7-1], zoo::rollmean(Value_diff, 7, align="right"))) %>%
+      mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
+    state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+    state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
+    state_cases <- state_cases %>%
+      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""))
+    # actual tooltip created as wellPanel
+    wellPanel(
+      style = style,
+      class = "gg_tooltip",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""), "<br/>",
+                    "<b>", category, ": </b>", format(round(state_cases$Values,2), big.mark = ","), "<br/>",
+                    "<b> Change in ", category, ": </b>+",  format(round(state_cases$Value_diff,2),big.mark = ","), "<br/>",
+                    "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%<br/>"
+    ))))
+  }
+  
+  output$state.CoT.tooltip <- renderUI({
+    click <- input$state.CoT.click
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    
+    barplot.tooltip(click, state_initial, "p_cases")
+  })
+  
+  output$state.DoT.tooltip <- renderUI({
+    click <- input$state.DoT.click
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    
+    barplot.tooltip(click, state_initial, "p_deaths")
+  })
+  
+  
   output$state.CoT <- renderPlot({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    ggbar.overall(state_initial, y.value = "p_cases", remove.title = T)
+    ggbar.overall(state_initial, y.value = "p_cases", remove.title = T) + 
+      #geom_vline(xintercept=reactive.line$x, color= "black", linetype="solid", size = 1, show.legend = F) +
+      NULL
   })
   
   output$state.DoT <- renderPlot({
