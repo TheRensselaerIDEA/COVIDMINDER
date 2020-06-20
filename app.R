@@ -95,7 +95,24 @@ ui <-
                                     offset = 2)),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
-                    fluidRow(column(10, style="text-align:center;",uiOutput("state.trends.title"),
+                    # tags$div(class = "page_title",
+                    #          selectInput(inputId = "NYRegion3",
+                    #                      label = "NY Regions",
+                    #                      choices = c("All Regions", sort(unique(covid_NY_TS_plot.cases$Region))),
+                    #                      selected = "All Regions"),
+                    #          dateRangeInput(inputId = "NYDate.ma",
+                    #                         label = "Date Range",
+                    #                         min = min(covid_NY_TS_plot.cases$date),
+                    #                         max = max(covid_NY_TS_plot.cases$date),
+                    #                         start = as.Date(max(covid_NY_TS_plot.cases$date)) - 31,
+                    #                         end = max(covid_NY_TS_plot.cases$date)),
+                    #          radioButtons(inputId = "rate.ma",
+                    #                       label = "",
+                    #                       choices = c("Overall", "Per/100k"),
+                    #                       selected = "Per/100k"))
+                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
+                                    tags$div(style="height:125px",
+                                             uiOutput("state.report.county.selector")),
                                     plotOutput(outputId = "state.trends", height=height), offset = 1)),
                     fluidRow(column(6,
                                     uiOutput("state.county.cases"),
@@ -2057,6 +2074,67 @@ server <- function(input, output, session) {
   
   ### State Report Cards Code ###
   
+  output$state.report.county.selector <- renderUI ({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    
+    # Grab state subset for dataframe
+    state.df <- covid_TS_counties_long.cases %>%
+      select(-c(countyFIPS, stateFIPS))%>%
+      filter(State == state_initial)
+    
+    if (state_initial == "NY") {
+      nyc.population <- state.df %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(County) %>%
+        top_n(n=1, wt=date) %>%
+        select(population)
+      nyc.population <- sum(nyc.population$population)
+      
+      NYC <- state.df %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(State, date) %>%
+        summarise(
+          County = "New York City",
+          cases = sum(cases),
+          deaths = sum(deaths),
+          population = nyc.population,
+          p_cases = sum(cases)*100000/nyc.population,
+          p_deaths = sum(deaths)*100000/nyc.population,
+          diff = sum(diff),
+          p_diff = sum(diff)*100000/nyc.population,
+          d_diff = sum(d_diff),
+          p.d_diff = sum(p.d_diff)*100000/nyc.population
+        )
+      state.df <- state.df %>%
+        filter(!County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        rbind.data.frame(NYC)
+    }
+    
+    counties <- state.df %>%
+      select(County) %>%
+      unlist() %>%
+      unique()
+    
+    selected <- state.df %>%
+      group_by(County) %>%
+      top_n(1, cases) %>%
+      arrange(desc(cases)) %>%
+      select(County) %>%
+      unlist() %>%
+      unique()
+    
+    if (length(selected) > 10) {
+      selected <- selected[1:10]
+    }
+    selectInput(inputId = "SRC.county",
+                label = "County Selector",
+                choices = counties,
+                selected = selected,
+                multiple = TRUE
+                )
+  })
+  
   output$main_title <- renderUI({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
@@ -2296,11 +2374,8 @@ server <- function(input, output, session) {
   output$state.trends <- renderPlot({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    n_case_cut <- 500
-    if (state_initial %in% c("MT", "WV", "AK", "HI", "SD", "WY")) {
-      n_case_cut <- 100
-    }
-    ggplot.state(state_initial, y.value = "diff", case.cut = n_case_cut,remove.title = T)
+    counties <- input$SRC.county
+    ggplot.state(state_initial, y.value = "diff", counties = counties,remove.title = T)
   })
   
   output$ranking.table <- render_gt({

@@ -75,10 +75,10 @@ get_dif <- function(y.value) {
   }
 }
 
-ggplot.state <- function(selected.state="NY", 
-                         y.value="diff", 
+ggplot.state <- function(selected.state = "NY", 
+                         y.value = "diff", 
                          moving.avg.window=7, 
-                         case.cut=100, 
+                         counties = c(), 
                          remove.title = F,
                          max.labels=10 # To be implimented
                          ){
@@ -145,9 +145,7 @@ ggplot.state <- function(selected.state="NY",
   state$County = selected.state
   
   covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
-    group_by(County) %>%
-    filter(max(cases) > case.cut) %>%
-    ungroup() %>%
+    filter(County %in% counties) %>%
     rbind.data.frame(state) %>%
     filter(get(y.value) > 0)
   
