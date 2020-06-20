@@ -2252,8 +2252,8 @@ server <- function(input, output, session) {
       filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
     
     five.plus <- ""
-    if (length(state_cases$pct_increase) > 0) {
-      if(state_cases$pct_increase >= 5) {
+    if (length(US.ma$pct_increase) > 0) {
+      if(US.ma$pct_increase >= 5) {
         five.plus <- "+"
       }
     }
