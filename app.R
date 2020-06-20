@@ -71,17 +71,21 @@ ui <-
                     fluidRow(column(8, style="text-align:center;",
                                     tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past 14 days."),
                                     offset=2)),
-                    fluidRow(column(6, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
+                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
                                     plotOutput(outputId = "state.CoT", 
                                                height = height, 
-                                               click = clickOpts(id = "state.CoT.click")),
-                                    uiOutput("state.CoT.tooltip")),
-                             column(6, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
+                                               hover = hoverOpts(id = "state.CoT.click",
+                                                                 delay = 100,
+                                                                 delayType = "throttle")),
+                                    uiOutput("state.CoT.tooltip"), offset = 1),
+                             column(10, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
-                                               click = clickOpts(id = "state.DoT.click")),
-                                    uiOutput("state.DoT.tooltip"))),
-                    fluidRow(column(8, style="text-align:center;",
+                                               hover = hoverOpts(id = "state.DoT.click",
+                                                                 delay = 100,
+                                                                 delayType = "throttle")),
+                                    uiOutput("state.DoT.tooltip"), offset = 1)),
+                    fluidRow(column(10, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
                                     tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
                                     tags$b("Data Source: "), tags$a("CDC", href="https://wwwnc.cdc.gov/eid/article/26/8/20-1093_article"), offset=2)),
@@ -2132,6 +2136,10 @@ server <- function(input, output, session) {
                               state_initial,
                               y.value="p_cases", 
                               moving.avg.window=14) {
+    
+    pixelratio <- session$clientData$pixelratio
+    left.offset <- 15
+    top.offset <- 45
     if(is.null(click)) {return(NULL)}
     my_diff <- get_dif(y.value)
     category <- get_y_label(y.value)
@@ -2144,8 +2152,10 @@ server <- function(input, output, session) {
     # calculate distance from left and bottom side of the picture in pixels
     left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
     top_px <- click$range$top + top_pct * (click$range$bottom - click$range$top)
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
-                    "left:", (left_px + 2)%/%2, "px; top:", (top_px + 2)%/%2, "px;")
+    style <- paste0("position:absolute; 
+                    z-index:100;",
+                    "left:", (left_px)/pixelratio + left.offset, "px; 
+                    top:", (top_px)/pixelratio + top.offset, "px;")
     # TODO: Check for retina displays
     state_cases <- covid_TS_state_long.cases %>%
       filter(State == state_initial) %>%
