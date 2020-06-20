@@ -85,7 +85,7 @@ ui <-
                                                                  delay = 100,
                                                                  delayType = "throttle")),
                                     uiOutput("state.DoT.tooltip"), offset = 1)),
-                    fluidRow(column(10, style="text-align:center;",
+                    fluidRow(column(8, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
                                     tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
                                     tags$b("Data Source: "), tags$a("CDC", href="https://wwwnc.cdc.gov/eid/article/26/8/20-1093_article"), offset=2)),
@@ -156,10 +156,22 @@ ui <-
                value = "national_report_card",
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
-               fluidRow(column(6, style="text-align:center;",tags$h3("United States COVID-19 Cases Over Time"),
-                               plotOutput(outputId = "US.CoT", height = "600px")),
-                        column(6, style="text-align:center;",tags$h3("United States COVID-19 Deaths Over Time"),
-                               plotOutput(outputId = "US.DoT", height = "600px"))),
+               fluidRow(column(10, style="text-align:center;position:relative;",
+                               tags$h3("United States COVID-19 Cases Over Time"),
+                               plotOutput(outputId = "US.CoT", 
+                                          height = height,
+                                          hover = hoverOpts(id = "US.CoT.hover",
+                                                           delay = 100,
+                                                           delayType = "throttle")),
+                               uiOutput("US.CoT.tooltip"), offset = 1),
+                        column(10, style="text-align:center;position:relative;",
+                               tags$h3("United States COVID-19 Deaths Over Time"),
+                               plotOutput(outputId = "US.DoT", 
+                                          height = height,
+                                          hover = hoverOpts(id = "US.DoT.hover",
+                                                            delay = 100,
+                                                            delayType = "throttle")),
+                               uiOutput("US.DoT.tooltip"), offset = 1)),
                fluidRow(column(8, style="text-align:center;",
                                tags$h2("Flattening the Curve"),
                                tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -2136,10 +2148,11 @@ server <- function(input, output, session) {
                               state_initial,
                               y.value="p_cases", 
                               moving.avg.window=14) {
-    
+    #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 15
     top.offset <- 45
+    
     if(is.null(click)) {return(NULL)}
     my_diff <- get_dif(y.value)
     category <- get_y_label(y.value)
@@ -2156,7 +2169,7 @@ server <- function(input, output, session) {
                     z-index:100;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
                     top:", (top_px)/pixelratio + top.offset, "px;")
-    # TODO: Check for retina displays
+    
     state_cases <- covid_TS_state_long.cases %>%
       filter(State == state_initial) %>%
       rename(Values = all_of(y.value)) %>%
@@ -2165,17 +2178,24 @@ server <- function(input, output, session) {
       mutate(pct_increase =diff.ma/Values*100) %>%
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
     state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
-    state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
+    state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- 0
     state_cases <- state_cases %>%
       filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""))
     # actual tooltip created as wellPanel
+    
+    five.plus <- ""
+    if (length(state_cases$pct_increase) > 0) {
+      if(state_cases$pct_increase >= 5) {
+        five.plus <- "+"
+      }
+    }
     wellPanel(
       style = style,
       class = "gg_tooltip",
       p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""), "<br/>",
                     "<b>", category, ": </b>", format(round(state_cases$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(state_cases$Value_diff,2),big.mark = ","), "<br/>",
-                    "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%<br/>"
+                    "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
     ))))
   }
   
@@ -2195,6 +2215,69 @@ server <- function(input, output, session) {
     barplot.tooltip(click, state_initial, "p_deaths")
   })
   
+  US.barplot.tooltip <- function(hover,
+                                 y.value="cases", 
+                                 moving.avg.window=14) {
+    pixelratio <- session$clientData$pixelratio
+    left.offset <- 15
+    top.offset <- 45
+    
+    if(is.null(hover)) {return(NULL)}
+    my_diff <- get_dif(y.value)
+    category <- get_y_label(y.value)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    style <- paste0("position:absolute; 
+                    z-index:100;",
+                    "left:", (left_px)/pixelratio + left.offset, "px; 
+                    top:", (top_px)/pixelratio + top.offset, "px;")
+    
+    US.ma <- covid_TS_US_long.cases %>%
+      rename(Values = all_of(y.value)) %>%
+      rename(my_diff = all_of(my_diff)) %>%
+      mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
+      mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+    US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
+    US.ma <- US.ma %>%
+      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
+    
+    five.plus <- ""
+    if (length(state_cases$pct_increase) > 0) {
+      if(state_cases$pct_increase >= 5) {
+        five.plus <- "+"
+      }
+    }
+    
+    wellPanel(
+      style = style,
+      class = "gg_tooltip",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""), "<br/>",
+                    "<b>", category, ": </b>", format(round(US.ma$Values,2), big.mark = ","), "<br/>",
+                    "<b> Change in ", category, ": </b>+",  format(round(US.ma$my_diff,2),big.mark = ","), "<br/>",
+                    "<b> Daily Percentage Increase: </b>",  format(round(US.ma$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
+      ))))
+    
+  }
+  
+  output$US.CoT.tooltip <- renderUI({
+    hover <- input$US.CoT.hover
+    US.barplot.tooltip(hover, "cases")
+  })
+  
+  output$US.DoT.tooltip <- renderUI({
+    hover <- input$US.DoT.hover
+    US.barplot.tooltip(hover, "deaths")
+  })
   
   output$state.CoT <- renderPlot({
     state_name <- input$state_name
