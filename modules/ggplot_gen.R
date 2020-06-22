@@ -187,7 +187,7 @@ ggplot.state <- function(selected.state = "NY",
     geom_line(size=1) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,100,500,1000,5000,10000, 50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
     scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
     ylab(y_label) + 
@@ -208,8 +208,7 @@ ggplot.state <- function(selected.state = "NY",
                           values = c(2,2), 
                           guide = guide_legend(title.position = "top",title.hjust = 0.5,override.aes = list(color = c("blue", "red")), direction = "vertical")) +
     theme(legend.position = "bottom") +
-    gg_title +
-    NULL
+    gg_title
   return(g)
 }
 
@@ -445,7 +444,7 @@ ggplot.US <- function(y.value="cases",
     geom_line(size=1.5) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,100,500,1000,5000,10000, 50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
     scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
     ylab(y_label) + 
@@ -463,7 +462,6 @@ ggplot.US <- function(y.value="cases",
     guides(color = guide_legend(title = "Region",
                                 title.position = "left")) +
     theme(legend.position = "bottom") +
-    gg_title +
-    NULL
+    gg_title
   return(g)
 }
