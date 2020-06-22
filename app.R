@@ -2438,11 +2438,17 @@ server <- function(input, output, session) {
     state.or.county = "County: "
     if (state_initial %in% point$County) {
       state.or.county = "State: "
+      point <- point %>%
+        left_join(state.abr[c("name", "abr")],
+                  by = c("State" = "abr"))
+    }
+    else {
+      point$name <- point$County
     }
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b>",state.or.county, "</b>", point$County, "<br/>",
+      p(HTML(paste0("<b>",state.or.county, "</b>", point$name, "<br/>",
                     "<b> Date: </b>", point$date, "<br/>",
                     "<b>", y_label, ": </b>",  format(round(point$Values),big.mark = ","), "<br/>"
       ))))
