@@ -110,10 +110,11 @@ ui <-
                     #                       label = "",
                     #                       choices = c("Overall", "Per/100k"),
                     #                       selected = "Per/100k"))
-                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
-                                    tags$div(style="height:125px",
-                                             uiOutput("state.report.county.selector")),
+                    fluidRow(column(10, style="text-align:center;",uiOutput("state.trends.title"),
+                                    tags$div(style = "height:130px;",
+                                      uiOutput("state.report.county.selector")),
                                     plotOutput(outputId = "state.trends", height=height), offset = 1)),
+                    tags$br(),
                     fluidRow(column(6,
                                     uiOutput("state.county.cases"),
                                     leafletOutput("map.cases", height = height)),
@@ -199,8 +200,13 @@ ui <-
                                offset = 2)),
                fluidRow(column(12, style="text-align:center;",
                                tags$h1("State Level Breakdown"))),
+               # tags$div(style = "height:130px;",
+               #          uiOutput("state.report.county.selector")),
+               # plotOutput(outputId = "state.trends", height=height)
                fluidRow(column(12, style="text-align:center;",uiOutput("US.trends.title"),
-                               plotOutput(outputId = "US.trends", height="600px"))),
+                               tags$div(style = "height:130px;",
+                                        uiOutput("US.report.state.selector")),
+                               plotOutput(outputId = "US.trends", height=height))),
                fluidRow(column(6,
                                tags$h3("US COVID-19 14-Day Case disparities compared to US Average"),
                                leafletOutput("US.map.cases")),
@@ -2129,10 +2135,40 @@ server <- function(input, output, session) {
     }
     selectInput(inputId = "SRC.county",
                 label = "County Selector",
-                choices = counties,
+                choices = sort(counties),
                 selected = selected,
-                multiple = TRUE
+                multiple = TRUE,
+                selectize = FALSE,
+                size = min(5, length(counties))
                 )
+  })
+  
+  output$US.report.state.selector <- renderUI({
+    state.names <- states %>%
+      filter(NAME != "District of Columbia") %>%
+      select(NAME) %>%
+      unlist() %>%
+      unique() %>%
+      sort()
+    
+    selected <- states %>%
+      arrange(desc(Case_rate)) %>%
+      select(NAME) %>%
+      unlist() %>%
+      unique()
+    
+    if (length(selected > 10)) {
+      selected <- selected[1:10]
+    }
+    selectInput(inputId = "NRC.state",
+                label = "State Selector",
+                choices = state.names,
+                selected = selected,
+                multiple = TRUE,
+                selectize = FALSE,
+                size = min(5, length(state.names))
+    )
+    
   })
   
   output$main_title <- renderUI({
@@ -2253,9 +2289,11 @@ server <- function(input, output, session) {
       rename(Values = all_of(y.value)) %>%
       rename(Value_diff = all_of(my_diff)) %>%
       mutate(diff.ma =  c(Value_diff[1:7-1], zoo::rollmean(Value_diff, 7, align="right"))) %>%
-      mutate(pct_increase =diff.ma/Values*100) %>%
+      #mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(pct_increase =Value_diff/Values*100) %>%
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
-    state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+    #state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+    state_cases[state_cases$Value_diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
     state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- 0
     state_cases <- state_cases %>%
       filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""))
@@ -2291,70 +2329,6 @@ server <- function(input, output, session) {
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     
     barplot.tooltip(click, state_initial, "p_deaths")
-  })
-  
-  US.barplot.tooltip <- function(hover,
-                                 y.value="cases", 
-                                 moving.avg.window=14) {
-    pixelratio <- session$clientData$pixelratio
-    left.offset <- 15
-    top.offset <- 45
-    
-    if(is.null(hover)) {return(NULL)}
-    my_diff <- get_dif(y.value)
-    category <- get_y_label(y.value)
-    
-    # calculate point position INSIDE the image as percent of total dimensions
-    # from left (horizontal) and from top (vertical)
-    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
-    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
-    
-    # calculate distance from left and bottom side of the picture in pixels
-    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
-    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
-    style <- paste0("position:absolute; 
-                    z-index:100;",
-                    "left:", (left_px)/pixelratio + left.offset, "px; 
-                    top:", (top_px)/pixelratio + top.offset, "px;")
-    
-    US.ma <- covid_TS_US_long.cases %>%
-      rename(Values = all_of(y.value)) %>%
-      rename(my_diff = all_of(my_diff)) %>%
-      mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
-      mutate(pct_increase =diff.ma/Values*100) %>%
-      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
-      filter(ma > 0)
-    US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
-    US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
-    US.ma <- US.ma %>%
-      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
-    
-    five.plus <- ""
-    if (length(US.ma$pct_increase) > 0) {
-      if(US.ma$pct_increase >= 5) {
-        five.plus <- "+"
-      }
-    }
-    
-    wellPanel(
-      style = style,
-      class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""), "<br/>",
-                    "<b>", category, ": </b>", format(round(US.ma$Values,2), big.mark = ","), "<br/>",
-                    "<b> Change in ", category, ": </b>+",  format(round(US.ma$my_diff,2),big.mark = ","), "<br/>",
-                    "<b> Daily Percentage Increase: </b>",  format(round(US.ma$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
-      ))))
-    
-  }
-  
-  output$US.CoT.tooltip <- renderUI({
-    hover <- input$US.CoT.hover
-    US.barplot.tooltip(hover, "cases")
-  })
-  
-  output$US.DoT.tooltip <- renderUI({
-    hover <- input$US.DoT.hover
-    US.barplot.tooltip(hover, "deaths")
   })
   
   output$state.CoT <- renderPlot({
@@ -2432,6 +2406,72 @@ server <- function(input, output, session) {
     geo.plot("US", "Mortality")
   })
   
+  US.barplot.tooltip <- function(hover,
+                                 y.value="cases", 
+                                 moving.avg.window=14) {
+    pixelratio <- session$clientData$pixelratio
+    left.offset <- 15
+    top.offset <- 45
+    
+    if(is.null(hover)) {return(NULL)}
+    my_diff <- get_dif(y.value)
+    category <- get_y_label(y.value)
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    style <- paste0("position:absolute; 
+                    z-index:100;",
+                    "left:", (left_px)/pixelratio + left.offset, "px; 
+                    top:", (top_px)/pixelratio + top.offset, "px;")
+    
+    US.ma <- covid_TS_US_long.cases %>%
+      rename(Values = all_of(y.value)) %>%
+      rename(my_diff = all_of(my_diff)) %>%
+      mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
+      #mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(pct_increase = my_diff/Values*100) %>%
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+    #US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
+    US.ma <- US.ma %>%
+      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
+    
+    five.plus <- ""
+    if (length(US.ma$pct_increase) > 0) {
+      if(US.ma$pct_increase >= 5) {
+        five.plus <- "+"
+      }
+    }
+    
+    wellPanel(
+      style = style,
+      class = "gg_tooltip",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""), "<br/>",
+                    "<b>", category, ": </b>", format(round(US.ma$Values,2), big.mark = ","), "<br/>",
+                    "<b> Change in ", category, ": </b>+",  format(round(US.ma$my_diff,2),big.mark = ","), "<br/>",
+                    "<b> Daily Percentage Increase: </b>",  format(round(US.ma$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
+      ))))
+    
+  }
+  
+  output$US.CoT.tooltip <- renderUI({
+    hover <- input$US.CoT.hover
+    US.barplot.tooltip(hover, "cases")
+  })
+  
+  output$US.DoT.tooltip <- renderUI({
+    hover <- input$US.DoT.hover
+    US.barplot.tooltip(hover, "deaths")
+  })
+  
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)
   })
@@ -2440,9 +2480,12 @@ server <- function(input, output, session) {
     ggbar.US(y.value = "deaths", remove.title = T)
   })
   
-  
   output$US.trends <- renderPlot({
-    ggplot.US("diff", moving.avg.window=14, remove.title = T)
+    selected.states <- data.frame("name" = input$NRC.state)
+    selected.states <- selected.states %>%
+      left_join(state.abr[c("name", "abr")],
+                by = c("name" = "name"))
+    ggplot.US("diff", moving.avg.window=14, selected.states=selected.states$abr, remove.title = T)
   })
   
   # TODO: This is written twice

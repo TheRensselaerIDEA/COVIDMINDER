@@ -236,9 +236,11 @@ ggbar.overall <- function(selected.state = "NY",
     rename(Values = all_of(y.value)) %>%
     rename(diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
-  state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+  #state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+  state_cases[state_cases$diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
   state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
   state_cases$Type <- "State Moving Average"
   
@@ -246,7 +248,8 @@ ggbar.overall <- function(selected.state = "NY",
     rename(Values = all_of(y.value)) %>%
     rename(diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
     filter(ma > 0) %>%
     filter(date > min(state_cases$date))
@@ -312,10 +315,12 @@ ggbar.US <- function(y.value="cases",
     rename(Values = all_of(y.value)) %>%
     rename(my_diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =my_diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
     filter(ma > 0)
-  US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+  #US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+  US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
   US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- NA
   US.ma$Type <- "US Moving Average"
   
@@ -354,8 +359,8 @@ ggbar.US <- function(y.value="cases",
 }
 
 ggplot.US <- function(y.value="cases", 
-                      moving.avg.window=7, 
-                      case.cut=200, 
+                      moving.avg.window=7,
+                      selected.states = c(), 
                       max.labels=10, 
                       remove.title = F) {
   
@@ -375,7 +380,7 @@ ggplot.US <- function(y.value="cases",
   
   covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
     select(-c(population)) %>%
-    filter(! (State %in% "DC")) %>%
+    filter(State %in% selected.states) %>%
     group_by(State) %>% 
     filter(n() >= moving.avg.window) %>%
     mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
@@ -390,7 +395,6 @@ ggplot.US <- function(y.value="cases",
   
   covid_TS_state.cases.plot <-  covid_TS_state.cases.plot %>%
     group_by(State) %>%
-    filter(max(cases) > case.cut) %>%
     ungroup() %>%
     rbind.data.frame(US) %>%
     filter(get(y.value) > 1)
@@ -425,9 +429,9 @@ ggplot.US <- function(y.value="cases",
   col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
   state.num$Color <- "black"
   state.num[state.num$Region == "West", "Color"] <- col_vector[1]
-  state.num[state.num$Region == "South", "Color"] <- col_vector[7]
-  state.num[state.num$Region == "North Central", "Color"] <- col_vector[5]
-  state.num[state.num$Region == "Northeast", "Color"] <- col_vector[6]
+  state.num[state.num$Region == "South", "Color"] <- col_vector[5]
+  state.num[state.num$Region == "North Central", "Color"] <- col_vector[6]
+  state.num[state.num$Region == "Northeast", "Color"] <- col_vector[7]
   
   region_palette <- setNames(as.character(state.num$Color), as.character(state.num$Region))
   
