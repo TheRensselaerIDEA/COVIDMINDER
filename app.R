@@ -179,6 +179,8 @@ ui <-
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
+               fluidRow(column(12,
+                        tags$h3(style = "float:right;",tags$b("Date: "), update_date))),
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
