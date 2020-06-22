@@ -65,7 +65,9 @@ ui <-
                                     selectInput(inputId = "state_name",
                                                 label = "State Selector",
                                                 choices = state.abr$name,
-                                                selected = as.character(unlist(ranking[ranking$rank==50, "name"]))))),
+                                                selected = as.character(unlist(ranking[ranking$rank==50, "name"]))),
+                                    tags$div(style = "float:right;",
+                                             tags$h3(tags$b("Date: "), update_date)))),
                     fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
                     tags$br(),
                     fluidRow(column(8, style="text-align:center;",
@@ -74,14 +76,14 @@ ui <-
                     fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
                                     plotOutput(outputId = "state.CoT", 
                                                height = height, 
-                                               hover = hoverOpts(id = "state.CoT.click",
+                                               hover = hoverOpts(id = "state.CoT.hover",
                                                                  delay = 100,
                                                                  delayType = "throttle")),
                                     uiOutput("state.CoT.tooltip"), offset = 1),
                              column(10, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
-                                               hover = hoverOpts(id = "state.DoT.click",
+                                               hover = hoverOpts(id = "state.DoT.hover",
                                                                  delay = 100,
                                                                  delayType = "throttle")),
                                     uiOutput("state.DoT.tooltip"), offset = 1)),
@@ -95,8 +97,31 @@ ui <-
                                     offset = 2)),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
-                    fluidRow(column(10, style="text-align:center;",uiOutput("state.trends.title"),
-                                    plotOutput(outputId = "state.trends", height=height), offset = 1)),
+                    # tags$div(class = "page_title",
+                    #          dateRangeInput(inputId = "NYDate.ma",
+                    #                         label = "Date Range",
+                    #                         min = min(covid_NY_TS_plot.cases$date),
+                    #                         max = max(covid_NY_TS_plot.cases$date),
+                    #                         start = as.Date(max(covid_NY_TS_plot.cases$date)) - 31,
+                    #                         end = max(covid_NY_TS_plot.cases$date)))
+                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
+                                    tags$div(style = "height:130px;text-align:left;padding-left:4%;",
+                                      uiOutput("state.report.county.selector"),
+                                               radioButtons(inputId = "SRC.rate",
+                                                   label = "Rate",
+                                                   choices = c("Overall", "Per/100k"),
+                                                   selected = "Per/100k")),
+                                    plotOutput(outputId = "state.trends", 
+                                               height=height,
+                                               hover = hoverOpts(id = "state.trends.hover",
+                                                                 delay = 100,
+                                                                 delayType = "throttle"),
+                                               dblclick = "trends.dbl_click",
+                                               brush = brushOpts(
+                                                 id = "trends.brush",
+                                                 resetOnNew = TRUE)),
+                                    uiOutput("state.trends.tooltip"), offset = 1)),
+                    tags$br(),
                     fluidRow(column(6,
                                     uiOutput("state.county.cases"),
                                     leafletOutput("map.cases", height = height)),
@@ -154,6 +179,8 @@ ui <-
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
+               fluidRow(column(12,
+                        tags$h3(style = "float:right;",tags$b("Date: "), update_date))),
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
@@ -182,8 +209,30 @@ ui <-
                                offset = 2)),
                fluidRow(column(12, style="text-align:center;",
                                tags$h1("State Level Breakdown"))),
-               fluidRow(column(12, style="text-align:center;",uiOutput("US.trends.title"),
-                               plotOutput(outputId = "US.trends", height="600px"))),
+               # fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
+               #                 tags$div(style = "height:130px;text-align:left;padding-left:4%;",
+               #                          uiOutput("state.report.county.selector"),
+               #                          radioButtons(inputId = "SRC.rate",
+               #                                       label = "Rate",
+               #                                       choices = c("Overall", "Per/100k"),
+               #                                       selected = "Per/100k")),
+               fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("US.trends.title"),
+                               tags$div(style = "height:130px;text-align:left;padding-left:4%;",
+                                        uiOutput("US.report.state.selector"),
+                                        radioButtons(inputId = "NRC.rate",
+                                                     label = "Rate",
+                                                     choices = c("Overall", "Per/100k"),
+                                                     selected = "Per/100k")),
+                               plotOutput(outputId = "US.trends", 
+                                          height=height,
+                                          hover = hoverOpts(id = "US.trends.hover",
+                                                            delay = 100,
+                                                            delayType = "throttle"),
+                                          dblclick = "trends.dbl_click",
+                                          brush = brushOpts(
+                                            id = "trends.brush",
+                                            resetOnNew = TRUE)),
+                               uiOutput("US.trends.tooltip"), offset = 1)),
                fluidRow(column(6,
                                tags$h3("US COVID-19 14-Day Case disparities compared to US Average"),
                                leafletOutput("US.map.cases")),
@@ -2057,6 +2106,97 @@ server <- function(input, output, session) {
   
   ### State Report Cards Code ###
   
+  output$state.report.county.selector <- renderUI ({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    
+    # Grab state subset for dataframe
+    state.df <- covid_TS_counties_long.cases %>%
+      select(-c(countyFIPS, stateFIPS))%>%
+      filter(State == state_initial)
+    
+    if (state_initial == "NY") {
+      nyc.population <- state.df %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(County) %>%
+        top_n(n=1, wt=date) %>%
+        select(population)
+      nyc.population <- sum(nyc.population$population)
+      
+      NYC <- state.df %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(State, date) %>%
+        summarise(
+          County = "New York City",
+          cases = sum(cases),
+          deaths = sum(deaths),
+          population = nyc.population,
+          p_cases = sum(cases)*100000/nyc.population,
+          p_deaths = sum(deaths)*100000/nyc.population,
+          diff = sum(diff),
+          p_diff = sum(diff)*100000/nyc.population,
+          d_diff = sum(d_diff),
+          p.d_diff = sum(p.d_diff)*100000/nyc.population
+        )
+      state.df <- state.df %>%
+        filter(!County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        rbind.data.frame(NYC)
+    }
+    
+    counties <- state.df %>%
+      select(County) %>%
+      unlist() %>%
+      unique()
+    
+    selected <- state.df %>%
+      group_by(County) %>%
+      top_n(1, cases) %>%
+      arrange(desc(cases)) %>%
+      select(County) %>%
+      unlist() %>%
+      unique()
+    
+    if (length(selected) > 10) {
+      selected <- selected[1:10]
+    }
+    selectInput(inputId = "SRC.county",
+                label = "County Selector",
+                choices = sort(counties),
+                selected = selected,
+                multiple = TRUE,
+                selectize = FALSE,
+                size = min(5, length(counties))
+                )
+  })
+  
+  output$US.report.state.selector <- renderUI({
+    state.names <- states %>%
+      filter(NAME != "District of Columbia") %>%
+      select(NAME) %>%
+      unlist() %>%
+      unique() %>%
+      sort()
+    
+    selected <- states %>%
+      arrange(desc(Case_rate)) %>%
+      select(NAME) %>%
+      unlist() %>%
+      unique()
+    
+    if (length(selected > 10)) {
+      selected <- selected[1:10]
+    }
+    selectInput(inputId = "NRC.state",
+                label = "State Selector",
+                choices = state.names,
+                selected = selected,
+                multiple = TRUE,
+                selectize = FALSE,
+                size = min(5, length(state.names))
+    )
+    
+  })
+  
   output$main_title <- renderUI({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
@@ -2079,7 +2219,14 @@ server <- function(input, output, session) {
   
   output$state.trends.title <- renderUI({
     state_name <- input$state_name
-    tags$h3(paste0(state_name, " ", get_y_label("diff"), " over time (7 day average)"))
+    rate <- input$SRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    tags$h3(paste0(state_name, " ", get_y_label(y.value), " (7 day average)"))
   })
   
   output$state.county.cases <- renderUI({
@@ -2131,19 +2278,6 @@ server <- function(input, output, session) {
     geo.plot(state_initial, det)
   })
   
-  #reactive.line <- reactiveValues(x = NULL)
-  
-  #observeEvent(input$state.CoT.click, {
-  #  click <- input$state.CoT.click
-  #  if (!is.null(click)) {
-  #    #browser()
-  #    reactive.line$x <- as.POSIXct(click$x, origin="1970-01-01")
-  #    
-  #  } else {
-  #    reactive.line$x <- NULL
-  #  }
-  #})
-  
   barplot.tooltip <- function(click, 
                               state_initial,
                               y.value="p_cases", 
@@ -2175,24 +2309,26 @@ server <- function(input, output, session) {
       rename(Values = all_of(y.value)) %>%
       rename(Value_diff = all_of(my_diff)) %>%
       mutate(diff.ma =  c(Value_diff[1:7-1], zoo::rollmean(Value_diff, 7, align="right"))) %>%
-      mutate(pct_increase =diff.ma/Values*100) %>%
+      #mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(pct_increase =Value_diff/Values*100) %>%
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
-    state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
-    state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- 0
+    #state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+    #state_cases[state_cases$Value_diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+    state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase < 0, "pct_increase"] <- 0
     state_cases <- state_cases %>%
-      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""))
+      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"))
     # actual tooltip created as wellPanel
     
     five.plus <- ""
-    if (length(state_cases$pct_increase) > 0) {
-      if(state_cases$pct_increase >= 5) {
-        five.plus <- "+"
-      }
-    }
+    #if (length(state_cases$pct_increase) > 0) {
+    #  if(state_cases$pct_increase >= 5) {
+    #    five.plus <- "+"
+    #  }
+    #}
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""), "<br/>",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"), "<br/>",
                     "<b>", category, ": </b>", format(round(state_cases$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(state_cases$Value_diff,2),big.mark = ","), "<br/>",
                     "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
@@ -2200,19 +2336,333 @@ server <- function(input, output, session) {
   }
   
   output$state.CoT.tooltip <- renderUI({
-    click <- input$state.CoT.click
+    hover <- input$state.CoT.hover
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     
-    barplot.tooltip(click, state_initial, "p_cases")
+    barplot.tooltip(hover, state_initial, "p_cases")
   })
   
   output$state.DoT.tooltip <- renderUI({
-    click <- input$state.DoT.click
+    hover <- input$state.DoT.hover
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     
-    barplot.tooltip(click, state_initial, "p_deaths")
+    barplot.tooltip(hover, state_initial, "p_deaths")
+  })
+  
+  trends.tooltip <- function(hover, 
+                             state_initial = "NY",
+                             y.value="p_cases", 
+                             counties = c("Rensselaer"), 
+                             moving.avg.window=7) {
+    #print(session$clientData)
+    pixelratio <- session$clientData$pixelratio
+    left.offset <- 20
+    top.offset <- 175
+    
+    #if(is.null(click)) {return(NULL)}
+    y_label <- get_y_label(y.value)
+    state.name <- state.abr[state.abr$abr==state_initial,"name"]
+    covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
+      select(-c(countyFIPS, stateFIPS)) %>%
+      filter(State == state_initial) %>%
+      group_by(County) %>% 
+      filter(n() >= moving.avg.window) %>%
+      mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      ungroup()
+    
+    if (state_initial == "NY") {
+      nyc.population <- covid_TS_counties.cases.plot %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(County) %>%
+        top_n(n=1, wt=date) %>%
+        select(population)
+      nyc.population <- sum(nyc.population$population)
+      
+      NYC <- covid_TS_counties.cases.plot %>%
+        filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        group_by(State, date) %>%
+        summarise(
+          County = "New York City",
+          cases = sum(cases),
+          deaths = sum(deaths),
+          population = nyc.population,
+          p_cases = sum(cases)*100000/nyc.population,
+          p_deaths = sum(deaths)*100000/nyc.population,
+          diff = sum(diff),
+          p_diff = sum(diff)*100000/nyc.population,
+          d_diff = sum(d_diff),
+          p.d_diff = sum(p.d_diff)*100000/nyc.population
+        ) 
+      covid_TS_counties.cases.plot <- covid_TS_counties.cases.plot %>%
+        filter(!County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
+        rbind.data.frame(NYC)
+      
+    }
+    
+    state <- covid_TS_state_long.cases %>%
+      filter(State == state_initial) %>%
+      filter(n() >= moving.avg.window) %>%
+      mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right")))
+    
+    state$County = state_initial
+    
+    covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
+      filter(County %in% counties) %>%
+      rbind.data.frame(state) %>%
+      filter(get(y.value) > 0)
+    
+    point <- nearPoints(covid_TS_counties.cases.plot, hover, threshold = 5, maxpoints = 1, addDist = TRUE) %>%
+      rename(Values = all_of(y.value))
+    
+    if (nrow(point) == 0) return(NULL)
+    point <- point[1,]
+    
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - log(hover$y, 10)) / (hover$domain$top - hover$domain$bottom)
+    # Log10 is needed to account for log y axis
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    style <- paste0("position:absolute; 
+                    z-index:100;",
+                    "left:", (left_px)/pixelratio + left.offset, "px; 
+                    top:", (top_px)/pixelratio + top.offset, "px;")
+    
+    state.or.county = "County: "
+    if (state_initial %in% point$County) {
+      state.or.county = "State: "
+      point <- point %>%
+        left_join(state.abr[c("name", "abr")],
+                  by = c("State" = "abr"))
+    }
+    else {
+      point$name <- point$County
+    }
+    wellPanel(
+      style = style,
+      class = "gg_tooltip",
+      p(HTML(paste0("<b>",state.or.county, "</b>", point$name, "<br/>",
+                    "<b> Date: </b>", point$date, "<br/>",
+                    "<b>", y_label, ": </b>",  format(round(point$Values),big.mark = ","), "<br/>"
+      ))))
+    
+  }
+  
+  output$state.trends.tooltip <- renderUI({
+    hover <- input$state.trends.hover
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    counties <- input$SRC.county
+    rate <- input$SRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    
+    trends.tooltip(hover, state_initial, y.value, counties)
+  })
+  
+  nation.trends.tooltip <- function(hover, 
+                                    y.value="p_cases", 
+                                    selected.states = c(), 
+                                    moving.avg.window=7) {
+    pixelratio <- session$clientData$pixelratio
+    left.offset <- 20
+    top.offset <- 175
+    
+    y_label <- get_y_label(y.value)
+    covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
+      select(-c(population)) %>%
+      filter(State %in% selected.states$abr) %>%
+      group_by(State) %>% 
+      filter(n() >= moving.avg.window) %>%
+      mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+      ungroup()
+    
+    US <- covid_TS_US_long.cases %>%
+      mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+      mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right")))
+    
+    US$State = "US"
+    
+    covid_TS_state.cases.plot <-  covid_TS_state.cases.plot %>%
+      group_by(State) %>%
+      ungroup() %>%
+      rbind.data.frame(US) %>%
+      filter(get(y.value) > 1)
+    
+    point <- nearPoints(covid_TS_state.cases.plot, hover, threshold = 5, maxpoints = 1, addDist = TRUE) %>%
+      rename(Values = all_of(y.value)) %>%
+      left_join(selected.states,
+                by = c("State" = "abr"))
+    
+    if (nrow(point) == 0) return(NULL)
+    point <- point[1,]
+    
+    state.or.national <- "State: "
+    if(is.na(point$name)) {
+      point$name <- ""
+      state.or.national <- "United States"
+    }
+    
+    # calculate point position INSIDE the image as percent of total dimensions
+    # from left (horizontal) and from top (vertical)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - log(hover$y, 10)) / (hover$domain$top - hover$domain$bottom)
+    # Log10 is needed to account for log y axis
+    
+    # calculate distance from left and bottom side of the picture in pixels
+    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    style <- paste0("position:absolute; 
+                    z-index:100;",
+                    "left:", (left_px)/pixelratio + left.offset, "px; 
+                    top:", (top_px)/pixelratio + top.offset, "px;")
+    
+    wellPanel(
+      style = style,
+      class = "gg_tooltip",
+      p(HTML(paste0("<b>",state.or.national,"</b>", point$name, "<br/>",
+                    "<b> Date: </b>", point$date, "<br/>",
+                    "<b>", y_label, ": </b>",  format(round(point$Values),big.mark = ","), "<br/>"
+      ))))
+  }
+  
+  output$US.trends.tooltip <- renderUI({
+    hover <- input$US.trends.hover
+    selected.states <- data.frame(name = input$NRC.state)
+    selected.states <- selected.states %>%
+      left_join(state.abr[c("name", "abr")],
+                by = c("name" = "name"))
+    rate <- input$NRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    
+    nation.trends.tooltip(hover, y.value, selected.states)
+  })
+  
+  output$state.CoT <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    ggbar.overall(state_initial, y.value = "p_cases", remove.title = T) + 
+      #geom_vline(xintercept=reactive.line$x, color= "black", linetype="solid", size = 1, show.legend = F) +
+      NULL
+  })
+  
+  output$state.DoT <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    ggbar.overall(state_initial, y.value = "p_deaths", remove.title = T)
+  })
+  
+  Tr.ranges <- reactiveValues(x = NULL, y = NULL)
+  
+  observeEvent(input$trends.dbl_click, {
+    brush <- input$trends.brush
+    if (!is.null(brush)) {
+      #browser()
+      Tr.ranges$x <- as.POSIXct(c(brush$xmin, brush$xmax), origin="1970-01-01")
+      Tr.ranges$y <- c(brush$ymin, brush$ymax)
+      
+    } else {
+      Tr.ranges$x <- NULL
+      Tr.ranges$y <- NULL
+    }
+  }) 
+  
+  output$state.trends <- renderPlot({
+    state_name <- input$state_name
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    counties <- input$SRC.county
+    rate <- input$SRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    
+    ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = T) +
+      coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
+      NULL
+  })
+  
+  output$ranking.table <- render_gt({
+    entries <- input$entries
+    if ("Ascending" %in% input$rank.order) {
+      order <- function(x){x}
+    }
+    if ("Descending" %in% input$rank.order) {
+      order <- dplyr::desc
+    }
+    gt.ranking(as.numeric(entries), order)
+  })
+  
+  ### National Overview Code ###
+  
+  # TODO: Remove second version of ranking.table
+  output$US.ranking.table <- render_gt({
+    entries <- input$US.entries
+    if ("Ascending" %in% input$US.rank.order) {
+      order <- function(x){x}
+    }
+    if ("Descending" %in% input$US.rank.order) {
+      order <- dplyr::desc
+    }
+    gt.ranking(as.numeric(entries), order)
+  })
+  
+  output$US.trends.title <- renderUI({
+    rate <- input$NRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    tags$h3(paste0("United States ", get_y_label(y.value), " (7 day average)"))
+  })
+  
+  output$US.determinant.title <- renderUI({
+    det <- input$US.determinant
+    if (det == "CRD Mortality") {
+      det <- "Cronic Respiratory Disease (CRD) Mortality"
+    }
+    tags$h3(paste0("US ", det, " Rate Disparities Compared to the national average"))
+  })
+  
+  output$US.determinant.text <- renderText({
+    det <- input$US.determinant
+    paste0("Nationwide, ",det," has been observed as a leading comorbidity of COVID-19.")
+  })
+  
+  output$US.map.cases <- renderLeaflet({
+    geo.plot("US", "Case")
+  })
+  
+  output$US.report <- render_gt({
+    US.stats.table()
+  })
+  
+  output$US.map.deaths <- renderLeaflet({
+    geo.plot("US", "Mortality")
   })
   
   US.barplot.tooltip <- function(hover,
@@ -2243,13 +2693,15 @@ server <- function(input, output, session) {
       rename(Values = all_of(y.value)) %>%
       rename(my_diff = all_of(my_diff)) %>%
       mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
-      mutate(pct_increase =diff.ma/Values*100) %>%
+      #mutate(pct_increase =diff.ma/Values*100) %>%
+      mutate(pct_increase = my_diff/Values*100) %>%
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)
-    US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    #US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
     US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
     US.ma <- US.ma %>%
-      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
+      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"))
     
     five.plus <- ""
     if (length(US.ma$pct_increase) > 0) {
@@ -2261,7 +2713,7 @@ server <- function(input, output, session) {
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""), "<br/>",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"), "<br/>",
                     "<b>", category, ": </b>", format(round(US.ma$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(US.ma$my_diff,2),big.mark = ","), "<br/>",
                     "<b> Daily Percentage Increase: </b>",  format(round(US.ma$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
@@ -2279,84 +2731,6 @@ server <- function(input, output, session) {
     US.barplot.tooltip(hover, "deaths")
   })
   
-  output$state.CoT <- renderPlot({
-    state_name <- input$state_name
-    state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    ggbar.overall(state_initial, y.value = "p_cases", remove.title = T) + 
-      #geom_vline(xintercept=reactive.line$x, color= "black", linetype="solid", size = 1, show.legend = F) +
-      NULL
-  })
-  
-  output$state.DoT <- renderPlot({
-    state_name <- input$state_name
-    state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    ggbar.overall(state_initial, y.value = "p_deaths", remove.title = T)
-  })
-  
-  output$state.trends <- renderPlot({
-    state_name <- input$state_name
-    state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    n_case_cut <- 500
-    if (state_initial %in% c("MT", "WV", "AK", "HI", "SD", "WY")) {
-      n_case_cut <- 100
-    }
-    ggplot.state(state_initial, y.value = "diff", case.cut = n_case_cut,remove.title = T)
-  })
-  
-  output$ranking.table <- render_gt({
-    entries <- input$entries
-    if ("Ascending" %in% input$rank.order) {
-      order <- function(x){x}
-    }
-    if ("Descending" %in% input$rank.order) {
-      order <- dplyr::desc
-    }
-    gt.ranking(as.numeric(entries), order)
-  })
-  
-  ### National Overview Code ###
-  
-  # TODO: Remove second version of ranking.table
-  output$US.ranking.table <- render_gt({
-    entries <- input$US.entries
-    if ("Ascending" %in% input$US.rank.order) {
-      order <- function(x){x}
-    }
-    if ("Descending" %in% input$US.rank.order) {
-      order <- dplyr::desc
-    }
-    gt.ranking(as.numeric(entries), order)
-  })
-  
-  output$US.trends.title <- renderUI({
-    tags$h3(paste0("United States ", get_y_label("diff"), " over time (14 day average)"))
-  })
-  
-  output$US.determinant.title <- renderUI({
-    det <- input$US.determinant
-    if (det == "CRD Mortality") {
-      det <- "Cronic Respiratory Disease (CRD) Mortality"
-    }
-    tags$h3(paste0("US ", det, " Rate Disparities Compared to the national average"))
-  })
-  
-  output$US.determinant.text <- renderText({
-    det <- input$US.determinant
-    paste0("Nationwide, ",det," has been observed as a leading comorbidity of COVID-19.")
-  })
-  
-  output$US.map.cases <- renderLeaflet({
-    geo.plot("US", "Case")
-  })
-  
-  output$US.report <- render_gt({
-    US.stats.table()
-  })
-  
-  output$US.map.deaths <- renderLeaflet({
-    geo.plot("US", "Mortality")
-  })
-  
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)
   })
@@ -2365,9 +2739,22 @@ server <- function(input, output, session) {
     ggbar.US(y.value = "deaths", remove.title = T)
   })
   
-  
   output$US.trends <- renderPlot({
-    ggplot.US("diff", moving.avg.window=14, remove.title = T)
+    selected.states <- data.frame(name = input$NRC.state)
+    selected.states <- selected.states %>%
+      left_join(state.abr[c("name", "abr")],
+                by = c("name" = "name"))
+    rate <- input$NRC.rate
+    if (rate == "Overall") {
+      y.value = "diff"
+    }
+    else { #if per/100k
+      y.value = "p_diff"
+    }
+    
+    ggplot.US(y.value=y.value, moving.avg.window=7, selected.states=selected.states$abr, remove.title=T) +
+      coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
+      NULL
   })
   
   # TODO: This is written twice

@@ -75,10 +75,10 @@ get_dif <- function(y.value) {
   }
 }
 
-ggplot.state <- function(selected.state="NY", 
-                         y.value="diff", 
+ggplot.state <- function(selected.state = "NY", 
+                         y.value = "diff", 
                          moving.avg.window=7, 
-                         case.cut=100, 
+                         counties = c(), 
                          remove.title = F,
                          max.labels=10 # To be implimented
                          ){
@@ -145,9 +145,7 @@ ggplot.state <- function(selected.state="NY",
   state$County = selected.state
   
   covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
-    group_by(County) %>%
-    filter(max(cases) > case.cut) %>%
-    ungroup() %>%
+    filter(County %in% counties) %>%
     rbind.data.frame(state) %>%
     filter(get(y.value) > 0)
   
@@ -189,7 +187,7 @@ ggplot.state <- function(selected.state="NY",
     geom_line(size=1) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,100,500,1000,5000,10000, 50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
     scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
     ylab(y_label) + 
@@ -210,8 +208,7 @@ ggplot.state <- function(selected.state="NY",
                           values = c(2,2), 
                           guide = guide_legend(title.position = "top",title.hjust = 0.5,override.aes = list(color = c("blue", "red")), direction = "vertical")) +
     theme(legend.position = "bottom") +
-    gg_title +
-    NULL
+    gg_title
   return(g)
 }
 
@@ -238,9 +235,11 @@ ggbar.overall <- function(selected.state = "NY",
     rename(Values = all_of(y.value)) %>%
     rename(diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right")))
-  state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+  #state_cases[state_cases$diff.ma > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
+  state_cases[state_cases$diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
   state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase <= 0, "pct_increase"] <- NA
   state_cases$Type <- "State Moving Average"
   
@@ -248,7 +247,8 @@ ggbar.overall <- function(selected.state = "NY",
     rename(Values = all_of(y.value)) %>%
     rename(diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(diff[1:7-1], zoo::rollmean(diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
     filter(ma > 0) %>%
     filter(date > min(state_cases$date))
@@ -314,10 +314,12 @@ ggbar.US <- function(y.value="cases",
     rename(Values = all_of(y.value)) %>%
     rename(my_diff = all_of(my_diff)) %>%
     mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
-    mutate(pct_increase =diff.ma/Values*100) %>%
+    #mutate(pct_increase =diff.ma/Values*100) %>%
+    mutate(pct_increase =my_diff/Values*100) %>%
     mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
     filter(ma > 0)
-  US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+  #US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+  US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
   US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- NA
   US.ma$Type <- "US Moving Average"
   
@@ -356,8 +358,8 @@ ggbar.US <- function(y.value="cases",
 }
 
 ggplot.US <- function(y.value="cases", 
-                      moving.avg.window=7, 
-                      case.cut=200, 
+                      moving.avg.window=7,
+                      selected.states = c(), 
                       max.labels=10, 
                       remove.title = F) {
   
@@ -377,7 +379,7 @@ ggplot.US <- function(y.value="cases",
   
   covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
     select(-c(population)) %>%
-    filter(! (State %in% "DC")) %>%
+    filter(State %in% selected.states) %>%
     group_by(State) %>% 
     filter(n() >= moving.avg.window) %>%
     mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
@@ -392,7 +394,6 @@ ggplot.US <- function(y.value="cases",
   
   covid_TS_state.cases.plot <-  covid_TS_state.cases.plot %>%
     group_by(State) %>%
-    filter(max(cases) > case.cut) %>%
     ungroup() %>%
     rbind.data.frame(US) %>%
     filter(get(y.value) > 1)
@@ -427,9 +428,9 @@ ggplot.US <- function(y.value="cases",
   col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
   state.num$Color <- "black"
   state.num[state.num$Region == "West", "Color"] <- col_vector[1]
-  state.num[state.num$Region == "South", "Color"] <- col_vector[7]
-  state.num[state.num$Region == "North Central", "Color"] <- col_vector[5]
-  state.num[state.num$Region == "Northeast", "Color"] <- col_vector[6]
+  state.num[state.num$Region == "South", "Color"] <- col_vector[5]
+  state.num[state.num$Region == "North Central", "Color"] <- col_vector[6]
+  state.num[state.num$Region == "Northeast", "Color"] <- col_vector[7]
   
   region_palette <- setNames(as.character(state.num$Color), as.character(state.num$Region))
   
@@ -443,7 +444,7 @@ ggplot.US <- function(y.value="cases",
     geom_line(size=1.5) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,100,500,1000,5000,10000, 50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
     scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
     ylab(y_label) + 
@@ -461,7 +462,6 @@ ggplot.US <- function(y.value="cases",
     guides(color = guide_legend(title = "Region",
                                 title.position = "left")) +
     theme(legend.position = "bottom") +
-    gg_title +
-    NULL
+    gg_title
   return(g)
 }
