@@ -2314,7 +2314,7 @@ server <- function(input, output, session) {
     #state_cases[state_cases$Value_diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
     state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase < 0, "pct_increase"] <- 0
     state_cases <- state_cases %>%
-      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""))
+      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"))
     # actual tooltip created as wellPanel
     
     five.plus <- ""
@@ -2326,7 +2326,7 @@ server <- function(input, output, session) {
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz=""), "<br/>",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"), "<br/>",
                     "<b>", category, ": </b>", format(round(state_cases$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(state_cases$Value_diff,2),big.mark = ","), "<br/>",
                     "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
@@ -2350,7 +2350,7 @@ server <- function(input, output, session) {
   })
   
   trends.tooltip <- function(hover, 
-                             state_initial,
+                             state_initial = "NY",
                              y.value="p_cases", 
                              counties = c("Rensselaer"), 
                              moving.avg.window=7) {
@@ -2419,6 +2419,7 @@ server <- function(input, output, session) {
     if (nrow(point) == 0) return(NULL)
     point <- point[1,]
     
+    
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
     left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
@@ -2442,7 +2443,7 @@ server <- function(input, output, session) {
       style = style,
       class = "gg_tooltip",
       p(HTML(paste0("<b>",state.or.county, "</b>", point$County, "<br/>",
-                    "<b> Date: </b>", as.Date(point$date, tz=""), "<br/>",
+                    "<b> Date: </b>", point$date, "<br/>",
                     "<b>", y_label, ": </b>",  format(round(point$Values),big.mark = ","), "<br/>"
       ))))
     
@@ -2527,7 +2528,7 @@ server <- function(input, output, session) {
       style = style,
       class = "gg_tooltip",
       p(HTML(paste0("<b>",state.or.national,"</b>", point$name, "<br/>",
-                    "<b> Date: </b>", as.Date(point$date, tz=""), "<br/>",
+                    "<b> Date: </b>", point$date, "<br/>",
                     "<b>", y_label, ": </b>",  format(round(point$Values),big.mark = ","), "<br/>"
       ))))
   }
@@ -2591,7 +2592,7 @@ server <- function(input, output, session) {
     }
     
     ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = T) +
-      coord_cartesian(x = Tr.ranges$x, y = Tr.ranges$y, expand = FALSE) +
+      coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
   })
   
@@ -2692,7 +2693,7 @@ server <- function(input, output, session) {
     US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
     US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
     US.ma <- US.ma %>%
-      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""))
+      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"))
     
     five.plus <- ""
     if (length(US.ma$pct_increase) > 0) {
@@ -2704,7 +2705,7 @@ server <- function(input, output, session) {
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz=""), "<br/>",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"), "<br/>",
                     "<b>", category, ": </b>", format(round(US.ma$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(US.ma$my_diff,2),big.mark = ","), "<br/>",
                     "<b> Daily Percentage Increase: </b>",  format(round(US.ma$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
@@ -2744,7 +2745,7 @@ server <- function(input, output, session) {
     }
     
     ggplot.US(y.value=y.value, moving.avg.window=7, selected.states=selected.states$abr, remove.title=T) +
-      coord_cartesian(x = Tr.ranges$x, y = Tr.ranges$y, expand = FALSE) +
+      coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
   })
   
