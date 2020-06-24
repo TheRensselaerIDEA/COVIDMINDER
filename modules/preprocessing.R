@@ -218,7 +218,7 @@ pUS.6.deaths <- us_covid_data$Mortality_rate
 #death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
 Case_rate_ldi <- unlist(lapply(covid_data_states$Case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 Mortality_rate_ldi <- unlist(lapply(covid_data_states$Mortality_rate, FUN=function(x){-log(pUS.6.deaths/x)}))
-
+#browser()
 #ldi's for individual state report cards - Jose 
 todays.case.data$Case_rate <- todays.case.data$Cases/todays.case.data$population
 todays.case.data$Case_rate_ldi <- unlist(lapply(todays.case.data$Case_rate, FUN=function(x){-log(pUS.6.cases/x)})) 
@@ -460,8 +460,8 @@ ranking <- covid_TS_state_long.cases %>%
   top_n(time.period, wt=date) %>%
   summarise(
     population = max(population),
-    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
+    cases.delta = ((max(p_cases) - min(p_cases))/max(p_cases))/100000,
+    deaths.delta =  ((max(p_deaths) - min(p_deaths))/max(p_deaths))/100000
   ) %>%
   #mutate(points = 0.5*(cases.delta + deaths.delta)) %>%
   mutate(points = cases.delta) %>%
@@ -474,8 +474,8 @@ ranking <- covid_TS_state_long.cases %>%
 US.ranking <- covid_TS_US_long.cases %>%
   top_n(time.period, wt=date) %>%
   summarise(
-    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
+    cases.delta = ((max(p_cases) - min(p_cases))/max(p_cases))/100000,
+    deaths.delta =  ((max(p_deaths) - min(p_deaths))/max(p_deaths))/100000
   )
 
 ranking.ldi <- ranking %>%
