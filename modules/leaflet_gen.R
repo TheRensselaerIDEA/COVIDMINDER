@@ -46,6 +46,7 @@ geo.plot <- function(state.choice,
     dataset$Name <- dataset$NAME
     if (feature %in% c("Case", "Mortality")){
       m.a.w <- "14-Day "
+#      browser()
     }
     else {
       m.a.w <- " "

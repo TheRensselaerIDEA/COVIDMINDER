@@ -218,7 +218,7 @@ pUS.6.deaths <- us_covid_data$Mortality_rate
 #death_rate_ldi <- unlist(lapply(covid_data_states$p_death_rate, FUN=function(x){log((x/(1-x))/(pUS.6/(1-pUS.6)))}))
 Case_rate_ldi <- unlist(lapply(covid_data_states$Case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 Mortality_rate_ldi <- unlist(lapply(covid_data_states$Mortality_rate, FUN=function(x){-log(pUS.6.deaths/x)}))
-
+#browser()
 #ldi's for individual state report cards - Jose 
 todays.case.data$Case_rate <- todays.case.data$Cases/todays.case.data$population
 todays.case.data$Case_rate_ldi <- unlist(lapply(todays.case.data$Case_rate, FUN=function(x){-log(pUS.6.cases/x)})) 
@@ -293,8 +293,8 @@ states <- dplyr::left_join(states, covid_racial_data_states.wide[,-1], by = c("N
 #NY.data$case_rate_ldi <- unlist(lapply(NY.data$case_rate, FUN=function(x){-log(pUS.6.cases/x)}))
 
 # Need this for NY Diabetes and obesity...
-pUS.7.diabetes <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
-pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])
+pUS.7.diabetes <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])/100
+pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])/100
 
 #NY.data$diabetes_ldi <- unlist(lapply(NY.data$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/x)}))
 #NY.data$obesity_ldi <- unlist(lapply(NY.data$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/x)}))
@@ -309,7 +309,7 @@ pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=
 ### NEW: US Diabetes Rates
 #pUS.7 <- as.numeric(diabetes_data_states[which(diabetes_data_states$State=="United States"),"pct_Adults_with_Diabetes"])
 
-diabetes_rate_ldi <- unlist(lapply(diabetes_data_states$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/x)}))
+diabetes_rate_ldi <- unlist(lapply(diabetes_data_states$pct_Adults_with_Diabetes, FUN=function(x){-log(pUS.7.diabetes/(x/100))}))
 
 diabetes_data_states <- data.frame(diabetes_data_states, diabetes_rate_ldi)
 
@@ -323,7 +323,7 @@ diabetes_data_states <- diabetes_data_states[match(states$NAME, diabetes_data_st
 diabetes_data_states <- diabetes_data_states[1:51,]
 
 states <- data.frame(states, "Diabetes_rate_ldi"=diabetes_data_states$diabetes_rate_ldi, check.names = F) # Append to states
-states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes, check.names = F) # Append to states
+states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_with_Diabetes/100, check.names = F) # Append to states
 
 # State report card version (county level)
 todays.case.data <- inner_join(todays.case.data, 
@@ -331,20 +331,20 @@ todays.case.data <- inner_join(todays.case.data,
                                by=c("countyFIPS" = "CountyFIPS")) %>%
   rename(Diabetes_rate = Percentage)
 todays.case.data$Diabetes_rate <- as.numeric(todays.case.data$Diabetes_rate)/100 # Percentage
-todays.case.data$Diabetes_rate_ldi <- unlist(lapply(todays.case.data$Diabetes_rate, FUN=function(x){-log(pUS.7.diabetes/(x*100))}))
+todays.case.data$Diabetes_rate_ldi <- unlist(lapply(todays.case.data$Diabetes_rate, FUN=function(x){-log(pUS.7.diabetes/(x))}))
 todays.case.data <- todays.case.data %>%
   mutate(Diabetes_rate_ldi = replace(Diabetes_rate_ldi, Diabetes_rate_ldi < -5, -5))
 
 
 ### NEW: US Obesity Rates
 # owid_data.obesity.rate
-pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])
+pUS.8.obesity <- as.numeric(obesity_data_states[which(obesity_data_states$State=="United States"),"pct_Adults_with_Obesity"])/100
 
 
 # Calculate state DIs based on a country's selected rate
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
 
-obesity_ldi.us <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/x)}))
+obesity_ldi.us <- unlist(lapply(obesity_data_states$pct_Adults_with_Obesity, FUN=function(x){-log(pUS.8.obesity/(x/100))}))
 
 # Write to data frame
 obesity_data_states <- data.frame(obesity_data_states, obesity_ldi.us)
@@ -358,7 +358,7 @@ obesity_data_states <- obesity_data_states %>%
   mutate(obesity_ldi.us = replace(obesity_ldi.us, obesity_ldi.us < -5, -5))
 
 
-states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity, check.names = F) # Append to states
+states <- data.frame(states, "Obesity_rate"=obesity_data_states$pct_Adults_with_Obesity/100, check.names = F) # Append to states
 states <- data.frame(states, "Obesity_rate_ldi"=obesity_data_states$obesity_ldi.us, check.names = F) # Append to states
 
 # State Report Cards - Obesity
@@ -368,7 +368,7 @@ todays.case.data <- inner_join(todays.case.data,
                                by=c("countyFIPS" = "FIPS")) %>%
   rename(Obesity_rate = `% Adults with Obesity`)
 todays.case.data$Obesity_rate <- as.numeric(todays.case.data$Obesity_rate)/100 # Percentage
-todays.case.data$Obesity_rate_ldi <- unlist(lapply(todays.case.data$Obesity_rate, FUN=function(x){-log(pUS.8.obesity/(x*100))}))
+todays.case.data$Obesity_rate_ldi <- unlist(lapply(todays.case.data$Obesity_rate, FUN=function(x){-log(pUS.8.obesity/(x))}))
 todays.case.data <- todays.case.data %>%
   mutate(Obesity_rate_ldi = replace(Obesity_rate_ldi, Obesity_rate_ldi < -5, -5))
 
@@ -460,12 +460,13 @@ ranking <- covid_TS_state_long.cases %>%
   top_n(time.period, wt=date) %>%
   summarise(
     population = max(population),
-    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
+    cases.delta = (max(p_cases) - min(p_cases))/100000,
+    deaths.delta =  (max(p_deaths) - min(p_deaths))/100000,
+    cases.pct = (max(p_cases) - min(p_cases))/max(p_cases),
+    deaths.pct = (max(p_deaths) - min(p_deaths))/max(p_deaths)
   ) %>%
   #mutate(points = 0.5*(cases.delta + deaths.delta)) %>%
-  mutate(points = cases.delta) %>%
-  arrange(points) %>%
+  arrange(cases.pct) %>%
   mutate(rank = row_number()) %>%
   left_join(state.abr[c("abr", "name")],
             by = c("State" = "abr"))
@@ -474,9 +475,9 @@ ranking <- covid_TS_state_long.cases %>%
 US.ranking <- covid_TS_US_long.cases %>%
   top_n(time.period, wt=date) %>%
   summarise(
-    cases.delta = (max(p_cases) - min(p_cases))/max(p_cases),
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/max(p_deaths)
-  )
+    cases.delta = (max(p_cases) - min(p_cases))/100000,
+    deaths.delta =  (max(p_deaths) - min(p_deaths))/100000
+    )
 
 ranking.ldi <- ranking %>%
   mutate(Case_rate_ldi = -log(US.ranking$cases.delta/cases.delta)) %>%
