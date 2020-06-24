@@ -50,7 +50,7 @@ gt.ranking <- function(entries = 50,
   ranking %>%
     arrange(order(rank)) %>%
     filter(row_number() <= entries) %>%
-    select(name, cases.delta, deaths.delta, rank) %>%
+    select(name, cases.pct, deaths.pct, rank) %>%
     gt() %>%
     tab_header(
       title = paste0("State Rankings"),
@@ -59,11 +59,11 @@ gt.ranking <- function(entries = 50,
     tab_source_note(
       source_note = md("Data Source: [USA Facts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/)")
     ) %>%
-    fmt_percent(c("cases.delta", "deaths.delta"), decimals = 1) %>%
+    fmt_percent(c("cases.pct", "deaths.pct"), decimals = 1) %>%
     cols_label(
       name = "State",
-      cases.delta = "Change in Cases",
-      deaths.delta = "Change in Deaths",
+      cases.pct = "Change in Cases",
+      deaths.pct = "Change in Deaths",
       rank = "Rank"
     ) %>%
     cols_move_to_start(columns = vars(rank)) %>%
