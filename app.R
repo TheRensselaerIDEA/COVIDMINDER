@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "06-23-2020" # makes it easy to change all occurances when we update
+update_date <- "06-24-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -80,6 +80,7 @@ ui <-
                                                                  delay = 100,
                                                                  delayType = "throttle")),
                                     uiOutput("state.CoT.tooltip"), offset = 1),
+                             column(1, downloadButton("state.CoT.dl"),offset = 9),
                              column(10, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
@@ -87,6 +88,7 @@ ui <-
                                                                  delay = 100,
                                                                  delayType = "throttle")),
                                     uiOutput("state.DoT.tooltip"), offset = 1)),
+                             column(1, downloadButton("state.DoT.dl"), offset = 9),
                     fluidRow(column(8, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
                                     tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -97,13 +99,6 @@ ui <-
                                     offset = 2)),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
-                    # tags$div(class = "page_title",
-                    #          dateRangeInput(inputId = "NYDate.ma",
-                    #                         label = "Date Range",
-                    #                         min = min(covid_NY_TS_plot.cases$date),
-                    #                         max = max(covid_NY_TS_plot.cases$date),
-                    #                         start = as.Date(max(covid_NY_TS_plot.cases$date)) - 31,
-                    #                         end = max(covid_NY_TS_plot.cases$date)))
                     fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
                                     tags$div(style = "height:130px;text-align:left;padding-left:4%;",
                                       uiOutput("state.report.county.selector"),
@@ -121,13 +116,16 @@ ui <-
                                                  id = "trends.brush",
                                                  resetOnNew = TRUE)),
                                     uiOutput("state.trends.tooltip"), offset = 1)),
+                             column(1, downloadButton("state.trends.dl"), offset = 9),
                     tags$br(),
                     fluidRow(column(6,
                                     uiOutput("state.county.cases"),
-                                    leafletOutput("map.cases", height = height)),
+                                    leafletOutput("map.cases", height = height),
+                                    column(2, downloadButton("map.cases.dl"), offset=10)),
                              column(6,
                                     uiOutput("state.county.deaths"),
-                                    leafletOutput("map.deaths", height = height))),
+                                    leafletOutput("map.deaths", height = height),
+                                    column(2, downloadButton("map.deaths.dl"), offset = 10))),
                     tags$br(),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("Comorbidities"))),
@@ -138,7 +136,8 @@ ui <-
                                                 label = NULL,
                                                 choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
-                                    leafletOutput("maps.determinant"), offset = 3),
+                                    leafletOutput("maps.determinant"),
+                                    column(2, downloadButton("map.determinant.dl"), offset = 10), offset = 3),
                              column(8, style="text-align:center;",
                                     tags$p(textOutput("determinant.text"),
                                            tags$br(),
@@ -2265,11 +2264,44 @@ server <- function(input, output, session) {
     geo.plot(state_initial, "Case")
   })
   
+  output$map.cases.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_cases.png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      mapshot(x = geo.plot(state_initial, "Case"),
+              file = file,
+              cliprect = "viewport",
+              selfcontained = F)
+    }
+  )
+  
   output$map.deaths <- renderLeaflet({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     geo.plot(state_initial, "Mortality")
   })
+  
+  
+  output$map.deaths.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_mortality.png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      mapshot(x = geo.plot(state_initial, "Mortality"),
+              file = file,
+              cliprect = "viewport",
+              selfcontained = F)
+    }
+  )
   
   output$maps.determinant <- renderLeaflet({
     state_name <- input$state_name
@@ -2277,6 +2309,25 @@ server <- function(input, output, session) {
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     geo.plot(state_initial, det)
   })
+  
+  
+  output$map.determinant.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      det <- input$state.determinant
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_",det,".png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      det <- input$state.determinant
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      mapshot(x = geo.plot(state_initial, det),
+              file = file,
+              cliprect = "viewport",
+              selfcontained = F)
+    }
+  )
   
   barplot.tooltip <- function(click, 
                               state_initial,
@@ -2566,6 +2617,42 @@ server <- function(input, output, session) {
       NULL
   })
   
+  output$state.CoT.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_CoT_plot.png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      ggsave(filename = file, 
+             plot = ggbar.overall(state_initial, y.value = "p_cases", remove.title = F, date = update_date) + NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
+  
+  output$state.DoT.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_DoT_plot.png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      ggsave(filename = file, 
+             plot = ggbar.overall(state_initial, y.value = "p_deaths", remove.title = F, date = update_date) + NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
+  
   output$state.DoT <- renderPlot({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
@@ -2603,6 +2690,32 @@ server <- function(input, output, session) {
       coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
   })
+  
+  output$state.trends.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_trends_plot.png"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <- state.abr[state.abr$name == state_name, "abr"]
+      counties <- input$SRC.county
+      rate <- input$SRC.rate
+      if (rate == "Overall") {
+        y.value = "diff"
+      }
+      else { #if per/100k
+        y.value = "p_diff"
+      }
+      ggsave(filename = file, 
+             plot = ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = F, date = update_date) + NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
   
   output$ranking.table <- render_gt({
     entries <- input$entries

@@ -80,6 +80,7 @@ ggplot.state <- function(selected.state = "NY",
                          moving.avg.window=7, 
                          counties = c(), 
                          remove.title = F,
+                         date = "",
                          max.labels=10 # To be implimented
                          ){
   
@@ -94,7 +95,7 @@ ggplot.state <- function(selected.state = "NY",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0(state.name, " ", y_label, " over time",m.a.w))
+    gg_title <- ggtitle(paste0(state.name, " ", y_label, " over time",m.a.w, " [", date, "]"))
   }
   
   
@@ -207,7 +208,7 @@ ggplot.state <- function(selected.state = "NY",
     scale_linetype_manual(name = "Events", 
                           values = c(2,2), 
                           guide = guide_legend(title.position = "top",title.hjust = 0.5,override.aes = list(color = c("blue", "red")), direction = "vertical")) +
-    theme(legend.position = "bottom") +
+    theme(legend.position = "bottom", title = element_text(hjust = 0.5)) +
     gg_title
   return(g)
 }
@@ -215,7 +216,8 @@ ggplot.state <- function(selected.state = "NY",
 ggbar.overall <- function(selected.state = "NY", 
                           y.value="p_cases", 
                           moving.avg.window=14, 
-                          remove.title = F) {
+                          remove.title = F,
+                          date = "") {
   state <- covid_TS_state_long.cases %>%
     filter(State == selected.state)
   
@@ -226,7 +228,7 @@ ggbar.overall <- function(selected.state = "NY",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0(selected.state, " ", category, " over time"))
+    gg_title <- ggtitle(paste0(selected.state, " ", category, " over time (", date,")"))
   }
   
   
@@ -291,7 +293,7 @@ ggbar.overall <- function(selected.state = "NY",
            scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
            ylab(get_y_label(y.value)) + 
            xlab("Date") +
-           theme(legend.position = "bottom",legend.direction = "horizontal") +
+           theme(legend.position = "bottom",legend.direction = "horizontal",plot.title = element_text(hjust = 0.5)) +
            gg_title
   )
 }
