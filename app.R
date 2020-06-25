@@ -2881,7 +2881,7 @@ server <- function(input, output, session) {
     content = function(file) {
       title <- tags$h1(style="text-align:center;", "US COVID-19 Case Hotspots")
       mapshot(x = geo.plot("US", 
-                           "Case", 
+                           "Daily Case", 
                            title = tags$div(title)
       ),
       file = file,
@@ -2905,7 +2905,7 @@ server <- function(input, output, session) {
     content = function(file) {
       title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
       mapshot(x = geo.plot("US", 
-                           "Mortality", 
+                           "Daily Mortality", 
                            title = tags$div(title)
       ),
       file = file,
