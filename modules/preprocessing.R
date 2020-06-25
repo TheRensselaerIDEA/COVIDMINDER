@@ -453,15 +453,15 @@ states <- data.frame(states, "covid_eo"=covid_eo_bills$Total_EO, check.names = F
 states <- data.frame(states, "covid_bills"=covid_eo_bills$Total_Bills, check.names = F) # Append to states
 
 # State Ranking
-time.period <- 14
+time.period <- 7
 ranking <- covid_TS_state_long.cases %>%
   group_by(State) %>%
   filter(State != "DC") %>%
   top_n(time.period, wt=date) %>%
   summarise(
     population = max(population),
-    cases.delta = (max(p_cases) - min(p_cases))/100000,
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/100000,
+    cases.delta = sum(p_diff)/(time.period*100000),
+    deaths.delta =  sum(p.d_diff)/(time.period*100000),
     cases.pct = (max(p_cases) - min(p_cases))/max(p_cases),
     deaths.pct = (max(p_deaths) - min(p_deaths))/max(p_deaths)
   ) %>%
@@ -471,23 +471,42 @@ ranking <- covid_TS_state_long.cases %>%
   left_join(state.abr[c("abr", "name")],
             by = c("State" = "abr"))
 
+
 # US LDI from rankings
 US.ranking <- covid_TS_US_long.cases %>%
   top_n(time.period, wt=date) %>%
   summarise(
-    cases.delta = (max(p_cases) - min(p_cases))/100000,
-    deaths.delta =  (max(p_deaths) - min(p_deaths))/100000
+    cases.delta = sum(p_diff)/(time.period*100000),
+    deaths.delta =  sum(p.d_diff)/(time.period*100000)
     )
 
 ranking.ldi <- ranking %>%
-  mutate(Case_rate_ldi = -log(US.ranking$cases.delta/cases.delta)) %>%
-  mutate(Case_rate_ldi = replace(Case_rate_ldi, Case_rate_ldi < -5, -5)) %>%
-  mutate(Mortality_rate_ldi = -log(US.ranking$deaths.delta/deaths.delta)) %>%
-  mutate(Mortality_rate_ldi = replace(Mortality_rate_ldi, Mortality_rate_ldi < -5, -5)) %>%
-  rename(Case_rate = cases.delta) %>%
-  rename(Mortality_rate = deaths.delta)
+  mutate(`Daily Case_rate_ldi` = -log(US.ranking$cases.delta/cases.delta)) %>%
+  mutate(`Daily Case_rate_ldi` = replace(`Daily Case_rate_ldi`, `Daily Case_rate_ldi` < -5, -5)) %>%
+  mutate(`Daily Mortality_rate_ldi` = -log(US.ranking$deaths.delta/deaths.delta)) %>%
+  mutate(`Daily Mortality_rate_ldi` = replace(`Daily Mortality_rate_ldi`, `Daily Mortality_rate_ldi` < -5, -5)) %>%
+  rename(`Daily Case_rate` = cases.delta) %>%
+  rename(`Daily Mortality_rate` = deaths.delta)
 
 states <- states %>%
-  left_join(ranking.ldi[c("name", "Case_rate", "Case_rate_ldi", "Mortality_rate", "Mortality_rate_ldi")],
+  left_join(ranking.ldi[c("name", "Daily Case_rate", "Daily Case_rate_ldi", "Daily Mortality_rate", "Daily Mortality_rate_ldi")],
             by = c("NAME" = "name"))
+
+# County "Ranking"
+#todays.case.data$`Daily Case_rate` <- covid_TS_counties_long.cases
+ct.ranking <- covid_TS_counties_long.cases %>%
+  group_by(countyFIPS) %>%
+  top_n(time.period, wt=date) %>%
+  summarise(
+    `Daily Case_rate` = sum(p_diff)/(time.period*100000),
+    `Daily Mortality_rate` =  sum(p.d_diff)/(time.period*100000)
+  ) %>%
+  mutate(`Daily Mortality_rate_ldi` = -log(US.ranking$deaths.delta/`Daily Mortality_rate`)) %>%
+  mutate(`Daily Mortality_rate_ldi` = replace(`Daily Mortality_rate_ldi`, `Daily Mortality_rate_ldi` < -5, -5)) %>%
+  mutate(`Daily Case_rate_ldi` = -log(US.ranking$cases.delta/`Daily Case_rate`)) %>%
+  mutate(`Daily Case_rate_ldi` = replace(`Daily Case_rate_ldi`, `Daily Case_rate_ldi` < -5, -5))
+
+todays.case.data <- todays.case.data %>%
+  left_join(ct.ranking,
+            by = c("countyFIPS" = "countyFIPS"))
 

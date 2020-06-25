@@ -54,7 +54,7 @@ gt.ranking <- function(entries = 50,
     gt() %>%
     tab_header(
       title = paste0("State Rankings"),
-      subtitle = "Based on 14 day change in COVID-19 Cases"
+      subtitle = paste0("Based on ",time.period," day change in COVID-19 Cases")
     ) %>%
     tab_source_note(
       source_note = md("Data Source: [USA Facts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/)")

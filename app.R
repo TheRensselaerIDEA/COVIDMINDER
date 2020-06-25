@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "06-24-2020" # makes it easy to change all occurances when we update
+update_date <- "06-25-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -71,7 +71,7 @@ ui <-
                     fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
                     tags$br(),
                     fluidRow(column(8, style="text-align:center;",
-                                    tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past 14 days."),
+                                    tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past ",time.period," days."),
                                     offset=2)),
                     fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
                                     plotOutput(outputId = "state.CoT", 
@@ -101,11 +101,11 @@ ui <-
                                     tags$h1("County Level Breakdown"))),
                     fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
                                     tags$div(style = "height:130px;text-align:left;padding-left:4%;",
-                                      uiOutput("state.report.county.selector"),
-                                               radioButtons(inputId = "SRC.rate",
-                                                   label = "Rate",
-                                                   choices = c("Overall", "Per/100k"),
-                                                   selected = "Per/100k")),
+                                    uiOutput("state.report.county.selector"),
+                                             radioButtons(inputId = "SRC.rate",
+                                                 label = "Rate",
+                                                 choices = c("Overall", "Per/100k"),
+                                                 selected = "Per/100k")),
                                     plotOutput(outputId = "state.trends", 
                                                height=height,
                                                hover = hoverOpts(id = "state.trends.hover",
@@ -118,12 +118,36 @@ ui <-
                                     uiOutput("state.trends.tooltip"), offset = 1)),
                              column(1, downloadButton("state.trends.dl"), offset = 9),
                     tags$br(),
+                    fluidRow(column(4, style="text-align:center;",
+                                    tags$div(class = "info",
+                                             HTML("<h3>Disparity Color Legend</h3>
+                               Respective rates per 100k people on maps below are: 
+                                <div>
+                               <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #F46D43; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                               <div><span style='background: #f7f7f7; border:solid 1px; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                               <div><span style='background: #253494; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #4575B4; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #74ADD1; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                               <i style='display:inline;'>Darker shades indicate greater disparity.</i><br><br>
+                               </div>")), offset=4)),
                     fluidRow(column(6,
-                                    uiOutput("state.county.cases"),
+                                    tags$div(style = "text-align:center;",uiOutput("state.county.cases")),
+                                    radioButtons(inputId = "SRC.case.time",
+                                                 label = "Time Frame",
+                                                 choices = c("Daily", "Overall"),
+                                                 selected = "Daily",
+                                                 inline = T),
                                     leafletOutput("map.cases", height = height),
                                     column(2, downloadButton("map.cases.dl"), offset=10)),
                              column(6,
-                                    uiOutput("state.county.deaths"),
+                                    tags$div(style = "text-align:center;",uiOutput("state.county.deaths")),
+                                    radioButtons(inputId = "SRC.death.time",
+                                                 label = "Time Frame",
+                                                 choices = c("Daily", "Overall"),
+                                                 selected = "Daily",
+                                                 inline = T),
                                     leafletOutput("map.deaths", height = height),
                                     column(2, downloadButton("map.deaths.dl"), offset = 10))),
                     tags$br(),
@@ -136,7 +160,7 @@ ui <-
                                                 label = NULL,
                                                 choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
-                                    leafletOutput("maps.determinant"),
+                                    leafletOutput("maps.determinant", height = height),
                                     column(2, downloadButton("map.determinant.dl"), offset = 10), offset = 3),
                              column(8, style="text-align:center;",
                                     tags$p(textOutput("determinant.text"),
@@ -146,14 +170,6 @@ ui <-
                                                     "https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/health-behaviors/diet-exercise/adult-obesity")), 
                                     offset = 2
                              )),
-                    fluidRow(column(8, style="text-align:center;",
-                                    HTML("Respective rates per 100k people on maps are: 
-                <div>
-               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-               <i>Darker shades indicate greater disparity.</i><br><br>
-               </div>"), offset=2)),
                     tags$br(),
                     tags$br()
                     ,fluidRow(column(12, style="text-align:center;",
@@ -210,13 +226,6 @@ ui <-
                                offset = 2)),
                fluidRow(column(12, style="text-align:center;",
                                tags$h1("State Level Breakdown"))),
-               # fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
-               #                 tags$div(style = "height:130px;text-align:left;padding-left:4%;",
-               #                          uiOutput("state.report.county.selector"),
-               #                          radioButtons(inputId = "SRC.rate",
-               #                                       label = "Rate",
-               #                                       choices = c("Overall", "Per/100k"),
-               #                                       selected = "Per/100k")),
                fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("US.trends.title"),
                                tags$div(style = "height:130px;text-align:left;padding-left:4%;",
                                         uiOutput("US.report.state.selector"),
@@ -235,13 +244,30 @@ ui <-
                                             resetOnNew = TRUE)),
                                uiOutput("US.trends.tooltip"), offset = 1),
                         column(1, downloadButton("US.trends.dl"), offset = 9)),
+               tags$br(),
+               fluidRow(column(4, style="text-align:center;",
+                               tags$div(class = "info",
+                               HTML("<h3>Disparity Color Legend</h3>
+                               Respective rates per 100k people on maps below are: 
+                                <div>
+                               <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #F46D43; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+                               <div><span style='background: #f7f7f7; border:solid 1px; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+                               <div><span style='background: #253494; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #4575B4; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #74ADD1; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+                               <i style='display:inline;'>Darker shades indicate greater disparity.</i><br><br>
+                               </div>")), offset=4)),
                fluidRow(column(6,
-                               tags$h3("US COVID-19 14-Day Case disparities compared to US Average"),
-                               leafletOutput("US.map.cases"),
+                               tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in daily Case Rates? (",time.period, " day average)")),
+                               leafletOutput("US.map.cases", height = height),
                                column(2, downloadButton("US.map.cases.dl"), offset=10)),
                         column(6,
-                               tags$h3("US COVID-19 14-Day Mortality disparities compared to US Average"),
-                               leafletOutput("US.map.deaths"),
+                               tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in daily Mortality Rates? (",time.period, " day average)")),
+                               leafletOutput("US.map.deaths", height = height),
                                column(2, downloadButton("US.map.deaths.dl"), offset = 10))),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
@@ -251,7 +277,7 @@ ui <-
                                            label = NULL,
                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                            selected = "Diabetes"),
-                               leafletOutput("US.maps.determinant"),
+                               leafletOutput("US.maps.determinant", height = height),
                                column(2, downloadButton("US.maps.determinant.dl"), offset = 10), offset = 3),
                         column(8, style="text-align:center;",
                                tags$p(textOutput("US.determinant.text"),
@@ -261,14 +287,6 @@ ui <-
                                                "https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/health-behaviors/diet-exercise/adult-obesity")), 
                                offset = 2
                         )),
-               fluidRow(column(8, style="text-align:center;",
-                               HTML("Respective rates per 100k people on maps are: 
-                                <div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br>
-                               </div>"), offset=2)),
                tags$br(),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
@@ -2183,7 +2201,7 @@ server <- function(input, output, session) {
       sort()
     
     selected <- states %>%
-      arrange(desc(Case_rate)) %>%
+      arrange(desc(`Daily Case_rate`)) %>%
       select(NAME) %>%
       unlist() %>%
       unique()
@@ -2236,12 +2254,35 @@ server <- function(input, output, session) {
   
   output$state.county.cases <- renderUI({
     state_name <- input$state_name
-    tags$h3(paste0(state_name, " COVID-19 Case disparities compared to US Average"))
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    time <- input$SRC.case.time
+    if (time == "Daily") {
+      m.a.w <- paste0(" (",time.period," day average)")
+    }
+    else {
+      m.a.w <- ""
+    }
+    tagList(
+      tags$h2(paste0(state_name, " COVID-19 Case Hotspots")),
+      tags$h3(paste0("What are the ", state_initial, " Countywide disparities in ",time," Case Rates?",m.a.w))
+    )
   })
   
   output$state.county.deaths <- renderUI({
     state_name <- input$state_name
-    tags$h3(paste0(state_name, " COVID-19 Mortality disparities compared to US Average"))
+    state_initial <- state.abr[state.abr$name == state_name, "abr"]
+    time <- input$SRC.death.time
+    if (time == "Daily") {
+      m.a.w <- paste0(" (",time.period," day average)")
+    }
+    else {
+      m.a.w <- ""
+    }
+    
+    tagList(
+      tags$h2(paste0(state_name, " COVID-19 Mortality Hotspots")),
+      tags$h3(paste0("What are the ", state_initial, " Countywide disparities in ",time," Mortality Rates?", m.a.w))
+    )
   })
   
   output$determinant.title <- renderUI({
@@ -2267,7 +2308,15 @@ server <- function(input, output, session) {
   output$map.cases <- renderLeaflet({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    geo.plot(state_initial, "Case")
+    time <- input$SRC.case.time
+    if (time == "Daily") {
+      param <- "Daily Case"
+    }
+    else {
+      param <- "Case"
+    }
+    
+    geo.plot(state_initial, param)
   })
   
   output$map.cases.dl <- downloadHandler(
@@ -2279,9 +2328,17 @@ server <- function(input, output, session) {
     content = function(file) {
       state_name <- input$state_name
       state_initial <- state.abr[state.abr$name == state_name, "abr"]
-      title <- tags$h1(paste0(state_name, " COVID-19 Case disparities compared to US Average"))
+      title <- tags$h1(paste0(state_name, " COVID-19 Case Hotspots"))
+      time <- input$SRC.case.time
+      if (time == "Daily") {
+        param <- "Daily Case"
+      }
+      else {
+        param <- "Case"
+      }
+      
       mapshot(x = geo.plot(state_initial, 
-                           "Case", 
+                           param, 
                            title = tags$div(title)
                            ),
               file = file,
@@ -2293,7 +2350,15 @@ server <- function(input, output, session) {
   output$map.deaths <- renderLeaflet({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    geo.plot(state_initial, "Mortality")
+    time <- input$SRC.death.time
+    if (time == "Daily") {
+      param <- "Daily Mortality"
+    }
+    else {
+      param <- "Mortality"
+    }
+    
+    geo.plot(state_initial, param)
   })
   
   
@@ -2306,9 +2371,16 @@ server <- function(input, output, session) {
     content = function(file) {
       state_name <- input$state_name
       state_initial <- state.abr[state.abr$name == state_name, "abr"]
-      title <- tags$h1(paste0(state_name, " COVID-19 Mortality disparities compared to US Average"))
+      title <- tags$h1(paste0(state_name, " COVID-19 Case Hotspots"))
+      time <- input$SRC.death.time
+      if (time == "Daily") {
+        param <- "Daily Mortality"
+      }
+      else {
+        param <- "Mortality"
+      }
       mapshot(x = geo.plot(state_initial, 
-                           "Mortality",
+                           param,
                            title = tags$div(title)),
               file = file,
               cliprect = "viewport",
@@ -2776,7 +2848,10 @@ server <- function(input, output, session) {
     else { #if per/100k
       y.value = "p_diff"
     }
-    tags$h3(paste0("United States ", get_y_label(y.value), " (7 day average)"))
+    tagList(
+      tags$h2("United States Daily Case Trends"),
+      tags$h3(paste0(get_y_label(y.value), " (7 day average)"))
+    )
   })
   
   output$US.determinant.title <- renderUI({
@@ -2784,7 +2859,10 @@ server <- function(input, output, session) {
     if (det == "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    tags$h3(paste0("US ", det, " Rate Disparities Compared to the US Average"))
+    tagList(
+      tags$h2(paste0("United States ", det, " Disparities")),
+      tags$h3(paste0("What are the nationwide disparities in ", det, " Rates compared to the US Average?"))
+    )
   })
   
   output$US.determinant.text <- renderText({
@@ -2793,7 +2871,7 @@ server <- function(input, output, session) {
   })
   
   output$US.map.cases <- renderLeaflet({
-    geo.plot("US", "Case")
+    geo.plot("US", "Daily Case")
   })
   
   output$US.map.cases.dl <- downloadHandler(
@@ -2801,9 +2879,9 @@ server <- function(input, output, session) {
       return("US_cases.png")
     },
     content = function(file) {
-      title <- tags$h1("US COVID-19 14-Day Case disparities compared to US Average")
+      title <- tags$h1(style="text-align:center;", "US COVID-19 Case Hotspots")
       mapshot(x = geo.plot("US", 
-                           "Case", 
+                           "Daily Case", 
                            title = tags$div(title)
       ),
       file = file,
@@ -2817,7 +2895,7 @@ server <- function(input, output, session) {
   })
   
   output$US.map.deaths <- renderLeaflet({
-    geo.plot("US", "Mortality")
+    geo.plot("US", "Daily Mortality")
   })
   
   output$US.map.deaths.dl <- downloadHandler(
@@ -2825,9 +2903,9 @@ server <- function(input, output, session) {
       return("US_mortality.png")
     },
     content = function(file) {
-      title <- tags$h1("US COVID-19 14-Day Mortality disparities compared to US Average")
+      title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
       mapshot(x = geo.plot("US", 
-                           "Mortality", 
+                           "Daily Mortality", 
                            title = tags$div(title)
       ),
       file = file,
