@@ -95,7 +95,7 @@ ggplot.state <- function(selected.state = "NY",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0(state.name, " ", y_label, " over time",m.a.w, " [", date, "]"))
+    gg_title <- ggtitle(paste0(state.name, " ", y_label, " ",m.a.w, " [", date, "]"))
   }
   
   
@@ -228,7 +228,7 @@ ggbar.overall <- function(selected.state = "NY",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0(selected.state, " ", category, " over time (", date,")"))
+    gg_title <- ggtitle(paste0(selected.state, " ", category, " Over Time (", date,")"))
   }
   
   
@@ -300,7 +300,8 @@ ggbar.overall <- function(selected.state = "NY",
 
 ggbar.US <- function(y.value="cases", 
                      moving.avg.window=14, 
-                     remove.title = F) {
+                     remove.title = F,
+                     date = "") {
   my_diff <- get_dif(y.value)
   category <- get_y_label(y.value)
   
@@ -308,7 +309,7 @@ ggbar.US <- function(y.value="cases",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0("United States ", category, " over time"))
+    gg_title <- ggtitle(paste0("United States ", category, " over time (",date,")"))
   }
   
   
@@ -362,8 +363,9 @@ ggbar.US <- function(y.value="cases",
 ggplot.US <- function(y.value="cases", 
                       moving.avg.window=7,
                       selected.states = c(), 
-                      max.labels=10, 
-                      remove.title = F) {
+                      remove.title = F, 
+                      date = "",
+                      max.labels=10) {
   
   y_label <- get_y_label(y.value)
   m.a.w <- ""
@@ -375,7 +377,7 @@ ggplot.US <- function(y.value="cases",
     gg_title <- NULL
   }
   else {
-    gg_title <- ggtitle(paste0("United States ", y_label, " over time",m.a.w))
+    gg_title <- ggtitle(paste0("United States ", y_label, " ",m.a.w, " [",date,"]"))
   }
   
   

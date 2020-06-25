@@ -190,6 +190,7 @@ ui <-
                                                            delay = 100,
                                                            delayType = "throttle")),
                                uiOutput("US.CoT.tooltip"), offset = 1),
+                        column(1, downloadButton("US.CoT.dl"),offset = 9),
                         column(10, style="text-align:center;position:relative;",
                                tags$h3("United States COVID-19 Deaths Over Time"),
                                plotOutput(outputId = "US.DoT", 
@@ -197,7 +198,8 @@ ui <-
                                           hover = hoverOpts(id = "US.DoT.hover",
                                                             delay = 100,
                                                             delayType = "throttle")),
-                               uiOutput("US.DoT.tooltip"), offset = 1)),
+                               uiOutput("US.DoT.tooltip"), offset = 1),
+                        column(1, downloadButton("US.DoT.dl"),offset = 9)),
                fluidRow(column(8, style="text-align:center;",
                                tags$h2("Flattening the Curve"),
                                tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -231,13 +233,16 @@ ui <-
                                           brush = brushOpts(
                                             id = "trends.brush",
                                             resetOnNew = TRUE)),
-                               uiOutput("US.trends.tooltip"), offset = 1)),
+                               uiOutput("US.trends.tooltip"), offset = 1),
+                        column(1, downloadButton("US.trends.dl"), offset = 9)),
                fluidRow(column(6,
                                tags$h3("US COVID-19 14-Day Case disparities compared to US Average"),
-                               leafletOutput("US.map.cases")),
+                               leafletOutput("US.map.cases"),
+                               column(2, downloadButton("US.map.cases.dl"), offset=10)),
                         column(6,
                                tags$h3("US COVID-19 14-Day Mortality disparities compared to US Average"),
-                               leafletOutput("US.map.deaths"))),
+                               leafletOutput("US.map.deaths"),
+                               column(2, downloadButton("US.map.deaths.dl"), offset = 10))),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
                                uiOutput("US.determinant.title")),
@@ -246,7 +251,8 @@ ui <-
                                            label = NULL,
                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                            selected = "Diabetes"),
-                               leafletOutput("US.maps.determinant"), offset = 3),
+                               leafletOutput("US.maps.determinant"),
+                               column(2, downloadButton("US.maps.determinant.dl"), offset = 10), offset = 3),
                         column(8, style="text-align:center;",
                                tags$p(textOutput("US.determinant.text"),
                                       tags$br(),
@@ -2244,7 +2250,7 @@ server <- function(input, output, session) {
     if(det ==  "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    tags$h3(paste0(state_name, " ", det, " Rate Disparities Compared to the national average"))
+    tags$h3(paste0(state_name, " ", det, " Rate Disparities Compared to US Average"))
   })
   
   output$determinant.text <- renderText({
@@ -2273,7 +2279,11 @@ server <- function(input, output, session) {
     content = function(file) {
       state_name <- input$state_name
       state_initial <- state.abr[state.abr$name == state_name, "abr"]
-      mapshot(x = geo.plot(state_initial, "Case"),
+      title <- tags$h1(paste0(state_name, " COVID-19 Case disparities compared to US Average"))
+      mapshot(x = geo.plot(state_initial, 
+                           "Case", 
+                           title = tags$div(title)
+                           ),
               file = file,
               cliprect = "viewport",
               selfcontained = F)
@@ -2296,7 +2306,10 @@ server <- function(input, output, session) {
     content = function(file) {
       state_name <- input$state_name
       state_initial <- state.abr[state.abr$name == state_name, "abr"]
-      mapshot(x = geo.plot(state_initial, "Mortality"),
+      title <- tags$h1(paste0(state_name, " COVID-19 Mortality disparities compared to US Average"))
+      mapshot(x = geo.plot(state_initial, 
+                           "Mortality",
+                           title = tags$div(title)),
               file = file,
               cliprect = "viewport",
               selfcontained = F)
@@ -2322,7 +2335,14 @@ server <- function(input, output, session) {
       state_name <- input$state_name
       det <- input$state.determinant
       state_initial <- state.abr[state.abr$name == state_name, "abr"]
-      mapshot(x = geo.plot(state_initial, det),
+      det_title <- det
+      if(det ==  "CRD Mortality") {
+        det_title <- "Cronic Respiratory Disease (CRD) Mortality"
+      }
+      title <- tags$h1(paste0(state_name, " ", det_title, " Rate Disparities Compared to US Average"))
+      mapshot(x = geo.plot(state_initial, 
+                           det,
+                           title = tags$div(title, class = "leaflet-map-title")),
               file = file,
               cliprect = "viewport",
               selfcontained = F)
@@ -2709,7 +2729,13 @@ server <- function(input, output, session) {
         y.value = "p_diff"
       }
       ggsave(filename = file, 
-             plot = ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = F, date = update_date) + NULL,
+             plot = ggplot.state(state_initial, 
+                                 y.value = y.value, 
+                                 counties = counties,
+                                 remove.title = F, 
+                                 date = update_date) + 
+               coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
+               NULL,
              device = "png",
              width = 8,
              height = 6,
@@ -2758,7 +2784,7 @@ server <- function(input, output, session) {
     if (det == "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    tags$h3(paste0("US ", det, " Rate Disparities Compared to the national average"))
+    tags$h3(paste0("US ", det, " Rate Disparities Compared to the US Average"))
   })
   
   output$US.determinant.text <- renderText({
@@ -2770,6 +2796,22 @@ server <- function(input, output, session) {
     geo.plot("US", "Case")
   })
   
+  output$US.map.cases.dl <- downloadHandler(
+    filename = function() {
+      return("US_cases.png")
+    },
+    content = function(file) {
+      title <- tags$h1("US COVID-19 14-Day Case disparities compared to US Average")
+      mapshot(x = geo.plot("US", 
+                           "Case", 
+                           title = tags$div(title)
+      ),
+      file = file,
+      cliprect = "viewport",
+      selfcontained = F)
+    }
+  )
+  
   output$US.report <- render_gt({
     US.stats.table()
   })
@@ -2777,6 +2819,22 @@ server <- function(input, output, session) {
   output$US.map.deaths <- renderLeaflet({
     geo.plot("US", "Mortality")
   })
+  
+  output$US.map.deaths.dl <- downloadHandler(
+    filename = function() {
+      return("US_mortality.png")
+    },
+    content = function(file) {
+      title <- tags$h1("US COVID-19 14-Day Mortality disparities compared to US Average")
+      mapshot(x = geo.plot("US", 
+                           "Mortality", 
+                           title = tags$div(title)
+      ),
+      file = file,
+      cliprect = "viewport",
+      selfcontained = F)
+    }
+  )
   
   US.barplot.tooltip <- function(hover,
                                  y.value="cases", 
@@ -2848,9 +2906,37 @@ server <- function(input, output, session) {
     ggbar.US(y.value = "cases", remove.title = T)
   })
   
+  output$US.CoT.dl <- downloadHandler(
+    filename = function() {
+      return("US_CoT_plot.png")
+    },
+    content = function(file) {
+      ggsave(filename = file, 
+             plot = ggbar.US(y.value = "cases", remove.title = F, date = update_date) + NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
+  
   output$US.DoT <- renderPlot({
     ggbar.US(y.value = "deaths", remove.title = T)
   })
+  
+  output$US.DoT.dl <- downloadHandler(
+    filename = function() {
+      return("US_DoT_plot.png")
+    },
+    content = function(file) {
+      ggsave(filename = file, 
+             plot = ggbar.US(y.value = "deaths", remove.title = F, date = update_date) + NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
   
   output$US.trends <- renderPlot({
     selected.states <- data.frame(name = input$NRC.state)
@@ -2870,11 +2956,64 @@ server <- function(input, output, session) {
       NULL
   })
   
+  output$US.trends.dl <- downloadHandler(
+    filename = function() {
+      return("US_trends_plot.png")
+    },
+    content = function(file) {
+      selected.states <- data.frame(name = input$NRC.state)
+      selected.states <- selected.states %>%
+        left_join(state.abr[c("name", "abr")],
+                  by = c("name" = "name"))
+      rate <- input$NRC.rate
+      if (rate == "Overall") {
+        y.value = "diff"
+      }
+      else { #if per/100k
+        y.value = "p_diff"
+      }
+      ggsave(filename = file, 
+             plot = ggplot.US(y.value=y.value, 
+                              moving.avg.window=7, 
+                              selected.states=selected.states$abr, 
+                              remove.title=F,
+                              date = update_date) +
+               coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
+               NULL,
+             device = "png",
+             width = 8,
+             height = 6,
+             units = "in")
+    }
+  )
+  
   # TODO: This is written twice
   output$US.maps.determinant <- renderLeaflet({
     det <- input$US.determinant
     geo.plot("US", det)
   })
+  
+  output$US.maps.determinant.dl <- downloadHandler(
+    filename = function() {
+      det <- input$US.determinant
+      return(paste0("US_", det, ".png"))
+    },
+    content = function(file) {
+      det <- input$US.determinant
+      det_title <- det
+      if (det == "CRD Mortality") {
+        det_title <- "Cronic Respiratory Disease (CRD) Mortality"
+      }
+      title <- tags$h1(paste0("US ", det_title, " Rate Disparities Compared to the US Average"))
+      mapshot(x = geo.plot("US", 
+                           det, 
+                           title = tags$div(title)
+      ),
+      file = file,
+      cliprect = "viewport",
+      selfcontained = F)
+    }
+  )
   
   
   ### The following code deals with setting or responding to parameterized URLs

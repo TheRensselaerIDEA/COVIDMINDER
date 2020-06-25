@@ -36,7 +36,8 @@ get_zoom <- function(state.choice) {
 
 geo.plot <- function(state.choice, 
                      feature, 
-                     reverse=F) {
+                     reverse=F,
+                     title = "") {
   # Feature: Case, Mortality...
   # US Data: ....
   ldi_feature <- get_ldi(feature)
@@ -71,7 +72,7 @@ geo.plot <- function(state.choice,
   ) %>% lapply(htmltools::HTML)
   
   
-  return (leaflet(shapes) %>%
+  l <- leaflet(shapes) %>%
             addPolygons(
               fillColor = ~pal2(dataset[,ldi_feature[1]]),
               weight = 1,
@@ -105,5 +106,9 @@ geo.plot <- function(state.choice,
             ) %>%
             addProviderTiles("MapBox", options = providerTileOptions(
               id = "mapbox.light"))
-  )
+  if (title != "") {
+    l <- l %>%
+      addControl(title, position = "topleft", className = "leaflet-map-title")
+  }
+  return(l)
 }

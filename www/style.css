@@ -149,6 +149,16 @@ p {
     transform: translateX(-50%);
 }
 
+.leaflet-control.leaflet-map-title { 
+    transform: translate(-50%,20%);
+    position: fixed !important;
+    left: 50%;
+    text-align: center;
+    padding-left: 10px; 
+    padding-right: 10px; 
+    background: rgba(255,255,255,0.75);
+  }
+
 .NY_case_plots {
   height: Calc(90% - 65px);
 }
