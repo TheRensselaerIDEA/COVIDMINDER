@@ -2441,8 +2441,8 @@ server <- function(input, output, session) {
                               moving.avg.window=14) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 15
-    top.offset <- 45
+    left.offset <- 17
+    top.offset <- 80
     
     if(is.null(click)) {return(NULL)}
     my_diff <- get_dif(y.value)
@@ -2932,8 +2932,8 @@ server <- function(input, output, session) {
                                  y.value="cases", 
                                  moving.avg.window=14) {
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 15
-    top.offset <- 45
+    left.offset <- 17
+    top.offset <- 80
     
     if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
@@ -2961,17 +2961,17 @@ server <- function(input, output, session) {
       mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
       filter(ma > 0)
     #US.ma[US.ma$diff.ma > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
-    US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
+    #US.ma[US.ma$my_diff > 0 & US.ma$pct_increase > 5, "pct_increase"] <- 5
     US.ma[is.na(US.ma$pct_increase) | US.ma$pct_increase <= 0, "pct_increase"] <- 0
     US.ma <- US.ma %>%
       filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"))
     
     five.plus <- ""
-    if (length(US.ma$pct_increase) > 0) {
-      if(US.ma$pct_increase >= 5) {
-        five.plus <- "+"
-      }
-    }
+    #if (length(US.ma$pct_increase) > 0) {
+    #  if(US.ma$pct_increase >= 5) {
+    #    five.plus <- "+"
+    #  }
+    #}
     
     wellPanel(
       style = style,
