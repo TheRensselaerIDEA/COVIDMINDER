@@ -200,7 +200,7 @@ ui <-
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
                                tags$h2("United States COVID-19 Case Curve"),
-                               tags$h3("How has United States overall COVID-19 Cases changed over time?"),
+                               tags$h3("How have United States overall COVID-19 Cases changed over time?"),
                                plotOutput(outputId = "US.CoT", 
                                           height = height,
                                           hover = hoverOpts(id = "US.CoT.hover",
@@ -210,7 +210,7 @@ ui <-
                         column(1, downloadButton("US.CoT.dl"),offset = 9),
                         column(10, style="text-align:center;position:relative;",
                                tags$h2("United States COVID-19 Mortality Curve"),
-                               tags$h3("How has United States overall COVID-19 deaths changed over time?"),
+                               tags$h3("How have United States overall COVID-19 deaths changed over time?"),
                                plotOutput(outputId = "US.DoT", 
                                           height = height,
                                           hover = hoverOpts(id = "US.DoT.hover",
@@ -263,12 +263,12 @@ ui <-
                                </div>")), offset=4)),
                fluidRow(column(6,
                                tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
-                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in daily Case Rates? (",time.period, " day average)")),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Case Rates? (",time.period, " day average)")),
                                leafletOutput("US.map.cases", height = height),
                                column(2, downloadButton("US.map.cases.dl"), offset=10)),
                         column(6,
                                tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
-                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in daily Mortality Rates? (",time.period, " day average)")),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Mortality Rates? (",time.period, " day average)")),
                                leafletOutput("US.map.deaths", height = height),
                                column(2, downloadButton("US.map.deaths.dl"), offset = 10))),
                tags$br(),
@@ -2244,7 +2244,7 @@ server <- function(input, output, session) {
     state_name <- input$state_name
     tagList(
       tags$h2(paste0(state_name, " COVID-19 Mortality Curve")),
-      tags$h3(paste0("How have ", state_name, " COVID-19 Mortality Over Time per 100k changed compared to US?"))
+      tags$h3(paste0("How has ", state_name, " COVID-19 Mortality Over Time per 100k changed compared to US?"))
     )
   })
   
@@ -2442,7 +2442,7 @@ server <- function(input, output, session) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 17
-    top.offset <- 80
+    top.offset <- 82
     
     if(is.null(click)) {return(NULL)}
     my_diff <- get_dif(y.value)
@@ -2933,7 +2933,7 @@ server <- function(input, output, session) {
                                  moving.avg.window=14) {
     pixelratio <- session$clientData$pixelratio
     left.offset <- 17
-    top.offset <- 80
+    top.offset <- 82
     
     if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
