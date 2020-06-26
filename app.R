@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "06-25-2020" # makes it easy to change all occurances when we update
+update_date <- "06-26-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -121,7 +121,7 @@ ui <-
                     fluidRow(column(4, style="text-align:center;",
                                     tags$div(class = "info",
                                              HTML("<h3>Disparity Color Legend</h3>
-                               Respective rates per 100k people on maps below are: 
+                               Respective rates per 100k people on maps below are:<br><br>
                                 <div>
                                <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
                                     <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
@@ -199,7 +199,8 @@ ui <-
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
-                               tags$h3("United States COVID-19 Cases Over Time"),
+                               tags$h2("United States COVID-19 Case Curve"),
+                               tags$h3("How has United States overall COVID-19 Cases changed over time?"),
                                plotOutput(outputId = "US.CoT", 
                                           height = height,
                                           hover = hoverOpts(id = "US.CoT.hover",
@@ -208,7 +209,8 @@ ui <-
                                uiOutput("US.CoT.tooltip"), offset = 1),
                         column(1, downloadButton("US.CoT.dl"),offset = 9),
                         column(10, style="text-align:center;position:relative;",
-                               tags$h3("United States COVID-19 Deaths Over Time"),
+                               tags$h2("United States COVID-19 Mortality Curve"),
+                               tags$h3("How has United States overall COVID-19 deaths changed over time?"),
                                plotOutput(outputId = "US.DoT", 
                                           height = height,
                                           hover = hoverOpts(id = "US.DoT.hover",
@@ -248,7 +250,7 @@ ui <-
                fluidRow(column(4, style="text-align:center;",
                                tags$div(class = "info",
                                HTML("<h3>Disparity Color Legend</h3>
-                               Respective rates per 100k people on maps below are: 
+                               Respective rates per 100k people on maps below are:<br><br>
                                 <div>
                                <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
                                     <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
@@ -2231,13 +2233,19 @@ server <- function(input, output, session) {
   
   output$state.CoT.title <- renderUI({
     state_name <- input$state_name
-    tags$h3(paste0(state_name, " COVID-19 Cases Over Time per 100k"))
+    tagList(
+      tags$h2(paste0(state_name, " COVID-19 Case Curve")),
+      tags$h3(paste0("How have ", state_name, " COVID-19 Cases Over Time per 100k changed compared to US?"))
+    )
   })
   
   
   output$state.DoT.title <- renderUI({
     state_name <- input$state_name
-    tags$h3(paste0(state_name, " COVID-19 Deaths Over Time per 100k"))
+    tagList(
+      tags$h2(paste0(state_name, " COVID-19 Mortality Curve")),
+      tags$h3(paste0("How have ", state_name, " COVID-19 Mortality Over Time per 100k changed compared to US?"))
+    )
   })
   
   output$state.trends.title <- renderUI({
@@ -2249,7 +2257,10 @@ server <- function(input, output, session) {
     else { #if per/100k
       y.value = "p_diff"
     }
-    tags$h3(paste0(state_name, " ", get_y_label(y.value), " (7 day average)"))
+    tagList(
+      tags$h2(paste0(state_name, " Daily Case Trends")),
+      tags$h3(paste0("How have ", get_y_label(y.value), " changed in ", state_name," counties? (7 day average)"))
+    )
   })
   
   output$state.county.cases <- renderUI({
@@ -2291,7 +2302,10 @@ server <- function(input, output, session) {
     if(det ==  "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    tags$h3(paste0(state_name, " ", det, " Rate Disparities Compared to US Average"))
+    tagList(
+      tags$h2(paste0(state_name, " ", det, " Disparities")),
+      tags$h3(paste0("What are the ", state_name, " disparities in ", det, " Rates compared to US Average?"))
+    )
   })
   
   output$determinant.text <- renderText({
@@ -2850,7 +2864,7 @@ server <- function(input, output, session) {
     }
     tagList(
       tags$h2("United States Daily Case Trends"),
-      tags$h3(paste0(get_y_label(y.value), " (7 day average)"))
+      tags$h3(paste0("How have ", get_y_label(y.value), "changed in US states? (7 day average)"))
     )
   })
   
