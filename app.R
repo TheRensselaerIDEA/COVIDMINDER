@@ -2866,7 +2866,7 @@ server <- function(input, output, session) {
     }
     tagList(
       tags$h2("United States Daily Case Trends"),
-      tags$h3(paste0("How have ", get_y_label(y.value), "changed in US states? (7 day average)"))
+      tags$h3(paste0("How have ", get_y_label(y.value), " changed in US states? (7 day average)"))
     )
   })
   
