@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "06-28-2020" # makes it easy to change all occurances when we update
+update_date <- "06-29-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -54,8 +54,9 @@ ui <-
     navbarPage(
       id="tab",
       theme="style.css",
-      title=tags$div(class="title-text",
+      title=tags$a(class="title-text",
                      title = whatisit_text,
+                     href = "/",
                      img(class="logo", src="Rensselaer_round.png"),
                      HTML("COVID<b>MINDER</b>")),
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
@@ -2516,7 +2517,7 @@ server <- function(input, output, session) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 20
-    top.offset <- 175
+    top.offset <- 210
     
     #if(is.null(click)) {return(NULL)}
     y_label <- get_y_label(y.value)
@@ -2570,7 +2571,8 @@ server <- function(input, output, session) {
     covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
       filter(County %in% counties) %>%
       rbind.data.frame(state) %>%
-      filter(get(y.value) > 0)
+      filter(get(y.value) > 0) %>%
+      group_by(County)
     
     point <- nearPoints(covid_TS_counties.cases.plot, hover, threshold = 5, maxpoints = 1, addDist = TRUE) %>%
       rename(Values = all_of(y.value))
