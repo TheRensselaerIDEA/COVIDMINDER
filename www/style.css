@@ -43,23 +43,28 @@ p {
   padding-bottom: 6.9px;
 }
 
+
 .navbar-default .navbar-nav .active a {
   font-weight: 400;
-  background-color: #fff;
   color: #222;
   padding: 13px 10px;
 }
 
 .navbar-default .navbar-nav li a {
   font-weight: 400;
-  background-color: #fff;
+  /*background-color: #fff;*/
   color: #222;
   padding: 13px 10px;
 }
 
-.navbar-default .navbar-nav li a:hover {
-  background-color: #e7e7e7;
+
+.navbar-nav > .active > a,
+.navbar-nav > .active > a:hover,
+.navbar-nav > .active > a:focus {
+  color: black;
+  background-color: #ff8888;
 }
+
 
 /* Page styles */
 
