@@ -112,7 +112,7 @@ stats.table <- function(selected_state="NY") {
       source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
     ) %>%
     tab_source_note(
-      source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](www.tinyurl.com/statepolicies)")
+      source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](https://www.tinyurl.com/statepolicies)")
     ) %>%
     fmt(c("V1"), row = row_num < 9, fns = numeric_fmt) %>%
     fmt(c("V1"), row = row_num >= 9, fns = date_fmt) %>%
@@ -162,7 +162,7 @@ US.stats.table <- function() {
       source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
     ) %>%
     tab_source_note(
-      source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](www.tinyurl.com/statepolicies)")
+      source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](https://www.tinyurl.com/statepolicies)")
     ) %>%
     fmt(c("V1"),fns = numeric_fmt) %>%
     cols_hide(c("row_num")) %>%
