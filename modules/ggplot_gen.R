@@ -190,7 +190,7 @@ ggplot.state <- function(selected.state = "NY",
       trans = "log10",
       breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
-    scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+    scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
     ylab(y_label) + 
     xlab("Date") +
     #theme(legend.position = "none") +
@@ -290,7 +290,7 @@ ggbar.overall <- function(selected.state = "NY",
                               guide = guide_legend(title.position = "top",
                                                    title.hjust = 0.5,
                                                    direction = "vertical")) +
-           scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+           scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
            ylab(get_y_label(y.value)) + 
            xlab("Date") +
            theme(legend.position = "bottom",legend.direction = "horizontal",plot.title = element_text(hjust = 0.5)) +
@@ -351,7 +351,7 @@ ggbar.US <- function(y.value="cases",
            guides(linetype = guide_legend(title = "Line Type",
                                           title.position = "top",
                                           title.hjust = 0.5)) +
-           scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+           scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
            ylab(get_y_label(y.value)) + 
            xlab("Date") +
            theme(legend.position = "bottom",legend.direction = "horizontal") +
@@ -450,7 +450,7 @@ ggplot.US <- function(y.value="cases",
       trans = "log10",
       breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
-    scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+    scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
     ylab(y_label) + 
     xlab("Date") +
     #theme(legend.position = "none") +
