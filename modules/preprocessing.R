@@ -243,8 +243,10 @@ covid_data_states <- covid_data_states[match(states$NAME, covid_data_states$name
 # Append the new column to states
 covid_data_states <- covid_data_states[1:51,]
 
-states <- data.frame(states, "death_rate_ldi"=covid_data_states$Mortality_rate_ldi, check.names = F) # Append to states
-states <- data.frame(states, "covid_death_rate"=covid_data_states$Mortality_rate, check.names = F) # Append to states
+states <- data.frame(states, "Overall Mortality_rate_ldi"=covid_data_states$Mortality_rate_ldi, check.names = F) # Append to states
+states <- data.frame(states, "Overall Mortality_rate"=covid_data_states$Mortality_rate, check.names = F) # Append to states
+states <- data.frame(states, "Overall Case_rate_ldi"=covid_data_states$Case_rate_ldi, check.names = F) # Append to states
+states <- data.frame(states, "Overall Case_rate"=covid_data_states$Case_rate, check.names = F) # Append to states
 
 ##### US Racial Disparity
 # DI's based on covid_racial_data_states.wide

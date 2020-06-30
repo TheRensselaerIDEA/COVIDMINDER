@@ -1208,7 +1208,7 @@ server <- function(input, output, session) {
   
   output$map.covid_deaths <- renderLeaflet({
     
-    pal2 <- leaflet::colorBin(colors, domain = states$death_rate_ldi, bins = bins, reverse=FALSE)
+    pal2 <- leaflet::colorBin(colors, domain = states$`Overall Mortality_rate_ldi`, bins = bins, reverse=FALSE)
     
     labels2 <- sprintf(
       "<strong>%s</strong><br/>
@@ -1216,15 +1216,15 @@ server <- function(input, output, session) {
       COVID-19 Mortality Rate: %.1f /100k<br><br>",
       # Total COVID-19-related Executive Orders: %.0f<br>
       # Total COVID-19-related Bills: %.0f" ,
-        states$NAME, states$death_rate_ldi , 
-        states$covid_death_rate*100000
+        states$NAME, states$`Overall Mortality_rate_ldi` , 
+        states$`Overall Mortality_rate`*100000
 #        states$covid_eo, states$covid_bills
     ) %>% lapply(htmltools::HTML)
     
     leaflet(states.shapes) %>%
       setView(-96, 37.8, 4) %>% 
       addPolygons(
-        fillColor = ~pal2(states$death_rate_ldi),
+        fillColor = ~pal2(states$`Overall Mortality_rate_ldi`),
         weight = 1,
         opacity = 1,
         color = "#330000",
