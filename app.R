@@ -265,11 +265,21 @@ ui <-
                fluidRow(column(6,
                                tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
                                tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Case Rates? (",time.period, " day average)")),
+                               radioButtons(inputId = "NRC.case.time",
+                                            label = "Time Frame",
+                                            choices = c("Daily", "Overall"),
+                                            selected = "Daily",
+                                            inline = T),
                                leafletOutput("US.map.cases", height = height),
                                column(2, downloadButton("US.map.cases.dl"), offset=10)),
                         column(6,
                                tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
                                tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Mortality Rates? (",time.period, " day average)")),
+                               radioButtons(inputId = "NRC.deaths.time",
+                                            label = "Time Frame",
+                                            choices = c("Daily", "Overall"),
+                                            selected = "Daily",
+                                            inline = T),
                                leafletOutput("US.map.deaths", height = height),
                                column(2, downloadButton("US.map.deaths.dl"), offset = 10))),
                tags$br(),
@@ -2887,7 +2897,14 @@ server <- function(input, output, session) {
   })
   
   output$US.map.cases <- renderLeaflet({
-    geo.plot("US", "Daily Case")
+    time <- input$NRC.case.time
+    if (time == "Daily") {
+      param <- "Daily Case"
+    }
+    else {
+      param <- "Case"
+    }
+    geo.plot("US", param)
   })
   
   output$US.map.cases.dl <- downloadHandler(
@@ -2896,8 +2913,15 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       title <- tags$h1(style="text-align:center;", "US COVID-19 Case Hotspots")
+      time <- input$NRC.case.time
+      if (time == "Daily") {
+        param <- "Daily Case"
+      }
+      else {
+        param <- "Case"
+      }
       mapshot(x = geo.plot("US", 
-                           "Daily Case", 
+                           param, 
                            title = tags$div(title)
       ),
       file = file,
@@ -2911,7 +2935,14 @@ server <- function(input, output, session) {
   })
   
   output$US.map.deaths <- renderLeaflet({
-    geo.plot("US", "Daily Mortality")
+    time <- input$NRC.deaths.time
+    if (time == "Daily") {
+      param <- "Daily Mortality"
+    }
+    else {
+      param <- "Mortality"
+    }
+    geo.plot("US", param)
   })
   
   output$US.map.deaths.dl <- downloadHandler(
@@ -2920,8 +2951,15 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
+      time <- input$NRC.deaths.time
+      if (time == "Daily") {
+        param <- "Daily Mortality"
+      }
+      else {
+        param <- "Mortality"
+      }
       mapshot(x = geo.plot("US", 
-                           "Daily Mortality", 
+                           param, 
                            title = tags$div(title)
       ),
       file = file,
