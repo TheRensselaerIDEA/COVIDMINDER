@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "06-30-2020" # makes it easy to change all occurances when we update
+update_date <- "07-1-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -1217,56 +1217,7 @@ server <- function(input, output, session) {
   })
   
   output$map.covid_deaths <- renderLeaflet({
-    
-    pal2 <- leaflet::colorBin(colors, domain = states$`Overall Mortality_rate_ldi`, bins = bins, reverse=FALSE)
-    
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      COVID-19 Mortality Rate DI: %.2g<br>
-      COVID-19 Mortality Rate: %.1f /100k<br><br>",
-      # Total COVID-19-related Executive Orders: %.0f<br>
-      # Total COVID-19-related Bills: %.0f" ,
-        states$NAME, states$`Overall Mortality_rate_ldi` , 
-        states$`Overall Mortality_rate`*100000
-#        states$covid_eo, states$covid_bills
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(states$`Overall Mortality_rate_ldi`),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~states$death_rate_ldi, 
-                opacity = 0.7, 
-                title = "Disparity Index<br/>US COVID-19 Mortality Rates",
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                cuts[n] = paste0(cuts[n]," lower") 
-                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                cuts[2] = paste0(cuts[2]," higher") 
-                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-      ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-    #Remove personal API key
+    geo.plot("US", "Mortality")
   })
 
   output$map.covid_deaths.race <- renderLeaflet({
