@@ -106,7 +106,7 @@ ui <-
                                              radioButtons(inputId = "SRC.rate",
                                                  label = "Rate",
                                                  choices = c("Overall", "Per/100k"),
-                                                 selected = "Per/100k")),
+                                                 selected = "Overall")),
                                     plotOutput(outputId = "state.trends", 
                                                height=height,
                                                hover = hoverOpts(id = "state.trends.hover",
@@ -188,7 +188,7 @@ ui <-
                                               radioButtons(inputId = "rank.order",
                                                            label = "Order",
                                                            choices = c("Ascending", "Descending"),
-                                                           selected = "Ascending",
+                                                           selected = "Descending",
                                                            width="50%")),
                                      gt_output("ranking.table"), offset = 2))
                  )
@@ -235,7 +235,7 @@ ui <-
                                         radioButtons(inputId = "NRC.rate",
                                                      label = "Rate",
                                                      choices = c("Overall", "Per/100k"),
-                                                     selected = "Per/100k")),
+                                                     selected = "Overall")),
                                plotOutput(outputId = "US.trends", 
                                           height=height,
                                           hover = hoverOpts(id = "US.trends.hover",
@@ -317,7 +317,7 @@ ui <-
                                         radioButtons(inputId = "US.rank.order",
                                                      label = "Order",
                                                      choices = c("Ascending", "Descending"),
-                                                     selected = "Ascending",
+                                                     selected = "Descending",
                                                      width="50%")),
                                gt_output("US.ranking.table"), offset = 2))
       ),
@@ -885,7 +885,7 @@ ui <-
                )
                )
     ), 
-    # Footer
+    ### Footer
     fluidRow(
       column(12, class = "footer",
              hr(),
@@ -894,7 +894,8 @@ ui <-
              HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
              HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
              HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
-                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>")
+                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
+             tags$a(href="#top", "Back to Navbar")
              )
     )
     #,tags$script(src = "style.js")
