@@ -114,9 +114,6 @@ p {
   padding:-5px;
 }
 
-.leaflet-container {
-  height:100%;
-}
 
 .gg_tooltip {
     background-color: #f7f7f7;
@@ -183,6 +180,19 @@ p {
 
 .leaflet-container {
   background:none;
+  height:100%;
+}
+
+.legend-colorbar {
+  list-style-type:none;
+  display:flex;
+  clear:both;
+  padding:0;
+}
+
+.legend-colorsquares {
+  height:20px;
+  width:30px;
 }
 
 .dropdown-toggle > div:first-child {

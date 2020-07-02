@@ -34,6 +34,18 @@ get_zoom <- function(state.choice) {
   }
 }
 
+get_colorbar <- function(reverse) {
+  if (reverse) {
+    .colors <- rev(colors)
+  }
+  else {
+    .colors <- colors
+  }
+  
+  .colors <- lapply(.colors, function(x){paste0("<li class = 'legend-colorsquares' style='background-color: ",x,";'></li>")})
+  return(paste0(.colors, collapse = ''))
+}
+
 geo.plot <- function(state.choice, 
                      feature, 
                      reverse=F,
@@ -45,13 +57,7 @@ geo.plot <- function(state.choice,
     shapes <- states.shapes 
     dataset <- states
     dataset$Name <- dataset$NAME
-    if (feature %in% c("Case", "Mortality")){
-      m.a.w <- "14-Day "
-#      browser()
-    }
-    else {
-      m.a.w <- " "
-    }
+    state.choice <- "State"
   }
   else {
     dataset <- todays.case.data %>%
@@ -66,9 +72,9 @@ geo.plot <- function(state.choice,
   pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
   
   labels <- sprintf(
-    paste0("<strong>%s</strong><br/>
-    COVID-19 ",m.a.w,feature," Rate DI: %.2g<br>
-    COVID-19 ",m.a.w,feature," Rate: %.1f /100k"),
+    paste0("<strong>%s</strong><br/>",
+    feature," Rate DI: %.2g<br>",
+    feature," Rate: %.1f /100k"),
     dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
   ) %>% lapply(htmltools::HTML)
   
@@ -92,19 +98,36 @@ geo.plot <- function(state.choice,
                 style = list("font-weight" = "normal", padding = "3px 8px"),
                 textsize = "15px",
                 direction = "auto")) %>% 
-            addLegend(pal = pal2, 
-                      values = ~dataset[ldi_feature[1]], 
-                      opacity = 0.7, 
-                      title = paste0("Disparity Index<br/>",state.choice," COVID-19 ",m.a.w,feature," Rates"),
-                      position = "bottomright",
-                      labFormat = function(type, cuts, p) { n = length(cuts) 
-                      cuts[n] = paste0(cuts[n]," lower") 
-                      # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                      for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                      cuts[2] = paste0(cuts[2]," higher") 
-                      paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                      }
+            addControl(
+              HTML(paste0(
+                "<div>
+                  <b>",state.choice," ", feature, " Rates vs. US Average</b>
+                  <sup title='A log disparity index is used to compare respective values to average US rate. A disparity index < -0.2 indicates values below the US average. A disparity index > 0.2 indicates above the US average.' class='fa fa-info-circle'></sup>
+                </div></br>",
+                "<div class='labels'>
+                  <div style='float:left;'>Lower</div>
+                  <div style='float:right;'>Higher</div>
+                </div>
+                <ul class='legend-colorbar'>",
+                  get_colorbar(reverse),
+                "</ul>"
+              )),
+              position = "bottomright",
+              className = "info legend"
             ) %>%
+            # addLegend(pal = pal2,
+            #           values = ~dataset[ldi_feature[1]],
+            #           opacity = 0.7,
+            #           title = paste0("Disparity Index<br/>",state.choice," ",feature," Rates"),
+            #           position = "bottomright",
+            #           labFormat = function(type, cuts, p) { n = length(cuts)
+            #           cuts[n] = "Lower"
+            #           # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")}
+            #           for (i in c(1,seq(2,(n-1)))){cuts[i] = ""}
+            #           cuts[2] = "Higher"
+            #           paste0(str_remove(cuts[-n],"Higher"), str_remove(cuts[-1],"—"))
+            #           }
+            # ) %>%
             addProviderTiles("MapBox", options = providerTileOptions(
               id = "mapbox.light"))
   if (title != "") {
