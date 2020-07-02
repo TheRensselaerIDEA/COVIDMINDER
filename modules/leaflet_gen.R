@@ -57,6 +57,7 @@ geo.plot <- function(state.choice,
     shapes <- states.shapes 
     dataset <- states
     dataset$Name <- dataset$NAME
+    state.choice <- "State"
   }
   else {
     dataset <- todays.case.data %>%
@@ -99,7 +100,10 @@ geo.plot <- function(state.choice,
                 direction = "auto")) %>% 
             addControl(
               HTML(paste0(
-                "<div><b>",state.choice," ", feature, " Rates vs. US Average</b></div></br>",
+                "<div>
+                  <b>",state.choice," ", feature, " Rates vs. US Average</b>
+                  <sup title='A log disparity index is used to compare respective values to average US rate. A disparity index < -0.2 indicates values below the US average. A disparity index > 0.2 indicates above the US average.' class='fa fa-info-circle'></sup>
+                </div></br>",
                 "<div class='labels'>
                   <div style='float:left;'>Lower</div>
                   <div style='float:right;'>Higher</div>
