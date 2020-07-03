@@ -100,7 +100,7 @@ geo.plot <- function(state.choice,
                 direction = "auto")) %>% 
             addControl(
               HTML(paste0(
-                "<div style='max-width:270px;'>
+                "<div style='max-width:280px;'>
                   <b>",state.choice," ", feature, " Rates vs. US Average</b>
                   <sup title='A log disparity index is used to compare respective values to average US rate. A disparity index < -0.2 indicates values below the US average. A disparity index > 0.2 indicates above the US average.' class='fa fa-info-circle'></sup>
                 </div></br>",
