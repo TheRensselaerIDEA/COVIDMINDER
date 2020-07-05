@@ -191,8 +191,13 @@ ggplot.state <- function(selected.state = "NY",
       breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
     ) +
     scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
-    ylab(y_label) + 
-    xlab("Date") +
+    labs(x = "<b>Date</b>",
+         y = y_label,
+         caption = "<strong>Data Source:</strong> USA Facts") +
+    theme(legend.position = "bottom", 
+          title = element_textbox_simple(hjust = 0.5),
+          axis.text.x = element_markdown(),
+          plot.caption = element_textbox_simple(hjust = 1)) +
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
@@ -208,7 +213,6 @@ ggplot.state <- function(selected.state = "NY",
     scale_linetype_manual(name = "Events", 
                           values = c(2,2), 
                           guide = guide_legend(title.position = "top",title.hjust = 0.5,override.aes = list(color = c("blue", "red")), direction = "vertical")) +
-    theme(legend.position = "bottom", title = element_text(hjust = 0.5)) +
     gg_title
   return(g)
 }
