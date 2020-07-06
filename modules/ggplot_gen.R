@@ -188,16 +188,13 @@ ggplot.state <- function(selected.state = "NY",
     geom_line(size=1) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000),
+      label = scales::comma
     ) +
     scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
-    labs(x = "<b>Date</b>",
+    labs(x = "Date",
          y = y_label,
-         caption = "<strong>Data Source:</strong> USA Facts") +
-    theme(legend.position = "bottom", 
-          title = element_textbox_simple(hjust = 0.5),
-          axis.text.x = element_markdown(),
-          plot.caption = element_textbox_simple(hjust = 1)) +
+         caption = "<strong>Data Source:</strong> USA Facts, tinyurl.com/statepolicies") +
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
@@ -213,6 +210,14 @@ ggplot.state <- function(selected.state = "NY",
     scale_linetype_manual(name = "Events", 
                           values = c(2,2), 
                           guide = guide_legend(title.position = "top",title.hjust = 0.5,override.aes = list(color = c("blue", "red")), direction = "vertical")) +
+    theme(legend.position = "bottom", 
+          title = element_textbox_simple(hjust = 0.5, size = 18),
+          axis.title.x = element_markdown(size = 16, lineheight = 24),
+          axis.title.y = element_markdown(size = 16),
+          axis.text = element_markdown(size = 12, face = "bold"),
+          legend.text = element_markdown(size = 14),
+          legend.title = element_markdown(size = 16),
+          plot.caption = element_textbox_simple(halign = 1)) +
     gg_title
   return(g)
 }
@@ -274,7 +279,7 @@ ggbar.overall <- function(selected.state = "NY",
                                breaks = c(2.5,5),
                                labels = c("2.5%","5%+"),
                                na.value = "skyblue",
-                               guide = guide_colorbar(title = paste0("1-Day Percentage change in ", category),
+                               guide = guide_colorbar(title = paste0("Percentage change in ", category),
                                                       title.hjust = 0.5,
                                                       title.position = "top", 
                                                       label.hjust = 0.5, 
@@ -295,9 +300,21 @@ ggbar.overall <- function(selected.state = "NY",
                                                    title.hjust = 0.5,
                                                    direction = "vertical")) +
            scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
-           ylab(get_y_label(y.value)) + 
-           xlab("Date") +
-           theme(legend.position = "bottom",legend.direction = "horizontal",plot.title = element_text(hjust = 0.5)) +
+           scale_y_continuous(label = scales::comma) +
+           #ylab(get_y_label(y.value)) + 
+           #xlab("Date") +
+           labs(x = "Date",
+                y = get_y_label(y.value),
+                caption = "<strong>Data Source:</strong> USA Facts, tinyurl.com/statepolicies") +
+           theme(legend.position = "bottom", 
+                 legend.direction = "horizontal",
+                 title = element_textbox_simple(hjust = 0.5, size = 18),
+                 axis.title.x = element_markdown(size = 16, lineheight = 24),
+                 axis.title.y = element_markdown(size = 16),
+                 axis.text = element_markdown(size = 12, face = "bold"),
+                 legend.text = element_markdown(size = 14),
+                 legend.title = element_markdown(size = 16),
+                 plot.caption = element_textbox_simple(halign = 1)) +
            gg_title
   )
 }
@@ -356,9 +373,19 @@ ggbar.US <- function(y.value="cases",
                                           title.position = "top",
                                           title.hjust = 0.5)) +
            scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
-           ylab(get_y_label(y.value)) + 
-           xlab("Date") +
-           theme(legend.position = "bottom",legend.direction = "horizontal") +
+           scale_y_continuous(label = scales::comma) +
+           labs(x = "Date",
+                y = get_y_label(y.value),
+                caption = "<strong>Data Source:</strong> USA Facts") +
+           theme(legend.position = "bottom", 
+                 legend.direction = "horizontal",
+                 title = element_textbox_simple(hjust = 0.5, size = 18),
+                 axis.title.x = element_markdown(size = 16, lineheight = 24),
+                 axis.title.y = element_markdown(size = 16),
+                 axis.text = element_markdown(size = 12, face = "bold"),
+                 legend.text = element_markdown(size = 14),
+                 legend.title = element_markdown(size = 16),
+                 plot.caption = element_textbox_simple(halign = 1)) +
            gg_title + 
            NULL
   )
@@ -452,11 +479,15 @@ ggplot.US <- function(y.value="cases",
     geom_line(size=1.5) +
     scale_y_continuous(
       trans = "log10",
-      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000)
+      breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000),
+      labels = scales::comma
     ) +
     scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
-    ylab(y_label) + 
-    xlab("Date") +
+    #ylab(y_label) + 
+    #xlab("Date") +
+    labs(x = "Date",
+         y = y_label,
+         caption = "<strong>Data Source:</strong> USA Facts") +
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
@@ -469,7 +500,14 @@ ggplot.US <- function(y.value="cases",
     scale_color_manual(values=region_palette, aesthetics = c("color")) +
     guides(color = guide_legend(title = "Region",
                                 title.position = "left")) +
-    theme(legend.position = "bottom") +
+    theme(legend.position = "bottom", 
+          title = element_textbox_simple(hjust = 0.5, size = 18),
+          axis.title.x = element_markdown(size = 16, lineheight = 24),
+          axis.title.y = element_markdown(size = 16),
+          axis.text = element_markdown(size = 12, face = "bold"),
+          legend.text = element_markdown(size = 14),
+          legend.title = element_markdown(size = 16),
+          plot.caption = element_textbox_simple(halign = 1)) +
     gg_title
   return(g)
 }
