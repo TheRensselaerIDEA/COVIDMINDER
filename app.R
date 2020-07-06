@@ -2405,7 +2405,7 @@ server <- function(input, output, session) {
     }
   )
   
-  barplot.tooltip <- function(click, 
+  barplot.tooltip <- function(hover, 
                               state_initial,
                               y.value="p_cases", 
                               moving.avg.window=14) {
@@ -2414,24 +2414,24 @@ server <- function(input, output, session) {
     left.offset <- 17
     top.offset <- 82
     
-    if(is.null(click)) {return(NULL)}
+    if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
     category <- get_y_label(y.value)
     
     # calculate point position INSIDE the image as percent of total dimensions
     # from left (horizontal) and from top (vertical)
-    left_pct <- (click$x - click$domain$left) / (click$domain$right - click$domain$left)
-    top_pct <- (click$domain$top - click$y) / (click$domain$top - click$domain$bottom)
+    left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
+    top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
     
     # calculate distance from left and bottom side of the picture in pixels
     
-    if ((click$range$right - click$range$left)*(1-left_pct) < 300 ) {
-      left_px <- click$range$left + left_pct * (click$range$right - click$range$left) - 301*pixelratio
+    if ((hover$range$right - hover$range$left)*(1-left_pct) < 300 ) {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 301*pixelratio
     }
     else {
-      left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     }
-    top_px <- click$range$top + top_pct * (click$range$bottom - click$range$top)
+    top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
     style <- paste0("position:absolute; 
                     z-index:100;
                     width:300px;",
@@ -2450,7 +2450,7 @@ server <- function(input, output, session) {
     #state_cases[state_cases$Value_diff > 0 & state_cases$pct_increase > 5, "pct_increase"] <- 5
     state_cases[is.na(state_cases$pct_increase) | state_cases$pct_increase < 0, "pct_increase"] <- 0
     state_cases <- state_cases %>%
-      filter(date == as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"))
+      filter(date == as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"))
     # actual tooltip created as wellPanel
     
     five.plus <- ""
@@ -2462,7 +2462,7 @@ server <- function(input, output, session) {
     wellPanel(
       style = style,
       class = "gg_tooltip",
-      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(click$x, origin="1970-01-01"), tz="EST"), "<br/>",
+      p(HTML(paste0("<b> Date: </b>", as.Date(as.POSIXct(hover$x, origin="1970-01-01"), tz="EST"), "<br/>",
                     "<b>", category, ": </b>", format(round(state_cases$Values,2), big.mark = ","), "<br/>",
                     "<b> Change in ", category, ": </b>+",  format(round(state_cases$Value_diff,2),big.mark = ","), "<br/>",
                     "<b> Daily Percentage Increase: </b>",  format(round(state_cases$pct_increase,2),big.mark = ","), "%",five.plus,"<br/>"
@@ -2492,10 +2492,10 @@ server <- function(input, output, session) {
                              moving.avg.window=7) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 20
+    left.offset <- 17
     top.offset <- 210
     
-    #if(is.null(click)) {return(NULL)}
+    #if(is.null()) {return(NULL)}
     y_label <- get_y_label(y.value)
     state.name <- state.abr[state.abr$abr==state_initial,"name"]
     covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
@@ -2564,11 +2564,20 @@ server <- function(input, output, session) {
     # Log10 is needed to account for log y axis
     
     # calculate distance from left and bottom side of the picture in pixels
-    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    
+    if ((hover$range$right - hover$range$left)*(1-left_pct) < 200 ) {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 201*pixelratio
+    }
+    else {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    }
+    
+    #left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
     
     style <- paste0("position:absolute; 
-                    z-index:100;",
+                    z-index:100;
+                    width: 200px;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
                     top:", (top_px)/pixelratio + top.offset, "px;")
     
@@ -2613,8 +2622,8 @@ server <- function(input, output, session) {
                                     selected.states = c(), 
                                     moving.avg.window=7) {
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 20
-    top.offset <- 175
+    left.offset <- 17
+    top.offset <- 210
     
     y_label <- get_y_label(y.value)
     covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
@@ -2659,11 +2668,18 @@ server <- function(input, output, session) {
     # Log10 is needed to account for log y axis
     
     # calculate distance from left and bottom side of the picture in pixels
-    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    if ((hover$range$right - hover$range$left)*(1-left_pct) < 200 ) {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 201*pixelratio
+    }
+    else {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    }
+    #left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
     
     style <- paste0("position:absolute; 
-                    z-index:100;",
+                    z-index:100;
+                    width:200px;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
                     top:", (top_px)/pixelratio + top.offset, "px;")
     
