@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "07-4-2020" # makes it easy to change all occurances when we update
+update_date <- "07-6-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -49,6 +49,7 @@ url1 <- url2 <- ""
 #### UI Code ####
 ui <- 
   tagList(
+    tags$html(lang = "en"),
     tags$head(tags$title("COVIDMINDER: Where you live matters")),
     tags$head(includeHTML("www/analytics.html")),
     navbarPage(
@@ -57,12 +58,12 @@ ui <-
       title=tags$a(class="title-text",
                      title = whatisit_text,
                      href = "/",
-                     img(class="logo", src="Rensselaer_round.png"),
+                     img(class="logo", src="Rensselaer_round.png", alt="RPI Logo"),
                      HTML("COVID<b>MINDER</b>")),
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                   fluidPage(
-                    fluidRow(column(12, style="text-align:center;",
+                    fluidRow(column(12, style="",
                                     selectInput(inputId = "state_name",
                                                 label = "State Selector",
                                                 choices = state.abr$name,
@@ -158,7 +159,7 @@ ui <-
                                     uiOutput("determinant.title")),
                              column(6,
                                     selectInput(inputId = "state.determinant",
-                                                label = NULL,
+                                                label = "Determinant",
                                                 choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
                                     leafletOutput("maps.determinant", height = height),
