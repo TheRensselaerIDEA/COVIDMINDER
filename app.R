@@ -75,21 +75,21 @@ ui <-
                     fluidRow(column(8, style="text-align:center;",
                                     tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past ",time.period," days."),
                                     offset=2)),
-                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
+                    fluidRow(column(12, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
                                     plotOutput(outputId = "state.CoT", 
                                                height = height, 
                                                hover = hoverOpts(id = "state.CoT.hover",
                                                                  delay = 100,
                                                                  delayType = "throttle")),
-                                    uiOutput("state.CoT.tooltip"), offset = 1),
+                                    uiOutput("state.CoT.tooltip")),
                              column(1, downloadButton("state.CoT.dl"),offset = 9),
-                             column(10, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
+                             column(12, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
                                                hover = hoverOpts(id = "state.DoT.hover",
                                                                  delay = 100,
                                                                  delayType = "throttle")),
-                                    uiOutput("state.DoT.tooltip"), offset = 1)),
+                                    uiOutput("state.DoT.tooltip"))),
                              column(1, downloadButton("state.DoT.dl"), offset = 9),
                     fluidRow(column(8, style="text-align:center;",
                                     tags$h2("Flattening the Curve"),
@@ -101,7 +101,7 @@ ui <-
                                     offset = 2)),
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
-                    fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
+                    fluidRow(column(12, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
                                     tags$div(style = "height:130px;text-align:left;padding-left:4%;",
                                     uiOutput("state.report.county.selector"),
                                              radioButtons(inputId = "SRC.rate",
@@ -117,7 +117,7 @@ ui <-
                                                brush = brushOpts(
                                                  id = "trends.brush",
                                                  resetOnNew = TRUE)),
-                                    uiOutput("state.trends.tooltip"), offset = 1)),
+                                    uiOutput("state.trends.tooltip"))),
                              column(1, downloadButton("state.trends.dl"), offset = 9),
                     tags$br(),
                     fluidRow(column(6, style="text-align:center;",
@@ -2424,10 +2424,17 @@ server <- function(input, output, session) {
     top_pct <- (click$domain$top - click$y) / (click$domain$top - click$domain$bottom)
     
     # calculate distance from left and bottom side of the picture in pixels
-    left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
+    
+    if ((click$range$right - click$range$left)*(1-left_pct) < 300 ) {
+      left_px <- click$range$left + left_pct * (click$range$right - click$range$left) - 301*pixelratio
+    }
+    else {
+      left_px <- click$range$left + left_pct * (click$range$right - click$range$left)
+    }
     top_px <- click$range$top + top_pct * (click$range$bottom - click$range$top)
     style <- paste0("position:absolute; 
-                    z-index:100;",
+                    z-index:100;
+                    width:300px;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
                     top:", (top_px)/pixelratio + top.offset, "px;")
     
@@ -2971,10 +2978,16 @@ server <- function(input, output, session) {
     top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
     
     # calculate distance from left and bottom side of the picture in pixels
-    left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    if ((hover$range$right - hover$range$left)*(1-left_pct) < 250 ) {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 251*pixelratio
+    }
+    else {
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
+    }
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
     style <- paste0("position:absolute; 
-                    z-index:100;",
+                    z-index:100;
+                    width:250px;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
                     top:", (top_px)/pixelratio + top.offset, "px;")
     
