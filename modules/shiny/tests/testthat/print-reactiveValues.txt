@@ -1,6 +1,0 @@
-> x <- reactiveValues(x = 1, y = 2, z = 3)
-> x
-<ReactiveValues> 
-  Values:    x, y, z 
-  Readonly:  FALSE 
-

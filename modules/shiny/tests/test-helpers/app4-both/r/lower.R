@@ -1,1 +1,0 @@
-lowerHelper <- 123

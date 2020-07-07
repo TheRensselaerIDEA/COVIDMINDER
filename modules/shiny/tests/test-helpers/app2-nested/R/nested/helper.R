@@ -1,2 +1,0 @@
-
-helper2 <- "def"
