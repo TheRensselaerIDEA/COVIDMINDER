@@ -6,7 +6,7 @@ source("modules/leaflet_gen.R")
 source("modules/ggplot_gen.R")
 source("modules/gt_gen.R")
 
-update_date <- "07-6-2020" # makes it easy to change all occurances when we update
+update_date <- "07-7-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -823,6 +823,12 @@ ui <-
       # )),
       navbarMenu(menuName ="determinant_menu",
                  HTML("<div><b>DETERMINANT ANALYSIS</b></div>"),
+               tabPanel(tags$div(class="tab-title",style="text-align:center;",
+                                 HTML("<div><b>DISCLAIMER</b></div>")),
+                        value = "determinant_disclaimer",
+                        fluidRow(column(8, class = "about",
+                                        tags$h3(tags$b("DISCLAIMER: "),
+                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), offset = 2))),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
                      HTML("<div><b>DETERMINANT</b></br>USA</div>")),
                value="determinant_usa",
@@ -2566,7 +2572,7 @@ server <- function(input, output, session) {
     # calculate distance from left and bottom side of the picture in pixels
     
     if ((hover$range$right - hover$range$left)*(1-left_pct) < 200 ) {
-      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 201*pixelratio
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 202*pixelratio
     }
     else {
       left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
@@ -3229,6 +3235,7 @@ server <- function(input, output, session) {
                           'outcome_ny_cases_time_region',
                           'mediation_usa_testing',
                           'mediation_usa_hospital_beds',
+                          'determinant_disclaimer',
                           'determinant_usa',
                           #'determinant_usa_obesity',
                           'determinant_ny'
