@@ -106,7 +106,8 @@ stats.table <- function(selected_state="NY") {
     fmt(c("features"), row = row_num >= 9, fns = sup3_fmt) %>%
     cols_move_to_start(c("features")) %>%
     tab_header(
-      title = md(paste0("**", state.title, "**"))
+      title = md(paste0("**", state.title, "**")),
+      subtitle = paste0("How is ", state_name, " performing across various COVID-19 metrics?")
     ) %>%
     tab_source_note(
       source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
@@ -156,7 +157,8 @@ US.stats.table <- function() {
     fmt(c("features"), row = row_num >= 9, fns = sup3_fmt) %>%
     cols_move_to_start(c("features")) %>%
     tab_header(
-      title = md(paste0("**", state.title, "**"))
+      title = md(paste0("**", state.title, "**")),
+      subtitle = paste0("How is the US performing across various COVID-19 metrics?")
     ) %>%
     tab_source_note(
       source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")

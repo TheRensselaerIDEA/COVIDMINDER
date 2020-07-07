@@ -1,10 +1,16 @@
 #### Library and Data Imports ####
+sourceDir <- function(path, trace = TRUE, ...) {
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    if(trace) cat(nm,":")
+    source(file.path(path, nm), ...)
+    if(trace) cat("\n")
+  }
+}
+
 source("modules/Source.R")
-source("modules/data_load.R")
-source("modules/preprocessing.R")
-source("modules/leaflet_gen.R")
-source("modules/ggplot_gen.R")
-source("modules/gt_gen.R")
+sourceDir("modules")
+sourceDir("modules/shiny/R")
+
 
 update_date <- "07-7-2020" # makes it easy to change all occurances when we update
 
@@ -63,9 +69,10 @@ ui <-
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                   fluidPage(
-                    fluidRow(column(12, style="",
+                    fluidRow(column(12,
                                     selectInput(inputId = "state_name",
                                                 label = "State Selector",
+                                                title = "State selecting form tool.",
                                                 choices = state.abr$name,
                                                 selected = as.character(unlist(ranking[ranking$rank==50, "name"]))),
                                     tags$div(style = "float:right;",
@@ -160,6 +167,7 @@ ui <-
                              column(6,
                                     selectInput(inputId = "state.determinant",
                                                 label = "Determinant",
+                                                title = "Determinant selecting state tool.",
                                                 choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
                                     leafletOutput("maps.determinant", height = height),
@@ -181,6 +189,7 @@ ui <-
                                      fluidRow(style="float:right;width:250px;",
                                               selectInput(inputId = "entries",
                                                           label = "Entries",
+                                                          title = "Entry amount selecting form tool.",
                                                           choices = c(`Show 10` = 10, 
                                                                       `Show 25` = 25,
                                                                       `Show 50` = 50),
@@ -294,7 +303,8 @@ ui <-
                                uiOutput("US.determinant.title")),
                         column(6,
                                selectInput(inputId = "US.determinant",
-                                           label = NULL,
+                                           label = "Determinant",
+                                           title = "Determinant selecting form tool",
                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                            selected = "Diabetes"),
                                leafletOutput("US.maps.determinant", height = height),
@@ -316,6 +326,7 @@ ui <-
                                fluidRow(style="float:right;width:250px;",
                                         selectInput(inputId = "US.entries",
                                                     label = "Entries",
+                                                    title = "Entry amount selecting form tool.",
                                                     choices = c(`Show 10` = 10, 
                                                                 `Show 25` = 25,
                                                                 `Show 50` = 50),
@@ -829,66 +840,67 @@ ui <-
                         fluidRow(column(8, class = "about",
                                         tags$h3(tags$b("DISCLAIMER: "),
                                                 "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
-                                        offset = 2))),
-               tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                     HTML("<div><b>DETERMINANT</b></br>USA</div>")),
-               value="determinant_usa",
-               fluidPage(
-                 fluidRow(class="page_title", uiOutput("us_det_title")),
-                 fluidRow(class="page_title", uiOutput("us_det_subtitle")),
-                 fluidRow(class = "map-container",
-                column(8, id = "mainpanel_us_db",
-                       uiOutput("us_det_map_title"),
-                       tags$br(),tags$br(),
-                       tags$div(class = "select-bar",
-                                selectInput(inputId = "determinant",
-                                            label = NULL,
-                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
-                                            selected = "Diabetes"
-                                )),
-                       leafletOutput(outputId = "map.determinant", height=height)),
-                 column(4,
-                   id = "sidebar_us_db",
-                               uiOutput("sb_us_det_output"),
-                               HTML(
-                               "<div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br></div>"),
-                               uiOutput("sb_us_det_footer")))
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>DETERMINANT</b></br>NY</div>")),
-               value="determinant_ny",
-               fluidPage(
-                 fluidRow(class="page_title", uiOutput("ny_det_title")),
-                 fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
-                 fluidRow(class = "map-container",
-                 column(8, id = "mainpanel_ny_det",
-                   uiOutput("ny_det_map_title"),
-                   tags$br(),tags$br(),
-                   tags$div(class = "select-bar",
-                            selectInput(inputId = "determinant_NY",
-                                        label = NULL,
-                                        choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
-                                        selected = "Diabetes"
-                            )),
-                   leafletOutput(outputId = "map.NY.determinant", height=height)),
-                 column(4,
-                   id = "sidebar_ny_det",
-                   uiOutput("sb_ny_det_output"),
-                   HTML("
-                        <div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                       <i>Darker shades indicate greater disparity.</i><br><br>
-                       </div>"),
-                   uiOutput("sb_ny_det_footer")))
-               )
-      )
+                                        offset = 2)))
+               #,
+      #          tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                HTML("<div><b>DETERMINANT</b></br>USA</div>")),
+      #          value="determinant_usa",
+      #          fluidPage(
+      #            fluidRow(class="page_title", uiOutput("us_det_title")),
+      #            fluidRow(class="page_title", uiOutput("us_det_subtitle")),
+      #            fluidRow(class = "map-container",
+      #           column(8, id = "mainpanel_us_db",
+      #                  uiOutput("us_det_map_title"),
+      #                  tags$br(),tags$br(),
+      #                  tags$div(class = "select-bar",
+      #                           selectInput(inputId = "determinant",
+      #                                       label = NULL,
+      #                                       choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
+      #                                       selected = "Diabetes"
+      #                           )),
+      #                  leafletOutput(outputId = "map.determinant", height=height)),
+      #            column(4,
+      #              id = "sidebar_us_db",
+      #                          uiOutput("sb_us_det_output"),
+      #                          HTML(
+      #                          "<div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                          <i>Darker shades indicate greater disparity.</i><br><br></div>"),
+      #                          uiOutput("sb_us_det_footer")))
+      #          )
+      # ),
+      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                   HTML("<div><b>DETERMINANT</b></br>NY</div>")),
+      #          value="determinant_ny",
+      #          fluidPage(
+      #            fluidRow(class="page_title", uiOutput("ny_det_title")),
+      #            fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
+      #            fluidRow(class = "map-container",
+      #            column(8, id = "mainpanel_ny_det",
+      #              uiOutput("ny_det_map_title"),
+      #              tags$br(),tags$br(),
+      #              tags$div(class = "select-bar",
+      #                       selectInput(inputId = "determinant_NY",
+      #                                   label = NULL,
+      #                                   choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
+      #                                   selected = "Diabetes"
+      #                       )),
+      #              leafletOutput(outputId = "map.NY.determinant", height=height)),
+      #            column(4,
+      #              id = "sidebar_ny_det",
+      #              uiOutput("sb_ny_det_output"),
+      #              HTML("
+      #                   <div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                  <i>Darker shades indicate greater disparity.</i><br><br>
+      #                  </div>"),
+      #              uiOutput("sb_ny_det_footer")))
+      #          )
+      # )
       ),
       tabPanel(HTML("<div><b>ABOUT</b></div>"),
                value="about",
@@ -2163,6 +2175,7 @@ server <- function(input, output, session) {
     }
     selectInput(inputId = "SRC.county",
                 label = "County Selector",
+                title = "County selecting form tool.",
                 choices = sort(counties),
                 selected = selected,
                 multiple = TRUE,
@@ -2190,6 +2203,7 @@ server <- function(input, output, session) {
     }
     selectInput(inputId = "NRC.state",
                 label = "State Selector",
+                title = "State selecting form tool.",
                 choices = state.names,
                 selected = selected,
                 multiple = TRUE,
@@ -2722,7 +2736,7 @@ server <- function(input, output, session) {
     ggbar.overall(state_initial, y.value = "p_cases", remove.title = T) + 
       #geom_vline(xintercept=reactive.line$x, color= "black", linetype="solid", size = 1, show.legend = F) +
       NULL
-  })
+  }, alt = "A time series bar plot representing the states COVID-19 cases over time, per 100k.")
   
   output$state.CoT.dl <- downloadHandler(
     filename = function() {
@@ -2764,7 +2778,7 @@ server <- function(input, output, session) {
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     ggbar.overall(state_initial, y.value = "p_deaths", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing the states COVID-19 deaths over time, per 100k.")
   
   Tr.ranges <- reactiveValues(x = NULL, y = NULL)
   
@@ -2796,7 +2810,7 @@ server <- function(input, output, session) {
     ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = T) +
       coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
-  })
+  }, alt = "A time series bar plot representing the states new COVID-19 cases over time")
   
   output$state.trends.dl <- downloadHandler(
     filename = function() {
@@ -3058,7 +3072,7 @@ server <- function(input, output, session) {
   
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing United States cumilative COVID-19 cases over time.")
   
   output$US.CoT.dl <- downloadHandler(
     filename = function() {
@@ -3076,7 +3090,7 @@ server <- function(input, output, session) {
   
   output$US.DoT <- renderPlot({
     ggbar.US(y.value = "deaths", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing United States cumilative COVID-19 deaths over time.")
   
   output$US.DoT.dl <- downloadHandler(
     filename = function() {
@@ -3108,7 +3122,7 @@ server <- function(input, output, session) {
     ggplot.US(y.value=y.value, moving.avg.window=7, selected.states=selected.states$abr, remove.title=T) +
       coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
-  })
+  }, alt = "A time series plot representing United States new COVID-19 cases over time, broken down by state.")
   
   output$US.trends.dl <- downloadHandler(
     filename = function() {
