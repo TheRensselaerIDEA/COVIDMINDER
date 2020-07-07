@@ -22,7 +22,7 @@ footer_text <- "<h3><br><div>COVID<b>MINDER analysis and visualizations</b> by s
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
-                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;margin-right:5px;' ></a>
+                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' alt = 'Chat bubble icon' style='float:left;width:40px;margin-right:5px;' ></a>
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></h3><br><br>
                                 "
@@ -827,8 +827,9 @@ ui <-
                                  HTML("<div><b>DISCLAIMER</b></div>")),
                         value = "determinant_disclaimer",
                         fluidRow(column(8, class = "about",
-                                        tags$h3(tags$b("DISCLAIMER: "),
-                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), offset = 2))),
+                                        tags$h1(tags$h3(tags$b("DISCLAIMER: "),
+                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate.")), 
+                                        offset = 2))),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
                      HTML("<div><b>DETERMINANT</b></br>USA</div>")),
                value="determinant_usa",
@@ -893,8 +894,8 @@ ui <-
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
-                        HTML(whatisit_text_abt),
-                        HTML(footer_text))
+                        tags$h1(HTML(whatisit_text_abt),
+                        HTML(footer_text)))
                )
                )
     ), 
