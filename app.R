@@ -827,8 +827,8 @@ ui <-
                                  HTML("<div><b>DISCLAIMER</b></div>")),
                         value = "determinant_disclaimer",
                         fluidRow(column(8, class = "about",
-                                        tags$h1(tags$h3(tags$b("DISCLAIMER: "),
-                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate.")), 
+                                        tags$h3(tags$b("DISCLAIMER: "),
+                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
                                         offset = 2))),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
                      HTML("<div><b>DETERMINANT</b></br>USA</div>")),
@@ -838,7 +838,7 @@ ui <-
                  fluidRow(class="page_title", uiOutput("us_det_subtitle")),
                  fluidRow(class = "map-container",
                 column(8, id = "mainpanel_us_db",
-                       tags$h3(class="map-title", textOutput("us_det_map_title")),
+                       uiOutput("us_det_map_title"),
                        tags$br(),tags$br(),
                        tags$div(class = "select-bar",
                                 selectInput(inputId = "determinant",
@@ -867,7 +867,7 @@ ui <-
                  fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
                  fluidRow(class = "map-container",
                  column(8, id = "mainpanel_ny_det",
-                   tags$h3(class="map-title", textOutput("ny_det_map_title")),
+                   uiOutput("ny_det_map_title"),
                    tags$br(),tags$br(),
                    tags$div(class = "select-bar",
                             selectInput(inputId = "determinant_NY",
@@ -987,17 +987,17 @@ server <- function(input, output, session) {
     geo.plot("US", det)
   })
   
-  output$us_det_map_title <- renderText ({
+  output$us_det_map_title <- renderUI ({
     select.det <- input$determinant
     if (select.det == "CRD Mortality") {
       select.det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate")
+    tags$h3(class = "map-title", paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate"))
   })
   
-  output$ny_det_map_title <- renderText ({
+  output$ny_det_map_title <- renderUI ({
     select.det <- input$determinant_NY
-    paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate")
+    tags$h3(class="map-title", paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate"))
   })
   
   output$state_mort_heading <- renderUI({
