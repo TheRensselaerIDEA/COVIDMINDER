@@ -1,10 +1,16 @@
 #### Library and Data Imports ####
+sourceDir <- function(path, trace = TRUE, ...) {
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    if(trace) cat(nm,":")
+    source(file.path(path, nm), ...)
+    if(trace) cat("\n")
+  }
+}
+
 source("modules/Source.R")
-source("modules/data_load.R")
-source("modules/preprocessing.R")
-source("modules/leaflet_gen.R")
-source("modules/ggplot_gen.R")
-source("modules/gt_gen.R")
+sourceDir("modules")
+sourceDir("modules/shiny/R")
+
 
 update_date <- "07-9-2020" # makes it easy to change all occurances when we update
 
@@ -16,28 +22,28 @@ height <- "600px"# plot heights
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<h3><br><div>COVID<b>MINDER analysis and visualizations</b> by students and staff
+footer_text <- "<p>COVID<b>MINDER</b> analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
-                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' alt = 'Chat bubble icon' style='float:left;width:40px;margin-right:5px;' ></a>
+                                <img src='comment.png' alt = 'Small text bubble icon' style='float:left;width:40px;margin-right:5px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
-                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></h3><br><br>
+                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></p><br><br>
                                 "
                                 #<i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 #of Accessibility</a></i></div>"
 
-whatisit_text_abt <-"<div><h3>COVID<b>MINDER</b> reveals the regional disparities 
+whatisit_text_abt <-"<p>COVID<b>MINDER</b> reveals the regional disparities 
                                 in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
                                 effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</h3></div>"
+                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</p>"
 
 whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
 
 
-comments_link <-"<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
+comments_link <-"<img src='comment.png' style='float:left;width:40px;padding-right:2px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
@@ -56,20 +62,22 @@ ui <-
       id="tab",
       theme="style.css",
       title=tags$a(class="title-text",
-                     title = whatisit_text,
-                     href = "/",
-                     img(class="logo", src="Rensselaer_round.png", alt="RPI Logo"),
-                     HTML("COVID<b>MINDER</b>")),
+                   title = whatisit_text,
+                   name = "top",
+                   href = "/",
+                   img(class="logo", src="Rensselaer_round.png", alt="Small Rensselaer Polytechnic Institute Logo"),
+                   HTML("COVID<b>MINDER</b>")),
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                   fluidPage(
-                    fluidRow(column(12, style="",
+                    fluidRow(column(12,
                                     selectInput(inputId = "state_name",
                                                 label = "State Selector",
+                                                title = "State selecting form tool.",
                                                 choices = state.abr$name,
                                                 selected = as.character(unlist(ranking[ranking$rank==50, "name"]))),
                                     tags$div(style = "float:right;",
-                                             tags$h3(tags$b("Date: "), update_date)))),
+                                             HTML(paste("<b>Date:</b>", update_date))))),
                     fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
                     tags$br(),
                     fluidRow(column(8, style="text-align:center;",
@@ -160,6 +168,7 @@ ui <-
                              column(6,
                                     selectInput(inputId = "state.determinant",
                                                 label = "Determinant",
+                                                title = "Determinant selecting state tool.",
                                                 choices = c("Diabetes", "Obesity", "CRD Mortality"),
                                                 selected = "Diabetes"),
                                     leafletOutput("maps.determinant", height = height),
@@ -181,6 +190,7 @@ ui <-
                                      fluidRow(style="float:right;width:250px;",
                                               selectInput(inputId = "entries",
                                                           label = "Entries",
+                                                          title = "Entry amount selecting form tool.",
                                                           choices = c(`Show 10` = 10, 
                                                                       `Show 25` = 25,
                                                                       `Show 50` = 50),
@@ -196,8 +206,8 @@ ui <-
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
-               fluidRow(column(12,
-                        tags$h3(style = "float:right;",tags$b("Date: "), update_date))),
+               tags$div(style = "float:right;",
+                        HTML(paste("<b>Date:</b>", update_date))),
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
@@ -294,7 +304,8 @@ ui <-
                                uiOutput("US.determinant.title")),
                         column(6,
                                selectInput(inputId = "US.determinant",
-                                           label = NULL,
+                                           label = "Determinant",
+                                           title = "Determinant selecting form tool",
                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
                                            selected = "Diabetes"),
                                leafletOutput("US.maps.determinant", height = height),
@@ -316,6 +327,7 @@ ui <-
                                fluidRow(style="float:right;width:250px;",
                                         selectInput(inputId = "US.entries",
                                                     label = "Entries",
+                                                    title = "Entry amount selecting form tool.",
                                                     choices = c(`Show 10` = 10, 
                                                                 `Show 25` = 25,
                                                                 `Show 50` = 50),
@@ -827,75 +839,77 @@ ui <-
                                  HTML("<div><b>DISCLAIMER</b></div>")),
                         value = "determinant_disclaimer",
                         fluidRow(column(8, class = "about",
-                                        tags$h1(tags$h3(tags$b("DISCLAIMER: "),
-                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate.")), 
-                                        offset = 2))),
-               tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                     HTML("<div><b>DETERMINANT</b></br>USA</div>")),
-               value="determinant_usa",
-               fluidPage(
-                 fluidRow(class="page_title", uiOutput("us_det_title")),
-                 fluidRow(class="page_title", uiOutput("us_det_subtitle")),
-                 fluidRow(class = "map-container",
-                column(8, id = "mainpanel_us_db",
-                       tags$h3(class="map-title", textOutput("us_det_map_title")),
-                       tags$br(),tags$br(),
-                       tags$div(class = "select-bar",
-                                selectInput(inputId = "determinant",
-                                            label = NULL,
-                                            choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
-                                            selected = "Diabetes"
-                                )),
-                       leafletOutput(outputId = "map.determinant", height=height)),
-                 column(4,
-                   id = "sidebar_us_db",
-                               uiOutput("sb_us_det_output"),
-                               HTML(
-                               "<div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-                               <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                               <i>Darker shades indicate greater disparity.</i><br><br></div>"),
-                               uiOutput("sb_us_det_footer")))
-               )
-      ),
-      tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                        HTML("<div><b>DETERMINANT</b></br>NY</div>")),
-               value="determinant_ny",
-               fluidPage(
-                 fluidRow(class="page_title", uiOutput("ny_det_title")),
-                 fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
-                 fluidRow(class = "map-container",
-                 column(8, id = "mainpanel_ny_det",
-                   tags$h3(class="map-title", textOutput("ny_det_map_title")),
-                   tags$br(),tags$br(),
-                   tags$div(class = "select-bar",
-                            selectInput(inputId = "determinant_NY",
-                                        label = NULL,
-                                        choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
-                                        selected = "Diabetes"
-                            )),
-                   leafletOutput(outputId = "map.NY.determinant", height=height)),
-                 column(4,
-                   id = "sidebar_ny_det",
-                   uiOutput("sb_ny_det_output"),
-                   HTML("
-                        <div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-                       <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-                       <i>Darker shades indicate greater disparity.</i><br><br>
-                       </div>"),
-                   uiOutput("sb_ny_det_footer")))
-               )
-      )
+                                        tags$h1("Disclaimer"),
+                                        tags$p("Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
+                                        offset = 2)))
+               #,
+      #          tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                HTML("<div><b>DETERMINANT</b></br>USA</div>")),
+      #          value="determinant_usa",
+      #          fluidPage(
+      #            fluidRow(class="page_title", uiOutput("us_det_title")),
+      #            fluidRow(class="page_title", uiOutput("us_det_subtitle")),
+      #            fluidRow(class = "map-container",
+      #           column(8, id = "mainpanel_us_db",
+      #                  uiOutput("us_det_map_title"),
+      #                  tags$br(),tags$br(),
+      #                  tags$div(class = "select-bar",
+      #                           selectInput(inputId = "determinant",
+      #                                       label = NULL,
+      #                                       choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
+      #                                       selected = "Diabetes"
+      #                           )),
+      #                  leafletOutput(outputId = "map.determinant", height=height)),
+      #            column(4,
+      #              id = "sidebar_us_db",
+      #                          uiOutput("sb_us_det_output"),
+      #                          HTML(
+      #                          "<div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                          <i>Darker shades indicate greater disparity.</i><br><br></div>"),
+      #                          uiOutput("sb_us_det_footer")))
+      #          )
+      # ),
+      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
+      #                   HTML("<div><b>DETERMINANT</b></br>NY</div>")),
+      #          value="determinant_ny",
+      #          fluidPage(
+      #            fluidRow(class="page_title", uiOutput("ny_det_title")),
+      #            fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
+      #            fluidRow(class = "map-container",
+      #            column(8, id = "mainpanel_ny_det",
+      #              uiOutput("ny_det_map_title"),
+      #              tags$br(),tags$br(),
+      #              tags$div(class = "select-bar",
+      #                       selectInput(inputId = "determinant_NY",
+      #                                   label = NULL,
+      #                                   choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
+      #                                   selected = "Diabetes"
+      #                       )),
+      #              leafletOutput(outputId = "map.NY.determinant", height=height)),
+      #            column(4,
+      #              id = "sidebar_ny_det",
+      #              uiOutput("sb_ny_det_output"),
+      #              HTML("
+      #                   <div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+      #                  <i>Darker shades indicate greater disparity.</i><br><br>
+      #                  </div>"),
+      #              uiOutput("sb_ny_det_footer")))
+      #          )
+      # )
       ),
       tabPanel(HTML("<div><b>ABOUT</b></div>"),
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
-                        tags$h1(HTML(whatisit_text_abt),
-                        HTML(footer_text)))
+                        tags$h1("About the Project"),
+                        HTML(whatisit_text_abt),
+                        HTML(footer_text))
                )
                )
     ), 
@@ -987,17 +1001,17 @@ server <- function(input, output, session) {
     geo.plot("US", det)
   })
   
-  output$us_det_map_title <- renderText ({
+  output$us_det_map_title <- renderUI ({
     select.det <- input$determinant
     if (select.det == "CRD Mortality") {
       select.det <- "Cronic Respiratory Disease (CRD) Mortality"
     }
-    paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate")
+    tags$h3(class = "map-title", paste0("US ",select.det," Rate Disparities by State Compared to Average US Rate"))
   })
   
-  output$ny_det_map_title <- renderText ({
+  output$ny_det_map_title <- renderUI ({
     select.det <- input$determinant_NY
-    paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate")
+    tags$h3(class="map-title", paste0("NY ",select.det," Rate Disparities by County Compared to Average US Rate"))
   })
   
   output$state_mort_heading <- renderUI({
@@ -2163,6 +2177,7 @@ server <- function(input, output, session) {
     }
     selectInput(inputId = "SRC.county",
                 label = "County Selector",
+                title = "County selecting form tool.",
                 choices = sort(counties),
                 selected = selected,
                 multiple = TRUE,
@@ -2190,6 +2205,7 @@ server <- function(input, output, session) {
     }
     selectInput(inputId = "NRC.state",
                 label = "State Selector",
+                title = "State selecting form tool.",
                 choices = state.names,
                 selected = selected,
                 multiple = TRUE,
@@ -2722,7 +2738,7 @@ server <- function(input, output, session) {
     ggbar.overall(state_initial, y.value = "p_cases", remove.title = T) + 
       #geom_vline(xintercept=reactive.line$x, color= "black", linetype="solid", size = 1, show.legend = F) +
       NULL
-  })
+  }, alt = "A time series bar plot representing the states COVID-19 cases over time, per 100k.")
   
   output$state.CoT.dl <- downloadHandler(
     filename = function() {
@@ -2764,7 +2780,7 @@ server <- function(input, output, session) {
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
     ggbar.overall(state_initial, y.value = "p_deaths", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing the states COVID-19 deaths over time, per 100k.")
   
   Tr.ranges <- reactiveValues(x = NULL, y = NULL)
   
@@ -2796,7 +2812,7 @@ server <- function(input, output, session) {
     ggplot.state(state_initial, y.value = y.value, counties = counties,remove.title = T) +
       coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
-  })
+  }, alt = "A time series bar plot representing the states new COVID-19 cases over time")
   
   output$state.trends.dl <- downloadHandler(
     filename = function() {
@@ -3058,7 +3074,7 @@ server <- function(input, output, session) {
   
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing United States cumilative COVID-19 cases over time.")
   
   output$US.CoT.dl <- downloadHandler(
     filename = function() {
@@ -3076,7 +3092,7 @@ server <- function(input, output, session) {
   
   output$US.DoT <- renderPlot({
     ggbar.US(y.value = "deaths", remove.title = T)
-  })
+  }, alt = "A time series bar plot representing United States cumilative COVID-19 deaths over time.")
   
   output$US.DoT.dl <- downloadHandler(
     filename = function() {
@@ -3108,7 +3124,7 @@ server <- function(input, output, session) {
     ggplot.US(y.value=y.value, moving.avg.window=7, selected.states=selected.states$abr, remove.title=T) +
       coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
       NULL
-  })
+  }, alt = "A time series plot representing United States new COVID-19 cases over time, broken down by state.")
   
   output$US.trends.dl <- downloadHandler(
     filename = function() {
