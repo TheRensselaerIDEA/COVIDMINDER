@@ -28,7 +28,7 @@ footer_text <- "<p>COVID<b>MINDER</b> analysis and visualizations</b> by student
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
-                                <img src='comment.png' alt = 'Chat bubble icon' style='float:left;width:40px;margin-right:5px;' >
+                                <img src='comment.png' alt = 'Small text bubble icon' style='float:left;width:40px;margin-right:5px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></p><br><br>
                                 "
@@ -65,7 +65,7 @@ ui <-
                    title = whatisit_text,
                    name = "top",
                    href = "/",
-                   img(class="logo", src="Rensselaer_round.png", alt="RPI Logo"),
+                   img(class="logo", src="Rensselaer_round.png", alt="Small Rensselaer Polytechnic Institute Logo"),
                    HTML("COVID<b>MINDER</b>")),
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
