@@ -12,7 +12,7 @@ sourceDir("modules")
 sourceDir("modules/shiny/R")
 
 
-update_date <- "07-8-2020" # makes it easy to change all occurances when we update
+update_date <- "07-9-2020" # makes it easy to change all occurances when we update
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
                        # (i.e. a 20 day window if Catskill Region has 19 report dates.)
@@ -22,28 +22,28 @@ height <- "600px"# plot heights
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<h3><br><div>COVID<b>MINDER analysis and visualizations</b> by students and staff
+footer_text <- "<p>COVID<b>MINDER</b> analysis and visualizations</b> by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
                                 and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
                                 <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
                                 for more information. <br><br>
-                                <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' alt = 'Chat bubble icon' style='float:left;width:40px;margin-right:5px;' ></a>
+                                <img src='comment.png' alt = 'Chat bubble icon' style='float:left;width:40px;margin-right:5px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
-                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></h3><br><br>
+                                to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></p><br><br>
                                 "
                                 #<i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
                                 #of Accessibility</a></i></div>"
 
-whatisit_text_abt <-"<div><h3>COVID<b>MINDER</b> reveals the regional disparities 
+whatisit_text_abt <-"<p>COVID<b>MINDER</b> reveals the regional disparities 
                                 in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct 
                                 effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact 
-                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</h3></div>"
+                                COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic.</p>"
 
 whatisit_text <- "COVIDMINDER reveals the regional disparities in outcomes, determinants, and mediations of the COVID-19 pandemic. Outcomes are the direct effects of COVID-19. Social and Economic Determinants are pre-existing risk factors that impact COVID-19 outcomes. Mediations are resources and programs used to combat the pandemic."
 
 
-comments_link <-"<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'><img src='comment.png' style='float:left;width:40px;padding-right:2px;' ></a>
+comments_link <-"<img src='comment.png' style='float:left;width:40px;padding-right:2px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a><br><br>
                                 <i><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement 
@@ -62,10 +62,11 @@ ui <-
       id="tab",
       theme="style.css",
       title=tags$a(class="title-text",
-                     title = whatisit_text,
-                     href = "/",
-                     img(class="logo", src="Rensselaer_round.png", alt="RPI Logo"),
-                     HTML("COVID<b>MINDER</b>")),
+                   title = whatisit_text,
+                   name = "top",
+                   href = "/",
+                   img(class="logo", src="Rensselaer_round.png", alt="RPI Logo"),
+                   HTML("COVID<b>MINDER</b>")),
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                   fluidPage(
@@ -76,7 +77,7 @@ ui <-
                                                 choices = state.abr$name,
                                                 selected = as.character(unlist(ranking[ranking$rank==50, "name"]))),
                                     tags$div(style = "float:right;",
-                                             tags$h3(tags$b("Date: "), update_date)))),
+                                             HTML(paste("<b>Date:</b>", update_date))))),
                     fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
                     tags$br(),
                     fluidRow(column(8, style="text-align:center;",
@@ -205,8 +206,8 @@ ui <-
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
-               fluidRow(column(12,
-                        tags$h3(style = "float:right;",tags$b("Date: "), update_date))),
+               tags$div(style = "float:right;",
+                        HTML(paste("<b>Date:</b>", update_date))),
                fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
                tags$br(),
                fluidRow(column(10, style="text-align:center;position:relative;",
@@ -838,8 +839,8 @@ ui <-
                                  HTML("<div><b>DISCLAIMER</b></div>")),
                         value = "determinant_disclaimer",
                         fluidRow(column(8, class = "about",
-                                        tags$h3(tags$b("DISCLAIMER: "),
-                                                "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
+                                        tags$h1("Disclaimer"),
+                                        tags$p("Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
                                         offset = 2)))
                #,
       #          tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -906,8 +907,9 @@ ui <-
                value="about",
                fluidRow(
                  column(8,offset=2,class="about",
-                        tags$h1(HTML(whatisit_text_abt),
-                        HTML(footer_text)))
+                        tags$h1("About the Project"),
+                        HTML(whatisit_text_abt),
+                        HTML(footer_text))
                )
                )
     ), 
