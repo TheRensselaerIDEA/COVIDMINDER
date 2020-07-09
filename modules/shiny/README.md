@@ -4,4 +4,4 @@ The code inside the R directory is taken directly from the Shiny [GitHub reposit
 
 # Content
 
-A bulk of the shiny code has been cloned due to the dependent internal scripts being called by relevant code changes. The only needed code are the updated renderPlot and selectInput functions, and over time we will continue to trim uneeded repeat code as possible. In the long run, I would like to fork and push the changes to shinys official repository, specifically the alt text addition.
+A bulk of the shiny code has been cloned due to the dependent internal scripts being called by relevant code changes. The only needed code are the updated renderPlot and selectInput functions, and over time we will continue to trim uneeded repeat code as possible. In the long run, an ideal solution is to fork and push the changes to shinys official repository, specifically the alt text addition.
