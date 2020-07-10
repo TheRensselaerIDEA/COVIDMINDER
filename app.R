@@ -2581,7 +2581,7 @@ server <- function(input, output, session) {
     # calculate distance from left and bottom side of the picture in pixels
     
     if ((hover$range$right - hover$range$left)*(1-left_pct) < 200 ) {
-      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 202*pixelratio
+      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left) - 205*pixelratio
     }
     else {
       left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
