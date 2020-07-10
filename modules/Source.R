@@ -40,3 +40,12 @@ library(tidyverse)
 library(lubridate)
 library(zoo)
 #library(rsconnect) # required by JSE for pre-release deployment on shinyapps.io 
+
+# Directory loading script for shiny edits
+sourceDir <- function(path, trace = TRUE, ...) {
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    if(trace) cat(nm,":")
+    source(file.path(path, nm), ...)
+    if(trace) cat("\n")
+  }
+}
