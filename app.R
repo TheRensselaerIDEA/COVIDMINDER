@@ -2932,7 +2932,7 @@ server <- function(input, output, session) {
   })
   
   output$US.map.testing <- renderLeaflet({
-    geo.plot("US", "Testing", reverse = T)
+    geo.plot("US", "Daily Testing", reverse = T)
   })
   
   output$US.maps.testing.dl <- downloadHandler(
@@ -2940,17 +2940,18 @@ server <- function(input, output, session) {
       return("US_mortality.png")
     },
     content = function(file) {
-      title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
-      time <- input$NRC.deaths.time
-      if (time == "Daily") {
-        param <- "Daily Mortality"
-      }
-      else {
-        param <- "Mortality"
-      }
+      title <- tags$h2(style="text-align:center;", "US COVID-19 Testing Disparities")
+      #time <- input$NRC.deaths.time
+      #if (time == "Daily") {
+      #  param <- "Daily Mortality"
+      #}
+      #else {
+      #  param <- "Mortality"
+      #}
       mapshot(x = geo.plot("US", 
-                           param, 
-                           title = tags$div(title)
+                           "Daily Testing", 
+                           title = tags$div(title),
+                           reverse = T
       ),
       file = file,
       cliprect = "viewport",
