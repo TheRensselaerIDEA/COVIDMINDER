@@ -17,10 +17,10 @@ todays_raw_data <- read_csv(paste0("data/csv/", "states_testing_raw.csv"))
 state_covid_testing <- todays_raw_data %>%
 #  filter(Country_Region == "US") %>%
   dplyr::filter(!state %in% c("AS") ) %>%
-  dplyr::select(state,positive,negative,total) 
+  dplyr::select(state,positive,negative,total,totalTestResultsIncrease) 
 
 # Adjust names
-colnames(state_covid_testing) <- c("Abbreviation","positive","negative","total_num_tests")
+colnames(state_covid_testing) <- c("Abbreviation","positive","negative","total_num_tests","test_increase")
 
 states_abbreviations <- read_csv(paste0("data/csv/", "states_abbreviations.csv"))
 
@@ -31,10 +31,13 @@ state_covid_testing <- state_covid_testing[,-1]
 
 # Create a "United States" row
 covid_testing_united_states <- state_covid_testing %>%
-  summarize(total_num_tests=sum(na.omit(total_num_tests)), positive=sum(na.omit(positive)), negative=sum(na.omit(negative)))
+  summarize(total_num_tests=sum(na.omit(total_num_tests)), 
+            positive=sum(na.omit(positive)), 
+            negative=sum(na.omit(negative)), 
+            test_increase=sum(na.omit(test_increase)))
             
 covid_testing_united_states$NAME <- 'United States'
-covid_testing_united_states <- covid_testing_united_states[,c("NAME","positive","negative","total_num_tests")]
+covid_testing_united_states <- covid_testing_united_states[,c("NAME","positive","negative","total_num_tests","test_increase")]
 
 state_covid_testing <- data.frame(rbind(covid_testing_united_states, state_covid_testing))
 state_covid_testing <- state_covid_testing %>%
