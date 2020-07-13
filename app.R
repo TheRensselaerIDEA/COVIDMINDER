@@ -2746,8 +2746,8 @@ server <- function(input, output, session) {
       ggsave(filename = file, 
              plot = ggbar.overall(state_initial, y.value = "p_cases", remove.title = F, date = update_date) + NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
@@ -2764,8 +2764,8 @@ server <- function(input, output, session) {
       ggsave(filename = file, 
              plot = ggbar.overall(state_initial, y.value = "p_deaths", remove.title = F, date = update_date) + NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
@@ -2834,8 +2834,8 @@ server <- function(input, output, session) {
                coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
                NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
@@ -3079,8 +3079,8 @@ server <- function(input, output, session) {
       ggsave(filename = file, 
              plot = ggbar.US(y.value = "cases", remove.title = F, date = update_date) + NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
@@ -3097,8 +3097,8 @@ server <- function(input, output, session) {
       ggsave(filename = file, 
              plot = ggbar.US(y.value = "deaths", remove.title = F, date = update_date) + NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
@@ -3146,8 +3146,8 @@ server <- function(input, output, session) {
                coord_cartesian(xlim = Tr.ranges$x, ylim = Tr.ranges$y) +
                NULL,
              device = "png",
-             width = 8,
-             height = 6,
+             width = 12,
+             height = 8,
              units = "in")
     }
   )
