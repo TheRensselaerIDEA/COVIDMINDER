@@ -50,7 +50,6 @@ url1 <- url2 <- ""
 ui <- 
   tagList(
     tags$html(lang = "en"),
-    tags$head(tags$title("COVIDMINDER: Where you live matters")),
     tags$head(includeHTML("www/analytics.html")),
     navbarPage(
       id="tab",
@@ -61,6 +60,7 @@ ui <-
                    href = "/",
                    img(class="logo", src="Rensselaer_round.png", alt="Small Rensselaer Polytechnic Institute Logo"),
                    HTML("COVID<b>MINDER</b>")),
+      windowTitle = "COVIDMINDER: Where you live matters",
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                   fluidPage(
