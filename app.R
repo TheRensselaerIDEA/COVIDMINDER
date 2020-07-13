@@ -14,12 +14,14 @@ height <- "600px"# plot heights
 # TODO: Implement other text as strings like this...
 rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
 
-footer_text <- "<p>COVID<b>MINDER</b> analysis and visualizations</b> by students and staff
+
+footer_text <- "<p>COVID<b>MINDER</b> analysis and visualizations</b> are by students and staff
                                 of <a href='http://idea.rpi.edu/'>The Rensselaer Institute for Data Exploration 
-                                and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a>. 
-                                <b>COVIDMINDER</b> is an open source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
+                                and Applications</a> at <a href='http://rpi.edu/'>Rensselaer Polytechnic Institute</a> 
+                                with generous support from the United Health Foundation. COVID<b>MINDER</b> is an open 
+                                source project implemented on the <a href='https://shiny.rstudio.com/'>R Shiny platform</a>;
                                 see the <a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER github</a>
-                                for more information. <br><br>
+                                for more information. COVID<b>MINDER</b> was directed by Kristin P. Bennett and John S. Erickson.<br><br>
                                 <img src='comment.png' alt = 'Small text bubble icon' style='float:left;width:40px;margin-right:5px;' >
                                 Thanks for using <b>COVIDMINDER!</b> Please take a few moments 
                                 to fill out our short <a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>comments form.</a></p><br><br>
