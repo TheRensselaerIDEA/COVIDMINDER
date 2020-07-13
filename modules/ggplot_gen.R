@@ -194,7 +194,8 @@ ggplot.state <- function(selected.state = "NY",
     scale_x_datetime(date_breaks = "1 month", date_minor_breaks = "1 week", date_labels = "%b") +
     labs(x = "Date",
          y = y_label,
-         caption = "Data Source: USA Facts, tinyurl.com/statepolicies") +
+         caption = "Analysis: The Rensselaer Institute for Data Exploration and Applications
+         Data Source: USA Facts, tinyurl.com/statepolicies") +
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
@@ -217,7 +218,7 @@ ggplot.state <- function(selected.state = "NY",
           axis.text = element_text(size = 12, face = "bold"),
           legend.text = element_text(size = 14),
           legend.title = element_text(size = 16),
-          plot.caption = element_text(hjust = 1)) +
+          plot.caption = element_text(hjust = 1, size = 10)) +
     gg_title
   return(g)
 }
@@ -305,7 +306,8 @@ ggbar.overall <- function(selected.state = "NY",
            #xlab("Date") +
            labs(x = "Date",
                 y = get_y_label(y.value),
-                caption = "Data Source: USA Facts, tinyurl.com/statepolicies") +
+                caption = "Analysis: The Rensselaer Institute for Data Exploration and Applications
+                Data Source: USA Facts, tinyurl.com/statepolicies") +
            theme(legend.position = "bottom", 
                  legend.direction = "horizontal",
                  title = element_text(hjust = 0.5, size = 18),
@@ -314,7 +316,7 @@ ggbar.overall <- function(selected.state = "NY",
                  axis.text = element_text(size = 12, face = "bold"),
                  legend.text = element_text(size = 14),
                  legend.title = element_text(size = 16),
-                 plot.caption = element_text(hjust = 1)) +
+                 plot.caption = element_text(hjust = 1, size = 10)) +
            gg_title
   )
 }
@@ -376,7 +378,8 @@ ggbar.US <- function(y.value="cases",
            scale_y_continuous(label = scales::comma) +
            labs(x = "Date",
                 y = get_y_label(y.value),
-                caption = "Data Source: USA Facts") +
+                caption = "Analysis: The Rensselaer Institute for Data Exploration and Applications
+                Data Source: USA Facts") +
            theme(legend.position = "bottom", 
                  legend.direction = "horizontal",
                  title = element_text(hjust = 0.5, size = 18),
@@ -486,7 +489,8 @@ ggplot.US <- function(y.value="cases",
     #xlab("Date") +
     labs(x = "Date",
          y = y_label,
-         caption = "Data Source: USA Facts") +
+         caption = "Analysis: The Rensselaer Institute for Data Exploration and Applications
+         Data Source: USA Facts") +
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
@@ -506,7 +510,7 @@ ggplot.US <- function(y.value="cases",
           axis.text = element_text(size = 12, face = "bold"),
           legend.text = element_text(size = 14),
           legend.title = element_text(size = 16),
-          plot.caption = element_text(hjust = 1)) +
+          plot.caption = element_text(hjust = 1, size = 10)) +
     gg_title
   return(g)
 }
