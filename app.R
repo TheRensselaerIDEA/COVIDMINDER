@@ -3234,23 +3234,8 @@ server <- function(input, output, session) {
     # if the tab variable is defined, send a message to client to update the tab
     if (any(sapply(data[c("state_report_cards",
                           "national_report_card",
-                          'outcome_usa_mortality', 
-                          'outcome_usa_racial_disparity',
-                          'outcome_state_mortality',
-                          'outcome_state_cases', 
-                          'outcome_ny_racial_disparity',
-                          'outcome_ct_racial_disparity',
-                          'outcome_ny_new_cases',
-                          #'outcome_ny_cases_rate',
-                          #'outcome_ny_cases_rate_regions',
-                          'outcome_ny_cases_time',
-                          'outcome_ny_cases_time_region',
-                          'mediation_usa_testing',
-                          'mediation_usa_hospital_beds',
                           'determinant_disclaimer',
-                          'determinant_usa',
-                          #'determinant_usa_obesity',
-                          'determinant_ny'
+                          'about'
     )], 
     Negate(is.null)))) {
       # browser()

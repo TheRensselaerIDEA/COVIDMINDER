@@ -1579,7 +1579,7 @@ writeUTF8 <- function(text, ...) {
 }
 
 URLdecode <- function(value) {
-  decodeURIComponent(value)
+  httpuv::decodeURIComponent(value)
 }
 
 URLencode <- function(value, reserved = FALSE) {
