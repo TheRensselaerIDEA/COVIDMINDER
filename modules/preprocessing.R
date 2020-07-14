@@ -50,31 +50,31 @@ pUS.2 <- as.numeric(state_covid_testing[which(state_covid_testing$NAME=="United 
 # Checked: 13 May 2020
 
 #pUS.2 <- total_test_rates.df[total_test_rates.df$iso_code == "USA",]$total_tests_per_thousand #/ 1000
-pPR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "PRT",]$total_tests_per_thousand #/ 1000
-pSP.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ESP",]$total_tests_per_thousand #/ 1000
-pBE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "BEL",]$total_tests_per_thousand #/ 1000
-pIT.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ITA",]$total_tests_per_thousand #/ 1000
-pRU.2 <- total_test_rates.df[total_test_rates.df$iso_code == "RUS",]$total_tests_per_thousand #/ 1000
-pCH.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CHE",]$total_tests_per_thousand #/ 1000
-pDE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "DEU",]$total_tests_per_thousand #/ 1000
-pIR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "IRL",]$total_tests_per_thousand #/ 1000
-pCA.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CAN",]$total_tests_per_thousand #/ 1000
-pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests_per_thousand #/ 1000
+#pPR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "PRT",]$total_tests_per_thousand #/ 1000
+#pSP.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ESP",]$total_tests_per_thousand #/ 1000
+#pBE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "BEL",]$total_tests_per_thousand #/ 1000
+#pIT.2 <- total_test_rates.df[total_test_rates.df$iso_code == "ITA",]$total_tests_per_thousand #/ 1000
+#pRU.2 <- total_test_rates.df[total_test_rates.df$iso_code == "RUS",]$total_tests_per_thousand #/ 1000
+#pCH.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CHE",]$total_tests_per_thousand #/ 1000
+#pDE.2 <- total_test_rates.df[total_test_rates.df$iso_code == "DEU",]$total_tests_per_thousand #/ 1000
+#pIR.2 <- total_test_rates.df[total_test_rates.df$iso_code == "IRL",]$total_tests_per_thousand #/ 1000
+#pCA.2 <- total_test_rates.df[total_test_rates.df$iso_code == "CAN",]$total_tests_per_thousand #/ 1000
+#pUK.2 <- total_test_rates.df[total_test_rates.df$iso_code == "GBR",]$total_tests_per_thousand #/ 1000
 
 # for drop-down
-country_testing_choices <- c("us","pr","sp","be","ch","it","ru","ir","de","ca","uk")
+#country_testing_choices <- c("us","pr","sp","be","ch","it","ru","ir","de","ca","uk")
 
-names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2),"/1000)"),
-                                    paste0("Portugal ("      ,round(pPR.2),"/1000)"),
-                                    paste0("Spain ("         ,round(pSP.2),"/1000)"),
-                                    paste0("Belgium ("       ,round(pBE.2),"/1000)"),
-                             paste0("Switzerland ("   ,round(pCH.2),"/1000)"),
-                             paste0("Italy ("         ,round(pIT.2),"/1000)"),
-                             paste0("Russia ("        ,round(pRU.2),"/1000)"),
-                             paste0("Ireland ("       ,round(pIR.2),"/1000)"),
-                             paste0("Germany ("       ,round(pDE.2),"/1000)"),
-                             paste0("Canada ("        ,round(pCA.2),"/1000)"),
-                             paste0("United Kingdom (",round(pUK.2),"/1000)"))
+# names(country_testing_choices) <- c(paste0("United States (" ,round(pUS.2),"/1000)"),
+#                                     paste0("Portugal ("      ,round(pPR.2),"/1000)"),
+#                                     paste0("Spain ("         ,round(pSP.2),"/1000)"),
+#                                     paste0("Belgium ("       ,round(pBE.2),"/1000)"),
+#                              paste0("Switzerland ("   ,round(pCH.2),"/1000)"),
+#                              paste0("Italy ("         ,round(pIT.2),"/1000)"),
+#                              paste0("Russia ("        ,round(pRU.2),"/1000)"),
+#                              paste0("Ireland ("       ,round(pIR.2),"/1000)"),
+#                              paste0("Germany ("       ,round(pDE.2),"/1000)"),
+#                              paste0("Canada ("        ,round(pCA.2),"/1000)"),
+#                              paste0("United Kingdom (",round(pUK.2),"/1000)"))
 
 # Calculate state DIs based on a country's selected rate
 # UPDATE: make several values available . See https://bit.ly/2yMyjFX for current rates!
@@ -83,32 +83,32 @@ Daily_Testing_rate_ldi <- unlist(lapply(state_covid_testing$Daily_Testing_rate, 
 
 pUS.2 <- pUS.2*1000
 tests_ldi.us <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/(pUS.2))}))
-tests_ldi.be <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pBE.2)}))
-tests_ldi.pr <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pPR.2)}))
-tests_ldi.ch <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCH.2)}))
-tests_ldi.it <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pIT.2)}))
-tests_ldi.sp <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pSP.2)}))
-tests_ldi.ir <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pIR.2)}))
-tests_ldi.de <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pDE.2)}))
-tests_ldi.ca <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCA.2)}))
-tests_ldi.uk <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pUK.2)}))
-tests_ldi.ru <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pRU.2)}))
+# tests_ldi.be <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pBE.2)}))
+# tests_ldi.pr <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pPR.2)}))
+# tests_ldi.ch <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCH.2)}))
+# tests_ldi.it <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pIT.2)}))
+# tests_ldi.sp <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pSP.2)}))
+# tests_ldi.ir <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pIR.2)}))
+# tests_ldi.de <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pDE.2)}))
+# tests_ldi.ca <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pCA.2)}))
+# tests_ldi.uk <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pUK.2)}))
+# tests_ldi.ru <- unlist(lapply(state_covid_testing$tests_per_1000, FUN=function(x){log(x/pRU.2)}))
 
 # Write to data frame
 state_covid_testing <- data.frame(state_covid_testing, Testing_rate_ldi)
 state_covid_testing <- data.frame(state_covid_testing, Daily_Testing_rate_ldi)
 
 state_covid_testing <- data.frame(state_covid_testing, tests_ldi.us)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.be)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.pr)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ch)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.it)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.sp)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ir)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.de)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ca)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.uk)
-state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ru)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.be)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.pr)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ch)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.it)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.sp)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ir)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.de)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ca)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.uk)
+# state_covid_testing <- data.frame(state_covid_testing, tests_ldi.ru)
 
 state_covid_testing <- state_covid_testing[match(states$NAME, state_covid_testing$NAME),]
 
@@ -117,17 +117,18 @@ state_covid_testing <- state_covid_testing[1:51,]
 state_covid_testing <- state_covid_testing %>% 
   mutate(Testing_rate_ldi = replace(Testing_rate_ldi, Testing_rate_ldi < -5, -5)) %>%
   mutate(Daily_Testing_rate_ldi = replace(Daily_Testing_rate_ldi, Daily_Testing_rate_ldi < -5, -5)) %>%
-  mutate(tests_ldi.us = replace(tests_ldi.us, tests_ldi.us < -5, -5)) %>%
-  mutate(tests_ldi.be = replace(tests_ldi.be, tests_ldi.be < -5, -5)) %>%
-  mutate(tests_ldi.pr = replace(tests_ldi.pr, tests_ldi.pr < -5, -5)) %>%
-  mutate(tests_ldi.ch = replace(tests_ldi.ch, tests_ldi.ch < -5, -5)) %>%
-  mutate(tests_ldi.it = replace(tests_ldi.it, tests_ldi.it < -5, -5)) %>%
-  mutate(tests_ldi.sp = replace(tests_ldi.sp, tests_ldi.sp < -5, -5)) %>%
-  mutate(tests_ldi.ir = replace(tests_ldi.ir, tests_ldi.ir < -5, -5)) %>%
-  mutate(tests_ldi.de = replace(tests_ldi.de, tests_ldi.de < -5, -5)) %>%
-  mutate(tests_ldi.ca = replace(tests_ldi.ca, tests_ldi.ca < -5, -5)) %>%
-  mutate(tests_ldi.ru = replace(tests_ldi.ru, tests_ldi.ru < -5, -5)) %>%
-  mutate(tests_ldi.uk = replace(tests_ldi.uk, tests_ldi.uk < -5, -5)) 
+  mutate(tests_ldi.us = replace(tests_ldi.us, tests_ldi.us < -5, -5))
+  # %>%
+  # mutate(tests_ldi.be = replace(tests_ldi.be, tests_ldi.be < -5, -5)) %>%
+  # mutate(tests_ldi.pr = replace(tests_ldi.pr, tests_ldi.pr < -5, -5)) %>%
+  # mutate(tests_ldi.ch = replace(tests_ldi.ch, tests_ldi.ch < -5, -5)) %>%
+  # mutate(tests_ldi.it = replace(tests_ldi.it, tests_ldi.it < -5, -5)) %>%
+  # mutate(tests_ldi.sp = replace(tests_ldi.sp, tests_ldi.sp < -5, -5)) %>%
+  # mutate(tests_ldi.ir = replace(tests_ldi.ir, tests_ldi.ir < -5, -5)) %>%
+  # mutate(tests_ldi.de = replace(tests_ldi.de, tests_ldi.de < -5, -5)) %>%
+  # mutate(tests_ldi.ca = replace(tests_ldi.ca, tests_ldi.ca < -5, -5)) %>%
+  # mutate(tests_ldi.ru = replace(tests_ldi.ru, tests_ldi.ru < -5, -5)) %>%
+  # mutate(tests_ldi.uk = replace(tests_ldi.uk, tests_ldi.uk < -5, -5)) 
 
 states <- data.frame(states, "Testing_rate"=state_covid_testing$Testing_rate, check.names = F) # Append to states
 states <- data.frame(states, "Daily Testing_rate"=state_covid_testing$Daily_Testing_rate, check.names = F) # Append to states
