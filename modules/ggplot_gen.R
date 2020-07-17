@@ -148,7 +148,7 @@ ggplot.state <- function(selected.state = "NY",
   covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
     filter(County %in% counties) %>%
     rbind.data.frame(state) %>%
-    filter(get(y.value) > 0)
+    filter(get(y.value) > 0.1)
   
   
   county.num <- covid_TS_counties.cases.plot %>% 
@@ -433,7 +433,7 @@ ggplot.US <- function(y.value="cases",
     group_by(State) %>%
     ungroup() %>%
     rbind.data.frame(US) %>%
-    filter(get(y.value) > 1)
+    filter(get(y.value) > 0.1)
   
   
   state.num <- covid_TS_state.cases.plot %>% 
