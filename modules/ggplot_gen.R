@@ -150,6 +150,9 @@ ggplot.state <- function(selected.state = "NY",
     rbind.data.frame(state) %>%
     filter(get(y.value) > 0.1)
   
+  state <- state %>%
+    filter(get(y.value) > 0.1)
+  
   
   county.num <- covid_TS_counties.cases.plot %>% 
     select(County) %>%
@@ -186,6 +189,7 @@ ggplot.state <- function(selected.state = "NY",
       group="County")) +
     scale_color_manual(values=region_palette, guide=guide_legend(title.position = "top",title.hjust = 0.5)) +
     geom_line(size=1) +
+    geom_line(data = state, size = 2, show.legend = F) +
     scale_y_continuous(
       trans = "log10",
       breaks = c(10,25,100,250,500,1000,2500,5000,10000,25000,50000),
