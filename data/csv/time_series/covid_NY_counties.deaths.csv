@@ -1,9 +1,9 @@
 county,deaths
-New York State,32133
-Albany,109
+New York State,32147
+Albany,110
 Allegany,2
-Bronx,4810
-Broome,65
+Bronx,4812
+Broome,66
 Cattaraugus,6
 Cayuga,2
 Chautauqua,3
@@ -13,10 +13,10 @@ Clinton,4
 Columbia,47
 Cortland,1
 Delaware,4
-Dutchess,152
-Erie,581
+Dutchess,153
+Erie,582
 Essex,0
-Franklin,0
+Franklin,1
 Fulton,26
 Genesee,6
 Greene,13
@@ -32,15 +32,15 @@ Montgomery,4
 Nassau,2191
 New York,3135
 Niagara,85
-Oneida,109
-Onondaga,166
+Oneida,110
+Onondaga,167
 Ontario,27
 Orange,404
 Orleans,55
 Oswego,3
 Otsego,4
 Putnam,63
-Queens,7121
+Queens,7124
 Rensselaer,33
 Richmond,1074
 Rockland,506
