@@ -7,5 +7,5 @@ source("data_downloaders/usa_facts_dl.R")
 source("data_downloaders/jhu_ts_downloader.R")
 source("data_downloaders/jhu_ny_ts_downloader.R")
 source("data_downloaders/cdc_downloader.R")
-source("data_downloaders/owid_downloader.R")           # Run for up to date testing numbers.
+source("data_downloaders/owid_downloader.R")             # Run for up to date testing numbers.
 # source("data_downloaders/jhu_ts_downloader_malik.R")   # Experimental; Malik's structures
