@@ -324,7 +324,7 @@ covid_TS_New_York.deaths[1,1] <- "New York State"
 
 # Prepend New York State summary to counties summary
 # THIS IS "WIDE"!
-covid_NY_TS_counties.deaths <- data.frame(rbind(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[-c(1,2),-c(1,3)]))
+covid_NY_TS_counties.deaths <- data.frame(bind_rows(covid_TS_New_York.deaths, covid_NY_TS_counties.deaths[-c(1,2),-c(1,3)]))
 
 # The "right most" column is the cumulative tally to-date
 covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_counties.deaths))] 
@@ -336,7 +336,8 @@ write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),
 write_csv(read_csv("data/csv/time_series/covid_NY_counties.deaths.csv"),"data/csv/time_series/covid_NY_counties.deaths.csv.bak")
 
 # write out new WIDE dataframe to file system
-write_csv(covid_NY_TS_counties.deaths,"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
+print(covid_NY_counties.deaths)
+write_csv(as.vector(covid_NY_TS_counties.deaths),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
 write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.deaths.csv")
 
 # LONG county ts
