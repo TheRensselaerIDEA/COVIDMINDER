@@ -1,0 +1,54 @@
+---
+title: "HACL Project Status Notebook Template"
+subtitle: "HACL project name (e.g. COVIDMINDER)"
+author: "Student Name"
+date: "22 July 2020"
+output: 
+  html_document:
+    toc: true
+---
+
+## Weekly Work Summary	
+
+* Summary of work since last week 
+* Summary of github commits 
+
+    * include branch name
+    * include files
+    
+* List of presentations,  papers, or other outputs (with links)
+* List of references (if necessary) 
+* List of location(s) of all work submitted to github
+* Indicate use of group shared code base
+* Indicate which parts were done by you or as part of joint efforts
+
+## Personal Contribution	
+
+* Clearly defined, unique contribution done by you (code, ideas, writing)
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * What did you want to know? 
+    * How did you go about finding it? 
+    * What did you find?
+	
+* Provide illustrating figures and or tables
+* Make sure any source code for your figures and tables are embedded in notebook or provide github location
+
+## Other Project Status Notebook Guidance
+
+### Writing Quality	
+
+* Notebook includes narrative text between code blocks
+* Notebook includes title and date 
+*	Notebook includes author and project team
+* Notebook includes Table of Contents
+* Notebook is written with good grammar, spelling and style
+
+### Scientific Clarity and Reproducibility	
+
+* Reader can understand what is being done
+* Discussion of finding is clearly written.
+* Results can be reproduced from supplied info
