@@ -108,12 +108,13 @@ ui <-
                     fluidRow(column(12, style="text-align:center;",
                                     tags$h1("County Level Breakdown"))),
                     fluidRow(column(12, style="text-align:center;position:relative;",uiOutput("state.trends.title"),
-                                    tags$div(style = "height:130px;text-align:left;padding-left:4%;",
+                                    tags$div(style = "height:130px;width:100%;text-align:left;padding-left:4%;",
                                     uiOutput("state.report.county.selector"),
                                              radioButtons(inputId = "SRC.rate",
                                                  label = "Rate",
                                                  choices = c("Overall", "Per/100k"),
                                                  selected = "Per/100k")),
+                                    tags$div(style="text-align:left;padding-left:4%", "Use the above form to select 1 or multiple Counties."),
                                     plotOutput(outputId = "state.trends", 
                                                height=height,
                                                hover = hoverOpts(id = "state.trends.hover",
@@ -245,6 +246,7 @@ ui <-
                                                      label = "Rate",
                                                      choices = c("Overall", "Per/100k"),
                                                      selected = "Per/100k")),
+                               tags$div(style="text-align:left;padding-left:4%", "Use the above form to select 1 or multiple States."),
                                plotOutput(outputId = "US.trends", 
                                           height=height,
                                           hover = hoverOpts(id = "US.trends.hover",
@@ -2514,7 +2516,7 @@ server <- function(input, output, session) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 17
-    top.offset <- 210
+    top.offset <- 226
     
     #if(is.null()) {return(NULL)}
     y_label <- get_y_label(y.value)
@@ -2644,7 +2646,7 @@ server <- function(input, output, session) {
                                     moving.avg.window=7) {
     pixelratio <- session$clientData$pixelratio
     left.offset <- 17
-    top.offset <- 210
+    top.offset <- 226
     
     y_label <- get_y_label(y.value)
     covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
