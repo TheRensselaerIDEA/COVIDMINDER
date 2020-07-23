@@ -1,12 +1,31 @@
 ---
 title: "HACL Project Status Notebook Template"
-subtitle: "HACL project name (e.g. COVIDMINDER)"
 author: "Student Name"
-date: "22 July 2020"
-output: 
+date: "23 July 2020"
+output:
   html_document:
-    toc: true
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: HACL project name (e.g. COVIDMINDER)
 ---
+
+## Instructions (DELETE BEFORE SUBMISSION)
+
+* This notebook is a template for your weekly project status assignment. Please use the sections starting with "Weekly Work Summary" as your outline for your submitted notebook. DELETE this "Instructions" section
+
+1. Create a new copy of this notebook in the `HACL-2020-Notebooks` sub-directory of your team's github repository using the following naming convention
+
+   * `hacl_rcsid_ddmmmyyyy.Rmd` and `hacl_rcsid_ddmmmyyyy.html`
+   * For example, `hacl_erickj4_23Jul2020.Rmd`
+
+2. Document the work you did on your assigned project this week using the outline below. As noted, you may include figures to illustrate your work
+
+3. Commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
+
+4. Submit a pull request; please notify Dr. Erickson if you don't see your notebook merged within one day
+
+See the Grading Rubric for guidance on how the contents of this notebook will be graded: https://bit.ly/32OeY44
 
 ## Weekly Work Summary	
 
@@ -37,18 +56,3 @@ output:
 * Provide illustrating figures and or tables
 * Make sure any source code for your figures and tables are embedded in notebook or provide github location
 
-## Other Project Status Notebook Guidance
-
-### Writing Quality	
-
-* Notebook includes narrative text between code blocks
-* Notebook includes title and date 
-*	Notebook includes author and project team
-* Notebook includes Table of Contents
-* Notebook is written with good grammar, spelling and style
-
-### Scientific Clarity and Reproducibility	
-
-* Reader can understand what is being done
-* Discussion of finding is clearly written.
-* Results can be reproduced from supplied info
