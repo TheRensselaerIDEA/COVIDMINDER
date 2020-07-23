@@ -116,8 +116,9 @@ p {
 
 
 .gg_tooltip {
-    background-color: #f7f7f7;
-    background-color: rgba(245, 245, 245, 0.85);
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
     padding: 0 10px;
     margin: 10px 0;
     line-height: 1.5em;
