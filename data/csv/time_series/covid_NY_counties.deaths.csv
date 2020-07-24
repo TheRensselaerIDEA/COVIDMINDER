@@ -1,6 +1,6 @@
 county,deaths
-New York State,32218
-Albany,111
+New York State,32229
+Albany,112
 Allegany,2
 Bronx,4818
 Broome,66
@@ -14,23 +14,23 @@ Columbia,47
 Cortland,1
 Delaware,4
 Dutchess,153
-Erie,586
+Erie,587
 Essex,0
 Franklin,1
-Fulton,26
+Fulton,27
 Genesee,6
 Greene,13
 Hamilton,1
 Herkimer,3
 Jefferson,0
-Kings,7211
+Kings,7212
 Lewis,5
 Livingston,4
 Madison,9
-Monroe,249
+Monroe,250
 Montgomery,4
 Nassau,2193
-New York,3141
+New York,3138
 Niagara,87
 Oneida,113
 Onondaga,169
@@ -59,6 +59,6 @@ Ulster,81
 Warren,30
 Washington,14
 Wayne,2
-Westchester,1440
+Westchester,1442
 Wyoming,5
 Yates,6
