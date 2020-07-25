@@ -332,13 +332,13 @@ covid_NY_counties.deaths <- covid_NY_TS_counties.deaths[,c(1,ncol(covid_NY_TS_co
 colnames(covid_NY_counties.deaths) <- c("county","deaths")
 
 # Make backup of existing WIDE data
-write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
-write_csv(read_csv("data/csv/time_series/covid_NY_counties.deaths.csv"),"data/csv/time_series/covid_NY_counties.deaths.csv.bak")
+#write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv.bak")
+#write_csv(read_csv("data/csv/time_series/covid_NY_counties.deaths.csv"),"data/csv/time_series/covid_NY_counties.deaths.csv.bak")
 
 # write out new WIDE dataframe to file system
 print(covid_NY_counties.deaths)
-write_csv(as.vector(covid_NY_TS_counties.deaths),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
-write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.deaths.csv")
+#write_csv(as.vector(covid_NY_TS_counties.deaths),"data/csv/time_series/covid_NY_TS_counties_wide.deaths.csv")
+#write_csv(covid_NY_counties.deaths,"data/csv/time_series/covid_NY_counties.deaths.csv")
 
 # LONG county ts
 covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties.deaths %>%
@@ -351,10 +351,10 @@ covid_NY_TS_counties_long.deaths$date <- parse_date_time(covid_NY_TS_counties_lo
 covid_NY_TS_counties_long.deaths$County <- factor(covid_NY_TS_counties_long.deaths$County)
 
 # Make backup of existing LONG data
-write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak")
+#write_csv(read_csv("data/csv/time_series/covid_NY_TS_counties_long.deaths.csv"),"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv.bak")
 
 # write out new LONG dataframe to file system
-write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
+#write_csv(covid_NY_TS_counties_long.deaths,"data/csv/time_series/covid_NY_TS_counties_long.deaths.csv")
 
 covid_NY_TS_counties_long.deaths <- covid_NY_TS_counties_long.deaths %>%
   dplyr::filter(deaths > 0)%>%
@@ -378,7 +378,7 @@ NY_counties_regions <- read_csv("data/csv/time_series/NY_counties_regions.csv")
 covid_NY_TS_plot.deaths <- dplyr::inner_join(covid_NY_TS_plot.deaths, as.data.frame(NY_counties_regions), by = c("County" = "County"))
 
 # Make backup of existing LONG data
-write_csv(read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv"),"data/csv/time_series/covid_NY_TS_plot.deaths.csv.bak")
+#write_csv(read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv"),"data/csv/time_series/covid_NY_TS_plot.deaths.csv.bak")
 
 # make sure we have the same version for our app plot!
-write_csv(covid_NY_TS_plot.deaths, "data/csv/time_series/covid_NY_TS_plot.deaths.csv")
+#write_csv(covid_NY_TS_plot.deaths, "data/csv/time_series/covid_NY_TS_plot.deaths.csv")
