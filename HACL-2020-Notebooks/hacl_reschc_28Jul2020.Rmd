@@ -1,5 +1,5 @@
 ---
-title: "HACL Project Status Notebook Template"
+title: "HACL Project Status Notebook"
 author: "Cole Reschke"
 date: "28 July 2020"
 output:
