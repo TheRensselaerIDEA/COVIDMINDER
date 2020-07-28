@@ -1,0 +1,24 @@
+---
+title: "HACL Project Status Notebook Template"
+author: "Cole Reschke"
+date: "28 July 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: HACL project name (e.g. COVIDMINDER)
+---
+
+## Weekly Work Summary	
+
+I haven't been able to add much to github in terms of code or ideas this past week. I have mostly been focused on understanding the existing code base of the project that I have been assigned to and am now working on developing documentation that will be shown on the COVIDMINDER Github wiki. I have had emergency personal conflicts over the past couple days so the documentation is still very much unfinished but it is my goal to have it ready to be reviewed by the end of this week. 
+
+## Personal Contribution	
+
+As explained above, I have been working on documentation for COVIDMINDER's codebase. This will build on the existing language in any README files that are scattered around the file tree. The reason I'm doing this is because if we believe that COVID will last for an extended period of time, it stands to reason that several different groups of students will find themselves working on the COVIDMINDER application. 
+
+## Discussion of Primary Findings 	
+
+I don't really know what to put here, I haven't been able to progress to looking for new findings and playing with new visualizations as my focus has been on understanding the codebase and documentation for my 1st week on the project.
+
