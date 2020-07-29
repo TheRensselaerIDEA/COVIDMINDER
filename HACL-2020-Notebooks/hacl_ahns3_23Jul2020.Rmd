@@ -1,0 +1,192 @@
+---
+title: "HACL Project Status Notebook Template"
+author: "Sarah Ahn"
+date: "23 July 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: COVIDMINDER
+---
+## Weekly Work Summary	
+
+* Summary of work since last week 
+I had switched to the COVIDMinder team. I spent the last week to familiarize myself with the code and utilize statistics with the data. I looked at COVID mortality rates for all of the New York counties. Then, I did a correlation test between the states' COVID mortality rate and chronic respiratory mortality rate.
+
+* Summary of github commits 
+I committed a notebook called ahns3-covid-notebook-haclCOPY under the hacl-ahns3 branch in the COVID-Notebooks github.
+    
+* List of presentations,  papers, or other outputs (with links)
+N/A
+
+* List of references (if necessary) 
+N/A
+
+* List of location(s) of all work submitted to github
+The practice notebook ahns3-covid-notebook-haclCOPY is submitted in the HACL-2020-Notebooks.
+
+* Indicate use of group shared code base
+I did not use a group shared code base for my analysis. I did look at app.R in the COVIDMINDER repository and state_report_cards.Rmd in the COVID-Notebooks repository. For this week, I will start to find ways on how I can extend these code.
+
+* Indicate which parts were done by you or as part of joint efforts
+My analysis was done by myself this week.
+
+## Personal Contribution	
+
+(NOTE:all code are comments as of now as the notebook will not knit)
+
+This is when I was familiarizing myself to RStudio and the COVIDMINDER repository.
+```{r}
+##load libraries
+library(ggplot2)
+library(tidyverse)
+library(usmap)
+
+##import state_covid_testing.csv data 
+#state_covid_testing
+
+##found the mean of positive tests and negative tests of the country
+#mean(state_covid_testing$positive)
+#mean(state_covid_testing$negative)
+```
+```{r,echo=FALSE}
+##positive cases vs testsper1000 graphs
+##positive vs testsper1000 with no legend
+#ggplot(state_covid_testing, aes(x = tests_per_1000, y = positive)) +
+#           geom_point()
+
+##positive vs testsper1000 with legend
+#ggplot(filter(state_covid_testing, NAME %in% c("Montana", "Alaska", "Idaho","Florida","Nebraska","Missouri","Texas","Mississppi","Tennessee","Alabama","New Jersey","Connecticut","New York","Massachusetts","New Hampshire","Maine","Vermont","Rhode Island","Illinois","Michigan")),
+#       aes(x=tests_per_1000,
+#           y=positive,
+#           color=NAME))+
+#  geom_point()
+
+```
+negaitve
+
+```{r, echo=FALSE}
+##negative cases vs testsper1000
+#ggplot(filter(state_covid_testing, NAME %in% c("Montana", "Alaska", "Idaho","Florida","Nebraska","Missouri","Texas","Mississppi","Tennessee","Alabama","New Jersey","Connecticut","New York","Massachusetts","New Hampshire","Maine","Vermont","Rhode Island","Illinois","Michigan")),
+#       aes(x=tests_per_1000,
+#           y=negative,
+#           color=NAME))+
+#  geom_point()
+```
+
+
+This code was used to find mortality rate per 100K for each NY county.
+```{r}
+##import data from covid_NY_counties.death.csv and NY_populations.csv
+#covid_NY_counties.deaths 
+#NY_populations 
+
+##merge the two data frames by county
+##this new data frame is called "myfulldata"
+#myfulldata = merge(covid_NY_counties_deaths , NY_populations, by.x="county", by.y="County")
+
+##divide the number of deaths with the county's population to find the mortality rate
+#mortality_rate_sa = myfulldata$deaths/myfulldata$Population
+#myfulldata$mortality_rate <- c(mortality_rate_sa)
+
+##plot of crude rate
+#ggplot(data=myfulldata, aes(x=county, y=mortality_rate))+geom_point()+  ylim(c(0, .004))
+
+##each mortality is mulitpled by 100K for easier comparison and added into the myfulldata data frame
+#stadper100000 = mortality_rate_sa *100000
+#myfulldata$mortality_per_100000 <- c(stadper100000)
+
+##plot of per100K rate with no excluded points
+#ggplot(data=myfulldata, aes(x=county, y=mortality_per_100000))+geom_point()+  ylim(c(0, 350))
+
+##plot of per100K rate with exclusion of points under the value 10
+#ggplot(data=myfulldata, aes(x=county, y=mortality_per_100000))+geom_point()+  ylim(c(10, 350))
+```
+This code was used to make a map of NY counties and its COVID mortality rate. The code will be fixed after reviewing the state report card notebook.
+```{r}
+##NY map for per100K rate
+#usmap::plot_usmap("counties", fill = "red", alpha = 0.25,include = c("NY"))
+```
+
+This code was used to find the quantile of COVID mortality rates. 
+```{r}
+##quantile of COVID mortality rate
+#qqnorm(myfulldata$mortality_per_100000)
+#qqline(myfulldata$mortality_per_100000, col="red")
+```
+
+This code was used to compare the COVID mortality rate and chronic repsiratory disease mortality rate for each NY county.
+```{r}
+##import data from chronicrespiratorydiseases_counties.csv
+##chronicrespiratorydiseases_counties 
+
+##merged data from chronicrespiratorydiseases_counties.csv into the data frame "myfulldata" by the FIPS and renamed the data frame as "myfulldataresp" 
+#myfulldataresp = merge(myfulldata , chronicrespiratorydiseases_counties, by="FIPS")
+
+##correlation test and plot between COVID mortality rate and respiratory diesease mortality rate
+#cor.test(myfulldataresp$mortality_per_100000,myfulldataresp$MortalityRate2014)
+#plot(myfulldataresp$MortalityRate2014, myfulldataresp$mortality_per_100000, xlab="Chronic Respiratory Disease Mortality Rate", ylab="COVID Mortality Rate")
+#lm(myfulldataresp$mortality_per_100000~myfulldataresp$MortalityRate2014)
+```
+
+This code was used to compare the COVID mortality rate and chronic repsiratory disease mortality rate for each state.
+```{r}
+##chronic respiratory disease vs COVID in states
+##merged data from covid_data_states.csv and chronicrespiratorydiseases_counties into a data frame called dataforstatesresp by the state names
+#dataforstatesresp = merge(covid_data_states, chronicrespiratorydiseases_counties, by.x="name", by.y="CNTY")
+
+##correlation test and plot between COVID mortality rate and respiratory diesease mortality rate
+#cor.test(dataforstatesresp$Mortality_rate,dataforstatesresp$MortalityRate2014)
+#plot(dataforstatesresp$MortalityRate2014, dataforstatesresp$Mortality_rate,xlab ="Chronic Respiratory Disease Mortality Rate", ylab ="COVID Mortality Rate")
+
+##plots comparing COVID mortality rate and respiratory diesease mortality rate of certain states
+
+##plot was done for practice
+#ggplot(filter(dataforstatesresp, name %in% c("Florida","California","New Jersey","Connecticut","New York")),aes(x=MortalityRate2014,  y=Mortality_rate,color=name))+geom_point()
+
+##plot of 10 best and worst states on COVIDMINDER
+#ggplot(filter(dataforstatesresp, name %in% c("Montana", "Alaska", "Idaho","Florida","Nebraska","Missouri","Texas","Mississppi","Tennessee","Alabama","New Jersey","Connecticut","New York","Massachusetts","New Hampshire","Maine","Vermont","Rhode Island","Illinois","Michigan")),
+#       aes(x=MortalityRate2014,
+#           y=Mortality_rate,
+#           color=name))+
+#  geom_point()
+
+##plot of 3 smallest and greatest state population
+#ggplot(filter(dataforstatesresp, name %in% c("Wyoming","Vermont","Alaska","California","Texas", "Florida")),
+#       aes(x=MortalityRate2014,
+#           y=Mortality_rate,
+#           color=name))+
+#  geom_point()
+```
+
+## Discussion of Primary Findings 	
+
+I wanted to see the relationship between the frequency of testing and the positive/negative cases. I plotted the ten best and worst states from COVIDMINDER. The x value was the test per 1000 people, and the y value was the number of positive/negative cases. There was the trend where more tests will mean that is more likely to get more positive cases. Some states where the lockdown was not heavily enforced, such as Florida, did not follow this trend since it had a low testing rate but a large of positive cases. The trend for negative cases was similar. The more tests, the more likely to get negative tests. A correlation was not done as this finding was for practice.
+
+I then looked for the mortality rate for the counties in New York. I combined the two data frames covid_NY_counties.deaths.csv and NY_populations.csv to be able to divide the number of deaths with the population for each county. Then, I multipled each rate by 100,000 for easier comparison. 
+
+I wanted to map New York with the various counties and its COVID mortality rate (per 100K). I tried the code above but will change my code after further review of the state report card notebook.
+
+Using the mortality (per 100K), I plotted the quantile of mortality rate with a Q-Q plot. I found that the distribution was not normal, and therefore nonparametric methods will be need to analysis the data.
+
+I also wanted to see the correlation between COVID mortality rates and chronic respiratory mortality rates for each NY county. I merged the data frame chronicrespiratorydiseases_counties.csv with the already combined data frame (that contains covid_NY_counties.deaths.csv and NY_populations.csv). The x-value is the chronic respiratory disease mortality rate, and the y-value is the COVID mortality rate. The correlation test yielded a strong negative correlation of -0.77. 
+
+To see if this trend is the same on a national scale, I combined the two data frames (covid_data_states.csv and chronicrespiratorydiseases_counties.csv). I did a correlation test and plotted it. There was a negative correlation of -0.47. However, on further analysis, this correlation is faulty since the two mortality rates are not on the same scale (per 100K). Therefore, during this week, this problem will be fixed.
+
+In addition, I plotted graphs of varying conditions to see how certain states can affect the trend between chronic respiratory disease mortality rate and the COVID mortality rate. The conditions were based on the smallest/largest population and the 10 best/worst states on COVIDMINDER. These graphs will have to be redone due to the problem mentioned above.
+
+
+
+    
+	
+
+
+
+
+
+
+
+
+
+
