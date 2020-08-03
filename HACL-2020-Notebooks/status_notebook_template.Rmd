@@ -1,49 +1,95 @@
 ---
 title: "HACL Project Status Notebook Template"
 author: "Student Name"
-date: "23 July 2020"
+date: "03 August 2020"
 output:
   html_document:
     toc: yes
   pdf_document:
     toc: yes
-subtitle: HACL project name (e.g. COVIDMINDER)
+subtitle: "HACL project name (One of: COVIDMINDER, COVID Twitter, COVID Wifi, COVID Contact Tracing)"
 ---
 
 ## Instructions (DELETE BEFORE SUBMISSION)
 
-* This notebook is a template for your weekly project status assignment. Please use the sections starting with "Weekly Work Summary" as your outline for your submitted notebook. DELETE this "Instructions" section
+* Use this notebook is a template for your weekly project status assignment. 
+* Use the sections starting with **Weekly Work Summary** as your outline for your submitted notebook.
+* Summarize ALL of your work in this notebook; **if you don't show and/or link to your work here, it doesn't exist for us!**
 
 1. Create a new copy of this notebook in the `HACL-2020-Notebooks` sub-directory of your team's github repository using the following naming convention
 
    * `hacl_rcsid_ddmmmyyyy.Rmd` and `hacl_rcsid_ddmmmyyyy.html`
    * For example, `hacl_erickj4_23Jul2020.Rmd`
 
-2. Document the work you did on your assigned project this week using the outline below. As noted, you may include figures to illustrate your work
+2. Document **all** the work you did on your assigned project this week **using the outline below.** 
 
-3. Commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
+3. You MUST include figures and/or tables to illustrate your work. *Screen shots are okay*, but include something!
 
-4. Submit a pull request; please notify Dr. Erickson if you don't see your notebook merged within one day
+4. You MUST include links to other important resources (knitted HTMl files, Shiny apps). See the guide below for help.
+
+5. Commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
+
+6. **Submit a pull request.** Please notify Dr. Erickson if you don't see your notebook merged within one day. 
+
+7. **DO NOT MERGE YOUR PULL REQUESTS YOURSELF!!**
 
 See the Grading Rubric for guidance on how the contents of this notebook will be graded: https://bit.ly/32OeY44
 
+## Guide to linking to external resources (DELETE BEFORE SUBMISSION)
+
+1. How to link to knitted notebooks (ie HTML) files
+
+* For files merged with the master on github, it's possible to provide a direct link in your notebook using the following pattern:
+
+    * Preface: `https://htmlpreview.github.io/? `
+    * Repo and branch: `https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/ `
+    * Directory and file: `HACL-2020-Notebooks/status_notebook_template.html'
+
+* Example for projects on the public github (COVIDMINDER, COVID Twitter):
+
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html 
+
+* Example for projects on the RPI github (COVID Contact Tracing, COVID WiFi):
+    
+https://htmlpreview.github.io/?https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/master/HACL-2020-Notebooks/status_notebook_template.html?token=AAAABG2FCVS45VKK5L4MIVC7GFBRA
+
+* **Note:** URLs for RPI github links **must** include an access token at the end. The easiest way to obtain this is to browse to the "raw" version of a merged file and view the URL. For example:
+
+    * Browse to the Contact Tracing repo: `https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/ `
+    * Browse to the subdirectory where your file is...
+    * Browse to the file...
+    * Click on the "Raw" link (upper right)
+    * Copy the link from the address bar. It should begin with `https://raw.github.rpi.edu/` (for RPI repo) and end with `?token=SOMECODE` (for RPI)
+    * Links to the public github won't have the token suffix
+
+
 ## Weekly Work Summary	
 
+**NOTE:** Follow an outline format; use bullets to express individual points. 
+
+* RCS ID: **Always** include this!
+* Project Name: **Always** include this!
 * Summary of work since last week 
+
+    * Describe the important aspects of what you worked on and accomplished
+    
 * Summary of github commits 
 
-    * include branch name
-    * include files
+    * include branch name(s)
+    * include browsable links to all external files on github
+    * Include links to shared Shiny apps
     
-* List of presentations,  papers, or other outputs (with links)
+* List of presentations,  papers, or other outputs
+
+    * Include browsable links
+    
 * List of references (if necessary) 
-* List of location(s) of all work submitted to github
-* Indicate use of group shared code base
-* Indicate which parts were done by you or as part of joint efforts
+* Indicate any use of group shared code base
+* Indicate which parts of your described work were done by you or as part of joint efforts
 
 ## Personal Contribution	
 
-* Clearly defined, unique contribution done by you (code, ideas, writing)
+* Clearly defined, unique contribution(s) done by you: code, ideas, writing...
 
 ## Discussion of Primary Findings 	
 
@@ -53,6 +99,29 @@ See the Grading Rubric for guidance on how the contents of this notebook will be
     * How did you go about finding it? 
     * What did you find?
 	
-* Provide illustrating figures and or tables
-* Make sure any source code for your figures and tables are embedded in notebook or provide github location
+* **Required:** Provide illustrating figures and/or tables
 
+    * Screen shots are acceptable 
+    * If your figures are "live," either include source code embedded in notebook or provide github location for their source scripts
+
+## NEW: Drafting your DAR/HACL Blog Post
+
+*Use this space to begin drafting your by-the-end-of-term Data INCITE blog post. As discussed in class, the "specs" for this post are...*
+
+* 400-600 words in length
+* Clear statement of your **lede** --- the first paragraph of any news story, containing the "Five W’s and H:" who, what, where, when, why, and how.
+
+    * Who: Who is the post about?
+    * What: What happened in the post?
+    * Where: Where did the work you’re writing about occur?
+    * When: When did it occur?
+    * Why: Why did this happen?
+    * How: How did this happen?
+
+* A screen shot or image that best illustrates your post
+* Answer Mary's "three questions":
+
+    * What did you want to know?
+    * How did you go about finding it?
+    * What did you find?
+    

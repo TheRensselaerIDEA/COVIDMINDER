@@ -11,7 +11,7 @@
 
 <meta name="author" content="Student Name" />
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2020-08-03" />
 
 <title>HACL Project Status Notebook Template</title>
 
@@ -364,25 +364,29 @@ summary {
 
 
 <h1 class="title toc-ignore">HACL Project Status Notebook Template</h1>
-<h3 class="subtitle">HACL project name (e.g. COVIDMINDER)</h3>
+<h3 class="subtitle">HACL project name (One of: COVIDMINDER, COVID Twitter, COVID Wifi, COVID Contact Tracing)</h3>
 <h4 class="author">Student Name</h4>
-<h4 class="date">23 July 2020</h4>
+<h4 class="date">03 August 2020</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
 <li><a href="#instructions-delete-before-submission">Instructions (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#guide-to-linking-to-external-resources-delete-before-submission">Guide to linking to external resources (DELETE BEFORE SUBMISSION)</a></li>
 <li><a href="#weekly-work-summary">Weekly Work Summary</a></li>
 <li><a href="#personal-contribution">Personal Contribution</a></li>
 <li><a href="#discussion-of-primary-findings">Discussion of Primary Findings</a></li>
+<li><a href="#new-drafting-your-darhacl-blog-post">NEW: Drafting your DAR/HACL Blog Post</a></li>
 </ul>
 </div>
 
 <div id="instructions-delete-before-submission" class="section level2">
 <h2>Instructions (DELETE BEFORE SUBMISSION)</h2>
 <ul>
-<li>This notebook is a template for your weekly project status assignment. Please use the sections starting with “Weekly Work Summary” as your outline for your submitted notebook. DELETE this “Instructions” section</li>
+<li>Use this notebook is a template for your weekly project status assignment.</li>
+<li>Use the sections starting with <strong>Weekly Work Summary</strong> as your outline for your submitted notebook.</li>
+<li>Summarize ALL of your work in this notebook; <strong>if you don’t show and/or link to your work here, it doesn’t exist for us!</strong></li>
 </ul>
 <ol style="list-style-type: decimal">
 <li><p>Create a new copy of this notebook in the <code>HACL-2020-Notebooks</code> sub-directory of your team’s github repository using the following naming convention</p>
@@ -390,32 +394,75 @@ summary {
 <li><code>hacl_rcsid_ddmmmyyyy.Rmd</code> and <code>hacl_rcsid_ddmmmyyyy.html</code></li>
 <li>For example, <code>hacl_erickj4_23Jul2020.Rmd</code></li>
 </ul></li>
-<li><p>Document the work you did on your assigned project this week using the outline below. As noted, you may include figures to illustrate your work</p></li>
+<li><p>Document <strong>all</strong> the work you did on your assigned project this week <strong>using the outline below.</strong></p></li>
+<li><p>You MUST include figures and/or tables to illustrate your work. <em>Screen shots are okay</em>, but include something!</p></li>
+<li><p>You MUST include links to other important resources (knitted HTMl files, Shiny apps). See the guide below for help.</p></li>
 <li><p>Commit the source (<code>.Rmd</code>) and knitted (<code>.html</code>) versions of your notebook and push to github</p></li>
-<li><p>Submit a pull request; please notify Dr. Erickson if you don’t see your notebook merged within one day</p></li>
+<li><p><strong>Submit a pull request.</strong> Please notify Dr. Erickson if you don’t see your notebook merged within one day.</p></li>
+<li><p><strong>DO NOT MERGE YOUR PULL REQUESTS YOURSELF!!</strong></p></li>
 </ol>
 <p>See the Grading Rubric for guidance on how the contents of this notebook will be graded: <a href="https://bit.ly/32OeY44" class="uri">https://bit.ly/32OeY44</a></p>
 </div>
+<div id="guide-to-linking-to-external-resources-delete-before-submission" class="section level2">
+<h2>Guide to linking to external resources (DELETE BEFORE SUBMISSION)</h2>
+<ol style="list-style-type: decimal">
+<li>How to link to knitted notebooks (ie HTML) files</li>
+</ol>
+<ul>
+<li><p>For files merged with the master on github, it’s possible to provide a direct link in your notebook using the following pattern:</p>
+<ul>
+<li>Preface: <code>https://htmlpreview.github.io/?</code></li>
+<li>Repo and branch: <code>https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/</code></li>
+<li>Directory and file: `HACL-2020-Notebooks/status_notebook_template.html’</li>
+</ul></li>
+<li><p>Example for projects on the public github (COVIDMINDER, COVID Twitter):</p></li>
+</ul>
+<p><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html" class="uri">https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html</a></p>
+<ul>
+<li>Example for projects on the RPI github (COVID Contact Tracing, COVID WiFi):</li>
+</ul>
+<p><a href="https://htmlpreview.github.io/?https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/master/HACL-2020-Notebooks/status_notebook_template.html?token=AAAABG2FCVS45VKK5L4MIVC7GFBRA" class="uri">https://htmlpreview.github.io/?https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/master/HACL-2020-Notebooks/status_notebook_template.html?token=AAAABG2FCVS45VKK5L4MIVC7GFBRA</a></p>
+<ul>
+<li><p><strong>Note:</strong> URLs for RPI github links <strong>must</strong> include an access token at the end. The easiest way to obtain this is to browse to the “raw” version of a merged file and view the URL. For example:</p>
+<ul>
+<li>Browse to the Contact Tracing repo: <code>https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/</code></li>
+<li>Browse to the subdirectory where your file is…</li>
+<li>Browse to the file…</li>
+<li>Click on the “Raw” link (upper right)</li>
+<li>Copy the link from the address bar. It should begin with <code>https://raw.github.rpi.edu/</code> (for RPI repo) and end with <code>?token=SOMECODE</code> (for RPI)</li>
+<li>Links to the public github won’t have the token suffix</li>
+</ul></li>
+</ul>
+</div>
 <div id="weekly-work-summary" class="section level2">
 <h2>Weekly Work Summary</h2>
+<p><strong>NOTE:</strong> Follow an outline format; use bullets to express individual points.</p>
 <ul>
-<li>Summary of work since last week</li>
+<li>RCS ID: <strong>Always</strong> include this!</li>
+<li>Project Name: <strong>Always</strong> include this!</li>
+<li><p>Summary of work since last week</p>
+<ul>
+<li>Describe the important aspects of what you worked on and accomplished</li>
+</ul></li>
 <li><p>Summary of github commits</p>
 <ul>
-<li>include branch name</li>
-<li>include files</li>
+<li>include branch name(s)</li>
+<li>include browsable links to all external files on github</li>
+<li>Include links to shared Shiny apps</li>
 </ul></li>
-<li>List of presentations, papers, or other outputs (with links)</li>
+<li><p>List of presentations, papers, or other outputs</p>
+<ul>
+<li>Include browsable links</li>
+</ul></li>
 <li>List of references (if necessary)</li>
-<li>List of location(s) of all work submitted to github</li>
-<li>Indicate use of group shared code base</li>
-<li><p>Indicate which parts were done by you or as part of joint efforts</p></li>
+<li>Indicate any use of group shared code base</li>
+<li><p>Indicate which parts of your described work were done by you or as part of joint efforts</p></li>
 </ul>
 </div>
 <div id="personal-contribution" class="section level2">
 <h2>Personal Contribution</h2>
 <ul>
-<li>Clearly defined, unique contribution done by you (code, ideas, writing)</li>
+<li>Clearly defined, unique contribution(s) done by you: code, ideas, writing…</li>
 </ul>
 </div>
 <div id="discussion-of-primary-findings" class="section level2">
@@ -427,8 +474,34 @@ summary {
 <li>How did you go about finding it?</li>
 <li>What did you find?</li>
 </ul></li>
-<li>Provide illustrating figures and or tables</li>
-<li><p>Make sure any source code for your figures and tables are embedded in notebook or provide github location</p></li>
+<li><p><strong>Required:</strong> Provide illustrating figures and/or tables</p>
+<ul>
+<li>Screen shots are acceptable</li>
+<li>If your figures are “live,” either include source code embedded in notebook or provide github location for their source scripts</li>
+</ul></li>
+</ul>
+</div>
+<div id="new-drafting-your-darhacl-blog-post" class="section level2">
+<h2>NEW: Drafting your DAR/HACL Blog Post</h2>
+<p><em>Use this space to begin drafting your by-the-end-of-term Data INCITE blog post. As discussed in class, the “specs” for this post are…</em></p>
+<ul>
+<li>400-600 words in length</li>
+<li><p>Clear statement of your <strong>lede</strong> — the first paragraph of any news story, containing the “Five W’s and H:” who, what, where, when, why, and how.</p>
+<ul>
+<li>Who: Who is the post about?</li>
+<li>What: What happened in the post?</li>
+<li>Where: Where did the work you’re writing about occur?</li>
+<li>When: When did it occur?</li>
+<li>Why: Why did this happen?</li>
+<li>How: How did this happen?</li>
+</ul></li>
+<li>A screen shot or image that best illustrates your post</li>
+<li><p>Answer Mary’s “three questions”:</p>
+<ul>
+<li>What did you want to know?</li>
+<li>How did you go about finding it?</li>
+<li>What did you find?</li>
+</ul></li>
 </ul>
 </div>
 
