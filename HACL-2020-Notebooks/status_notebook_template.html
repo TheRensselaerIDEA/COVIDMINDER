@@ -372,8 +372,10 @@ summary {
 
 <div id="TOC">
 <ul>
-<li><a href="#instructions-delete-before-submission">Instructions (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#instructions-delete-before-submission">Instructions (DELETE BEFORE SUBMISSION)</a><ul>
 <li><a href="#guide-to-linking-to-external-resources-delete-before-submission">Guide to linking to external resources (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#guide-to-linking-to-shiny-apps">Guide to linking to Shiny Apps</a></li>
+</ul></li>
 <li><a href="#weekly-work-summary">Weekly Work Summary</a></li>
 <li><a href="#personal-contribution">Personal Contribution</a></li>
 <li><a href="#discussion-of-primary-findings">Discussion of Primary Findings</a></li>
@@ -402,9 +404,8 @@ summary {
 <li><p><strong>DO NOT MERGE YOUR PULL REQUESTS YOURSELF!!</strong></p></li>
 </ol>
 <p>See the Grading Rubric for guidance on how the contents of this notebook will be graded: <a href="https://bit.ly/32OeY44" class="uri">https://bit.ly/32OeY44</a></p>
-</div>
-<div id="guide-to-linking-to-external-resources-delete-before-submission" class="section level2">
-<h2>Guide to linking to external resources (DELETE BEFORE SUBMISSION)</h2>
+<div id="guide-to-linking-to-external-resources-delete-before-submission" class="section level3">
+<h3>Guide to linking to external resources (DELETE BEFORE SUBMISSION)</h3>
 <ol style="list-style-type: decimal">
 <li>How to link to knitted notebooks (ie HTML) files</li>
 </ol>
@@ -433,6 +434,33 @@ summary {
 <li>Links to the public github won’t have the token suffix</li>
 </ul></li>
 </ul>
+</div>
+<div id="guide-to-linking-to-shiny-apps" class="section level3">
+<h3>Guide to linking to Shiny Apps</h3>
+<ul>
+<li><p>On the cluster, create a sub-directory called <code>ShinyApps</code> in your home directory</p>
+<ul>
+<li>In RStudio in the <strong>Terminal</strong> tab, <code>cd ~</code></li>
+<li>Then <code>mkdir ShinyApps</code></li>
+<li>You only need to do this once</li>
+</ul></li>
+<li><p>In your new <code>ShinyApps</code> sub-directory, create a sub-directory to contain your app</p>
+<ul>
+<li>In the <strong>Terminal</strong> tab, <code>cd ~/ShinyApps</code></li>
+<li>Then <code>mkdir yourcoolapp</code> (if <code>yourcoolapp</code> is the name of your app)</li>
+<li>Then copy all of the files associated with your app (esp. the <code>app.R</code>) in that directory</li>
+</ul></li>
+<li><p>Alternatively, you can create a symbolic link in that directory, “pointing” to your working directory. In this way your shared app will always be up-to-date.</p>
+<ul>
+<li>In the <strong>Terminal</strong> tab, <code>cd ~/ShinyApps</code></li>
+<li>Then (for example) <code>ln -s /home/yourrcs/yourappdirectory yourcoolapp</code></li>
+</ul></li>
+<li><p>You can now share your app on the RPI network using this syntax:</p>
+<ul>
+<li><code>http://lp01.idea.rpi.edu/shiny/yourrcs/yourcoolapp/</code></li>
+</ul></li>
+</ul>
+</div>
 </div>
 <div id="weekly-work-summary" class="section level2">
 <h2>Weekly Work Summary</h2>
