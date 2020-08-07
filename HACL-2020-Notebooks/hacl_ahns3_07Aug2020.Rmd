@@ -1,0 +1,178 @@
+---
+title: "HACL Project Status Notebook for Sarah Ahn (Week 4)"
+author: "Sarah Ahn"
+date: "07 August 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "COVIDMINDER"
+---
+
+## Instructions (DELETE BEFORE SUBMISSION)
+
+* Use this notebook is a template for your weekly project status assignment. 
+* Use the sections starting with **Weekly Work Summary** as your outline for your submitted notebook.
+* Summarize ALL of your work in this notebook; **if you don't show and/or link to your work here, it doesn't exist for us!**
+
+2. Document **all** the work you did on your assigned project this week 
+
+3. You MUST include figures and/or tables to illustrate your work. 
+
+4. You MUST include links to other important resources (knitted HTMl files, Shiny apps).
+
+5. Commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
+
+6. **Submit a pull request.** Please notify Dr. Erickson if you don't see your notebook merged within one day. 
+
+### Guide to linking to external resources (DELETE BEFORE SUBMISSION)
+
+1. How to link to knitted notebooks (ie HTML) files
+
+* For files merged with the master on github, it's possible to provide a direct link in your notebook using the following pattern:
+
+    * Preface: `https://htmlpreview.github.io/? `
+    * Repo and branch: `https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/ `
+    * Directory and file: `HACL-2020-Notebooks/status_notebook_template.html'
+
+* Example for projects on the public github (COVIDMINDER, COVID Twitter):
+
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html 
+
+
+I apologize for the late submission. I did not have power since Tuesday afternoon. I still do not have power and am spending a day at a place with internet. 
+
+## Weekly Work Summary	
+* RCS ID: ahns3
+* Project Name: COVIDMINDER
+* Summary of work since last week: 
+
+    * Edited correlation plot of COVID mortality rates for all of the New York counties for better readability (title, axis labels)
+    * Edited correlation plot of the states' COVID mortality rate and chronic respiratory mortality rate for better readability (title, axis labels, scale for COVID mortality rate)
+    * Created bar graph that shows the number of times each determinant appears as significant from the state GWAS
+    * Creating stacked bar graph that shows the number of times each state GWAS determinant as protective or destructive
+    * Beginning a rough draft of blog post
+
+* Summary of github commits: 
+
+    * Branch Name: hacl-ahns3
+    * Browsable Links to all external files on github
+      *NEED TO ADD MY FOLDER?FILES
+    
+* List of presentations,  papers, or other outputs:
+
+    * N/A
+    
+* List of references:
+    * N/A
+
+* Indicate any use of group shared code base:
+    * Preface:
+    * Repo and branch: https://github.com/TheRensselaerIDEA/COVID-Notebooks/tree/Social_Determinants
+    * Directory and file: ProtoNotebook.html
+    https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Notebooks/Social_Determinants/Notebooks/ProtoNotebook.html
+    
+ADD MY NOTEBOOKS
+
+* Indicate which parts of your described work were done by you or as part of joint efforts:
+    * ProtoNotebook.Rmd is the work of Tiburon Benavides.
+    * Determinants_Graphing.Rmd and Determinants_Stacked_Bar.Rmd include the code from ProtoNotebook, but the analysis is my work.
+
+## Personal Contribution	
+* Code in ahns3-Week_Graphs.Rmd
+  * Plot of COVID Mortality Rates for all of the New York Counties:
+    * This code was used to find the COVID mortality rate for each NY county.
+    * Code:
+      * covid_NY_counties_deaths <- read.csv(file.choose())
+      * NY_populations <- read.csv("NY_population.csv")
+      * myfulldata = merge(covid_NY_counties_deaths , NY_populations, by.x="county", by.y="County")
+      * mortality_rate_sa = myfulldata$deaths/myfulldata$Population
+      * myfulldata$mortality_rate <- c(mortality_rate_sa)
+      * ggplot(data=myfulldata, aes(x=county, y=mortality_rate))+geom_point()+  ylim(c(0, .004))+xlab("NY Counties")+ ylab ("Crude COVID Mortality Rate")+ ggtitle("Crude COVID Mortality Rate for Every NY County")
+      * stadper100000 = mortality_rate_sa *100000
+      * myfulldata$mortality_per_100000 <- c(stadper100000)
+      * ggplot(data=myfulldata, aes(x=county, y=mortality_per_100000))+geom_point()+  ylim(c(0, 350))+xlab("NY Counties")+ ylab ("COVID Mortality Rate (per 100K)")+ ggtitle("COVID Mortality Rate (per 100K) for Every NY County")
+      *ggplot(data=myfulldata, aes(x=county, y=mortality_per_100000))+geom_point()+  ylim(c(10, 350))+xlab("NY Counties")+ ylab ("COVID Mortality Rate (per 100K)")+ ggtitle("COVID Mortality Rate (per 100K) for NY Counties with Rates Greater Than 10")
+
+  * Correlation Plot of COVID Mortality Rate and Chronic Repsiratory Disease Mortality Rate for each NY County
+    * This code was used to compare the COVID mortality rate and chronic repsiratory disease mortality rate for each NY county.
+    * Code:
+      * chronicrespiratorydiseases_counties 
+      * myfulldataresp = merge(myfulldata , chronicrespiratorydiseases_counties, by="FIPS")
+      * cor.test(myfulldataresp$mortality_per_100000,myfulldataresp$MortalityRate2014)
+      * plot(myfulldataresp$MortalityRate2014, myfulldataresp$mortality_per_100000, xlab="Chronic Respiratory Disease Mortality Rate", ylab="COVID Mortality Rate", main="COVID Mortality Rate VS Chronic Respiratory Disease Mortality Rate")
+      * lm(myfulldataresp$mortality_per_100000~myfulldataresp$MortalityRate2014)
+* Code in Determinants_Graphing.Rmd
+  * This code was used to find number of occurrences of each significant determinant in the state GWAS.
+  * Code:
+    * prtdescombined = rbind(dataAL , dataAR,dataAZ,dataCA, dataCO, dataFL, dataGA, dataIA, dataID,dataIL,dataIN,dataKS, dataKY, dataLA, dataMI, dataMN, dataMO, dataMS, dataMT, dataNC, dataND, dataNE, dataNJ, dataNM, dataNY, dataOH,dataOK,dataOR,dataPA,dataSC,dataSD, dataTN,dataTX,dataVA,dataWA,dataWI,dataWV)
+    * count_confirmed<- ldply(prtdescombined,function(c) sum(c=="Confirmed"))
+      * 24 more lines similar to one above
+    * significantdeterminants <- data.frame (determinants  = c("Confirmed", "Active", "Case Fatality Rate","Teen Birth Rate","Overcrowding","% less than 18 years of age","% Not Proficient in English","Pediatric Asthma","% Uninsured 1","% Uninsured 2","Mean Winter Temperature","Mean Summer Temperature","Long_","Older Percent","Mid Percent","Years of Potential Life Lost Rate","% Low Birthweight","% Smokers","pct_obesity","% Physically Inactive","% Excessive Drinking","% Driving Deaths with Alcohol Involvement","Teen Birth Rate (Hispanic)","Teen Birth Rate (White)","Incidence Rate"),
+                                       frequency = c("10", "8", "21", "2", "3", "4", "6", "4", "5","3","3","4","7","3","3","1","4","2","2","1","3","1","1","1","22")
+                                       #prtordes=  
+                                         )
+    * significantdeterminants$frequency <- as.numeric(as.character(significantdeterminants$frequency))
+    * p <- ggplot(significantdeterminants, aes(x=determinants, y=frequency)) + 
+  geom_bar(stat = "identity") +
+  xlab("Significant Determinants") + ylab("Frequency") + ggtitle("Frequency of Significant Determinants")
+    * p + coord_flip()
+*Code in Determinants_Stacked_Bar.Rmd
+  *This code was used for a more time efficient analysis of all of the state GWAS and to create a new data frame to allow the separation of protective and destructive occurrences.
+  *Code:
+    *
+
+
+
+
+
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * What did you want to know? 
+    * How did you go about finding it? 
+    * What did you find?
+	
+* **Required:** Provide illustrating figures and/or tables
+
+    * Screen shots are acceptable 
+    * If your figures are "live," either include source code embedded in notebook or provide github location for their source scripts
+
+I wanted to see the relationship between the frequency of testing and the positive/negative cases. I plotted the ten best and worst states from COVIDMINDER. The x value was the test per 1000 people, and the y value was the number of positive/negative cases. There was the trend where more tests will mean that is more likely to get more positive cases. Some states where the lockdown was not heavily enforced, such as Florida, did not follow this trend since it had a low testing rate but a large of positive cases. The trend for negative cases was similar. The more tests, the more likely to get negative tests. A correlation was not done as this finding was for practice.
+
+I then looked for the mortality rate for the counties in New York. I combined the two data frames covid_NY_counties.deaths.csv and NY_populations.csv to be able to divide the number of deaths with the population for each county. Then, I multipled each rate by 100,000 for easier comparison. 
+
+I wanted to map New York with the various counties and its COVID mortality rate (per 100K). I tried the code above but will change my code after further review of the state report card notebook.
+
+Using the mortality (per 100K), I plotted the quantile of mortality rate with a Q-Q plot. I found that the distribution was not normal, and therefore nonparametric methods will be need to analysis the data.
+
+I also wanted to see the correlation between COVID mortality rates and chronic respiratory mortality rates for each NY county. I merged the data frame chronicrespiratorydiseases_counties.csv with the already combined data frame (that contains covid_NY_counties.deaths.csv and NY_populations.csv). The x-value is the chronic respiratory disease mortality rate, and the y-value is the COVID mortality rate. The correlation test yielded a strong negative correlation of -0.77. 
+
+To see if this trend is the same on a national scale, I combined the two data frames (covid_data_states.csv and chronicrespiratorydiseases_counties.csv). I did a correlation test and plotted it. There was a negative correlation of -0.47. However, on further analysis, this correlation is faulty since the two mortality rates are not on the same scale (per 100K). Therefore, during this week, this problem will be fixed.
+
+In addition, I plotted graphs of varying conditions to see how certain states can affect the trend between chronic respiratory disease mortality rate and the COVID mortality rate. The conditions were based on the smallest/largest population and the 10 best/worst states on COVIDMINDER. These graphs will have to be redone due to the problem mentioned above.
+
+## Drafting your DAR/HACL Blog Post
+
+*Use this space to begin drafting your by-the-end-of-term Data INCITE blog post. As discussed in class, the "specs" for this post are...*
+
+* 400-600 words in length
+* Clear statement of your **lede** --- the first paragraph of any news story, containing the "Five W’s and H:" who, what, where, when, why, and how.
+
+    * Who: Who is the post about?
+    * What: What happened in the post?
+    * Where: Where did the work you’re writing about occur?
+    * When: When did it occur?
+    * Why: Why did this happen?
+    * How: How did this happen?
+
+* A screen shot or image that best illustrates your post
+* Answer Mary's "three questions":
+
+    * What did you want to know?
+    * How did you go about finding it?
+    * What did you find?
+    
