@@ -1,0 +1,62 @@
+---
+title: "ahns3-State_GWAS_Working_Determinants_Graphing"
+output: html_notebook
+---
+
+WORKING CODE
+
+```{r}
+library(plyr)
+library(ggplot2)
+library(dbplyr)
+library(reshape2)
+library(tidyr)
+
+#states with not enough data: UT,VT,DE,ME,MD,MA,NH,NJ
+#states that did not work with above code: AK,MI,RI,WY
+prtdescombined = rbind(dataAL , dataAR,dataAZ,dataCA, dataCO, dataFL, dataGA, dataIA, dataID,dataIL,dataIN,dataKS, dataKY, dataLA, dataMI, dataMN, dataMO, dataMS, dataMT, dataNC, dataND, dataNE, dataNJ, dataNM, dataNY, dataOH,dataOK,dataOR,dataPA,dataSC,dataSD, dataTN,dataTX,dataVA,dataWA,dataWI,dataWV)
+
+#Confirmed
+determinant.confirmed = subset(prtdescombined, y == "Confirmed")
+count.confirmed<- count(determinant.confirmed$x, "1.820609")
+#countofconfirmed<- ldply(determinant.confirmed,function(c) sum(c=="1.519982"))
+#frequency.confirmed = countofconfirmed[-c(2, 3),]
+#determinant.confirmed$Frequency = frequency.confirmed$V1
+determinant.confirmed<- cbind(determinant.confirmed, count.confirmed[,2, drop=FALSE])
+
+#Active
+determinant.active = subset(prtdescombined, y == "Active")
+count.active<- count(determinant.active$x, "	1.790520")
+determinant.active<- cbind(determinant.active, count.active[,2, drop=FALSE])
+
+#Case Fatality Ratio
+determinant.case.fatality = subset(prtdescombined, y == "Case.Fatality_Ratio")
+count.case.fatality<- count(determinant.case.fatality$x, "2.239948")
+determinant.case.fatality<- cbind(determinant.case.fatality, count.case.fatality[,2, drop=FALSE])
+
+#Teen Birth
+determinant.teenbirth = subset(prtdescombined, y == "Teen Birth Rate")
+count.teenbirth<- count(determinant.teenbirth$x, "1.5191014")
+determinant.teenbirth<- cbind(determinant.teenbirth, count.teenbirth[,2, drop=FALSE])
+
+
+#data frame of combined sub data frames
+significant.determinants.combined<-rbind(determinant.confirmed,determinant.active,determinant.case.fatality,determinant.teenbirth)
+
+#combineddata$Frequency <- as.factor(as.character(combineddata$Frequency))
+
+#graphofdeterminants <- ggplot(data=combineddata, aes(x=y, y=freq, fill=Effect on MRR)) +
+#  geom_bar(stat = "identity", position="stack")+ 
+#  coord_flip()
+#graphofdeterminants
+
+#Working Graph
+ggplot(significant.determinants.combined) +
+  geom_bar(aes(x = y, fill = `Effect on MRR`)) +
+  ggtitle("Frequency of State GWAS Determinants") +
+  xlab("Determinants") +
+  ylab("Frequency") +
+  coord_flip()
+
+```
+

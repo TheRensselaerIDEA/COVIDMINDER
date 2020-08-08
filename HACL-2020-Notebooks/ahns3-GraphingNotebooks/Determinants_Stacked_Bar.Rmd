@@ -1,0 +1,1393 @@
+---
+title: "ahns-Determinants_Stacked_Bar"
+output: html_notebook
+---
+I abandoned my work in the Determinants_Graphing.Rmd because of time deficiency. Also, the data frame does not allow me to separate what determinants showed up as destructive and protective.
+This time, I counted the frequency of protective and destructive for each determinant and added them to the data frame.
+
+creating new data frame with determinants, number of occurrence, and frequency of protective/destructive
+```{r}
+library(plyr)
+library(ggplot2)
+library(dbplyr)
+library(reshape2)
+library(tidyr)
+
+#states with not enough data: UT,VT,DE,ME,MD,MA,NH,NJ
+#states that did not work with above code: AK,MI,RI,WY
+
+#combined all of state data into a data frame called "prtdescombined"
+#same data frame used in Determinants_Graphing.Rmd
+prtdescombined = rbind(dataAL , dataAR,dataAZ,dataCA, dataCO, dataFL, dataGA, dataIA, dataID,dataIL,dataIN,dataKS, dataKY, dataLA, dataMI, dataMN, dataMO, dataMS, dataMT, dataNC, dataND, dataNE, dataNJ, dataNM, dataNY, dataOH,dataOK,dataOR,dataPA,dataSC,dataSD, dataTN,dataTX,dataVA,dataWA,dataWI,dataWV)
+
+#SubDataFrames for each Significant Determinant Pattern
+#1st line: create detdeterminant_name data frame by selecting only that determinant in the prtdescombined dataframe
+#2nd line: create count_determinant_name data frame by counting number of determinant's occurrence 
+#3rd line: create freqdeterminant_name data frame by deleting rows 2 and 3 in the count_determinant_name data frame
+#4th line: create new column with name of determinants in freqdeterminant_name data frame
+#5th line: create prtdeterminant_name data frame by coutning number of protective occurrences of determinant
+#6th line: create freqprtdeterminant_name data frame by deleting rows 1 and 2 in the prtdeterminant_name data frame
+#7th line: add new column with frequency of protective occurrences in freqdeterminant_name data frame
+#8th line: create desdeterminant_name data frame by coutning number of destructive occurrences of determinant
+#9th line: create freqdesdeterminant_name data frame by deleting rows 1 and 2 in the desdeterminant_name data frame
+#10th line: add new column with frequency of destructive occurrences in freqdeterminant_name data frame
+
+#Confirmed 
+detconfirmed = subset(prtdescombined, y == "Confirmed")
+count_confirmed<- ldply(detconfirmed,function(c) sum(c=="Confirmed"))
+freqconfirmed = count_confirmed[-c(2, 3),]
+freqconfirmed$Determinants = "Confirmed"
+prtconfirmed = ldply(detconfirmed, function(c) sum(c == "Protective"))
+freqprtconfirmed = prtconfirmed[-c(1,2),]
+freqconfirmed$Protective = freqprtconfirmed
+desconfirmed = ldply(detconfirmed, function(c) sum(c == "Destructive"))                
+freqdesconfirmed = desconfirmed[-c(1,2),]
+freqconfirmed$Destructive = freqdesconfirmed
+
+#Active
+detactive = subset(prtdescombined, y == "Active")
+count_active<- ldply(detactive,function(c) sum(c=="Active"))
+freqactive = count_active[-c(2, 3),]
+freqactive$Determinants= "Active"
+prtactive = ldply(detactive, function(c) sum(c == "Protective"))
+freqprtactive = prtactive[-c(1,2),]
+freqactive$Protective = freqprtactive
+desactive = ldply(detactive, function(c) sum(c == "Destructive"))                
+freqdesactive = desactive[-c(1,2),]
+freqactive$Destructive = freqdesactive
+
+#Case Fatality Ratio
+detcase.fatality = subset(prtdescombined, y == "Case.Fatality_Ratio")
+count_case.fatality<- ldply(detcase.fatality,function(c) sum(c=="Case.Fatality_Ratio"))
+freqcase.fatality = count_case.fatality[-c(2, 3),]
+freqcase.fatality$Determinants= "Case Fatality Ratio"
+prtcase.fatality = ldply(detcase.fatality, function(c) sum(c == "Protective"))
+freqprtcase.fatality = prtcase.fatality[-c(1,2),]
+freqcase.fatality$Protective = freqprtcase.fatality
+descase.fatality = ldply(detcase.fatality, function(c) sum(c == "Destructive"))                
+freqdescase.fatality = descase.fatality[-c(1,2),]
+freqcase.fatality$Destructive = freqdescase.fatality
+
+#Teen Birth Rate
+detteenbirth = subset(prtdescombined, y == "Teen Birth Rate")
+count_teenbirth<- ldply(detteenbirth,function(c) sum(c=="Teen Birth Rate"))
+freqteenbirth = count_teenbirth[-c(2, 3),]
+freqteenbirth$Determinants= "Teen Birth Rate"
+prtteenbirth = ldply(detteenbirth, function(c) sum(c == "Protective"))
+freqprtteenbirth = prtteenbirth[-c(1,2),]
+freqteenbirth$Protective = freqprtteenbirth
+desteenbirth = ldply(detteenbirth, function(c) sum(c == "Destructive"))                
+freqdesteenbirth = desteenbirth[-c(1,2),]
+freqteenbirth$Destructive = freqdesteenbirth
+
+#Overcrowding
+detovercrowding = subset(prtdescombined, y == "Overcrowding")
+count_overcrowding<- ldply(detovercrowding,function(c) sum(c=="Overcrowding"))
+freqovercrowding = count_overcrowding[-c(2, 3),]
+freqovercrowding$Determinants= "Overcrowding"
+prtovercrowding = ldply(detovercrowding, function(c) sum(c == "Protective"))
+freqprtovercrowding = prtovercrowding[-c(1,2),]
+freqovercrowding$Protective = freqprtovercrowding
+desovercrowding = ldply(detovercrowding, function(c) sum(c == "Destructive"))                
+freqdesovercrowding = desovercrowding[-c(1,2),]
+freqovercrowding$Destructive = freqdesovercrowding
+
+#% less than 18 years of age
+detlessthan18 = subset(prtdescombined, y == "% less than 18 years of age")
+count_lessthan18<- ldply(detlessthan18,function(c) sum(c=="% less than 18 years of age"))
+freqlessthan18 = count_lessthan18[-c(2, 3),]
+freqlessthan18$Determinants= "% less than 18 years of age"
+prtlessthan18 = ldply(detlessthan18, function(c) sum(c == "Protective"))
+freqprtlessthan18 = prtlessthan18[-c(1,2),]
+freqlessthan18$Protective = freqprtlessthan18
+deslessthan18 = ldply(detlessthan18, function(c) sum(c == "Destructive"))                
+freqdeslessthan18 = deslessthan18[-c(1,2),]
+freqlessthan18$Destructive = freqdeslessthan18
+
+#% Not Proficient in English
+detnotproficientinenglish = subset(prtdescombined, y == "% Not Proficient in English")
+count_notproficientinenglish<- ldply(detnotproficientinenglish,function(c) sum(c=="% Not Proficient in English"))
+freqnotproficientinenglish = count_notproficientinenglish[-c(2, 3),]
+freqnotproficientinenglish$Determinants= "% Not Proficient in English"
+prtnotproficientinenglish = ldply(detnotproficientinenglish, function(c) sum(c == "Protective"))
+freqprtnotproficientinenglish = prtnotproficientinenglish[-c(1,2),]
+freqnotproficientinenglish$Protective = freqprtnotproficientinenglish
+desnotproficientinenglish = ldply(detnotproficientinenglish, function(c) sum(c == "Destructive"))
+freqdesnotproficientinenglish = desnotproficientinenglish[-c(1,2),]
+freqnotproficientinenglish$Destructive = freqdesnotproficientinenglish
+
+#Pediatric Asthma
+detpediatricasthma = subset(prtdescombined, y == "PediatricAsthma")
+count_pediatricasthma<- ldply(detpediatricasthma,function(c) sum(c=="PediatricAsthma"))
+freqpediatricasthma = count_pediatricasthma[-c(2, 3),]
+freqpediatricasthma$Determinants= "Pediatric Asthma"
+prtpediatricasthma = ldply(detpediatricasthma, function(c) sum(c == "Protective"))
+freqprtpediatricasthma = prtpediatricasthma[-c(1,2),]
+freqpediatricasthma$Protective = freqprtpediatricasthma
+despediatricasthma = ldply(detpediatricasthma, function(c) sum(c == "Destructive"))             
+freqdespediatricasthma = despediatricasthma[-c(1,2),]
+freqpediatricasthma$Destructive = freqdespediatricasthma
+
+#% Uninsured 1
+detuninsured1 = subset(prtdescombined, y == "% Uninsured_1")
+count_uninsured1<- ldply(detuninsured1,function(c) sum(c=="% Uninsured_1"))
+frequninsured1 = count_uninsured1[-c(2, 3),]
+frequninsured1$Determinants= "% Uninsured 1"
+prtuninsured1 = ldply(detuninsured1, function(c) sum(c == "Protective"))
+freqprtuninsured1 = prtuninsured1[-c(1,2),]
+frequninsured1$Protective = freqprtuninsured1
+desuninsured1 = ldply(detuninsured1, function(c) sum(c == "Destructive"))      
+freqdesuninsured1 = desuninsured1[-c(1,2),]
+frequninsured1$Destructive = freqdesuninsured1
+
+#% Uninsured 2
+detuninsured2 = subset(prtdescombined, y == "% Uninsured_2")
+count_uninsured2<- ldply(detuninsured2,function(c) sum(c=="% Uninsured_2"))
+frequninsured2 = count_uninsured2[-c(2, 3),]
+frequninsured2$Determinants= "% Uninsured 2"
+prtuninsured2 = ldply(detuninsured2, function(c) sum(c == "Protective"))
+freqprtuninsured2 = prtuninsured2[-c(1,2),]
+frequninsured2$Protective = freqprtuninsured2
+desuninsured2 = ldply(detuninsured2, function(c) sum(c == "Destructive"))      
+freqdesuninsured2 = desuninsured2[-c(1,2),]
+frequninsured2$Destructive = freqdesuninsured2
+
+#Mean Winter Temperature
+detmeanwintertemp = subset(prtdescombined, y == "mean_winter_temp")
+count_meanwintertemp<- ldply(detmeanwintertemp,function(c) sum(c=="mean_winter_temp"))
+freqmeanwintertemp = count_meanwintertemp[-c(2, 3),]
+freqmeanwintertemp$Determinants= "Mean Winter Temperature"
+prtmeanwintertemp = ldply(detmeanwintertemp, function(c) sum(c == "Protective"))
+freqprtmeanwintertemp = prtmeanwintertemp[-c(1,2),]
+freqmeanwintertemp$Protective = freqprtmeanwintertemp
+desmeanwintertemp = ldply(detmeanwintertemp, function(c) sum(c == "Destructive"))      
+freqdesmeanwintertemp = desmeanwintertemp[-c(1,2),]
+freqmeanwintertemp$Destructive = freqdesmeanwintertemp
+
+#Mean Summer Temperature
+detmeansummertemp = subset(prtdescombined, y == "mean_summer_temp")
+count_meansummertemp<- ldply(detmeansummertemp,function(c) sum(c=="mean_summer_temp"))
+freqmeansummertemp = count_meansummertemp[-c(2, 3),]
+freqmeansummertemp$Determinants= "Mean Summer Temperature"
+prtmeansummertemp = ldply(detmeansummertemp, function(c) sum(c == "Protective"))
+freqprtmeansummertemp = prtmeansummertemp[-c(1,2),]
+freqmeansummertemp$Protective = freqprtmeansummertemp
+desmeansummertemp = ldply(detmeansummertemp, function(c) sum(c == "Destructive"))      
+freqdesmeansummertemp = desmeansummertemp[-c(1,2),]
+freqmeansummertemp$Destructive = freqdesmeansummertemp
+
+#Longitude
+detlong = subset(prtdescombined, y == "Long_")
+count_long<- ldply(detlong,function(c) sum(c=="Long_"))
+freqlong = count_long[-c(2, 3),]
+freqlong$Determinants= "Long_"
+prtlong = ldply(detlong, function(c) sum(c == "Protective"))
+freqprtlong = prtlong[-c(1,2),]
+freqlong$Protective = freqprtlong
+deslong = ldply(detlong, function(c) sum(c == "Destructive"))      
+freqdeslong = deslong[-c(1,2),]
+freqlong$Destructive = freqdeslong
+
+#Older Percent
+detolderpecent = subset(prtdescombined, y == "older_pecent")
+count_olderpecent<- ldply(detolderpecent,function(c) sum(c=="older_pecent"))
+freqolderpecent = count_olderpecent[-c(2, 3),]
+freqolderpecent$Determinants= "Older Percent"
+prtolderpecent = ldply(detolderpecent, function(c) sum(c == "Protective"))
+freqprtolderpecent = prtolderpecent[-c(1,2),]
+freqolderpecent$Protective = freqprtolderpecent
+desolderpecent = ldply(detolderpecent, function(c) sum(c == "Destructive"))      
+freqdesolderpecent = desolderpecent[-c(1,2),]
+freqolderpecent$Destructive = freqdesolderpecent
+
+#Mid Percent
+detmidpecent = subset(prtdescombined, y == "mid_pecent")
+count_midpecent<- ldply(detmidpecent,function(c) sum(c=="mid_pecent"))
+freqmidpecent = count_midpecent[-c(2, 3),]
+freqmidpecent$Determinants= "Mid Percent"
+prtmidpecent = ldply(detmidpecent, function(c) sum(c == "Protective"))
+freqprtmidpecent = prtmidpecent[-c(1,2),]
+freqmidpecent$Protective = freqprtmidpecent
+desmidpecent = ldply(detmidpecent, function(c) sum(c == "Destructive"))      
+freqdesmidpecent = desmidpecent[-c(1,2),]
+freqmidpecent$Destructive = freqdesmidpecent
+
+#Years of Potential Life Lost Rate
+detyearspotentiallifelostrate = subset(prtdescombined, y == "Years of Potential Life Lost Rate")
+count_yearspotentiallifelostrate<- ldply(detyearspotentiallifelostrate,function(c) sum(c=="Years of Potential Life Lost Rate"))
+freqyearspotentiallifelostrate = count_yearspotentiallifelostrate[-c(2, 3),]
+freqyearspotentiallifelostrate$Determinants= "Years of Potential Life Lost Rate"
+prtyearspotentiallifelostrate = ldply(detyearspotentiallifelostrate, function(c) sum(c == "Protective"))
+freqprtyearspotentiallifelostrate = prtyearspotentiallifelostrate[-c(1,2),]
+freqyearspotentiallifelostrate$Protective = freqprtyearspotentiallifelostrate
+desyearspotentiallifelostrate = ldply(detyearspotentiallifelostrate, function(c) sum(c == "Destructive"))      
+freqdesyearspotentiallifelostrate = desyearspotentiallifelostrate[-c(1,2),]
+freqyearspotentiallifelostrate$Destructive = freqdesyearspotentiallifelostrate
+
+detlowbirthweight = subset(prtdescombined, y == "% Low Birthweight")
+count_lowbirthweight<- ldply(detlowbirthweight,function(c) sum(c=="% Low Birthweight"))
+freqlowbirthweight = count_lowbirthweight[-c(2, 3),]
+freqlowbirthweight$Determinants= "% Low Birthweight"
+prtlowbirthweight = ldply(detlowbirthweight, function(c) sum(c == "Protective"))
+freqprtlowbirthweight = prtlowbirthweight[-c(1,2),]
+freqlowbirthweight$Protective = freqprtlowbirthweight
+deslowbirthweight = ldply(detlowbirthweight, function(c) sum(c == "Destructive"))      
+freqdeslowbirthweight = deslowbirthweight[-c(1,2),]
+freqlowbirthweight$Destructive = freqdeslowbirthweight
+
+detsmokers = subset(prtdescombined, y == "% Smokers")
+count_smokers<- ldply(detsmokers,function(c) sum(c=="% Smokers"))
+freqsmokers = count_smokers[-c(2, 3),]
+freqsmokers$Determinants= "% Smokers"
+prtsmokers = ldply(detsmokers, function(c) sum(c == "Protective"))
+freqprtsmokers = prtsmokers[-c(1,2),]
+freqsmokers$Protective = freqprtsmokers
+dessmokers = ldply(detsmokers, function(c) sum(c == "Destructive"))      
+freqdessmokers = dessmokers[-c(1,2),]
+freqsmokers$Destructive = freqdessmokers
+
+detpct_obesity = subset(prtdescombined, y == "pct_obesity")
+count_pct_obesity<- ldply(detpct_obesity,function(c) sum(c=="pct_obesity"))
+freqpct_obesity = count_pct_obesity[-c(2, 3),]
+freqpct_obesity$Determinants= "pct_obesity"
+prtpct_obesity = ldply(detpct_obesity, function(c) sum(c == "Protective"))
+freqprtpct_obesity = prtpct_obesity[-c(1,2),]
+freqpct_obesity$Protective = freqprtpct_obesity
+despct_obesity = ldply(detpct_obesity, function(c) sum(c == "Destructive"))      
+freqdespct_obesity = despct_obesity[-c(1,2),]
+freqpct_obesity$Destructive = freqdespct_obesity
+
+detphysicallyinactive = subset(prtdescombined, y == "% Physically Inactive")
+count_physicallyinactive<- ldply(detphysicallyinactive,function(c) sum(c=="% Physically Inactive"))
+freqphysicallyinactive = count_physicallyinactive[-c(2, 3),]
+freqphysicallyinactive$Determinants= "% Physically Inactive"
+prtphysicallyinactive = ldply(detphysicallyinactive, function(c) sum(c == "Protective"))
+freqprtphysicallyinactive = prtphysicallyinactive[-c(1,2),]
+freqphysicallyinactive$Protective = freqprtphysicallyinactive
+desphysicallyinactive = ldply(detphysicallyinactive, function(c) sum(c == "Destructive"))      
+freqdesphysicallyinactive = desphysicallyinactive[-c(1,2),]
+freqphysicallyinactive$Destructive = freqdesphysicallyinactive
+
+detexcessivedrinking = subset(prtdescombined, y == "% Excessive Drinking")
+count_excessivedrinking<- ldply(detexcessivedrinking,function(c) sum(c=="% Excessive Drinking"))
+freqexcessivedrinking = count_excessivedrinking[-c(2, 3),]
+freqexcessivedrinking$Determinants= "% Excessive Drinking"
+prtexcessivedrinking = ldply(detexcessivedrinking, function(c) sum(c == "Protective"))
+freqprtexcessivedrinking = prtexcessivedrinking[-c(1,2),]
+freqexcessivedrinking$Protective = freqprtexcessivedrinking
+desexcessivedrinking = ldply(detexcessivedrinking, function(c) sum(c == "Destructive"))      
+freqdesexcessivedrinking = desexcessivedrinking[-c(1,2),]
+freqexcessivedrinking$Destructive = freqdesexcessivedrinking
+
+detdrivingalcohol = subset(prtdescombined, y == "% Driving Deaths with Alcohol Involvement")
+count_drivingalcohol<- ldply(detdrivingalcohol,function(c) sum(c=="% Driving Deaths with Alcohol Involvement"))
+freqdrivingalcohol = count_drivingalcohol[-c(2, 3),]
+freqdrivingalcohol$Determinants= "% Driving Deaths with Alcohol Involvement"
+prtdrivingalcohol = ldply(detdrivingalcohol, function(c) sum(c == "Protective"))
+freqprtdrivingalcohol = prtdrivingalcohol[-c(1,2),]
+freqdrivingalcohol$Protective = freqprtdrivingalcohol
+desdrivingalcohol = ldply(detdrivingalcohol, function(c) sum(c == "Destructive"))      
+freqdesdrivingalcohol = desdrivingalcohol[-c(1,2),]
+freqdrivingalcohol$Destructive = freqdesdrivingalcohol
+
+detteenbirthhispanic = subset(prtdescombined, y == "Teen Birth Rate (Hispanic)")
+count_teenbirthhispanic<- ldply(detteenbirthhispanic,function(c) sum(c=="Teen Birth Rate (Hispanic)"))
+freqteenbirthhispanic = count_teenbirthhispanic[-c(2, 3),]
+freqteenbirthhispanic$Determinants= "Teen Birth Rate (Hispanic)"
+prtteenbirthhispanic = ldply(detteenbirthhispanic, function(c) sum(c == "Protective"))
+freqprtteenbirthhispanic = prtteenbirthhispanic[-c(1,2),]
+freqteenbirthhispanic$Protective = freqprtteenbirthhispanic
+desteenbirthhispanic = ldply(detteenbirthhispanic, function(c) sum(c == "Destructive"))      
+freqdesteenbirthhispanic = desteenbirthhispanic[-c(1,2),]
+freqteenbirthhispanic$Destructive = freqdesteenbirthhispanic
+
+detteenbirthwhite = subset(prtdescombined, y == "Teen Birth Rate (White)")
+count_teenbirthwhite<- ldply(detteenbirthwhite,function(c) sum(c=="Teen Birth Rate (White)"))
+freqteenbirthwhite = count_teenbirthwhite[-c(2, 3),]
+freqteenbirthwhite$Determinants= "Teen Birth Rate (White)"
+prtteenbirthwhite = ldply(detteenbirthwhite, function(c) sum(c == "Protective"))
+freqprtteenbirthwhite = prtteenbirthwhite[-c(1,2),]
+freqteenbirthwhite$Protective = freqprtteenbirthwhite
+desteenbirthwhite = ldply(detteenbirthwhite, function(c) sum(c == "Destructive"))      
+freqdesteenbirthwhite = desteenbirthwhite[-c(1,2),]
+freqteenbirthwhite$Destructive = freqdesteenbirthwhite
+
+detincidencerate = subset(prtdescombined, y == "Incidence_Rate")
+count_incidencerate<- ldply(detincidencerate,function(c) sum(c=="Incidence_Rate"))
+freqincidencerate = count_incidencerate[-c(2, 3),]
+freqincidencerate$Determinants= "Incidence Rate"
+prtincidencerate = ldply(detincidencerate, function(c) sum(c == "Protective"))
+freqprtincidencerate = prtincidencerate[-c(1,2),]
+freqincidencerate$Protective = freqprtincidencerate
+desincidencerate = ldply(detincidencerate, function(c) sum(c == "Destructive"))      
+freqdesincidencerate = desincidencerate[-c(1,2),]
+freqincidencerate$Destructive = freqdesincidencerate
+
+detpreventablehospital = subset(prtdescombined, y == "Preventable Hospitalization Rate")
+count_preventablehospital<- ldply(prtdescombined,function(c) sum(c=="Preventable Hospitalization Rate"))
+freqpreventablehospital = count_preventablehospital[-c(2, 3),]
+freqpreventablehospital$Determinants= "Preventable Hospitalization Rate"
+prtpreventablehospital = ldply(detpreventablehospital, function(c) sum(c == "Protective"))
+freqprtpreventablehospital = prtpreventablehospital[-c(1,2),]
+freqpreventablehospital$Protective = freqprtpreventablehospital
+despreventablehospital = ldply(detpreventablehospital, function(c) sum(c == "Destructive"))      
+freqdespreventablehospital = despreventablehospital[-c(1,2),]
+freqpreventablehospital$Destructive = freqdespreventablehospital
+
+detpreventablehospitalhispanic = subset(prtdescombined, y == "Preventable Hosp. Rate (Hispanic)")
+count_preventablehospitalhispanic<- ldply(prtdescombined,function(c) sum(c=="Preventable Hosp. Rate (Hispanic)"))
+freqpreventablehospitalhispanic = count_preventablehospitalhispanic[-c(2, 3),]
+freqpreventablehospitalhispanic$Determinants= "Preventable Hosp. Rate (Hispanic)"
+prtpreventablehospitalhispanic = ldply(detpreventablehospitalhispanic, function(c) sum(c == "Protective"))
+freqprtpreventablehospitalhispanic = prtpreventablehospitalhispanic[-c(1,2),]
+freqpreventablehospitalhispanic$Protective = freqprtpreventablehospitalhispanic
+despreventablehospitalhispanic = ldply(detpreventablehospitalhispanic, function(c) sum(c == "Destructive"))      
+freqdespreventablehospitalhispanic = despreventablehospitalhispanic[-c(1,2),]
+freqpreventablehospitalhispanic$Destructive = freqdespreventablehospitalhispanic
+
+detpreventablehospitalwhite = subset(prtdescombined, y == "Preventable Hosp. Rate (White)")
+count_preventablehospitalwhite<- ldply(prtdescombined,function(c) sum(c=="Preventable Hosp. Rate (White)"))
+freqpreventablehospitalwhite = count_preventablehospitalwhite[-c(2, 3),]
+freqpreventablehospitalwhite$Determinants= "Preventable Hosp. Rate (White)"
+prtpreventablehospitalwhite = ldply(detpreventablehospitalwhite, function(c) sum(c == "Protective"))
+freqprtpreventablehospitalwhite = prtpreventablehospitalwhite[-c(1,2),]
+freqpreventablehospitalwhite$Protective = freqprtpreventablehospitalwhite
+despreventablehospitalwhite = ldply(detpreventablehospitalwhite, function(c) sum(c == "Destructive"))      
+freqdespreventablehospitalwhite = despreventablehospitalwhite[-c(1,2),]
+freqpreventablehospitalwhite$Destructive = freqdespreventablehospitalwhite
+
+detscreenedhispanic = subset(prtdescombined, y == "% Screened (Hispanic)")
+count_screenedhispanic<- ldply(prtdescombined,function(c) sum(c=="% Screened (Hispanic)"))
+freqscreenedhispanic = count_screenedhispanic[-c(2, 3),]
+freqscreenedhispanic$Determinants= "% Screened (Hispanic)"
+prtscreenedhispanic = ldply(detscreenedhispanic, function(c) sum(c == "Protective"))
+freqprtscreenedhispanic = prtscreenedhispanic[-c(1,2),]
+freqscreenedhispanic$Protective = freqprtscreenedhispanic
+desscreenedhispanic = ldply(detscreenedhispanic, function(c) sum(c == "Destructive"))      
+freqdesscreenedhispanic = desscreenedhispanic[-c(1,2),]
+freqscreenedhispanic$Destructive = freqdesscreenedhispanic
+
+detchildrenpoverty = subset(prtdescombined, y == "% Children in Poverty (White)")
+count_childrenpoverty<- ldply(prtdescombined,function(c) sum(c=="% Children in Poverty (White)"))
+freqchildrenpoverty = count_childrenpoverty[-c(2, 3),]
+freqchildrenpoverty$Determinants= "% Children in Poverty (White)"
+prtchildrenpoverty = ldply(detchildrenpoverty, function(c) sum(c == "Protective"))
+freqprtchildrenpoverty = prtchildrenpoverty[-c(1,2),]
+freqchildrenpoverty$Protective = freqprtchildrenpoverty
+deschildrenpoverty = ldply(detchildrenpoverty, function(c) sum(c == "Destructive"))      
+freqdeschildrenpoverty = deschildrenpoverty[-c(1,2),]
+freqchildrenpoverty$Destructive = freqdeschildrenpoverty
+
+detincomeratio = subset(prtdescombined, y == "Income Ratio")
+count_incomeratio<- ldply(prtdescombined,function(c) sum(c=="Income Ratio"))
+freqincomeratio = count_incomeratio[-c(2, 3),]
+freqincomeratio$Determinants= "Income Ratio"
+prtincomeratio = ldply(detincomeratio, function(c) sum(c == "Protective"))
+freqprtincomeratio = prtincomeratio[-c(1,2),]
+freqincomeratio$Protective = freqprtincomeratio
+desincomeratio = ldply(detincomeratio, function(c) sum(c == "Destructive"))      
+freqdesincomeratio = desincomeratio[-c(1,2),]
+freqincomeratio$Destructive = freqdesincomeratio
+
+detsingleparent = subset(prtdescombined, y == "% Single-Parent Households")
+count_singleparent<- ldply(prtdescombined,function(c) sum(c=="% Single-Parent Households"))
+freqsingleparent = count_singleparent[-c(2, 3),]
+freqsingleparent$Determinants= "% Single-Parent Households"
+prtsingleparent = ldply(detsingleparent, function(c) sum(c == "Protective"))
+freqprtsingleparent = prtsingleparent[-c(1,2),]
+freqsingleparent$Protective = freqprtsingleparent
+dessingleparent = ldply(detsingleparent, function(c) sum(c == "Destructive"))      
+freqdessingleparent = dessingleparent[-c(1,2),]
+freqsingleparent$Destructive = freqdessingleparent
+
+detinjurydeathrate = subset(prtdescombined, y == "Injury Death Rate")
+count_injurydeathrate<- ldply(prtdescombined,function(c) sum(c=="Injury Death Rate"))
+freqinjurydeathrate = count_injurydeathrate[-c(2, 3),]
+freqinjurydeathrate$Determinants= "Injury Death Rate"
+prtinjurydeathrate = ldply(detinjurydeathrate, function(c) sum(c == "Protective"))
+freqprtinjurydeathrate = prtinjurydeathrate[-c(1,2),]
+freqinjurydeathrate$Protective = freqprtinjurydeathrate
+desinjurydeathrate = ldply(detinjurydeathrate, function(c) sum(c == "Destructive"))      
+freqdesinjurydeathrate = desinjurydeathrate[-c(1,2),]
+freqinjurydeathrate$Destructive = freqdesinjurydeathrate
+
+detinjurydeathratehispanic = subset(prtdescombined, y == "Injury Death Rate (Hispanic)")
+count_injurydeathratehispanic<- ldply(prtdescombined,function(c) sum(c=="Injury Death Rate (Hispanic)"))
+freqinjurydeathratehispanic = count_injurydeathratehispanic[-c(2, 3),]
+freqinjurydeathratehispanic$Determinants= "Injury Death Rate (Hispanic)"
+prtinjurydeathratehispanic = ldply(detinjurydeathratehispanic, function(c) sum(c == "Protective"))
+freqprtinjurydeathratehispanic = prtinjurydeathratehispanic[-c(1,2),]
+freqinjurydeathratehispanic$Protective = freqprtinjurydeathratehispanic
+desinjurydeathratehispanic = ldply(detinjurydeathratehispanic, function(c) sum(c == "Destructive"))      
+freqdesinjurydeathratehispanic = desinjurydeathratehispanic[-c(1,2),]
+freqinjurydeathratehispanic$Destructive = freqdesinjurydeathratehispanic
+
+detinjurydeathratewhite = subset(prtdescombined, y == "Injury Death Rate (White)")
+count_injurydeathratewhite<- ldply(prtdescombined,function(c) sum(c=="Injury Death Rate (White)"))
+freqinjurydeathratewhite = count_injurydeathratewhite[-c(2, 3),]
+freqinjurydeathratewhite$Determinants= "Injury Death Rate (White)"
+prtinjurydeathratewhite = ldply(detinjurydeathratewhite, function(c) sum(c == "Protective"))
+freqprtinjurydeathratewhite = prtinjurydeathratewhite[-c(1,2),]
+freqinjurydeathratewhite$Protective = freqprtinjurydeathratewhite
+desinjurydeathratewhite = ldply(detinjurydeathratewhite, function(c) sum(c == "Destructive"))   
+freqdesinjurydeathratewhite = desinjurydeathratewhite[-c(1,2),]
+freqinjurydeathratewhite$Destructive = freqdesinjurydeathratewhite
+
+detinadequatefacilities = subset(prtdescombined, y == "Inadequate Facilities")
+count_inadequatefacilities<- ldply(prtdescombined,function(c) sum(c=="Inadequate Facilities"))
+freqinadequatefacilities = count_inadequatefacilities[-c(2, 3),]
+freqinadequatefacilities$Determinants= "Inadequate Facilities"
+prtinadequatefacilities = ldply(detinadequatefacilities, function(c) sum(c == "Protective"))
+freqprtinadequatefacilities = prtinadequatefacilities[-c(1,2),]
+freqinadequatefacilities$Protective = freqprtinadequatefacilities
+desinadequatefacilities = ldply(detinadequatefacilities, function(c) sum(c == "Destructive"))      
+freqdesinadequatefacilities = desinadequatefacilities[-c(1,2),]
+freqinadequatefacilities$Destructive = freqdesinadequatefacilities
+
+detdrivealonehispanic = subset(prtdescombined, y == "% Drive Alone (Hispanic)")
+count_drivealonehispanic<- ldply(prtdescombined,function(c) sum(c=="% Drive Alone (Hispanic)"))
+freqdrivealonehispanic = count_drivealonehispanic[-c(2, 3),]
+freqdrivealonehispanic$Determinants= "% Drive Alone (Hispanic)"
+prtdrivealonehispanic = ldply(detdrivealonehispanic, function(c) sum(c == "Protective"))
+freqprtdrivealonehispanic = prtdrivealonehispanic[-c(1,2),]
+freqdrivealonehispanic$Protective = freqprtdrivealonehispanic
+desdrivealonehispanic = ldply(detdrivealonehispanic, function(c) sum(c == "Destructive"))      
+freqdesdrivealonehispanic = desdrivealonehispanic[-c(1,2),]
+freqdrivealonehispanic$Destructive = freqdesdrivealonehispanic
+
+detdrivealonewhite = subset(prtdescombined, y == "% Drive Alone (White)")
+count_drivealonewhite<- ldply(prtdescombined,function(c) sum(c=="% Drive Alone (White)"))
+freqdrivealonewhite = count_drivealonewhite[-c(2, 3),]
+freqdrivealonewhite$Determinants= "% Drive Alone (White)"
+prtdrivealonewhite = ldply(detdrivealonewhite, function(c) sum(c == "Protective"))
+freqprtdrivealonewhite = prtdrivealonewhite[-c(1,2),]
+freqdrivealonewhite$Protective = freqprtdrivealonewhite
+desdrivealonewhite = ldply(detdrivealonewhite, function(c) sum(c == "Destructive"))      
+freqdesdrivealonewhite = desdrivealonewhite[-c(1,2),]
+freqdrivealonewhite$Destructive = freqdesdrivealonewhite
+
+detprecoviddeathrate = subset(prtdescombined, y == "pre_covid_death_rate")
+count_precoviddeathrate<- ldply(prtdescombined,function(c) sum(c=="pre_covid_death_rate"))
+freqprecoviddeathrate = count_precoviddeathrate[-c(2, 3),]
+freqprecoviddeathrate$Determinants= "PreCovid Death Rate"
+prtprecoviddeathrate = ldply(detprecoviddeathrate, function(c) sum(c == "Protective"))
+freqprtprecoviddeathrate = prtprecoviddeathrate[-c(1,2),]
+freqprecoviddeathrate$Protective = freqprtprecoviddeathrate
+desprecoviddeathrate = ldply(detprecoviddeathrate, function(c) sum(c == "Destructive"))      
+freqdesprecoviddeathrate = desprecoviddeathrate[-c(1,2),]
+freqprecoviddeathrate$Destructive = freqdesprecoviddeathrate
+
+detageadjustedhispanic = subset(prtdescombined, y == "Age-Adjusted Mortality (Hispanic)")
+count_ageadjustedhispanic<- ldply(prtdescombined,function(c) sum(c=="Age-Adjusted Mortality (Hispanic)"))
+freqageadjustedhispanic = count_ageadjustedhispanic[-c(2, 3),]
+freqageadjustedhispanic$Determinants= "Age-Adjusted Mortality (Hispanic)"
+prtageadjustedhispanic = ldply(detageadjustedhispanic, function(c) sum(c == "Protective"))
+freqprtageadjustedhispanic = prtageadjustedhispanic[-c(1,2),]
+freqageadjustedhispanic$Protective = freqprtageadjustedhispanic
+desageadjustedhispanic = ldply(detageadjustedhispanic, function(c) sum(c == "Destructive"))      
+freqdesageadjustedhispanic = desageadjustedhispanic[-c(1,2),]
+freqageadjustedhispanic$Destructive = freqdesageadjustedhispanic
+
+detageadjustedwhite = subset(prtdescombined, y == "Age-Adjusted Mortality (White)")
+count_ageadjustedwhite<- ldply(prtdescombined,function(c) sum(c=="Age-Adjusted Mortality (White)"))
+freqageadjustedwhite = count_ageadjustedwhite[-c(2, 3),]
+freqageadjustedwhite$Determinants= "Age-Adjusted Mortality (White)"
+prtageadjustedwhite = ldply(detageadjustedwhite, function(c) sum(c == "Protective"))
+freqprtageadjustedwhite = prtageadjustedwhite[-c(1,2),]
+freqageadjustedwhite$Protective = freqprtageadjustedwhite
+desageadjustedwhite = ldply(detageadjustedwhite, function(c) sum(c == "Destructive"))      
+freqdesageadjustedwhite = desageadjustedwhite[-c(1,2),]
+freqageadjustedwhite$Destructive = freqdesageadjustedwhite
+
+detpct_diabetes = subset(prtdescombined, y == "pct_diabetes")
+count_pct_diabetes<- ldply(prtdescombined,function(c) sum(c=="pct_diabetes"))
+freqpct_diabetes = count_pct_diabetes[-c(2, 3),]
+freqpct_diabetes$Determinants= "pct_diabetes"
+prtpct_diabetes = ldply(detpct_diabetes, function(c) sum(c == "Protective"))
+freqprtpct_diabetes = prtpct_diabetes[-c(1,2),]
+freqpct_diabetes$Protective = freqprtpct_diabetes
+despct_diabetes = ldply(detpct_diabetes, function(c) sum(c == "Destructive"))      
+freqdespct_diabetes = despct_diabetes[-c(1,2),]
+freqpct_diabetes$Destructive = freqdespct_diabetes
+
+detfoodinsecure = subset(prtdescombined, y == "% Food Insecure")
+count_foodinsecure<- ldply(prtdescombined,function(c) sum(c=="% Food Insecure"))
+freqfoodinsecure = count_foodinsecure[-c(2, 3),]
+freqfoodinsecure$Determinants= "% Food Insecure"
+prtfoodinsecure = ldply(detfoodinsecure, function(c) sum(c == "Protective"))
+freqprtfoodinsecure = prtfoodinsecure[-c(1,2),]
+freqfoodinsecure$Protective = freqprtfoodinsecure
+desfoodinsecure = ldply(detfoodinsecure, function(c) sum(c == "Destructive"))      
+freqdesfoodinsecure = desfoodinsecure[-c(1,2),]
+freqfoodinsecure$Destructive = freqdesfoodinsecure
+
+detlimitedhealthyfood = subset(prtdescombined, y == "% Limited Access to Healthy Foods")
+count_limitedhealthyfood<- ldply(prtdescombined,function(c) sum(c=="% Limited Access to Healthy Foods"))
+freqlimitedhealthyfood = count_limitedhealthyfood[-c(2, 3),]
+freqlimitedhealthyfood$Determinants= "% Limited Access to Healthy Foods"
+prtlimitedhealthyfood = ldply(detlimitedhealthyfood, function(c) sum(c == "Protective"))
+freqprtlimitedhealthyfood = prtlimitedhealthyfood[-c(1,2),]
+freqlimitedhealthyfood$Protective = freqprtlimitedhealthyfood
+deslimitedhealthyfood = ldply(detlimitedhealthyfood, function(c) sum(c == "Destructive"))      
+freqdeslimitedhealthyfood = deslimitedhealthyfood[-c(1,2),]
+freqlimitedhealthyfood$Destructive = freqdeslimitedhealthyfood
+
+detmotormortality = subset(prtdescombined, y == "Motor Vehicle Mortality Rate")
+count_motormortality<- ldply(prtdescombined,function(c) sum(c=="Motor Vehicle Mortality Rate"))
+freqmotormortality = count_motormortality[-c(2, 3),]
+freqmotormortality$Determinants= "Motor Vehicle Mortality Rate"
+prtmotormortality = ldply(detmotormortality, function(c) sum(c == "Protective"))
+freqprtmotormortality = prtmotormortality[-c(1,2),]
+freqmotormortality$Protective = freqprtmotormortality
+desmotormortality = ldply(detmotormortality, function(c) sum(c == "Destructive"))      
+freqdesmotormortality = desmotormortality[-c(1,2),]
+freqmotormortality$Destructive = freqdesmotormortality
+
+detinsufficientsleep = subset(prtdescombined, y == "% Insufficient Sleep")
+count_insufficientsleep<- ldply(prtdescombined,function(c) sum(c=="% Insufficient Sleep"))
+freqinsufficientsleep = count_insufficientsleep[-c(2, 3),]
+freqinsufficientsleep$Determinants= "% Insufficient Sleep"
+prtinsufficientsleep = ldply(detinsufficientsleep, function(c) sum(c == "Protective"))
+freqprtinsufficientsleep = prtinsufficientsleep[-c(1,2),]
+freqinsufficientsleep$Protective = freqprtinsufficientsleep
+desinsufficientsleep = ldply(detinsufficientsleep, function(c) sum(c == "Destructive"))      
+freqdesinsufficientsleep = desinsufficientsleep[-c(1,2),]
+freqinsufficientsleep$Destructive = freqdesinsufficientsleep
+
+detsegregationindex = subset(prtdescombined, y == "Segregation Index")
+count_segregationindex<- ldply(prtdescombined,function(c) sum(c=="Segregation Index"))
+freqsegregationindex = count_segregationindex[-c(2, 3),]
+freqsegregationindex$Determinants= "Segregation Index"
+prtsegregationindex = ldply(detsegregationindex, function(c) sum(c == "Protective"))
+freqprtsegregationindex = prtsegregationindex[-c(1,2),]
+freqsegregationindex$Protective = freqprtsegregationindex
+dessegregationindex = ldply(detsegregationindex, function(c) sum(c == "Destructive"))      
+freqdessegregationindex = dessegregationindex[-c(1,2),]
+freqsegregationindex$Destructive = freqdessegregationindex
+
+dethomeowners = subset(prtdescombined, y == "% Homeowners")
+count_homeowners<- ldply(prtdescombined,function(c) sum(c=="% Homeowners"))
+freqhomeowners = count_homeowners[-c(2, 3),]
+freqhomeowners$Determinants= "% Homeowners"
+prthomeowners = ldply(dethomeowners, function(c) sum(c == "Protective"))
+freqprthomeowners = prthomeowners[-c(1,2),]
+freqhomeowners$Protective = freqprthomeowners
+deshomeowners = ldply(dethomeowners, function(c) sum(c == "Destructive"))      
+freqdeshomeowners = deshomeowners[-c(1,2),]
+freqhomeowners$Destructive = freqdeshomeowners
+
+detpct_age65 = subset(prtdescombined, y == "pct_age65")
+count_pct_age65<- ldply(prtdescombined,function(c) sum(c=="pct_age65"))
+freqpct_age65 = count_pct_age65[-c(2, 3),]
+freqpct_age65$Determinants= "pct_age65"
+prtpct_age65 = ldply(detpct_age65, function(c) sum(c == "Protective"))
+freqprtpct_age65 = prtpct_age65[-c(1,2),]
+freqpct_age65$Protective = freqprtpct_age65
+despct_age65 = ldply(detpct_age65, function(c) sum(c == "Destructive"))      
+freqdespct_age65 = despct_age65[-c(1,2),]
+freqpct_age65$Destructive = freqdespct_age65
+
+detblack = subset(prtdescombined, y == "% Black")
+count_black<- ldply(prtdescombined,function(c) sum(c=="% Black"))
+freqblack = count_black[-c(2, 3),]
+freqblack$Determinants= "% Black"
+prtblack = ldply(detblack, function(c) sum(c == "Protective"))
+freqprtblack = prtblack[-c(1,2),]
+freqblack$Protective = freqprtblack
+desblack = ldply(detblack, function(c) sum(c == "Destructive"))      
+freqdesblack = desblack[-c(1,2),]
+freqblack$Destructive = freqdesblack
+
+detindianalaska = subset(prtdescombined, y == "% American Indian & Alaska Native")
+count_indianalaska<- ldply(prtdescombined,function(c) sum(c=="% American Indian & Alaska Native"))
+freqindianalaska = count_indianalaska[-c(2, 3),]
+freqindianalaska$Determinants= "% American Indian & Alaska Native"
+prtindianalaska = ldply(detindianalaska, function(c) sum(c == "Protective"))
+freqprtindianalaska = prtindianalaska[-c(1,2),]
+freqindianalaska$Protective = freqprtindianalaska
+desindianalaska = ldply(detindianalaska, function(c) sum(c == "Destructive"))      
+freqdesindianalaska = desindianalaska[-c(1,2),]
+freqindianalaska$Destructive = freqdesindianalaska
+
+dethawaiian = subset(prtdescombined, y == "% Native Hawaiian/Other Pacific Islander")
+count_hawaiian<- ldply(prtdescombined,function(c) sum(c=="% Native Hawaiian/Other Pacific Islander"))
+freqhawaiian = count_hawaiian[-c(2, 3),]
+freqhawaiian$Determinants= "% Native Hawaiian/Other Pacific Islander"
+prthawaiian = ldply(dethawaiian, function(c) sum(c == "Protective"))
+freqprthawaiian = prthawaiian[-c(1,2),]
+freqhawaiian$Protective = freqprthawaiian
+deshawaiian = ldply(dethawaiian, function(c) sum(c == "Destructive"))      
+freqdeshawaiian = deshawaiian[-c(1,2),]
+freqhawaiian$Destructive = freqdeshawaiian
+
+detnonhispanicwhite = subset(prtdescombined, y == "% Non-Hispanic White")
+count_nonhispanicwhite<- ldply(prtdescombined,function(c) sum(c=="% Non-Hispanic White"))
+freqnonhispanicwhite = count_nonhispanicwhite[-c(2, 3),]
+freqnonhispanicwhite$Determinants= "% Non-Hispanic White"
+prtnonhispanicwhite = ldply(detnonhispanicwhite, function(c) sum(c == "Protective"))
+freqprtnonhispanicwhite = prtnonhispanicwhite[-c(1,2),]
+freqnonhispanicwhite$Protective = freqprtnonhispanicwhite
+desnonhispanicwhite = ldply(detnonhispanicwhite, function(c) sum(c == "Destructive"))      
+freqdesnonhispanicwhite = desnonhispanicwhite[-c(1,2),]
+freqnonhispanicwhite$Destructive = freqdesnonhispanicwhite
+
+detadultasthma = subset(prtdescombined, y == "AdultAsthma")
+count_adultasthma<- ldply(prtdescombined,function(c) sum(c=="AdultAsthma"))
+freqadultasthma = count_adultasthma[-c(2, 3),]
+freqadultasthma$Determinants= "Adult Asthma"
+prtadultasthma = ldply(detadultasthma, function(c) sum(c == "Protective"))
+freqprtadultasthma = prtadultasthma[-c(1,2),]
+freqadultasthma$Protective = freqprtadultasthma
+desadultasthma = ldply(detadultasthma, function(c) sum(c == "Destructive"))      
+freqdesadultasthma = desadultasthma[-c(1,2),]
+freqadultasthma$Destructive = freqdesadultasthma
+
+dethouseholdincomeblack = subset(prtdescombined, y == "Household Income (Black)")
+count_householdincomeblack<- ldply(prtdescombined,function(c) sum(c=="Household Income (Black)"))
+freqhouseholdincomeblack = count_householdincomeblack[-c(2, 3),]
+freqhouseholdincomeblack$Determinants= "Household Income (Black)"
+prthouseholdincomeblack = ldply(dethouseholdincomeblack, function(c) sum(c == "Protective"))
+freqprthouseholdincomeblack = prthouseholdincomeblack[-c(1,2),]
+freqhouseholdincomeblack$Protective = freqprthouseholdincomeblack
+deshouseholdincomeblack = ldply(dethouseholdincomeblack, function(c) sum(c == "Destructive")) 
+freqdeshouseholdincomeblack = deshouseholdincomeblack[-c(1,2),]
+freqhouseholdincomeblack$Destructive = freqdeshouseholdincomeblack
+
+detmean_summer_rm = subset(prtdescombined, y == "mean_summer_rm")
+count_mean_summer_rm<- ldply(prtdescombined,function(c) sum(c=="mean_summer_rm"))
+freqmean_summer_rm = count_mean_summer_rm[-c(2, 3),]
+freqmean_summer_rm$Determinants= "mean_summer_rm"
+prtmean_summer_rm = ldply(detmean_summer_rm, function(c) sum(c == "Protective"))
+freqprtmean_summer_rm = prtmean_summer_rm[-c(1,2),]
+freqmean_summer_rm$Protective = freqprtmean_summer_rm
+desmean_summer_rm = ldply(detmean_summer_rm, function(c) sum(c == "Destructive"))      
+freqdesmean_summer_rm = desmean_summer_rm[-c(1,2),]
+freqmean_summer_rm$Destructive = freqdesmean_summer_rm
+
+detpct_owner_occ = subset(prtdescombined, y == "pct_owner_occ")
+count_pct_owner_occ<- ldply(prtdescombined,function(c) sum(c=="pct_owner_occ"))
+freqpct_owner_occ = count_pct_owner_occ[-c(2, 3),]
+freqpct_owner_occ$Determinants= "pct_owner_occ"
+prtpct_owner_occ = ldply(detpct_owner_occ, function(c) sum(c == "Protective"))
+freqprtpct_owner_occ = prtpct_owner_occ[-c(1,2),]
+freqpct_owner_occ$Protective = freqprtpct_owner_occ
+despct_owner_occ = ldply(detpct_owner_occ, function(c) sum(c == "Destructive"))      
+freqdespct_owner_occ = despct_owner_occ[-c(1,2),]
+freqpct_owner_occ$Destructive = freqdespct_owner_occ
+
+detpoverty = subset(prtdescombined, y == "poverty")
+count_poverty<- ldply(prtdescombined,function(c) sum(c=="poverty"))
+freqpoverty = count_poverty[-c(2, 3),]
+freqpoverty$Determinants= "poverty"
+prtpoverty = ldply(detpoverty, function(c) sum(c == "Protective"))
+freqprtpoverty = prtpoverty[-c(1,2),]
+freqpoverty$Protective = freqprtpoverty
+despoverty = ldply(detpoverty, function(c) sum(c == "Destructive"))      
+freqdespoverty = despoverty[-c(1,2),]
+freqpoverty$Destructive = freqdespoverty
+
+detmentalproviderrate = subset(prtdescombined, y == "Mental Health Provider Rate")
+count_mentalproviderrate<- ldply(prtdescombined,function(c) sum(c=="Mental Health Provider Rate"))
+freqmentalproviderrate = count_mentalproviderrate[-c(2, 3),]
+freqmentalproviderrate$Determinants= "Mental Health Provider Rate"
+prtmentalproviderrate = ldply(detmentalproviderrate, function(c) sum(c == "Protective"))
+freqprtmentalproviderrate = prtmentalproviderrate[-c(1,2),]
+freqmentalproviderrate$Protective = freqprtmentalproviderrate
+desmentalproviderrate = ldply(detmentalproviderrate, function(c) sum(c == "Destructive"))      
+freqdesmentalproviderrate = desmentalproviderrate[-c(1,2),]
+freqmentalproviderrate$Destructive = freqdesmentalproviderrate
+
+detunhealthydays = subset(prtdescombined, y == "Average Number of Physically Unhealthy Days")
+count_unhealthydays<- ldply(prtdescombined,function(c) sum(c=="Average Number of Physically Unhealthy Days"))
+frequnhealthydays = count_unhealthydays[-c(2, 3),]
+frequnhealthydays$Determinants= "Average Number of Physically Unhealthy Days"
+prtunhealthydays = ldply(detunhealthydays, function(c) sum(c == "Protective"))
+freqprtunhealthydays = prtunhealthydays[-c(1,2),]
+frequnhealthydays$Protective = freqprtunhealthydays
+desunhealthydays = ldply(detunhealthydays, function(c) sum(c == "Destructive"))      
+freqdesunhealthydays = desunhealthydays[-c(1,2),]
+frequnhealthydays$Destructive = freqdesunhealthydays
+
+detdrivealonework = subset(prtdescombined, y == "% Drive Alone to Work")
+count_drivealonework<- ldply(prtdescombined,function(c) sum(c=="% Drive Alone to Work"))
+freqdrivealonework = count_drivealonework[-c(2, 3),]
+freqdrivealonework$Determinants= "% Drive Alone to Work"
+prtdrivealonework = ldply(detdrivealonework, function(c) sum(c == "Protective"))
+freqprtdrivealonework = prtdrivealonework[-c(1,2),]
+freqdrivealonework$Protective = freqprtdrivealonework
+desdrivealonework = ldply(detdrivealonework, function(c) sum(c == "Destructive"))      
+freqdesdrivealonework = desdrivealonework[-c(1,2),]
+freqdrivealonework$Destructive = freqdesdrivealonework
+
+det20percentileincome = subset(prtdescombined, y == "20th Percentile Income")
+count_20percentileincome<- ldply(prtdescombined,function(c) sum(c=="20th Percentile Income"))
+freq20percentileincome = count_20percentileincome[-c(2, 3),]
+freq20percentileincome$Determinants= "20th Percentile Income"
+prt20percentileincome = ldply(det20percentileincome, function(c) sum(c == "Protective"))
+freqprt20percentileincome = prt20percentileincome[-c(1,2),]
+freq20percentileincome$Protective = freqprt20percentileincome
+des20percentileincome = ldply(det20percentileincome, function(c) sum(c == "Destructive"))      
+freqdes20percentileincome = des20percentileincome[-c(1,2),]
+freq20percentileincome$Destructive = freqdes20percentileincome
+
+detlongcommutedrivealone = subset(prtdescombined, y == "% Long Commute - Drives Alone")
+count_longcommutedrivealone<- ldply(prtdescombined,function(c) sum(c=="% Long Commute - Drives Alone"))
+freqlongcommutedrivealone = count_longcommutedrivealone[-c(2, 3),]
+freqlongcommutedrivealone$Determinants= "% Long Commute - Drives Alone"
+prtlongcommutedrivealone = ldply(detlongcommutedrivealone, function(c) sum(c == "Protective"))
+freqprtlongcommutedrivealone = prtlongcommutedrivealone[-c(1,2),]
+freqlongcommutedrivealone$Protective = freqprtlongcommutedrivealone
+deslongcommutedrivealone = ldply(detlongcommutedrivealone, function(c) sum(c == "Destructive")) 
+freqdeslongcommutedrivealone = deslongcommutedrivealone[-c(1,2),]
+freqlongcommutedrivealone$Destructive = freqdeslongcommutedrivealone
+
+detsocialassociationrate = subset(prtdescombined, y == "Social Association Rate")
+count_socialassociationrate<- ldply(prtdescombined,function(c) sum(c=="Social Association Rate"))
+freqsocialassociationrate = count_socialassociationrate[-c(2, 3),]
+freqsocialassociationrate$Determinants= "Social Association Rate"
+prtsocialassociationrate = ldply(detsocialassociationrate, function(c) sum(c == "Protective"))
+freqprtsocialassociationrate = prtsocialassociationrate[-c(1,2),]
+freqsocialassociationrate$Protective = freqprtsocialassociationrate
+dessocialassociationrate = ldply(detsocialassociationrate, function(c) sum(c == "Destructive")) 
+freqdessocialassociationrate = dessocialassociationrate[-c(1,2),]
+freqsocialassociationrate$Destructive = freqdessocialassociationrate
+
+dettrafficvolumepermeter = subset(prtdescombined, y == "Average Traffic Volume per Meter of Major Roadways")
+count_trafficvolumepermeter<- ldply(prtdescombined,function(c) sum(c=="Average Traffic Volume per Meter of Major Roadways"))
+freqtrafficvolumepermeter = count_trafficvolumepermeter[-c(2, 3),]
+freqtrafficvolumepermeter$Determinants= "Average Traffic Volume per Meter of Major Roadways"
+prttrafficvolumepermeter = ldply(dettrafficvolumepermeter, function(c) sum(c == "Protective"))
+freqprttrafficvolumepermeter = prttrafficvolumepermeter[-c(1,2),]
+freqtrafficvolumepermeter$Protective = freqprttrafficvolumepermeter
+destrafficvolumepermeter = ldply(dettrafficvolumepermeter, function(c) sum(c == "Destructive")) 
+freqdestrafficvolumepermeter = destrafficvolumepermeter[-c(1,2),]
+freqtrafficvolumepermeter$Destructive = freqdestrafficvolumepermeter
+
+detmentalunhealthydays = subset(prtdescombined, y == "Average Number of Mentally Unhealthy Days")
+count_mentalunhealthydays<- ldply(prtdescombined,function(c) sum(c=="Average Number of Mentally Unhealthy Days"))
+freqmentalunhealthydays = count_mentalunhealthydays[-c(2, 3),]
+freqmentalunhealthydays$Determinants= "Average Number of Mentally Unhealthy Days"
+prtmentalunhealthydays = ldply(detmentalunhealthydays, function(c) sum(c == "Protective"))
+freqprtmentalunhealthydays = prtmentalunhealthydays[-c(1,2),]
+freqmentalunhealthydays$Protective = freqprtmentalunhealthydays
+desmentalunhealthydays = ldply(detmentalunhealthydays, function(c) sum(c == "Destructive"))      
+freqdesmentalunhealthydays = desmentalunhealthydays[-c(1,2),]
+freqmentalunhealthydays$Destructive = freqdesmentalunhealthydays
+
+detmentaldistressfrequent = subset(prtdescombined, y == "% Frequent Mental Distress")
+count_mentaldistressfrequent<- ldply(prtdescombined,function(c) sum(c=="% Frequent Mental Distress"))
+freqmentaldistressfrequent = count_mentaldistressfrequent[-c(2, 3),]
+freqmentaldistressfrequent$Determinants= "% Frequent Mental Distress"
+prtmentaldistressfrequent = ldply(detmentaldistressfrequent, function(c) sum(c == "Protective"))
+freqprtmentaldistressfrequent = prtmentaldistressfrequent[-c(1,2),]
+freqmentaldistressfrequent$Protective = freqprtmentaldistressfrequent
+desmentaldistressfrequent = ldply(detmentaldistressfrequent, function(c) sum(c == "Destructive"))
+freqdesmentaldistressfrequent = desmentaldistressfrequent[-c(1,2),]
+freqmentaldistressfrequent$Destructive = freqdesmentaldistressfrequent
+
+detwhitechildpoverty = subset(prtdescombined, y == "% Children in Poverty")
+count_whitechildpoverty<- ldply(prtdescombined,function(c) sum(c=="% Children in Poverty"))
+freqwhitechildpoverty = count_whitechildpoverty[-c(2, 3),]
+freqwhitechildpoverty$Determinants= "% Children in Poverty"
+prtwhitechildpoverty = ldply(detwhitechildpoverty, function(c) sum(c == "Protective"))
+freqprtwhitechildpoverty = prtwhitechildpoverty[-c(1,2),]
+freqwhitechildpoverty$Protective = freqprtwhitechildpoverty
+deswhitechildpoverty = ldply(detwhitechildpoverty, function(c) sum(c == "Destructive"))      
+freqdeswhitechildpoverty = deswhitechildpoverty[-c(1,2),]
+freqwhitechildpoverty$Destructive = freqdeswhitechildpoverty
+
+detmean_pm25 = subset(prtdescombined, y == "mean_pm25")
+count_mean_pm25<- ldply(prtdescombined,function(c) sum(c=="mean_pm25"))
+freqmean_pm25 = count_mean_pm25[-c(2, 3),]
+freqmean_pm25$Determinants= "mean_pm25"
+prtmean_pm25 = ldply(detmean_pm25, function(c) sum(c == "Protective"))
+freqprtmean_pm25 = prtmean_pm25[-c(1,2),]
+freqmean_pm25$Protective = freqprtmean_pm25
+desmean_pm25 = ldply(detmean_pm25, function(c) sum(c == "Destructive"))      
+freqdesmean_pm25 = desmean_pm25[-c(1,2),]
+freqmean_pm25$Destructive = freqdesmean_pm25
+
+detLungCancer = subset(prtdescombined, y == "LungCancer")
+count_LungCancer<- ldply(prtdescombined,function(c) sum(c=="LungCancer"))
+freqLungCancer = count_LungCancer[-c(2, 3),]
+freqLungCancer$Determinants= "LungCancer"
+prtLungCancer = ldply(detLungCancer, function(c) sum(c == "Protective"))
+freqprtLungCancer = prtLungCancer[-c(1,2),]
+freqLungCancer$Protective = freqprtLungCancer
+desLungCancer = ldply(detLungCancer, function(c) sum(c == "Destructive"))      
+freqdesLungCancer = desLungCancer[-c(1,2),]
+freqLungCancer$Destructive = freqdesLungCancer
+
+detfemale = subset(prtdescombined, y == "% Female")
+count_female<- ldply(prtdescombined,function(c) sum(c=="% Female"))
+freqfemale = count_female[-c(2, 3),]
+freqfemale$Determinants= "% Female"
+prtfemale = ldply(detfemale, function(c) sum(c == "Protective"))
+freqprtfemale = prtfemale[-c(1,2),]
+freqfemale$Protective = freqprtfemale
+desfemale = ldply(detfemale, function(c) sum(c == "Destructive"))      
+freqdesfemale = desfemale[-c(1,2),]
+freqfemale$Destructive = freqdesfemale
+
+dethispanic = subset(prtdescombined, y == "% Hispanic")
+count_hispanic<- ldply(prtdescombined,function(c) sum(c=="% Hispanic"))
+freqhispanic = count_hispanic[-c(2, 3),]
+freqhispanic$Determinants= "% Hispanic"
+prthispanic = ldply(dethispanic, function(c) sum(c == "Protective"))
+freqprthispanic = prthispanic[-c(1,2),]
+freqhispanic$Protective = freqprthispanic
+deshispanic = ldply(dethispanic, function(c) sum(c == "Destructive"))      
+freqdeshispanic = deshispanic[-c(1,2),]
+freqhispanic$Destructive = freqdeshispanic
+
+detnolessthan18 = subset(prtdescombined, y == "# less than 18 years of age")
+count_nolessthan18<- ldply(prtdescombined,function(c) sum(c=="# less than 18 years of age"))
+freqnolessthan18 = count_nolessthan18[-c(2, 3),]
+freqnolessthan18$Determinants= "# less than 18 years of age"
+prtnolessthan18 = ldply(detnolessthan18, function(c) sum(c == "Protective"))
+freqprtnolessthan18 = prtnolessthan18[-c(1,2),]
+freqnolessthan18$Protective = freqprtnolessthan18
+desnolessthan18 = ldply(detnolessthan18, function(c) sum(c == "Destructive"))      
+freqdesnolessthan18 = desnolessthan18[-c(1,2),]
+freqnolessthan18$Destructive = freqdesnolessthan18
+
+detnoblack = subset(prtdescombined, y == "# Black")
+count_noblack<- ldply(prtdescombined,function(c) sum(c=="# Black"))
+freqnoblack = count_noblack[-c(2, 3),]
+freqnoblack$Determinants= "# Black"
+prtnoblack = ldply(detnoblack, function(c) sum(c == "Protective"))
+freqprtnoblack = prtnoblack[-c(1,2),]
+freqnoblack$Protective = freqprtnoblack
+desnoblack = ldply(detnoblack, function(c) sum(c == "Destructive"))      
+freqdesnoblack = desnoblack[-c(1,2),]
+freqnoblack$Destructive = freqdesnoblack
+
+detnoindianalaska = subset(prtdescombined, y == "# American Indian & Alaska Native")
+count_noindianalaska<- ldply(prtdescombined,function(c) sum(c=="# American Indian & Alaska Native"))
+freqnoindianalaska = count_noindianalaska[-c(2, 3),]
+freqnoindianalaska$Determinants= "# American Indian & Alaska Native"
+prtnoindianalaska = ldply(detnoindianalaska, function(c) sum(c == "Protective"))
+freqprtnoindianalaska = prtnoindianalaska[-c(1,2),]
+freqnoindianalaska$Protective = freqprtnoindianalaska
+desnoindianalaska = ldply(detnoindianalaska, function(c) sum(c == "Destructive"))      
+freqdesnoindianalaska = desnoindianalaska[-c(1,2),]
+freqnoindianalaska$Destructive = freqdesnoindianalaska
+
+detnoasian = subset(prtdescombined, y == "# Asian")
+count_noasian<- ldply(prtdescombined,function(c) sum(c=="# Asian"))
+freqnoasian = count_noasian[-c(2, 3),]
+freqnoasian$Determinants= "# Asian"
+prtnoasian = ldply(detnoasian, function(c) sum(c == "Protective"))
+freqprtnoasian = prtnoasian[-c(1,2),]
+freqnoasian$Protective = freqprtnoasian
+desnoasian = ldply(detnoasian, function(c) sum(c == "Destructive"))      
+freqdesnoasian = desnoasian[-c(1,2),]
+freqnoasian$Destructive = freqdesnoasian
+
+detnohawaiian = subset(prtdescombined, y == "# Native Hawaiian/Other Pacific Islander")
+count_nohawaiian<- ldply(prtdescombined,function(c) sum(c=="# Native Hawaiian/Other Pacific Islander"))
+freqnohawaiian = count_nohawaiian[-c(2, 3),]
+freqnohawaiian$Determinants= "# Native Hawaiian/Other Pacific Islander"
+prtnohawaiian = ldply(detnohawaiian, function(c) sum(c == "Protective"))
+freqprtnohawaiian = prtnohawaiian[-c(1,2),]
+freqnohawaiian$Protective = freqprtnohawaiian
+desnohawaiian = ldply(detnohawaiian, function(c) sum(c == "Destructive"))      
+freqdesnohawaiian = desnohawaiian[-c(1,2),]
+freqnohawaiian$Destructive = freqdesnohawaiian
+
+detnohomeowners = subset(prtdescombined, y == "# Homeowners")
+count_nohomeowners<- ldply(prtdescombined,function(c) sum(c=="# Homeowners"))
+freqnohomeowners = count_nohomeowners[-c(2, 3),]
+freqnohomeowners$Determinants= "# Homeowners"
+prtnohomeowners = ldply(detnohomeowners, function(c) sum(c == "Protective"))
+freqprtnohomeowners = prtnohomeowners[-c(1,2),]
+freqnohomeowners$Protective = freqprtnohomeowners
+desnohomeowners = ldply(detnohomeowners, function(c) sum(c == "Destructive"))      
+freqdesnohomeowners = desnohomeowners[-c(1,2),]
+freqnohomeowners$Destructive = freqdesnohomeowners
+
+detnohouseholdwithseverecostburden = subset(prtdescombined, y == "# Households with Severe Cost Burden")
+count_nohouseholdwithseverecostburden<- ldply(prtdescombined,function(c) sum(c=="# Households with Severe Cost Burden"))
+freqnohouseholdwithseverecostburden = count_nohouseholdwithseverecostburden[-c(2, 3),]
+freqnohouseholdwithseverecostburden$Determinants= "# Households with Severe Cost Burden"
+prtnohouseholdwithseverecostburden = ldply(detnohouseholdwithseverecostburden, function(c) sum(c == "Protective"))
+freqprtnohouseholdwithseverecostburden = prtnohouseholdwithseverecostburden[-c(1,2),]
+freqnohouseholdwithseverecostburden$Protective = freqprtnohouseholdwithseverecostburden
+desnohouseholdwithseverecostburden = ldply(detnohouseholdwithseverecostburden, function(c) sum(c == "Destructive"))      
+freqdesnohouseholdwithseverecostburden = desnohouseholdwithseverecostburden[-c(1,2),]
+freqnohouseholdwithseverecostburden$Destructive = freqdesnohouseholdwithseverecostburden
+
+detseverehousingcostburden = subset(prtdescombined, y == "% Severe Housing Cost Burden")
+count_severehousingcostburden<- ldply(prtdescombined,function(c) sum(c=="% Severe Housing Cost Burden"))
+freqseverehousingcostburden = count_severehousingcostburden[-c(2, 3),]
+freqseverehousingcostburden$Determinants= "% Severe Housing Cost Burden"
+prtseverehousingcostburden = ldply(detseverehousingcostburden, function(c) sum(c == "Protective"))
+freqprtseverehousingcostburden = prtseverehousingcostburden[-c(1,2),]
+freqseverehousingcostburden$Protective = freqprtseverehousingcostburden
+desseverehousingcostburden = ldply(detseverehousingcostburden, function(c) sum(c == "Destructive"))      
+freqdesseverehousingcostburden = desseverehousingcostburden[-c(1,2),]
+freqseverehousingcostburden$Destructive = freqdesseverehousingcostburden
+
+detDenominator = subset(prtdescombined, y == "Denominator")
+count_Denominator<- ldply(prtdescombined,function(c) sum(c=="Denominator"))
+freqDenominator = count_Denominator[-c(2, 3),]
+freqDenominator$Determinants= "Denominator"
+prtDenominator = ldply(detDenominator, function(c) sum(c == "Protective"))
+freqprtDenominator = prtDenominator[-c(1,2),]
+freqDenominator$Protective = freqprtDenominator
+desDenominator = ldply(detDenominator, function(c) sum(c == "Destructive"))      
+freqdesDenominator = desDenominator[-c(1,2),]
+freqDenominator$Destructive = freqdesDenominator
+
+detSegregation_index = subset(prtdescombined, y == "Segregation index")
+count_Segregation_index<- ldply(prtdescombined,function(c) sum(c=="Segregation index"))
+freqSegregation_index = count_Segregation_index[-c(2, 3),]
+freqSegregation_index$Determinants= "Segregation index"
+prtSegregation_index = ldply(detSegregation_index, function(c) sum(c == "Protective"))
+freqprtSegregation_index = prtSegregation_index[-c(1,2),]
+freqSegregation_index$Protective = freqprtSegregation_index
+desSegregation_index = ldply(detSegregation_index, function(c) sum(c == "Destructive"))      
+freqdesSegregation_index = desSegregation_index[-c(1,2),]
+freqSegregation_index$Destructive = freqdesSegregation_index
+
+detenrolledfreelunch = subset(prtdescombined, y == "% Enrolled in Free or Reduced Lunch")
+count_enrolledfreelunch<- ldply(prtdescombined,function(c) sum(c=="% Enrolled in Free or Reduced Lunch"))
+freqenrolledfreelunch = count_enrolledfreelunch[-c(2, 3),]
+freqenrolledfreelunch$Determinants= "% Enrolled in Free or Reduced Lunch"
+prtenrolledfreelunch = ldply(detenrolledfreelunch, function(c) sum(c == "Protective"))
+freqprtenrolledfreelunch = prtenrolledfreelunch[-c(1,2),]
+freqenrolledfreelunch$Protective = freqprtenrolledfreelunch
+desenrolledfreelunch = ldply(detenrolledfreelunch, function(c) sum(c == "Destructive"))      
+freqdesenrolledfreelunch = desenrolledfreelunch[-c(1,2),]
+freqenrolledfreelunch$Destructive = freqdesenrolledfreelunch
+
+dethouseholdincomewhite = subset(prtdescombined, y == "Household Income (White)")
+count_householdincomewhite<- ldply(prtdescombined,function(c) sum(c=="Household Income (White)"))
+freqhouseholdincomewhite = count_householdincomewhite[-c(2, 3),]
+freqhouseholdincomewhite$Determinants= "Household Income (White)"
+prthouseholdincomewhite = ldply(dethouseholdincomewhite, function(c) sum(c == "Protective"))
+freqprthouseholdincomewhite = prthouseholdincomewhite[-c(1,2),]
+freqhouseholdincomewhite$Protective = freqprthouseholdincomewhite
+deshouseholdincomewhite = ldply(dethouseholdincomewhite, function(c) sum(c == "Destructive"))   
+freqdeshouseholdincomewhite = deshouseholdincomewhite[-c(1,2),]
+freqhouseholdincomewhite$Destructive = freqdeshouseholdincomewhite
+
+detnouninsured2 = subset(prtdescombined, y == "# Uninsured_2")
+count_nouninsured2<- ldply(prtdescombined,function(c) sum(c=="# Uninsured_2"))
+freqnouninsured2 = count_nouninsured2[-c(2, 3),]
+freqnouninsured2$Determinants= "# Uninsured_2"
+prtnouninsured2 = ldply(detnouninsured2, function(c) sum(c == "Protective"))
+freqprtnouninsured2 = prtnouninsured2[-c(1,2),]
+freqnouninsured2$Protective = freqprtnouninsured2
+desnouninsured2 = ldply(detnouninsured2, function(c) sum(c == "Destructive"))      
+freqdesnouninsured2 = desnouninsured2[-c(1,2),]
+freqnouninsured2$Destructive = freqdesnouninsured2
+
+detnouninsured1 = subset(prtdescombined, y == "# Uninsured_1")
+count_nouninsured1<- ldply(prtdescombined,function(c) sum(c=="# Uninsured_1"))
+freqnouninsured1 = count_nouninsured1[-c(2, 3),]
+freqnouninsured1$Determinants= "# Uninsured_1"
+prtnouninsured1 = ldply(detnouninsured1, function(c) sum(c == "Protective"))
+freqprtnouninsured1 = prtnouninsured1[-c(1,2),]
+freqnouninsured1$Protective = freqprtnouninsured1
+desnouninsured1 = ldply(detnouninsured1, function(c) sum(c == "Destructive"))      
+freqdesnouninsured1 = desnouninsured1[-c(1,2),]
+freqnouninsured1$Destructive = freqdesnouninsured1
+
+detmotorvehicledeaths = subset(prtdescombined, y == "# Motor Vehicle Deaths")
+count_motorvehicledeaths<- ldply(prtdescombined,function(c) sum(c=="# Motor Vehicle Deaths"))
+freqmotorvehicledeaths = count_motorvehicledeaths[-c(2, 3),]
+freqmotorvehicledeaths$Determinants= "# Motor Vehicle Deaths"
+prtmotorvehicledeaths = ldply(detmotorvehicledeaths, function(c) sum(c == "Protective"))
+freqprtmotorvehicledeaths = prtmotorvehicledeaths[-c(1,2),]
+freqmotorvehicledeaths$Protective = freqprtmotorvehicledeaths
+desmotorvehicledeaths = ldply(detmotorvehicledeaths, function(c) sum(c == "Destructive"))      
+freqdesmotorvehicledeaths = desmotorvehicledeaths[-c(1,2),]
+freqmotorvehicledeaths$Destructive = freqdesmotorvehicledeaths
+
+detnolimitedaccess = subset(prtdescombined, y == "# Limited Access")
+count_nolimitedaccess<- ldply(prtdescombined,function(c) sum(c=="# Limited Access"))
+freqnolimitedaccess = count_nolimitedaccess[-c(2, 3),]
+freqnolimitedaccess$Determinants= "# Limited Access"
+prtnolimitedaccess = ldply(detnolimitedaccess, function(c) sum(c == "Protective"))
+freqprtnolimitedaccess = prtnolimitedaccess[-c(1,2),]
+freqnolimitedaccess$Protective = freqprtnolimitedaccess
+desnolimitedaccess = ldply(detnolimitedaccess, function(c) sum(c == "Destructive"))      
+freqdesnolimitedaccess = desnolimitedaccess[-c(1,2),]
+freqnolimitedaccess$Destructive = freqdesnolimitedaccess
+
+detnofoodinsecure = subset(prtdescombined, y == "# Food Insecure")
+count_nofoodinsecure<- ldply(prtdescombined,function(c) sum(c=="# Food Insecure"))
+freqnofoodinsecure = count_nofoodinsecure[-c(2, 3),]
+freqnofoodinsecure$Determinants= "# Food Insecure"
+prtnofoodinsecure = ldply(detnofoodinsecure, function(c) sum(c == "Protective"))
+freqprtnofoodinsecure = prtnofoodinsecure[-c(1,2),]
+freqnofoodinsecure$Protective = freqprtnofoodinsecure
+desnofoodinsecure = ldply(detnofoodinsecure, function(c) sum(c == "Destructive"))      
+freqdesnofoodinsecure = desnofoodinsecure[-c(1,2),]
+freqnofoodinsecure$Destructive = freqdesnofoodinsecure
+
+detnohivecases = subset(prtdescombined, y == "# HIV Cases")
+count_nohivecases<- ldply(prtdescombined,function(c) sum(c=="# HIV Cases"))
+freqnohivecases = count_nohivecases[-c(2, 3),]
+freqnohivecases$Determinants= "# HIV Cases"
+prtnohivecases = ldply(detnohivecases, function(c) sum(c == "Protective"))
+freqprtnohivecases = prtnohivecases[-c(1,2),]
+freqnohivecases$Protective = freqprtnohivecases
+desnohivecases = ldply(detnohivecases, function(c) sum(c == "Destructive"))      
+freqdesnohivecases = desnohivecases[-c(1,2),]
+freqnohivecases$Destructive = freqdesnohivecases
+
+detphysicaldistressfrequent = subset(prtdescombined, y == "% Frequent Physical Distress")
+count_physicaldistressfrequent<- ldply(prtdescombined,function(c) sum(c=="% Frequent Physical Distress"))
+freqphysicaldistressfrequent = count_physicaldistressfrequent[-c(2, 3),]
+freqphysicaldistressfrequent$Determinants= "% Frequent Physical Distress"
+prtphysicaldistressfrequent = ldply(detphysicaldistressfrequent, function(c) sum(c == "Protective"))
+freqprtphysicaldistressfrequent = prtphysicaldistressfrequent[-c(1,2),]
+freqphysicaldistressfrequent$Protective = freqprtphysicaldistressfrequent
+desphysicaldistressfrequent = ldply(detphysicaldistressfrequent, function(c) sum(c == "Destructive"))      
+freqdesphysicaldistressfrequent = desphysicaldistressfrequent[-c(1,2),]
+freqphysicaldistressfrequent$Destructive = freqdesphysicaldistressfrequent
+
+detpre_covid_deaths = subset(prtdescombined, y == "pre_covid_deaths")
+count_pre_covid_deaths<- ldply(prtdescombined,function(c) sum(c=="pre_covid_deaths"))
+freqpre_covid_deaths = count_pre_covid_deaths[-c(2, 3),]
+freqpre_covid_deaths$Determinants= "pre_covid_deaths"
+prtpre_covid_deaths = ldply(detpre_covid_deaths, function(c) sum(c == "Protective"))
+freqprtpre_covid_deaths = prtpre_covid_deaths[-c(1,2),]
+freqpre_covid_deaths$Protective = freqprtpre_covid_deaths
+despre_covid_deaths = ldply(detpre_covid_deaths, function(c) sum(c == "Destructive"))      
+freqdespre_covid_deaths = despre_covid_deaths[-c(1,2),]
+freqpre_covid_deaths$Destructive = freqdespre_covid_deaths
+
+detlifeexpwhite = subset(prtdescombined, y == "Life Expectancy (White)")
+count_lifeexpwhite<- ldply(prtdescombined,function(c) sum(c=="Life Expectancy (White)"))
+freqlifeexpwhite = count_lifeexpwhite[-c(2, 3),]
+freqlifeexpwhite$Determinants= "Life Expectancy (White)"
+prtlifeexpwhite = ldply(detlifeexpwhite, function(c) sum(c == "Protective"))
+freqprtlifeexpwhite = prtlifeexpwhite[-c(1,2),]
+freqlifeexpwhite$Protective = freqprtlifeexpwhite
+deslifeexpwhite = ldply(detlifeexpwhite, function(c) sum(c == "Destructive"))      
+freqdeslifeexpwhite = deslifeexpwhite[-c(1,2),]
+freqlifeexpwhite$Destructive = freqdeslifeexpwhite
+
+detlifeexphispanic = subset(prtdescombined, y == "Life Expectancy (Hispanic)")
+count_lifeexphispanic<- ldply(prtdescombined,function(c) sum(c=="Life Expectancy (Hispanic)"))
+freqlifeexphispanic = count_lifeexphispanic[-c(2, 3),]
+freqlifeexphispanic$Determinants= "Life Expectancy (Hispanic)"
+prtlifeexphispanic = ldply(detlifeexphispanic, function(c) sum(c == "Protective"))
+freqprtlifeexphispanic = prtlifeexphispanic[-c(1,2),]
+freqlifeexphispanic$Protective = freqprtlifeexphispanic
+deslifeexphispanic = ldply(detlifeexphispanic, function(c) sum(c == "Destructive"))      
+freqdeslifeexphispanic = deslifeexphispanic[-c(1,2),]
+freqlifeexphispanic$Destructive = freqdeslifeexphispanic
+
+detlifeexp = subset(prtdescombined, y == "Life Expectancy")
+count_lifeexp<- ldply(prtdescombined,function(c) sum(c=="Life Expectancy"))
+freqlifeexp = count_lifeexp[-c(2, 3),]
+freqlifeexp$Determinants= "Life Expectancy"
+prtlifeexp = ldply(detlifeexp, function(c) sum(c == "Protective"))
+freqprtlifeexp = prtlifeexp[-c(1,2),]
+freqlifeexp$Protective = freqprtlifeexp
+deslifeexp = ldply(detlifeexp, function(c) sum(c == "Destructive"))      
+freqdeslifeexp = deslifeexp[-c(1,2),]
+freqlifeexp$Destructive = freqdeslifeexp
+
+detRural = subset(prtdescombined, y == "% Rural")
+count_Rural<- ldply(prtdescombined,function(c) sum(c=="% Rural"))
+freqRural = count_Rural[-c(2, 3),]
+freqRural$Determinants= "% Rural"
+prtRural = ldply(detRural, function(c) sum(c == "Protective"))
+freqprtRural = prtRural[-c(1,2),]
+freqRural$Protective = freqprtRural
+desRural = ldply(detRural, function(c) sum(c == "Destructive"))      
+freqdesRural = desRural[-c(1,2),]
+freqRural$Destructive = freqdesRural
+
+detAll.Cause.death_rate = subset(prtdescombined, y == "All.Cause.death_rate")
+count_All.Cause.death_rate<- ldply(prtdescombined,function(c) sum(c=="All.Cause.death_rate"))
+freqAll.Cause.death_rate = count_All.Cause.death_rate[-c(2, 3),]
+freqAll.Cause.death_rate$Determinants= "All.Cause.death_rate"
+prtAll.Cause.death_rate = ldply(detAll.Cause.death_rate, function(c) sum(c == "Protective"))
+freqprtAll.Cause.death_rate = prtAll.Cause.death_rate[-c(1,2),]
+freqAll.Cause.death_rate$Protective = freqprtAll.Cause.death_rate
+desAll.Cause.death_rate = ldply(detAll.Cause.death_rate, function(c) sum(c == "Destructive"))   
+freqdesAll.Cause.death_rate = desAll.Cause.death_rate[-c(1,2),]
+freqAll.Cause.death_rate$Destructive = freqdesAll.Cause.death_rate
+
+detAssault.death_rate = subset(prtdescombined, y == "Assault.death_rate")
+count_Assault.death_rate<- ldply(prtdescombined,function(c) sum(c=="Assault.death_rate"))
+freqAssault.death_rate = count_Assault.death_rate[-c(2, 3),]
+freqAssault.death_rate$Determinants= "Assault.death_rate"
+prtAssault.death_rate = ldply(detAssault.death_rate, function(c) sum(c == "Protective"))
+freqprtAssault.death_rate = prtAssault.death_rate[-c(1,2),]
+freqAssault.death_rate$Protective = freqprtAssault.death_rate
+desAssault.death_rate = ldply(detAssault.death_rate, function(c) sum(c == "Destructive"))      
+freqdesAssault.death_rate = desAssault.death_rate[-c(1,2),]
+freqAssault.death_rate$Destructive = freqdesAssault.death_rate
+
+detCancer.death_rate = subset(prtdescombined, y == "Cancer.death_rate")
+count_Cancer.death_rate<- ldply(prtdescombined,function(c) sum(c=="Cancer.death_rate"))
+freqCancer.death_rate = count_Cancer.death_rate[-c(2, 3),]
+freqCancer.death_rate$Determinants= "Cancer.death_rate"
+prtCancer.death_rate = ldply(detCancer.death_rate, function(c) sum(c == "Protective"))
+freqprtCancer.death_rate = prtCancer.death_rate[-c(1,2),]
+freqCancer.death_rate$Protective = freqprtCancer.death_rate
+desCancer.death_rate = ldply(detCancer.death_rate, function(c) sum(c == "Destructive"))      
+freqdesCancer.death_rate = desCancer.death_rate[-c(1,2),]
+freqCancer.death_rate$Destructive = freqdesCancer.death_rate
+
+detCardiovascular.death_rate = subset(prtdescombined, y == "Cardiovascular.death_rate")
+count_Cardiovascular.death_rate<- ldply(prtdescombined,function(c) sum(c=="Cardiovascular.death_rate"))
+freqCardiovascular.death_rate = count_Cardiovascular.death_rate[-c(2, 3),]
+freqCardiovascular.death_rate$Determinants= "Cardiovascular.death_rate"
+prtCardiovascular.death_rate = ldply(detCardiovascular.death_rate, function(c) sum(c == "Protective"))
+freqprtCardiovascular.death_rate = prtCardiovascular.death_rate[-c(1,2),]
+freqCardiovascular.death_rate$Protective = freqprtCardiovascular.death_rate
+desCardiovascular.death_rate = ldply(detCardiovascular.death_rate, function(c) sum(c == "Destructive"))      
+freqdesCardiovascular.death_rate = desCardiovascular.death_rate[-c(1,2),]
+freqCardiovascular.death_rate$Destructive = freqdesCardiovascular.death_rate
+
+detDespair.death_rate = subset(prtdescombined, y == "Despair.death_rate")
+count_Despair.death_rate<- ldply(prtdescombined,function(c) sum(c=="NDespair.death_rate"))
+freqDespair.death_rate = count_Despair.death_rate[-c(2, 3),]
+freqDespair.death_rate$Determinants= "Despair.death_rate"
+prtDespair.death_rate = ldply(detDespair.death_rate, function(c) sum(c == "Protective"))
+freqprtDespair.death_rate = prtDespair.death_rate[-c(1,2),]
+freqDespair.death_rate$Protective = freqprtDespair.death_rate
+desDespair.death_rate = ldply(detDespair.death_rate, function(c) sum(c == "Destructive"))      
+freqdesDespair.death_rate = desDespair.death_rate[-c(1,2),]
+freqDespair.death_rate$Destructive = freqdesDespair.death_rate
+
+detCOPD = subset(prtdescombined, y == "COPD")
+count_COPD<- ldply(prtdescombined,function(c) sum(c=="COPD"))
+freqCOPD = count_COPD[-c(2, 3),]
+freqCOPD$Determinants= "COPD"
+prtCOPD = ldply(detCOPD, function(c) sum(c == "Protective"))
+freqprtCOPD = prtCOPD[-c(1,2),]
+freqCOPD$Protective = freqprtCOPD
+desCOPD = ldply(detCOPD, function(c) sum(c == "Destructive"))      
+freqdesCOPD = desCOPD[-c(1,2),]
+freqCOPD$Destructive = freqdesCOPD
+
+detAdultChronicLungDisease = subset(prtdescombined, y == "AdultChronicLungDisease")
+count_AdultChronicLungDisease<- ldply(prtdescombined,function(c) sum(c=="AdultChronicLungDisease"))
+freqAdultChronicLungDisease = count_AdultChronicLungDisease[-c(2, 3),]
+freqAdultChronicLungDisease$Determinants= "AdultChronicLungDisease"
+prtAdultChronicLungDisease = ldply(detAdultChronicLungDisease, function(c) sum(c == "Protective"))
+freqprtAdultChronicLungDisease = prtAdultChronicLungDisease[-c(1,2),]
+freqAdultChronicLungDisease$Protective = freqprtAdultChronicLungDisease
+desAdultChronicLungDisease = ldply(detAdultChronicLungDisease, function(c) sum(c == "Destructive"))      
+freqdesAdultChronicLungDisease = desAdultChronicLungDisease[-c(1,2),]
+freqAdultChronicLungDisease$Destructive = freqdesAdultChronicLungDisease
+
+detnoworkersdrivealone = subset(prtdescombined, y == "# Workers who Drive Alone")
+count_noworkersdrivealone<- ldply(prtdescombined,function(c) sum(c=="# Workers who Drive Alone"))
+freqnoworkersdrivealone = count_noworkersdrivealone[-c(2, 3),]
+freqnoworkersdrivealone$Determinants= "# Workers who Drive Alone"
+prtnoworkersdrivealone = ldply(detnoworkersdrivealone, function(c) sum(c == "Protective"))
+freqprtnoworkersdrivealone = prtnoworkersdrivealone[-c(1,2),]
+freqnoworkersdrivealone$Protective = freqprtnoworkersdrivealone
+desnoworkersdrivealone = ldply(detnoworkersdrivealone, function(c) sum(c == "Destructive"))   
+freqdesnoworkersdrivealone = desnoworkersdrivealone[-c(1,2),]
+freqnoworkersdrivealone$Destructive = freqdesnoworkersdrivealone
+
+detjustseverehousingcostburden = subset(prtdescombined, y == "Severe Housing Cost Burden")
+count_justseverehousingcostburden<- ldply(prtdescombined,function(c) sum(c=="Severe Housing Cost Burden"))
+freqjustseverehousingcostburden = count_justseverehousingcostburden[-c(2, 3),]
+freqjustseverehousingcostburden$Determinants= "Severe Housing Cost Burden"
+prtjustseverehousingcostburden = ldply(detjustseverehousingcostburden, function(c) sum(c == "Protective"))
+freqprtjustseverehousingcostburden = prtjustseverehousingcostburden[-c(1,2),]
+freqjustseverehousingcostburden$Protective = freqprtjustseverehousingcostburden
+desjustseverehousingcostburden = ldply(detjustseverehousingcostburden, function(c) sum(c == "Destructive"))      
+freqdesjustseverehousingcostburden = desjustseverehousingcostburden[-c(1,2),]
+freqjustseverehousingcostburden$Destructive = freqdesjustseverehousingcostburden
+
+deteverehousingproblems = subset(prtdescombined, y == "% Severe Housing Problems")
+count_everehousingproblems<- ldply(prtdescombined,function(c) sum(c=="% Severe Housing Problems"))
+freqeverehousingproblems = count_everehousingproblems[-c(2, 3),]
+freqeverehousingproblems$Determinants= "% Severe Housing Problems"
+prteverehousingproblems = ldply(deteverehousingproblems, function(c) sum(c == "Protective"))
+freqprteverehousingproblems = prteverehousingproblems[-c(1,2),]
+freqeverehousingproblems$Protective = freqprteverehousingproblems
+deseverehousingproblems = ldply(deteverehousingproblems, function(c) sum(c == "Destructive")) 
+freqdeseverehousingproblems = deseverehousingproblems[-c(1,2),]
+freqeverehousingproblems$Destructive = freqdeseverehousingproblems
+
+detaveragedailypm2.5 = subset(prtdescombined, y == "Average Daily PM2.5")
+count_averagedailypm2.5<- ldply(prtdescombined,function(c) sum(c=="Average Daily PM2.5"))
+freqaveragedailypm2.5 = count_averagedailypm2.5[-c(2, 3),]
+freqaveragedailypm2.5$Determinants= "Average Daily PM2.5"
+prtaveragedailypm2.5 = ldply(detaveragedailypm2.5, function(c) sum(c == "Protective"))
+freqprtaveragedailypm2.5 = prtaveragedailypm2.5[-c(1,2),]
+freqaveragedailypm2.5$Protective = freqprtaveragedailypm2.5
+desaveragedailypm2.5 = ldply(detaveragedailypm2.5, function(c) sum(c == "Destructive"))      
+freqdesaveragedailypm2.5 = desaveragedailypm2.5[-c(1,2),]
+freqaveragedailypm2.5$Destructive = freqdesaveragedailypm2.5
+
+detnoinjurydeaths = subset(prtdescombined, y == "# Injury Deaths")
+count_noinjurydeaths<- ldply(prtdescombined,function(c) sum(c=="# Injury Deaths"))
+freqnoinjurydeaths = count_noinjurydeaths[-c(2, 3),]
+freqnoinjurydeaths$Determinants= "# Injury Deaths"
+prtnoinjurydeaths = ldply(detnoinjurydeaths, function(c) sum(c == "Protective"))
+freqprtnoinjurydeaths = prtnoinjurydeaths[-c(1,2),]
+freqnoinjurydeaths$Protective = freqprtnoinjurydeaths
+desnoinjurydeaths = ldply(detnoinjurydeaths, function(c) sum(c == "Destructive"))      
+freqdesnoinjurydeaths = desnoinjurydeaths[-c(1,2),]
+freqnoinjurydeaths$Destructive = freqdesnoinjurydeaths
+
+detaverageviolentcrimes = subset(prtdescombined, y == "Annual Average Violent Crimes")
+count_averageviolentcrimes<- ldply(prtdescombined,function(c) sum(c=="Annual Average Violent Crimes"))
+freqaverageviolentcrimes = count_averageviolentcrimes[-c(2, 3),]
+freqaverageviolentcrimes$Determinants= "Annual Average Violent Crimes"
+prtaverageviolentcrimes = ldply(detaverageviolentcrimes, function(c) sum(c == "Protective"))
+freqprtaverageviolentcrimes = prtaverageviolentcrimes[-c(1,2),]
+freqaverageviolentcrimes$Protective = freqprtaverageviolentcrimes
+desaverageviolentcrimes = ldply(detaverageviolentcrimes, function(c) sum(c == "Destructive"))   
+freqdesaverageviolentcrimes = desaverageviolentcrimes[-c(1,2),]
+freqaverageviolentcrimes$Destructive = freqdesaverageviolentcrimes
+
+detnoassociations = subset(prtdescombined, y == "# Associations")
+count_noassociations<- ldply(prtdescombined,function(c) sum(c=="# Associations"))
+freqnoassociations = count_noassociations[-c(2, 3),]
+freqnoassociations$Determinants= "# Associations"
+prtnoassociations = ldply(detnoassociations, function(c) sum(c == "Protective"))
+freqprtnoassociations = prtnoassociations[-c(1,2),]
+freqnoassociations$Protective = freqprtnoassociations
+desnoassociations = ldply(detnoassociations, function(c) sum(c == "Destructive"))      
+freqdesnoassociations = desnoassociations[-c(1,2),]
+freqnoassociations$Destructive = freqdesnoassociations
+
+detnohouseholds = subset(prtdescombined, y == "# Households")
+count_nohouseholds<- ldply(prtdescombined,function(c) sum(c=="# Households"))
+freqnohouseholds = count_nohouseholds[-c(2, 3),]
+freqnohouseholds$Determinants= "# Households"
+prtnohouseholds = ldply(detnohouseholds, function(c) sum(c == "Protective"))
+freqprtnohouseholds = prtnohouseholds[-c(1,2),]
+freqnohouseholds$Protective = freqprtnohouseholds
+desnohouseholds = ldply(detnohouseholds, function(c) sum(c == "Destructive"))      
+freqdesnohouseholds = desnohouseholds[-c(1,2),]
+freqnohouseholds$Destructive = freqdesnohouseholds
+
+detnosingleparenthouseholds = subset(prtdescombined, y == "# Single-Parent Households")
+count_nosingleparenthouseholds<- ldply(prtdescombined,function(c) sum(c=="# Single-Parent Households"))
+freqnosingleparenthouseholds = count_nosingleparenthouseholds[-c(2, 3),]
+freqnosingleparenthouseholds$Determinants= "# Single-Parent Households"
+prtnosingleparenthouseholds = ldply(detnosingleparenthouseholds, function(c) sum(c == "Protective"))
+freqprtnosingleparenthouseholds = prtnosingleparenthouseholds[-c(1,2),]
+freqnosingleparenthouseholds$Protective = freqprtnosingleparenthouseholds
+desnosingleparenthouseholds = ldply(detnosingleparenthouseholds, function(c) sum(c == "Destructive"))      
+freqdesnosingleparenthouseholds = desnosingleparenthouseholds[-c(1,2),]
+freqnosingleparenthouseholds$Destructive = freqdesnosingleparenthouseholds
+
+det80percentileincome = subset(prtdescombined, y == "80th Percentile Income")
+count_80percentileincome<- ldply(prtdescombined,function(c) sum(c=="80th Percentile Income"))
+freq80percentileincome = count_80percentileincome[-c(2, 3),]
+freq80percentileincome$Determinants= "80th Percentile Income"
+prt80percentileincome = ldply(det80percentileincome, function(c) sum(c == "Protective"))
+freqprt80percentileincome = prt80percentileincome[-c(1,2),]
+freq80percentileincome$Protective = freqprt80percentileincome
+des80percentileincome = ldply(det80percentileincome, function(c) sum(c == "Destructive"))      
+freqdes80percentileincome = des80percentileincome[-c(1,2),]
+freq80percentileincome$Destructive = freqdes80percentileincome
+
+detchildrenpovertyhispanic = subset(prtdescombined, y == "% Children in Poverty (Hispanic)")
+count_childrenpovertyhispanic<- ldply(prtdescombined,function(c) sum(c=="% Children in Poverty (Hispanic)"))
+freqchildrenpovertyhispanic = count_childrenpovertyhispanic[-c(2, 3),]
+freqchildrenpovertyhispanic$Determinants= "% Children in Poverty (Hispanic)"
+prtchildrenpovertyhispanic = ldply(detchildrenpovertyhispanic, function(c) sum(c == "Protective"))
+freqprtchildrenpovertyhispanic = prtchildrenpovertyhispanic[-c(1,2),]
+freqchildrenpovertyhispanic$Protective = freqprtchildrenpovertyhispanic
+deschildrenpovertyhispanic = ldply(detchildrenpovertyhispanic, function(c) sum(c == "Destructive"))      
+freqdeschildrenpovertyhispanic = deschildrenpovertyhispanic[-c(1,2),]
+freqchildrenpovertyhispanic$Destructive = freqdeschildrenpovertyhispanic
+
+detLat = subset(prtdescombined, y == "Lat")
+count_Lat<- ldply(prtdescombined,function(c) sum(c=="Lat"))
+freqLat = count_Lat[-c(2, 3),]
+freqLat$Determinants= "Lat"
+prtLat = ldply(detLat, function(c) sum(c == "Protective"))
+freqprtLat = prtLat[-c(1,2),]
+freqLat$Protective = freqprtLat
+desLat = ldply(detLat, function(c) sum(c == "Destructive"))      
+freqdesLat = desLat[-c(1,2),]
+freqLat$Destructive = freqdesLat
+
+detpopdensity = subset(prtdescombined, y == "popdensity")
+count_popdensity<- ldply(prtdescombined,function(c) sum(c=="popdensity"))
+freqpopdensity = count_popdensity[-c(2, 3),]
+freqpopdensity$Determinants= "popdensity"
+prtpopdensity = ldply(detpopdensity, function(c) sum(c == "Protective"))
+freqprtpopdensity = prtpopdensity[-c(1,2),]
+freqpopdensity$Protective = freqprtpopdensity
+despopdensity = ldply(detpopdensity, function(c) sum(c == "Destructive"))      
+freqdespopdensity = despopdensity[-c(1,2),]
+freqpopdensity$Destructive = freqdespopdensity
+
+detmedianhousevalue = subset(prtdescombined, y == "medianhousevalue")
+count_medianhousevalue<- ldply(prtdescombined,function(c) sum(c=="medianhousevalue"))
+freqmedianhousevalue = count_medianhousevalue[-c(2, 3),]
+freqmedianhousevalue$Determinants= "medianhousevalue"
+prtmedianhousevalue = ldply(detmedianhousevalue, function(c) sum(c == "Protective"))
+freqprtmedianhousevalue = prtmedianhousevalue[-c(1,2),]
+freqmedianhousevalue$Protective = freqprtmedianhousevalue
+desmedianhousevalue = ldply(detmedianhousevalue, function(c) sum(c == "Destructive"))      
+freqdesmedianhousevalue = desmedianhousevalue[-c(1,2),]
+freqmedianhousevalue$Destructive = freqdesmedianhousevalue
+
+detyoung_pecent = subset(prtdescombined, y == "young_pecent")
+count_young_pecent<- ldply(prtdescombined,function(c) sum(c=="young_pecent"))
+freqyoung_pecent = count_young_pecent[-c(2, 3),]
+freqyoung_pecent$Determinants= "young_pecent"
+prtyoung_pecent = ldply(detyoung_pecent, function(c) sum(c == "Protective"))
+freqprtyoung_pecent = prtyoung_pecent[-c(1,2),]
+freqyoung_pecent$Protective = freqprtyoung_pecent
+desyoung_pecent = ldply(detyoung_pecent, function(c) sum(c == "Destructive"))      
+freqdesyoung_pecent = desyoung_pecent[-c(1,2),]
+freqyoung_pecent$Destructive = freqdesyoung_pecent
+
+detprime_pecent = subset(prtdescombined, y == "prime_pecent")
+count_prime_pecent<- ldply(prtdescombined,function(c) sum(c=="prime_pecent"))
+freqprime_pecent = count_prime_pecent[-c(2, 3),]
+freqprime_pecent$Determinants= "prime_pecent"
+prtprime_pecent = ldply(detprime_pecent, function(c) sum(c == "Protective"))
+freqprtprime_pecent = prtprime_pecent[-c(1,2),]
+freqprime_pecent$Protective = freqprtprime_pecent
+desprime_pecent = ldply(detprime_pecent, function(c) sum(c == "Destructive"))      
+freqdesprime_pecent = desprime_pecent[-c(1,2),]
+freqprime_pecent$Destructive = freqdesprime_pecent
+
+#create sigdeterminants data frame that combines all of the data frames formed above
+sigdeterminants <- bind_rows(freqconfirmed, freqactive, freqcase.fatality, freqteenbirth, freqovercrowding, freqlessthan18, freqnotproficientinenglish, freqpediatricasthma, frequninsured1, frequninsured2, freqmeanwintertemp, freqmeansummertemp, freqlong, freqolderpecent, freqmidpecent, freqyearspotentiallifelostrate, freqlowbirthweight, freqsmokers, freqpct_obesity, freqphysicallyinactive, freqexcessivedrinking, freqdrivingalcohol, freqteenbirthhispanic, freqteenbirthwhite, freqincidencerate, freqpreventablehospital, freqpreventablehospitalhispanic, freqpreventablehospitalwhite, freqscreenedhispanic, freqchildrenpoverty, freqincomeratio, freqsingleparent, freqinjurydeathrate, freqinjurydeathratehispanic, freqinjurydeathratewhite, freqinadequatefacilities, freqdrivealonehispanic,freqdrivealonewhite, freqprecoviddeathrate,freqageadjustedhispanic,freqageadjustedwhite, freqpct_diabetes, freqfoodinsecure, freqlimitedhealthyfood, freqmotormortality, freqinsufficientsleep, freqsegregationindex, freqhomeowners, freqpct_age65,freqblack,freqindianalaska, freqhawaiian, freqnonhispanicwhite, freqadultasthma, freqhouseholdincomeblack, freqmean_summer_rm, freqpct_owner_occ, freqpoverty,freqmentalproviderrate, frequnhealthydays, freqdrivealonework,freq20percentileincome, freqlongcommutedrivealone,freqsocialassociationrate,freqtrafficvolumepermeter,freqmentalunhealthydays,freqmentaldistressfrequent,freqwhitechildpoverty,freqmean_pm25,freqLungCancer,freqfemale,freqhispanic, freqnolessthan18,freqnoblack,freqnoindianalaska,freqnoasian,freqnohawaiian,freqnohomeowners,freqnohouseholdwithseverecostburden,freqseverehousingcostburden, freqDenominator,freqSegregation_index,freqenrolledfreelunch,freqhouseholdincomewhite,freqnouninsured2, freqnouninsured1,freqmotorvehicledeaths,freqnolimitedaccess,freqnofoodinsecure,freqnohivecases,freqphysicaldistressfrequent,freqpre_covid_deaths,freqlifeexpwhite,freqlifeexphispanic,freqlifeexp,freqRural,freqAll.Cause.death_rate,freqAssault.death_rate,freqCancer.death_rate,freqCardiovascular.death_rate,freqDespair.death_rate,freqCOPD,freqAdultChronicLungDisease,freqnoworkersdrivealone,freqjustseverehousingcostburden,freqeverehousingproblems,freqaveragedailypm2.5,freqnoinjurydeaths,freqaverageviolentcrimes,freqnoassociations,freqnohouseholds,freqnosingleparenthouseholds,freq80percentileincome,freqchildrenpovertyhispanic, freqLat,freqpopdensity,freqmedianhousevalue,freqyoung_pecent,freqprime_pecent)
+
+```
+
+Graph of Significant Determinants' Frequency
+```{r}
+library(ggplot2)
+
+#bar graph of frequency of significant determinants
+#does not show frequency of destructive and protective occurrences
+p <- ggplot(sigdeterminants, aes(x=Determinants, y=V1)) + 
+  ggtitle("Frequency of Significant Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Frequency") +
+  geom_bar(stat = "identity")
+p + coord_flip()
+```
+
+Stacked Bar Graph of Frequency of Protective/Destructive Occurrences of each Significant Determinant
+```{r}
+library(ggplot2)
+
+#stacked bar graph version of graph above
+#currently working on it
+#issue: two colors are not showing
+ggplot(data=prtdescombined, aes(x=y, y='V1', fill='Effect on MRR')) +
+  ggtitle("Frequency of Significant DeterminantsS")+
+  xlab("Significant Determinants")+
+  ylab("Frequency") +
+  geom_bar(stat = "identity")+coord_flip()
+
+```
+
