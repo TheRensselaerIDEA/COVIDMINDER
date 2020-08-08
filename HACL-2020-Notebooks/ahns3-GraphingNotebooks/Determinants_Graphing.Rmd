@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 code is from ProtoNotebook
-used to find siginificant protective and destructive determinants for every state
+It was used to load the data for siginificant protective and destructive determinants for every state.
 ```{r echo = F}
 
   # use GWAS_ADJ_P and GWAS_MRR to say for which states there are significant protective and destructive variables
@@ -62,9 +62,10 @@ used to find siginificant protective and destructive determinants for every stat
 ```
 
 code is from ProtoNotebook
-load each state's significant determinants into global environment
-replace state with "chosen state" (ex: NY)
-replace data frame name with data"chosenstate" (ex: dataNY)
+It was used to load each state's significant determinants into the global environment.
+To use:
+* replace state with "chosen state" (ex: NY)
+* replace data frame name with data"chosenstate" (ex: dataNY)
 ```{r echo = F}
    # Libraries
   library(ggplot2)
@@ -73,7 +74,7 @@ replace data frame name with data"chosenstate" (ex: dataNY)
 for (state in colnames(GWAS_MRR)) {
   
   #REPLACE STATE NAME
-  state = "AK"
+  state = "NY"
   state
    s <- paste("GENERATING FIGURE FOR ", state, sep = "")
    print(s)
@@ -142,6 +143,7 @@ After collecting most of 50 states, I counted the frequency of each significant 
 This route was abandoned because it was not time efficient.
 ```{r echo = F }
 library(plyr)
+
 #states with not enough data: UT,VT,DE,ME,MD,MA,NH,NJ
 #states that did not work with above code: AK,MI,RI,WY
 
@@ -180,10 +182,12 @@ count_teenbirthwhite<- ldply(prtdescombined,function(c) sum(c=="Teen Birth Rate 
 count_incidencerate<- ldply(prtdescombined,function(c) sum(c=="Incidence_Rate"))
 
 #created a new data frame with the determinant name and the number of occurences
+#manually inputting name and value leads to many errors and loss of efficiency
 significantdeterminants <- data.frame (determinants  = c("Confirmed", "Active", "Case Fatality Rate","Teen Birth Rate","Overcrowding","% less than 18 years of age","% Not Proficient in English","Pediatric Asthma","% Uninsured 1","% Uninsured 2","Mean Winter Temperature","Mean Summer Temperature","Long_","Older Percent","Mid Percent","Years of Potential Life Lost Rate","% Low Birthweight","% Smokers","pct_obesity","% Physically Inactive","% Excessive Drinking","% Driving Deaths with Alcohol Involvement","Teen Birth Rate (Hispanic)","Teen Birth Rate (White)","Incidence Rate"),
                                        frequency = c("10", "8", "21", "2", "3", "4", "6", "4", "5","3","3","4","7","3","3","1","4","2","2","1","3","1","1","1","22")
                                        #prtordes=  
                                          )
+
 #change frequency variable into a number rather than a factor
 significantdeterminants$frequency <- as.numeric(as.character(significantdeterminants$frequency))
 

@@ -10,38 +10,7 @@ output:
 subtitle: "COVIDMINDER"
 ---
 
-## Instructions (DELETE BEFORE SUBMISSION)
-
-* Use this notebook is a template for your weekly project status assignment. 
-* Use the sections starting with **Weekly Work Summary** as your outline for your submitted notebook.
-* Summarize ALL of your work in this notebook; **if you don't show and/or link to your work here, it doesn't exist for us!**
-
-2. Document **all** the work you did on your assigned project this week 
-
-3. You MUST include figures and/or tables to illustrate your work. 
-
-4. You MUST include links to other important resources (knitted HTMl files, Shiny apps).
-
-5. Commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
-
-6. **Submit a pull request.** Please notify Dr. Erickson if you don't see your notebook merged within one day. 
-
-### Guide to linking to external resources (DELETE BEFORE SUBMISSION)
-
-1. How to link to knitted notebooks (ie HTML) files
-
-* For files merged with the master on github, it's possible to provide a direct link in your notebook using the following pattern:
-
-    * Preface: `https://htmlpreview.github.io/? `
-    * Repo and branch: `https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/ `
-    * Directory and file: `HACL-2020-Notebooks/status_notebook_template.html'
-
-* Example for projects on the public github (COVIDMINDER, COVID Twitter):
-
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html 
-
-
-I apologize for the late submission. I did not have power since Tuesday afternoon. I still do not have power and am spending a day at a place with internet. 
+*I apologize for the late submission. I did not have power since Tuesday afternoon. I still do not have power and am spending a night at a place with internet. Power is expected to come back on Sunday.* 
 
 ## Weekly Work Summary	
 * RCS ID: ahns3
@@ -49,16 +18,26 @@ I apologize for the late submission. I did not have power since Tuesday afternoo
 * Summary of work since last week: 
 
     * Edited correlation plot of COVID mortality rates for all of the New York counties for better readability (title, axis labels)
-    * Edited correlation plot of the states' COVID mortality rate and chronic respiratory mortality rate for better readability (title, axis labels, scale for COVID mortality rate)
+    * Edited correlation plot of the COVID mortality rate and chronic respiratory mortality rate of NY counties for better readability (title, axis labels, scale for COVID mortality rate)
     * Created bar graph that shows the number of times each determinant appears as significant from the state GWAS
     * Creating stacked bar graph that shows the number of times each state GWAS determinant as protective or destructive
-    * Beginning a rough draft of blog post
+    * Beginning a rough draft of the blog post
 
 * Summary of github commits: 
 
     * Branch Name: hacl-ahns3
     * Browsable Links to all external files on github
-      *NEED TO ADD MY FOLDER?FILES
+      * ahns3-Week3_Graphs.Rmd
+        * https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/ahns3-Week3_Graphs.nb.html 
+      * Determinants_Graphing.Rmd
+        * https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/Determinants_Graphing.nb.html  
+      * Determinants_Stacked_Bar.Rmd
+        * https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/Determinants_Stacked_Bar.nb.html 
+      * ahns3ProtoNotebook.Rmd
+        * https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/ahns3ProtoNotebook.Rmd
+      * copy of play code.R
+        * https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/copy%20of%20play%20code.R 
+      
     
 * List of presentations,  papers, or other outputs:
 
@@ -68,19 +47,18 @@ I apologize for the late submission. I did not have power since Tuesday afternoo
     * N/A
 
 * Indicate any use of group shared code base:
-    * Preface:
     * Repo and branch: https://github.com/TheRensselaerIDEA/COVID-Notebooks/tree/Social_Determinants
-    * Directory and file: ProtoNotebook.html
-    https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Notebooks/Social_Determinants/Notebooks/ProtoNotebook.html
-    
-ADD MY NOTEBOOKS
+    * Directory and file: 'ProtoNotebook.html'
+    https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Notebooks/Social_Determinants/Notebooks/ProtoNotebook.html,   https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Notebooks/Social_Determinants/Notebooks/ProtoNotebook.Rmd
 
 * Indicate which parts of your described work were done by you or as part of joint efforts:
     * ProtoNotebook.Rmd is the work of Tiburon Benavides.
-    * Determinants_Graphing.Rmd and Determinants_Stacked_Bar.Rmd include the code from ProtoNotebook, but the analysis is my work.
+    * Determinants_Graphing.Rmd and Determinants_Stacked_Bar.Rmd include and is based on the code from ProtoNotebook, but the analysis is my work.
 
-## Personal Contribution	
-* Code in ahns3-Week_Graphs.Rmd
+## Personal Contribution
+*Notebooks contain comments*
+
+* Code in ahns3-Week_Graphs.Rmd: https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/ahns3-Week3_Graphs.Rmd
   * Plot of COVID Mortality Rates for all of the New York Counties:
     * This code was used to find the COVID mortality rate for each NY county.
     * Code:
@@ -103,7 +81,7 @@ ADD MY NOTEBOOKS
       * cor.test(myfulldataresp$mortality_per_100000,myfulldataresp$MortalityRate2014)
       * plot(myfulldataresp$MortalityRate2014, myfulldataresp$mortality_per_100000, xlab="Chronic Respiratory Disease Mortality Rate", ylab="COVID Mortality Rate", main="COVID Mortality Rate VS Chronic Respiratory Disease Mortality Rate")
       * lm(myfulldataresp$mortality_per_100000~myfulldataresp$MortalityRate2014)
-* Code in Determinants_Graphing.Rmd
+* Code in Determinants_Graphing.Rmd: https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/Determinants_Graphing.Rmd 
   * This code was used to find number of occurrences of each significant determinant in the state GWAS.
   * Code:
     * prtdescombined = rbind(dataAL , dataAR,dataAZ,dataCA, dataCO, dataFL, dataGA, dataIA, dataID,dataIL,dataIN,dataKS, dataKY, dataLA, dataMI, dataMN, dataMO, dataMS, dataMT, dataNC, dataND, dataNE, dataNJ, dataNM, dataNY, dataOH,dataOK,dataOR,dataPA,dataSC,dataSD, dataTN,dataTX,dataVA,dataWA,dataWI,dataWV)
@@ -118,61 +96,88 @@ ADD MY NOTEBOOKS
   geom_bar(stat = "identity") +
   xlab("Significant Determinants") + ylab("Frequency") + ggtitle("Frequency of Significant Determinants")
     * p + coord_flip()
-*Code in Determinants_Stacked_Bar.Rmd
-  *This code was used for a more time efficient analysis of all of the state GWAS and to create a new data frame to allow the separation of protective and destructive occurrences.
-  *Code:
-    *
-
-
-
-
-
+* Code in Determinants_Stacked_Bar.Rmd: https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/hacl-ahns3/HACL-2020-Notebooks/ahns3-GraphingNotebooks/Determinants_Stacked_Bar.Rmd
+  * This code was used for a more time efficient analysis of all of the state GWAS and to create a new data frame to allow the separation of protective and destructive occurrences.
+  * Code:
+    * detconfirmed = subset(prtdescombined, y == "Confirmed")
+    * count_confirmed<- ldply(detconfirmed,function(c) sum(c=="Confirmed"))
+    * freqconfirmed = count_confirmed[-c(2, 3),]
+    * freqconfirmed$Determinants = "Confirmed"
+    * prtconfirmed = ldply(detconfirmed, function(c) sum(c == "Protective"))
+    * freqprtconfirmed = prtconfirmed[-c(1,2),]
+    * freqconfirmed$Protective = freqprtconfirmed
+    * desconfirmed = ldply(detconfirmed, function(c) sum(c == "Destructive")) 
+    * freqdesconfirmed = desconfirmed[-c(1,2),]
+    * freqconfirmed$Destructive = freqdesconfirmed
+      * repeat this code for each variable
+    * sigdeterminants <- bind_rows(freqconfirmed, freqactive, freqcase.fatality, freqteenbirth, freqovercrowding, freqlessthan18, freqnotproficientinenglish, freqpediatricasthma, frequninsured1, frequninsured2, freqmeanwintertemp, freqmeansummertemp, freqlong, freqolderpecent, freqmidpecent, freqyearspotentiallifelostrate, freqlowbirthweight, freqsmokers, freqpct_obesity, freqphysicallyinactive, freqexcessivedrinking, freqdrivingalcohol, freqteenbirthhispanic, freqteenbirthwhite, freqincidencerate, freqpreventablehospital, freqpreventablehospitalhispanic, freqpreventablehospitalwhite, freqscreenedhispanic, freqchildrenpoverty, freqincomeratio, freqsingleparent, freqinjurydeathrate, freqinjurydeathratehispanic, freqinjurydeathratewhite, freqinadequatefacilities, freqdrivealonehispanic,freqdrivealonewhite, freqprecoviddeathrate,freqageadjustedhispanic,freqageadjustedwhite, freqpct_diabetes, freqfoodinsecure, freqlimitedhealthyfood, freqmotormortality, freqinsufficientsleep, freqsegregationindex, freqhomeowners, freqpct_age65,freqblack,freqindianalaska, freqhawaiian, freqnonhispanicwhite, freqadultasthma, freqhouseholdincomeblack, freqmean_summer_rm, freqpct_owner_occ, freqpoverty,freqmentalproviderrate, frequnhealthydays, freqdrivealonework,freq20percentileincome, freqlongcommutedrivealone,freqsocialassociationrate,freqtrafficvolumepermeter,freqmentalunhealthydays,freqmentaldistressfrequent,freqwhitechildpoverty,freqmean_pm25,freqLungCancer,freqfemale,freqhispanic, freqnolessthan18,freqnoblack,freqnoindianalaska,freqnoasian,freqnohawaiian,freqnohomeowners,freqnohouseholdwithseverecostburden,freqseverehousingcostburden, freqDenominator,freqSegregation_index,freqenrolledfreelunch,freqhouseholdincomewhite,freqnouninsured2, freqnouninsured1,freqmotorvehicledeaths,freqnolimitedaccess,freqnofoodinsecure,freqnohivecases,freqphysicaldistressfrequent,freqpre_covid_deaths,freqlifeexpwhite,freqlifeexphispanic,freqlifeexp,freqRural,freqAll.Cause.death_rate,freqAssault.death_rate,freqCancer.death_rate,freqCardiovascular.death_rate,freqDespair.death_rate,freqCOPD,freqAdultChronicLungDisease,freqnoworkersdrivealone,freqjustseverehousingcostburden,freqeverehousingproblems,freqaveragedailypm2.5,freqnoinjurydeaths,freqaverageviolentcrimes,freqnoassociations,freqnohouseholds,freqnosingleparenthouseholds,freq80percentileincome,freqchildrenpovertyhispanic, freqLat,freqpopdensity,freqmedianhousevalue,freqyoung_pecent,freqprime_pecent)
+    * p <- ggplot(sigdeterminants, aes(x=Determinants, y=V1)) + 
+  ggtitle("Frequency of Significant Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Frequency") +
+  geom_bar(stat = "identity")
+    * p + coord_flip()
+    * ggplot(data=prtdescombined, aes(x=y, y='V1', fill='Effect on MRR')) +
+  ggtitle("Frequency of Significant DeterminantsS")+
+  xlab("Significant Determinants")+
+  ylab("Frequency") +
+  geom_bar(stat = "identity")+coord_flip()
 
 ## Discussion of Primary Findings 	
 
 * Discuss primary findings: 
+    * After looking back on my past work, I realized that I had no idea what my graphs were representing. I gave each graph below a new title and axis labels to clearly convey my results.
+```{r}
+#Edited Graphs of COVID Mortality Rate
+knitr::include_graphics("ahns3-GraphingNotebooks/crude_COVIDrate_NYcounty.png")
+knitr::include_graphics("ahns3-GraphingNotebooks/COVID100K_NYcounty.png")
+knitr::include_graphics("ahns3-GraphingNotebooks/COVID100K_NYcountygreaterthan10.png")
+knitr::include_graphics("ahns3-GraphingNotebooks/COVIDratevsChronicRespiratory.png")
+```
 
-    * What did you want to know? 
-    * How did you go about finding it? 
-    * What did you find?
-	
-* **Required:** Provide illustrating figures and/or tables
-
-    * Screen shots are acceptable 
-    * If your figures are "live," either include source code embedded in notebook or provide github location for their source scripts
-
-I wanted to see the relationship between the frequency of testing and the positive/negative cases. I plotted the ten best and worst states from COVIDMINDER. The x value was the test per 1000 people, and the y value was the number of positive/negative cases. There was the trend where more tests will mean that is more likely to get more positive cases. Some states where the lockdown was not heavily enforced, such as Florida, did not follow this trend since it had a low testing rate but a large of positive cases. The trend for negative cases was similar. The more tests, the more likely to get negative tests. A correlation was not done as this finding was for practice.
-
-I then looked for the mortality rate for the counties in New York. I combined the two data frames covid_NY_counties.deaths.csv and NY_populations.csv to be able to divide the number of deaths with the population for each county. Then, I multipled each rate by 100,000 for easier comparison. 
-
-I wanted to map New York with the various counties and its COVID mortality rate (per 100K). I tried the code above but will change my code after further review of the state report card notebook.
-
-Using the mortality (per 100K), I plotted the quantile of mortality rate with a Q-Q plot. I found that the distribution was not normal, and therefore nonparametric methods will be need to analysis the data.
-
-I also wanted to see the correlation between COVID mortality rates and chronic respiratory mortality rates for each NY county. I merged the data frame chronicrespiratorydiseases_counties.csv with the already combined data frame (that contains covid_NY_counties.deaths.csv and NY_populations.csv). The x-value is the chronic respiratory disease mortality rate, and the y-value is the COVID mortality rate. The correlation test yielded a strong negative correlation of -0.77. 
-
-To see if this trend is the same on a national scale, I combined the two data frames (covid_data_states.csv and chronicrespiratorydiseases_counties.csv). I did a correlation test and plotted it. There was a negative correlation of -0.47. However, on further analysis, this correlation is faulty since the two mortality rates are not on the same scale (per 100K). Therefore, during this week, this problem will be fixed.
-
-In addition, I plotted graphs of varying conditions to see how certain states can affect the trend between chronic respiratory disease mortality rate and the COVID mortality rate. The conditions were based on the smallest/largest population and the 10 best/worst states on COVIDMINDER. These graphs will have to be redone due to the problem mentioned above.
+  * Using the ProtoNotebook, I extended on it in order to find the number of times each determinant appeared from the state GWAS. I used this code to find the significant determinants for each state and then combined the information into a single data frame. I tried one approach in the Determinants_Graphing.Rmd, where I counted the appearance of each determinant. Then, I inputted the value manually into a data frame. This was an inefficient way to do this, and it did not yield me the information I needed. I changed my approach to the one in Determinants_Stacked_Bar.Rmd so that I will be able to see the frequency of positive and destructive occurrences in the data frame. 
+  * The top two highest significant determinants are Incidence Rate (of COVID) and Case Fatality Ratio. Both of them show up as destructive variables, meaning that they do not help prevent COVID infection/mortality.
+  
+```{r}
+#Graphs of Social Determinants Frequency in State GWAS
+#Graph from Determinants_Graphing.Rmd
+knitr::include_graphics("ahns3-GraphingNotebooks/frequency_of_socialdeterminants.png")
+#Graph from Determinants_Stacked_Bar.Rmd
+knitr::include_graphics("ahns3-GraphingNotebooks/allfrequencyofsocialdeterminants.png")
+```
+      
+  * I was able to input all of the determinants, but the color is not representing the protective and destructive occurrences. My next focus will be to fix this, be able to graph the top 10 significant determinants, and cross check the top 10 to the national GWAS.
+```{r}
+#Stacked Bar Graph of Social Determinants Frequency of Protective and Destructive Occurrences
+knitr::include_graphics("ahns3-GraphingNotebooks/stackedgraphofdeterminantfrequency.png")
+```
 
 ## Drafting your DAR/HACL Blog Post
+    * Who: student researchers
+    * What: looked at all of significant determinants from state GWAS
+    * Where: RPI and data from all states
+    * When: July/August
+    * Why: combine all state GWAS to compare to national GWAS
+    * How: stacked bar graph
 
-*Use this space to begin drafting your by-the-end-of-term Data INCITE blog post. As discussed in class, the "specs" for this post are...*
+Student researchers of RPI during the months of July and August looked at the significant determinants for all 50 states. A stacked bar graph was used to visualize this data and find out the top 10 significant determinants whether it is destructive or protective.
 
-* 400-600 words in length
-* Clear statement of your **lede** --- the first paragraph of any news story, containing the "Five W’s and H:" who, what, where, when, why, and how.
-
-    * Who: Who is the post about?
-    * What: What happened in the post?
-    * Where: Where did the work you’re writing about occur?
-    * When: When did it occur?
-    * Why: Why did this happen?
-    * How: How did this happen?
-
-* A screen shot or image that best illustrates your post
-* Answer Mary's "three questions":
+```{r}
+knitr::include_graphics("ahns3-GraphingNotebooks/ahns3-Incomplete_Stacked_Determinants.png")
+```
+Figure 1: Sample Stacked Bar Graph of Significant Determinants from State GWAS
 
     * What did you want to know?
+      * top 10 significant determinants and if they show up in the national GWAS
     * How did you go about finding it?
+      * code in Determinants_Graphing.Rmd and Determinants_Stacked_Bar.Rmd
+      * found all state GWAS and its significant determinants and combined them into one data frame
+      * made a subset from data frame for each variable
+      * counted frequency of determinant appearance from each variable subset
+      * combined all subsets
+      * plotted stacked bar graph of combined subset data frame
     * What did you find?
-    
+      * Incidence rate and case fatality ratio are the two that are noticeably the most occurring determinants
+ 
+
+
