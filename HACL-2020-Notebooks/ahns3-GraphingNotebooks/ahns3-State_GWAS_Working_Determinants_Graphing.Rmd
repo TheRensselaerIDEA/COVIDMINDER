@@ -5,6 +5,67 @@ output: html_notebook
 
 WORKING CODE
 
+national determinants
+```{r}
+library(ggplot2)
+national.determinants <- data.frame(Social_Determinants  = c("% Not Proficient in English","Average Daily PM 2.5","% Uninsured","% Overcrowded Housing","% Fair or Poor Health","Motor Vehicle Mortality Rate","% Vaccinated for Influenza","Preventable Hospitalization Rate","Cancer Death Rate","Deaths of Despair Rate","Average Grade Performance","Age-Adjusted Suicide Rate","% Excessive Drinking"),
+                                       Mortality_Rate_Ratio = c("38.40","36.90","36.88","24.61","24.20","14.47","14.10","10.82","9.40","-8.51","-13.4","-13.7","-14.56")
+                                       #prtordes=  
+                                         ) 
+national.determinants$Mortality_Rate_Ratio <- as.numeric(as.character(national.determinants$Mortality_Rate_Ratio))
+
+ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) + 
+  ggtitle("Significant National Social Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Mortality Rate Ratio") +
+  geom_bar(stat = "identity")+ 
+  coord_flip()
+
+
+
+national.determinants$Social_Determinants <- factor(national.determinants$Social_Determinants, levels = national.determinants$Social_Determinants[order(national.determinants$Mortality_Rate_Ratio)])
+
+ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) + 
+  ggtitle("Significant National Social Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Mortality Rate Ratio") +
+  geom_bar(stat = "identity")+ 
+  geom_text(aes(label=Mortality_Rate_Ratio), vjust=-0.3, size=3.5)
+
+ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) + 
+  ggtitle("Significant National Social Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Mortality Rate Ratio") +
+  geom_bar(stat = "identity",aes(fill = Mortality_Rate_Ratio<0)) + 
+  coord_flip() +
+  geom_text(aes(label=Mortality_Rate_Ratio), vjust=0.5,color="black", size=3.5) +
+  theme(legend.position='none')
+  
+
+#F8766D
+```
+
+national coefficients
+```{r}
+library(ggplot2)
+national.coefficients <- data.frame(Coefficientsdf  = c("% African American" ,"% with Lung Cancer", "Days Since Mask Required","4th Quartile of Population Density","2nd Quartile of Population Density","Median Household Income","% Hispanic in County","Days Since First Infection","% Native American","% with less than High-School Education","% Adult Asthma"),
+                                       Mortality_Rate_Ratio = c("44.19","33.86","31.96","29.62","26.81","21.51","20.17","19.75","17.16","10.71","-23.97")) 
+national.coefficients$Mortality_Rate_Ratio <- as.numeric(as.character(national.coefficients$Mortality_Rate_Ratio))
+
+national.coefficients$Coefficientsdf <- factor(national.coefficients$Coefficientsdf, levels = national.coefficients$Coefficientsdf[order(national.coefficients$Mortality_Rate_Ratio)])
+
+ggplot(national.coefficients, aes(x=Coefficientsdf , y=Mortality_Rate_Ratio)) + 
+  ggtitle("Significant National Coefficients")+
+  xlab("Significant Coefficients") +
+  ylab("Mortality Rate Ratio") +
+  geom_bar(stat = "identity",aes(fill = Mortality_Rate_Ratio<0)) + 
+  coord_flip() +
+  geom_text(aes(label=Mortality_Rate_Ratio), vjust=0.5,color="black", size=3.5) +
+  theme(legend.position='none')
+
+```
+
+
 ```{r}
 library(plyr)
 library(ggplot2)
@@ -16,6 +77,12 @@ library(tidyr)
 #states that did not work with above code: AK,MI,RI,WY
 prtdescombined = rbind(dataAL , dataAR,dataAZ,dataCA, dataCO, dataFL, dataGA, dataIA, dataID,dataIL,dataIN,dataKS, dataKY, dataLA, dataMI, dataMN, dataMO, dataMS, dataMT, dataNC, dataND, dataNE, dataNJ, dataNM, dataNY, dataOH,dataOK,dataOR,dataPA,dataSC,dataSD, dataTN,dataTX,dataVA,dataWA,dataWI,dataWV)
 
+#Format
+#Determinant Name
+#line 1: determinant."name" created by subsetting the prtdescombined data frame witht the determinant name
+#line 2: count."name" created by counting a p-value
+#line 3: determinant."name" updated by combinding the older version of determinant."name" and count."name"
+
 #Confirmed
 determinant.confirmed = subset(prtdescombined, y == "Confirmed")
 count.confirmed<- count(determinant.confirmed$x, "1.820609")
@@ -26,7 +93,7 @@ determinant.confirmed<- cbind(determinant.confirmed, count.confirmed[,2, drop=FA
 
 #Active
 determinant.active = subset(prtdescombined, y == "Active")
-count.active<- count(determinant.active$x, "	1.790520")
+count.active<- count(determinant.active$x, "1.790520")
 determinant.active<- cbind(determinant.active, count.active[,2, drop=FALSE])
 
 #Case Fatality Ratio
@@ -39,9 +106,13 @@ determinant.teenbirth = subset(prtdescombined, y == "Teen Birth Rate")
 count.teenbirth<- count(determinant.teenbirth$x, "1.5191014")
 determinant.teenbirth<- cbind(determinant.teenbirth, count.teenbirth[,2, drop=FALSE])
 
+#% Frequent Mental Distress
+determinant.frequentmentaldistress = subset(prtdescombined, y == "% Frequent Mental Distress")
+count.frequentmentaldistress<- count(determinant.frequentmentaldistress$x, "0.61055846")
+determinant.frequentmentaldistress<- cbind(determinant.frequentmentaldistress, count.frequentmentaldistress[,2, drop=FALSE])
 
 #data frame of combined sub data frames
-significant.determinants.combined<-rbind(determinant.confirmed,determinant.active,determinant.case.fatality,determinant.teenbirth)
+significant.determinants.combined<-rbind(determinant.confirmed,determinant.active,determinant.case.fatality,determinant.teenbirth,determinant.frequentmentaldistress)
 
 #combineddata$Frequency <- as.factor(as.character(combineddata$Frequency))
 
@@ -50,7 +121,7 @@ significant.determinants.combined<-rbind(determinant.confirmed,determinant.activ
 #  coord_flip()
 #graphofdeterminants
 
-#Working Graph
+#Graph of all Determinants
 ggplot(significant.determinants.combined) +
   geom_bar(aes(x = y, fill = `Effect on MRR`)) +
   ggtitle("Frequency of State GWAS Determinants") +
@@ -59,4 +130,91 @@ ggplot(significant.determinants.combined) +
   coord_flip()
 
 ```
+
+22 Incidence Rate 
+21 Case Fatality Ratio 
+10 Confirmed
+8 Active
+7 Long_
+6 % Not Proficient in English
+5 % Uninsured 1, Income Ratio, % Female, % Hispanic, Average Daily PM2.5, Prime_Pecent
+
+top 12 significant determinants
+```{r}
+#Incidence Rate
+determinant.incidencerate = subset(prtdescombined, y == "Incidence_Rate")
+count.incidencerate<- count(determinant.incidencerate$x, "2.74199053")
+determinant.incidencerate<- cbind(determinant.incidencerate, count.incidencerate[,2, drop=FALSE])
+
+#Case Fatality Ratio
+determinant.case.fatality = subset(prtdescombined, y == "Case.Fatality_Ratio")
+count.case.fatality<- count(determinant.case.fatality$x, "2.239948")
+determinant.case.fatality<- cbind(determinant.case.fatality, count.case.fatality[,2, drop=FALSE])
+
+#Confirmed
+determinant.confirmed = subset(prtdescombined, y == "Confirmed")
+count.confirmed<- count(determinant.confirmed$x, "1.820609")
+determinant.confirmed<- cbind(determinant.confirmed, count.confirmed[,2, drop=FALSE])
+
+#Active
+determinant.active = subset(prtdescombined, y == "Active")
+count.active<- count(determinant.active$x, "1.790520")
+determinant.active<- cbind(determinant.active, count.active[,2, drop=FALSE])
+
+#Longitutde
+determinant.long = subset(prtdescombined, y == "Long_")
+count.long<- count(determinant.long$x, "0.39590409")
+determinant.long<- cbind(determinant.long, count.long[,2, drop=FALSE])
+
+#% Not Proficient in English
+determinant.notproficientinenglish = subset(prtdescombined, y == "% Not Proficient in English")
+count.notproficientinenglish<- count(determinant.notproficientinenglish$x, "2.3443178")
+determinant.notproficientinenglish<- cbind(determinant.notproficientinenglish, count.notproficientinenglish[,2, drop=FALSE])
+
+#% Uninsured 1
+determinant.uninsured_1 = subset(prtdescombined, y == "% Uninsured_1")
+count.uninsured_1<- count(determinant.uninsured_1$x, "1.54717163")
+determinant.uninsured_1<- cbind(determinant.uninsured_1, count.uninsured_1[,2, drop=FALSE])
+
+#Income Ratio
+determinant.incomeratio = subset(prtdescombined, y == "Income Ratio")
+count.incomeratio<- count(determinant.incomeratio$x, "0.01679635")
+determinant.incomeratio<- cbind(determinant.incomeratio, count.incomeratio[,2, drop=FALSE])
+
+#% Female
+determinant.female = subset(prtdescombined, y == "% Female")
+count.female<- count(determinant.female$x, "2.0518989")
+determinant.female<- cbind(determinant.female, count.female[,2, drop=FALSE])
+
+#% Hispanic
+determinant.hispanic = subset(prtdescombined, y == "% Hispanic")
+count.hispanic<- count(determinant.hispanic$x, "1.667689")
+determinant.hispanic<- cbind(determinant.hispanic, count.hispanic[,2, drop=FALSE])
+
+#Average Daily PM2.5
+determinant.averagedaily_pm2.5 = subset(prtdescombined, y == "Average Daily PM2.5")
+count.averagedaily_pm2.5<- count(determinant.averagedaily_pm2.5$x, "3.03507631")
+determinant.averagedaily_pm2.5<- cbind(determinant.averagedaily_pm2.5, count.averagedaily_pm2.5[,2, drop=FALSE])
+
+#Prime_Pecent
+determinant.prime_pecent = subset(prtdescombined, y == "prime_pecent")
+count.prime_pecent<- count(determinant.prime_pecent$x, "0.6426303")
+determinant.prime_pecent<- cbind(determinant.prime_pecent, count.prime_pecent[,2, drop=FALSE])
+
+#data frame with combined determinants
+top10significant.determinants<-rbind(determinant.incidencerate,determinant.case.fatality,determinant.confirmed,determinant.active,determinant.long,determinant.notproficientinenglish,determinant.uninsured_1,determinant.incomeratio,determinant.female,determinant.hispanic,determinant.averagedaily_pm2.5,determinant.prime_pecent)
+
+
+#plot of top 12 significant determinants
+ggplot(top10significant.determinants) +
+  geom_bar(aes(x = y, fill = `Effect on MRR`)) +
+  ggtitle("Frequency of Top 12 State GWAS Determinants") +
+  xlab("Determinant Name") +
+  ylab("Frequency") +
+  coord_flip()
+
+
+```
+
+
 
