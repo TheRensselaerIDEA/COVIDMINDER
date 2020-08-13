@@ -1,26 +1,26 @@
 ---
-title: "COVID vs Despair"
+title: "COVID vs Variables"
 output: html_notebook
 ---
-
+not needed
 ```{r}
 library(ggplot2)
 library(dplyr)
 
+#data for despair death rate
 cdc.data
 
+#create dataframe with only despair death rate
 despair.data<- subset(cdc.data, death_cause == "Despair")
 
-#covid_data_states<- read.csv("covid_data_states.csv")
-
+#data for covid death rate
 covid_TS_counties_long.cases
 
+#combine despair and covid data
 keeps.despair <- c("county_name","county_fips","death_rate")
 despair.data.updated = despair.data[keeps.despair]
-
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated = covid_TS_counties_long.cases[keeps.covid]
-
 COVIDdespair.all = merge(despair.data.updated, covid.data.updated, by.x="county_fips", by.y="countyFIPS")
 
 COVIDdespair<- distinct(COVIDdespair.all)
@@ -36,50 +36,47 @@ ggplot(data=COVIDdespair, aes(x=death_rate, y=p_deaths)) +
 
 ```
 
+despair
 ```{r}
 library(gridExtra)
-#>50
+library(ggplot2)
+library(dplyr)
+
+#FORMAT:
+#>50 covid deaths vs despair
+#data for despair death rate
 cdc.data
-#despair.data<- subset(cdc.data, death_cause == "Despair", period == "2015-2017")
+
+#create dataframe with only despair death rate
 despair.data <- cdc.data[ which(cdc.data$death_cause=='Despair'
 & cdc.data$period== '2015-2017'), ]
 
+#data for covid death rate
 covid_TS_counties_long.cases
-#coviddeathallcounties1<- subset(covid_TS_counties_long.cases, date == "2020-03-15")
-#coviddeathallcounties <- subset(coviddeathallcounties1, deaths >= 5, select=c("County","countyFIPS","deaths", "p_deaths"))
 coviddeathallcounties <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 50 ),]
-#& covid_TS_counties_long.cases$date=="2020-03-15"), ]
-#coviddeathallcounties[coviddeathallcounties$date >= "2020-04-01" & coviddeathallcounties$date <= "2020-04-03",]
 
+#combine despair and covid data
 keeps.despair <- c("county_name","county_fips","death_rate")
 despair.data.updated = despair.data[keeps.despair]
-
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated = coviddeathallcounties[keeps.covid]
-
 COVIDdespair.all = merge(despair.data.updated, covid.data.updated, by.x="county_fips", by.y="countyFIPS")
-
-
-#COVIDdespair<- distinct(COVIDdespair.all)
 COVIDdespair<- distinct(COVIDdespair.all,county_fips, .keep_all= TRUE)
 
-#COVIDdespair <- unique(COVIDdespair[ , 1:3 ] )
-
-#ggplot(data=COVIDdespair, aes(x=death_rate,y=p_deaths)) +
-#  geom_point()
-
+#correlation test
 cor.test(COVIDdespair$death_rate,COVIDdespair$p_deaths)
 #-0.05098315 
 
+#graph of covid death rate vs despair death rate
 ggplot(data=COVIDdespair, aes(x=death_rate, y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("Deaths of Despair Rate vs COVID Mortality Rate (>50)") +
   xlab("Death of Despair Rate") +
   ylab("COVID Mortality Rate")
 
+#start of code for graphs
 
-
-#0-50
+#0-50 covid deaths vs despair 
 cdc.data
 despair.data <- cdc.data[ which(cdc.data$death_cause=='Despair'
 & cdc.data$period== '2015-2017'), ]
@@ -89,22 +86,21 @@ coviddeathallcountiesunder50 <- covid_TS_counties_long.cases[ which(covid_TS_cou
 
 keeps.despairunder50 <- c("county_name","county_fips","death_rate")
 despair.data.updated.under50 = despair.data[keeps.despairunder50]
-
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated = coviddeathallcountiesunder50[keeps.covid]
-
 COVIDdespair.all.under50 = merge(despair.data.updated.under50, covid.data.updated, by.x="county_fips", by.y="countyFIPS")
 
 COVIDdespairunder50<- distinct(COVIDdespair.all.under50,county_fips, .keep_all= TRUE)
 
 cor.test(COVIDdespairunder50$death_rate,COVIDdespairunder50$p_deaths)
-#-0.07721489 
+
 p1<-ggplot(data=COVIDdespairunder50, aes(x=death_rate, y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("Deaths of Despair Rate vs COVID Mortality Rate (0-50)") +
   xlab("Death of Despair Rate") +
   ylab("COVID Mortality Rate")
 
+#log10 transformation of data
 log10.covid.0_50<-(log10(COVIDdespairunder50$p_deaths))
 log10.despair.0_50<- (log10(COVIDdespairunder50$death_rate))
 COVIDdespairunder50$log10covid= log10.covid.0_50
@@ -115,7 +111,7 @@ p1_5<-ggplot(data=COVIDdespairunder50, aes(x=log10despair, y=log10covid)) +
   xlab("Death of Despair Rate") +
   ylab("COVID Mortality Rate")
 
-#50-100
+#50-100 covid death vs despair
 cdc.data
 despair.data <- cdc.data[ which(cdc.data$death_cause=='Despair'
 & cdc.data$period== '2015-2017'), ]
@@ -125,7 +121,6 @@ coviddeathallcounties50100 <- covid_TS_counties_long.cases[ which(covid_TS_count
 
 keeps.despair50100 <- c("county_name","county_fips","death_rate")
 despair.data.updated.50100 = despair.data[keeps.despair50100]
-
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated50100 = coviddeathallcounties50100[keeps.covid]
 
@@ -134,7 +129,7 @@ COVIDdespair.all.50100 = merge(despair.data.updated.50100, covid.data.updated501
 COVIDdespair50100<- distinct(COVIDdespair.all.50100,county_fips, .keep_all= TRUE)
 
 cor.test(COVIDdespair50100$death_rate,COVIDdespair50100$p_deaths)
-#-0.02593088 
+
 p2<-ggplot(data=COVIDdespair50100, aes(x=death_rate, y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("Deaths of Despair Rate vs COVID Mortality Rate (50-100)") +
@@ -151,7 +146,7 @@ p2_5<-ggplot(data=COVIDdespair50100, aes(x=log10despair, y=log10covid)) +
   xlab("Death of Despair Rate") +
   ylab("COVID Mortality Rate")
 
-#>100
+#>100 covid death vs despair
 cdc.data
 despair.data <- cdc.data[ which(cdc.data$death_cause=='Despair'
 & cdc.data$period== '2015-2017'), ]
@@ -171,7 +166,6 @@ COVIDdespairgreater100<- distinct(COVIDdespair.all.greater100,county_fips, .keep
 
 cor.test(COVIDdespairgreater100$death_rate,COVIDdespairgreater100$p_deaths)
 
-#-0.07142184
 p3<-ggplot(data=COVIDdespairgreater100, aes(x=death_rate, y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("Deaths of Despair Rate vs COVID Mortality Rate (>100)") +
@@ -188,6 +182,7 @@ p3_5<-ggplot(data=COVIDdespairgreater100, aes(x=log10despair, y=log10covid)) +
   xlab("Death of Despair Rate") +
   ylab("COVID Mortality Rate")
 
+#facet grids
 grid.arrange(p1, p2, p3, nrow = 3)
 grid.arrange(p1_5,p2_5,p3_5, nrow =3)
 p1
@@ -197,6 +192,7 @@ p1_5
 p2_5
 p3_5
 ```
+
 ```{r}
 cor.test(COVIDdespairunder50$log10covid,COVIDdespairunder50$log10despair)
 cor.test(COVIDdespair50100$log10covid,COVIDdespair50100$log10despair)
@@ -211,56 +207,32 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 
+#0-50 covid death vs suicide rate
+#data for suicide rate
 aaa<-read.csv("2020CHR.csv")
-
 data.suicide <- aaa %>% dplyr::select(FIPS, State, County, Suicide.Rate..Age.Adjusted.)
 
+#data for covid death rate from counties with 0-50 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
-coviddeathallcounties <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 50 ),]
-
-keeps.covid <- c("County","countyFIPS","p_deaths")
-covid.data.updated = coviddeathallcounties[keeps.covid]
-
-COVIDsuicide.all = merge(data.suicide, covid.data.updated, by.x="FIPS", by.y="countyFIPS")
-
-COVIDsuicide<- distinct(COVIDsuicide.all,FIPS, .keep_all= TRUE)
-
-cor.test(COVIDsuicide$Suicide.Rate..Age.Adjusted.,COVIDsuicide$p_deaths)
-#-0.139
-
-ggplot(data=COVIDsuicide, aes(x=Suicide.Rate..Age.Adjusted., y=p_deaths)) + 
-  geom_point() + geom_smooth(method="lm",se= TRUE) +
-  ggtitle("Suicide Rate (Age Adjusted) vs COVID Mortality Rate (>50)") +
-  xlab("Suicide Rate (Age Adjusted)") +
-  ylab("COVID Mortality Rate")
-
-
-#50
-aaa<-read.csv("2020CHR.csv")
-
-data.suicide <- aaa %>% dplyr::select(FIPS, State, County, Suicide.Rate..Age.Adjusted.)
-
-covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcountiesunder50 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths <= 50 ),]
 
+#combine data frames
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updatedunder50 = coviddeathallcountiesunder50[keeps.covid]
-
 COVIDsuicide.all.under50 = merge(data.suicide, covid.data.updatedunder50, by.x="FIPS", by.y="countyFIPS")
-
 COVIDsuicide.under50<- distinct(COVIDsuicide.all.under50,FIPS, .keep_all= TRUE)
 
+#correlation test
 cor.test(COVIDsuicide.under50$Suicide.Rate..Age.Adjusted.,COVIDsuicide.under50$p_deaths)
-#-0.139
 
+#plot
 g1<-ggplot(data=COVIDsuicide.under50, aes(x=Suicide.Rate..Age.Adjusted., y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("Suicide Rate (Age Adjusted) vs COVID Mortality Rate (0-50)") +
   xlab("Suicide Rate (Age Adjusted)") +
   ylab("COVID Mortality Rate")
 
+#log10 transformation and plot
 log10.covid.under50<-(log10(COVIDsuicide.under50$p_deaths))
 COVIDsuicide.under50$log10covid= log10.covid.under50
 g1_5<-ggplot(data=COVIDsuicide.under50, aes(x=Suicide.Rate..Age.Adjusted., y=log10covid)) + 
@@ -269,24 +241,20 @@ g1_5<-ggplot(data=COVIDsuicide.under50, aes(x=Suicide.Rate..Age.Adjusted., y=log
   xlab("Suicide Rate (Age Adjusted)") +
   ylab("COVID Mortality Rate")
 
-#50-100
+#50-100 covid death vs suicide rate
 aaa<-read.csv("2020CHR.csv")
-
 data.suicide <- aaa %>% dplyr::select(FIPS, State, County, Suicide.Rate..Age.Adjusted.)
 
+#data for covid death rate from counties with 50-100 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcounties50_100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 50|covid_TS_counties_long.cases$deaths <= 100 ),]
 
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated50_100 = coviddeathallcounties50_100[keeps.covid]
-
 COVIDsuicide.all.50_100 = merge(data.suicide, covid.data.updated50_100, by.x="FIPS", by.y="countyFIPS")
-
 COVIDsuicide.50_100<- distinct(COVIDsuicide.all.50_100,FIPS, .keep_all= TRUE)
 
 cor.test(COVIDsuicide.50_100$Suicide.Rate..Age.Adjusted.,COVIDsuicide.50_100$p_deaths)
-#-0.139
 
 g2<-ggplot(data=COVIDsuicide.50_100, aes(x=Suicide.Rate..Age.Adjusted., y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
@@ -302,24 +270,20 @@ g2_5<-ggplot(data=COVIDsuicide.50_100, aes(x=Suicide.Rate..Age.Adjusted., y=log1
   xlab("Suicide Rate (Age Adjusted)") +
   ylab("COVID Mortality Rate")
 
-#>100
+#>100 covid deaths vs suicide rate
 aaa<-read.csv("2020CHR.csv")
-
 data.suicide <- aaa %>% dplyr::select(FIPS, State, County, Suicide.Rate..Age.Adjusted.)
 
+#data for covid death rate from counties with >100 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcountiesgreater100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 100 ),]
 
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updatedgreater100 = coviddeathallcountiesgreater100[keeps.covid]
-
 COVIDsuicide.all.greater100 = merge(data.suicide, covid.data.updatedgreater100, by.x="FIPS", by.y="countyFIPS")
-
 COVIDsuicide.greater100<- distinct(COVIDsuicide.all.greater100,FIPS, .keep_all= TRUE)
 
 cor.test(COVIDsuicide.greater100$Suicide.Rate..Age.Adjusted.,COVIDsuicide.greater100$p_deaths)
-#-0.139
 
 g3<-ggplot(data=COVIDsuicide.greater100, aes(x=Suicide.Rate..Age.Adjusted., y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
@@ -359,30 +323,32 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 
-#0-50
+#0-50 covid death vs excessive drinking
+#data for excessive drinking
 aaa<-read.csv("2020CHR.csv")
-
 data.excessdrink <- aaa %>% dplyr::select(FIPS, State, County,X..Excessive.Drinking)
 
+#data for covid death rate from counties with 0-50 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcounties <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths <= 50 ),]
 
+#combine data frames
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated = coviddeathallcounties[keeps.covid]
-
 COVIDexcessdrink.all = merge(data.excessdrink, covid.data.updated, by.x="FIPS", by.y="countyFIPS")
-
 COVIDexcessdrink<- distinct(COVIDexcessdrink.all,FIPS, .keep_all= TRUE)
 
+#correlation test
 cor.test(COVIDexcessdrink$X..Excessive.Drinking,COVIDexcessdrink$p_deaths)
 
+#plot
 gg1<-ggplot(data=COVIDexcessdrink, aes(x=X..Excessive.Drinking, y=p_deaths)) + 
   geom_point() + geom_smooth(method="lm",se= TRUE) +
   ggtitle("% Excessive Drinking vs COVID Mortality Rate (<50)") +
   xlab("% Excessive Drinking") +
   ylab("COVID Mortality Rate")
 
+#log10 transformation of data and plot
 log10.covid.greater100<-(log10(COVIDexcessdrink$p_deaths))
 COVIDexcessdrink$log10covid= log10.covid.greater100
 gg1_5<-ggplot(data=COVIDexcessdrink, aes(x=X..Excessive.Drinking, y=log10covid)) + 
@@ -391,20 +357,17 @@ gg1_5<-ggplot(data=COVIDexcessdrink, aes(x=X..Excessive.Drinking, y=log10covid))
   xlab("% Excessive Drinking") +
   ylab("COVID Mortality Rate")
 
-#50-100
+#50-100 covid deaths vs excessive drinking
 aaa<-read.csv("2020CHR.csv")
-
 data.excessdrink <- aaa %>% dplyr::select(FIPS, State, County, X..Excessive.Drinking)
 
+#data for covid death rate from counties with 50-100 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcounties50_100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 50|covid_TS_counties_long.cases$deaths <= 100 ),]
 
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updated50_100 = coviddeathallcounties50_100[keeps.covid]
-
 COVIDexcessdrink.all.50_100 = merge(data.excessdrink, covid.data.updated50_100, by.x="FIPS", by.y="countyFIPS")
-
 COVIDexcessdrink.50_100<- distinct(COVIDexcessdrink.all.50_100,FIPS, .keep_all= TRUE)
 
 cor.test(COVIDexcessdrink.50_100$X..Excessive.Drinking,COVIDexcessdrink.50_100$p_deaths)
@@ -423,20 +386,17 @@ gg2_5<-ggplot(data=COVIDexcessdrink.50_100, aes(x=X..Excessive.Drinking, y=log10
   xlab("% Excessive Drinking") +
   ylab("COVID Mortality Rate")
 
-#>100
+#>100 covid deaths vs excessive drinking
 aaa<-read.csv("2020CHR.csv")
-
 data.excessdrink <- aaa %>% dplyr::select(FIPS, State, County, X..Excessive.Drinking)
 
+#data for covid death rate from counties with >100 deaths
 covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
-
 coviddeathallcountiesgreater100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 100 ),]
 
 keeps.covid <- c("County","countyFIPS","p_deaths")
 covid.data.updatedgreater100 = coviddeathallcountiesgreater100[keeps.covid]
-
 COVIDexcessdrink.all.greater100 = merge(data.excessdrink, covid.data.updatedgreater100, by.x="FIPS", by.y="countyFIPS")
-
 COVIDexcessdrink.greater100<- distinct(COVIDexcessdrink.all.greater100,FIPS, .keep_all= TRUE)
 
 cor.test(COVIDexcessdrink.greater100$X..Excessive.Drinking,COVIDexcessdrink.greater100$p_deaths)
