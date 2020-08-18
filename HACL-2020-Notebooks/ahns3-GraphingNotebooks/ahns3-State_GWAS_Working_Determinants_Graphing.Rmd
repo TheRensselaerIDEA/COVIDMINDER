@@ -5,6 +5,49 @@ output: html_notebook
 
 WORKING CODE
 
+```{r}
+library(ggplot2)
+
+#create data frame with information from Table 2 of the paper
+#Social_Determinants = siginificant national determinants
+#Mortality_Rate_Ratio = % increase in COVID-19 mortality rate per standard deviation increase of coefficient
+national.determinants <- data.frame(Social_Determinants  = c("% Not Proficient in English","Average Daily PM 2.5","% Uninsured","% Overcrowded Housing","% Fair or Poor Health","Motor Vehicle Mortality Rate","% Vaccinated for Influenza","Preventable Hospitalization Rate","Cancer Death Rate","Deaths of Despair Rate","Average Grade Performance","Age-Adjusted Suicide Rate","% Excessive Drinking", "% African American" ,"% with Lung Cancer", "Days Since Mask Required","4th Quartile of Population Density","2nd Quartile of Population Density","Median Household Income","% Hispanic in County","Days Since First Infection","% Native American","% with less than High-School Education","% Adult Asthma"),
+                                       Mortality_Rate_Ratio = c("38.40","36.90","36.88","24.61","24.20","14.47","14.10","10.82","9.40","-8.51","-13.4","-13.7","-14.56", "44.19","33.86","31.96","29.62","26.81","21.51","20.17","19.75","17.16","10.71","-23.97"))
+
+#changes column Mortality_Rate_Ratio from character to numeric
+national.determinants$Mortality_Rate_Ratio <- as.numeric(as.character(national.determinants$Mortality_Rate_Ratio))
+
+#graph that does not order them in increasing order
+#ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) + 
+#  ggtitle("Significant National Social Determinants")+
+#  xlab("Significant Determinants") +
+#  ylab("Mortality Rate Ratio") +
+#  geom_bar(stat = "identity")+ 
+#  coord_flip()
+
+#changes the order in which Social_Determinants appear
+#highest to lowest value
+national.determinants$Social_Determinants <- factor(national.determinants$Social_Determinants, levels = national.determinants$Social_Determinants[order(national.determinants$Mortality_Rate_Ratio)])
+
+#graph of national determinants
+#red = destructive determinant
+#blue = protective determinant
+ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) + 
+  ggtitle("Significant National Social Determinants")+
+  xlab("Significant Determinants") +
+  ylab("Mortality Rate Ratio") +
+  geom_bar(stat = "identity",aes(fill = Mortality_Rate_Ratio<0)) + 
+  coord_flip() +
+  geom_text(aes(label=Mortality_Rate_Ratio), vjust=0.5,color="black", size=3.5) +
+  theme(legend.position='none') +
+  scale_fill_manual(values = c("#bd0026", "#253494")) 
+ 
+#scale_color_manual(values = c("#c35442", "#2b517f"))
+
+ggsave("determinants_coefficients.png")
+```
+
+
 national determinants from paper
 ```{r}
 library(ggplot2)
@@ -48,8 +91,12 @@ ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)
   geom_bar(stat = "identity",aes(fill = Mortality_Rate_Ratio<0)) + 
   coord_flip() +
   geom_text(aes(label=Mortality_Rate_Ratio), vjust=0.5,color="black", size=3.5) +
-  theme(legend.position='none')
+  theme(legend.position='none') +
+  scale_fill_manual(values = c("#bd0026", "#253494")) 
+ 
+#scale_color_manual(values = c("#c35442", "#2b517f"))
 
+ggsave("national_determinants.png")
 ```
 
 national coefficients
@@ -79,7 +126,10 @@ ggplot(national.coefficients, aes(x=Coefficientsdf , y=Mortality_Rate_Ratio)) +
   geom_bar(stat = "identity",aes(fill = Mortality_Rate_Ratio<0)) + 
   coord_flip() +
   geom_text(aes(label=Mortality_Rate_Ratio), vjust=0.5,color="black", size=3.5) +
-  theme(legend.position='none')
+  theme(legend.position='none') +
+  scale_fill_manual(values = c("#bd0026", "#253494")) 
+
+ggsave("national_coefficients.png")
 
 ```
 
