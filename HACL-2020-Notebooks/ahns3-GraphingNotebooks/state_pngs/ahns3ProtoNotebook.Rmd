@@ -3,6 +3,7 @@ title: "ahns3ProtoNotebook"
 output: html_document
 ---
 
+from ProtoNotebook
 ```{r echo = F, results = 'hide',  warning=FALSE, message=FALSE}
 
 #### Library and Data Imports ####
@@ -13,6 +14,7 @@ source("load_model_output.R")
 
 ```
 
+from ProtoNotebook
 ```{r echo = F}
   
 # Normalize MRRs to MR by subtracting 1 and dividing by stdev for each state... output as table
@@ -105,6 +107,7 @@ source("load_model_output.R")
 
 ```
 
+from ProtoNotebook
 ```{r echo = F}
   
     nat <- national
@@ -149,7 +152,7 @@ source("load_model_output.R")
 
 ```
 
-
+from ProtoNotebook
 ```{r echo = F}
 
   # make GWAS per state per 305 vars
@@ -202,7 +205,7 @@ source("load_model_output.R")
         accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
 ```
 
-
+from ProtoNotebook
 ```{r echo = F}
 
   # use GWAS_ADJ_P and GWAS_MRR to say for which states there are significant protective and destructive variables
@@ -259,6 +262,8 @@ source("load_model_output.R")
 
 ```
 
+Start of Personal Contribution
+
 Alabama
 ```{r echo = F}
   # Libraries
@@ -266,10 +271,10 @@ Alabama
 # Create data
 
 for (state in colnames(GWAS_MRR)) {
-  
+#select state  
   state = "AL"
   state
-
+#sorts determinants as protective or destructive
    prt <- c(NA)
     des <- c(NA)
     for (itr in 1:length(GWAS_ADJ_P[[state]])) {
@@ -298,7 +303,7 @@ for (state in colnames(GWAS_MRR)) {
       next
     }
 
-    
+#create data frame    
     dataAL <- data.frame(
       y=names[2:length(names)], 
       x=vals[2:length(names)]
@@ -311,19 +316,20 @@ for (state in colnames(GWAS_MRR)) {
      
     dataAL$y <- factor(dataAL$y, levels = dataAL$y)
 
-#plot
+#round MRR to 2 decimal places
 x <- dataAL$x
 x_num<-round(x,digits=2)
 dataAL$x_round = x_num
 
-p<-ggplot(dataAL, aes(x=x, y=y)) +
+#plot
+p<- ggplot(dataAL, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=1, y=y, yend=y, color = `Effect on MRR`), size=12, alpha=0.9 ) +      
   scale_color_manual(values = c("#bd0026", "#253494")) +
   #      geom_point() +
   ylab("Interested Variable") +
   xlab("MRR of Interested Variable") +
   ggtitle(title) +
-  geom_text(aes(label=x_num), vjust=0.5,color="black", size=3.5)
+  geom_text(aes(label=x_round), vjust=0.5,color="black", size=3.5)
 }
 p
 ggsave("AL_desprt.png")
@@ -389,7 +395,7 @@ x_num<-round(x,digits=2)
 dataAZ$x_round = x_num
 
 p<-ggplot(dataAZ, aes(x=x, y=y)) +
-  geom_segment( aes(x=x, xend=1, y=y, yend=y, color = `Effect on MRR`), size=12, alpha=0.9 ) +      
+  geom_segment( aes(x=x, xend=1, y=y, yend=y, color = `Effect on MRR`), size=5, alpha=0.9 ) +      
   scale_color_manual(values = c("#bd0026", "#253494")) +
   #      geom_point() +
   ylab("Interested Variable") +
@@ -2813,38 +2819,84 @@ GWAS_ADJ_P
 ```{r echo = F}
 library(ggplot2)
 
+#data from GWAS_ADJ_P and GWAS_MRR
 GWAS_ADJ_P
+#remove rows 1-14 
 GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
 #GWAS_ADJ_P_t<-t(GWAS_ADJ_P_interested)
+#convert to data frame
 GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
+#find significant determinants and create data frame with them
 GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
-GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
+#GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
 #rownames(GWAS_ADJ_P_t)
 
 GWAS_MRR
+#remove rows 1-14
 GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
+#convert to data frame
 GWAS_MRR_t <- as.data.frame(t(GWAS_MRR_interested))
 
+#merge GWAS_ADJ and GWAS_MRR data
 GWAS_data <- merge(GWAS_ADJ_P_signficant, GWAS_MRR_t, by = 0) 
+#mutliply GWAS_MRR data by 100
 GWAS_data$MRRX100 <- GWAS_data$Interested_Variable.y * 100 
 
+#convert MRRX100 as numeric and Row.names as characters
 GWAS_data$MRRX100 <- as.numeric(as.character(GWAS_data$MRRX100))
 GWAS_data
 GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
 
+#orders data from highest to lowest value
 GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[order(GWAS_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+MRRX100 <- GWAS_data$MRRX100
+MRRX100_num<-round(MRRX100,digits=2)
+GWAS_data$MRRX100_round = MRRX100_num
 
 # ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
 #   geom_bar(stat="identity",aes(fill=MRRX100<0))
 
+#copy and make values N/A
+
+#current work in process
+MRRX100_round <- GWAS_data$MRRX100_round
+MRRX100_pos <- subset(GWAS_data,  MRRX100_round > 0)
+#GWAS_data <- merge(GWAS_data, MRRX100_pos, by = "Row.names", all = TRUE)
+MRRX100_neg <- subset(GWAS_data,  MRRX100_round < 0)
+#GWAS_data <- merge(GWAS_data, MRRX100_neg, by = "Row.names", all = TRUE)
+
+#plot
 ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
-  ggtitle("Significant National Social Determinants")+
-  xlab("Significant Determinants") +
-  ylab("Mortality Rate Ratio") +
-  geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
-  coord_flip()+
-  theme(legend.position='none')+
-  scale_fill_manual(values = c("#bd0026", "#253494"))
+   ggtitle("Significant National Social Determinants")+
+   xlab("Significant Determinants") +
+   ylab("Mortality Rate Ratio") +
+   geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
+   coord_flip()+
+   theme(legend.position='none')+
+   scale_fill_manual(values = c("#bd0026", "#253494"))+
+   geom_text(aes(label=MRRX100_round), vjust=0.5,color="black", size=3.5, nudge_y = 2.75)
+
+# ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
+#   ggtitle("Significant National Social Determinants")+
+#   xlab("Significant Determinants") +
+#   ylab("Mortality Rate Ratio") +
+#   geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
+#   coord_flip()+
+#   theme(legend.position='none')+
+#   scale_fill_manual(values = c("#bd0026", "#253494"))+
+#   geom_text(aes(label=MRRX100_round, colour =MRRX100 <0), vjust=0.5, size=3.5, nudge_y = 2.5)
+
+#change to black and white
+
+# ggplot(p, aes(x=Area, y=Count, color=Type)) + 
+#         geom_bar(stat="identity", position="dodge", aes(fill=Type), color="black")  +
+#     scale_fill_manual(values = alpha(c("#000000", "#FF5733"))) +
+#     geom_text(aes(label=Count, colour=Type), 
+#              position=position_dodge(width = 0.9), 
+#              vjust=-0.40) +
+#     scale_colour_manual(values=c("#000000", "#FF5733"))
 
 ggsave("national_sd.png")
 ```

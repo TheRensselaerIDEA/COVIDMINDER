@@ -544,4 +544,3 @@ cor.test(COVIDovercrowding$Overcrowding,COVIDovercrowding$log10covid)
 cor.test(COVIDovercrowding.50_100$Overcrowding,COVIDovercrowding.50_100$log10covid)
 cor.test(COVIDovercrowding.greater100$Overcrowding,COVIDovercrowding.greater100$log10covid)
 ```
-
