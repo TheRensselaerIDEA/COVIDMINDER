@@ -2233,14 +2233,24 @@ x <- dataPA$x
 x_num<-round(x,digits=2)
 dataPA$x_round = x_num
 
-p<-ggplot(dataPA, aes(x=x, y=y)) +
+p<- ggplot(dataPA, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=1, y=y, yend=y, color = `Effect on MRR`), size=12, alpha=0.9 ) +      
   scale_color_manual(values = c("#bd0026", "#253494")) +
   #      geom_point() +
   ylab("Interested Variable") +
   xlab("MRR of Interested Variable") +
   ggtitle(title) +
-  geom_text(aes(label=x_num), vjust=0.5,color="black", size=3.5)
+  geom_text(aes(label=x_round), vjust=0.5,color="black", size=3.5)
+
+ggplot(dataPA, aes(x=x, y=y)) +
+  geom_segment( aes(x=x, xend=1, y=y, yend=y, color = `Effect on MRR`), size=12, alpha=0.9 ) +  
+  scale_color_manual(values = c("#bd0026", "#253494")) +
+  ylab("Interested Variable") +
+  xlab("MRR of Interested Variable") +
+  ggtitle("PA Protective and Destructive Variables") +
+  geom_text(aes(label=x_round, colour=x_round<1), vjust=0.5,color="black", size=3.5,nudge_x = -0.15)
+
+
 }
 p
 ggsave("PA_desprt.png")
@@ -2868,7 +2878,17 @@ MRRX100_neg <- subset(GWAS_data,  MRRX100_round < 0)
 #GWAS_data <- merge(GWAS_data, MRRX100_neg, by = "Row.names", all = TRUE)
 
 #plot
-ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
+# ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
+#    ggtitle("Significant National Social Determinants")+
+#    xlab("Significant Determinants") +
+#    ylab("Mortality Rate Ratio") +
+#    geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
+#    coord_flip()+
+#    theme(legend.position='none')+
+#    scale_fill_manual(values = c("#bd0026", "#253494"))+
+#    geom_text(aes(label=MRRX100_round), vjust=0.5,color="black", size=3.5, nudge_y = 2.75)
+
+ ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
    ggtitle("Significant National Social Determinants")+
    xlab("Significant Determinants") +
    ylab("Mortality Rate Ratio") +
@@ -2876,17 +2896,8 @@ ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
    coord_flip()+
    theme(legend.position='none')+
    scale_fill_manual(values = c("#bd0026", "#253494"))+
-   geom_text(aes(label=MRRX100_round), vjust=0.5,color="black", size=3.5, nudge_y = 2.75)
-
-# ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
-#   ggtitle("Significant National Social Determinants")+
-#   xlab("Significant Determinants") +
-#   ylab("Mortality Rate Ratio") +
-#   geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
-#   coord_flip()+
-#   theme(legend.position='none')+
-#   scale_fill_manual(values = c("#bd0026", "#253494"))+
-#   geom_text(aes(label=MRRX100_round, colour =MRRX100 <0), vjust=0.5, size=3.5, nudge_y = 2.5)
+   geom_text(aes(label=MRRX100_round, colour =MRRX100 <0), vjust=0.5, size=3.5, nudge_y = 3)+
+   scale_colour_manual(values=c("#000000","#FFFFFF"))
 
 #change to black and white
 
@@ -2898,6 +2909,65 @@ ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
 #              vjust=-0.40) +
 #     scale_colour_manual(values=c("#000000", "#FF5733"))
 
+#Avg. Daily Air Pollution (PM2.5)
+#% Flu Vaccinated Medicare FFS
 ggsave("national_sd.png")
+
+
+#create data frame with information from Table 1 of the paper
+#Coefficientsdf = siginificant national coefficients from a high-risk control model
+#Mortality_Rate_Ratio = % increase in COVID-19 mortality rate per standard deviation increase of coefficient
+national.coefficients <- data.frame(Coefficientsdf  = c("Days Since First Infection", "% with Lung Cancer","% African American","Days Since Mask Required","Median Household Income","% Hispanic in County", "% Native American", "% with less than High-School Education" , "% Asian", "% Adult Asthma"),
+                                       Mortality_Rate_Ratio = c("124.94","40.87","36.11","30.41","22.00","21.53","16.34","14.13","8.31","-20.06")) 
+
+#changes column Mortality_Rate_Ratio from character to numeric
+national.coefficients$Mortality_Rate_Ratio <- as.numeric(as.character(national.coefficients$Mortality_Rate_Ratio))
+
+#changes the order in which Coefficientsdf appear
+#highest to lowest value
+national.coefficients$Coefficientsdf <- factor(national.coefficients$Coefficientsdf, levels = national.coefficients$Coefficientsdf[order(national.coefficients$Mortality_Rate_Ratio)])
+
+ggplot(national.coefficients, aes(x=Coefficientsdf, y=Mortality_Rate_Ratio)) +
+   ggtitle("Significant National Coefficients")+
+   xlab("Significant Coefficients") +
+   ylab("Mortality Rate Ratio") +
+   geom_bar(stat = "identity",aes(fill=Mortality_Rate_Ratio<0)) +
+   coord_flip()+
+   theme(legend.position='none')+
+   scale_fill_manual(values = c("#bd0026", "#253494"))+
+   geom_text(aes(label=Mortality_Rate_Ratio, colour =Mortality_Rate_Ratio <0), vjust=0.5, size=3.5, nudge_y = 7.5)+
+   scale_colour_manual(values=c("#000000","#FFFFFF"))
+ggsave("national_coefficients.png")
+
+
+
+
+#create data frame with information from Table 2 of the paper
+#Social_Determinants = siginificant national determinants
+#Mortality_Rate_Ratio = % increase in COVID-19 mortality rate per standard deviation increase of coefficient
+national.determinants <- data.frame(Social_Determinants  = c("Days Since First Infection", "% with Lung Cancer","% African American","Days Since Mask Required","Median Household Income","% Hispanic in County", "% Native American", "% with less than High-School Education" , "% Asian", "% Adult Asthma","% Uninsured","% Not Proficient in English", "Avg. Daily Air Pollution (PM2.5)", "% Fair or Poor Health", "% Overcrowded Housing", "Avg. Number of Physically Unhealthy Days","% Frequently Mentally Distressed","Motor Vehicle Mortality Rate", "Cancer Death Rate","% Flu Vaccinated Medicare FFS","Preventable Hospitalization Rate","Age-Adjusted Suicide Rate","Avg. Grade Performance","% Excessive Drinking"),
+                                       Mortality_Rate_Ratio = c("124.94","40.87","36.11","30.41","22.00","21.53","16.34","14.13","8.31","-20.06","33.81","33.40","31.32","26.87","21.52","19.85","15.97","14.95","12.76","10.90","10.44","-12.93","-16.45","-18.93"))
+
+#changes column Mortality_Rate_Ratio from character to numeric
+national.determinants$Mortality_Rate_Ratio <- as.numeric(as.character(national.determinants$Mortality_Rate_Ratio))
+#changes the order in which Social_Determinants appear
+#highest to lowest value
+national.determinants$Social_Determinants <- factor(national.determinants$Social_Determinants, levels = national.determinants$Social_Determinants[order(national.determinants$Mortality_Rate_Ratio)])
+
+ ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) +
+   ggtitle("Significant National Social Determinants")+
+   xlab("Significant Determinants") +
+   ylab("Mortality Rate Ratio") +
+   geom_bar(stat = "identity",aes(fill=Mortality_Rate_Ratio<0)) +
+   coord_flip()+
+   theme(legend.position='none')+
+   scale_fill_manual(values = c("#bd0026", "#253494"))+
+   geom_text(aes(label=Mortality_Rate_Ratio, colour =Mortality_Rate_Ratio <0), vjust=0.5, size=3, nudge_y = 6.75)+
+   scale_colour_manual(values=c("#000000","#FFFFFF"))
+
+#scale_color_manual(values = c("#c35442", "#2b517f"))
+
+ggsave("determinants_coefficients.png")
 ```
+
 
