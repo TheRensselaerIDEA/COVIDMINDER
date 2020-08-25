@@ -2956,25 +2956,22 @@ ggsave("national_coefficients.png")
 ```
 
 
-Combined Graph of Coefficients and Determinants(to be used in COVIDMINDER)
+Combinded Graph of Coefficients and Determinants(to be used in COVIDMINDER)
 ```{r}
 library(dplyr)
 library(ggplot2)
 
 ##National Determinants
 #data from GWAS_ADJ_P and GWAS_MRR
-GWAS_ADJ_P
+GWAS_ADJ_P<-readRDS('GWAS_ADJ_P.Rds')
 #remove rows 1-14 
 GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
-#GWAS_ADJ_P_t<-t(GWAS_ADJ_P_interested)
 #convert to data frame
 GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
 #find significant determinants and create data frame with them
 GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
-#GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
-#rownames(GWAS_ADJ_P_t)
 
-GWAS_MRR
+GWAS_MRR<-readRDS('GWAS_MRR.Rds')
 #remove rows 1-14
 GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
 #convert to data frame
@@ -3037,6 +3034,8 @@ high_risk_data$Row.names[high_risk_data$Row.names == "scale(LungCancer)"] <- "% 
 high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_asian)"] <- "% Asian"
 high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_blk)"] <- "% African American"
 high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_native)"] <- "% Native American"
+GWAS_data$Row.names[GWAS_data$Row.names == "Overcrowding"] <- "% Overcrowded Housing"
+
 
 #orders data from highest to lowest value
 high_risk_data$Row.names <- factor(high_risk_data$Row.names, levels = high_risk_data$Row.names[order(high_risk_data$MRRX100)])
