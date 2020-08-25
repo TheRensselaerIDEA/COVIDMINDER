@@ -8,9 +8,9 @@ from ProtoNotebook
 
 #### Library and Data Imports ####
 ## Load essential R packages
-source("Source.R")
+source("Modules/Source.R")
 ## Load in model outputs per state:
-source("load_model_output.R")
+source("Modules/load_model_output.R")
 
 ```
 
@@ -2963,7 +2963,7 @@ library(ggplot2)
 
 ##National Determinants
 #data from GWAS_ADJ_P and GWAS_MRR
-GWAS_ADJ_P<-readRDS('GWAS_ADJ_P.Rds')
+GWAS_ADJ_P<-readRDS('./GWAS/GWAS_ADJ_P.Rds')
 #remove rows 1-14 
 GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
 #convert to data frame
@@ -2971,7 +2971,7 @@ GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
 #find significant determinants and create data frame with them
 GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
 
-GWAS_MRR<-readRDS('GWAS_MRR.Rds')
+GWAS_MRR<-readRDS('./GWAS/GWAS_MRR.Rds')
 #remove rows 1-14
 GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
 #convert to data frame
@@ -3005,8 +3005,9 @@ MRRX100_num<-round(MRRX100,digits=2)
 GWAS_data$MRRX100_round = MRRX100_num
 
 
-##National Coefficients
+##National Coefficients (data from High Risk Model Notebook)
 #Output Wald-test p-values
+high.risk.model
 high_risk_p <- as.data.frame(summary(high.risk.model)[10]$coefficients[2:25,4])
 high_risk_p_signficant <- subset(high_risk_p,  high_risk_p$`summary(high.risk.model)[10]$coefficients[2:25, 4]` < 0.05)
 
@@ -3046,8 +3047,6 @@ hrmMRRX100_minus <- hrmMRRX100 - 100
 high_risk_data$MRRX100 <- hrmMRRX100_minus
 hrmMRRX100_num<-round(hrmMRRX100_minus,digits=2)
 high_risk_data$MRRX100_round = hrmMRRX100_num
-
-
 
 ##Combinded Coefficients and Determinants
 #change column names in high_risk_data dataframe
