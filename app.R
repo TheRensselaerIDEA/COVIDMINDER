@@ -2874,8 +2874,8 @@ server <- function(input, output, session) {
   
   output$US.determinant.title <- renderUI({
     tagList(
-      tags$h2(paste0("United States ", det, " Disparities")),
-      tags$h3(paste0("What are the nationwide disparities in ", det, " Rates compared to the US Average?"))
+      tags$h2(paste0("Signficant United States Determinants")),
+      tags$h3(paste0("What are the significant socioeconomic and medical determinants that impact COVID mortality rates?"))
     )
   })
   
