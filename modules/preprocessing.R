@@ -353,7 +353,7 @@ states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_wit
 todays.case.data <- inner_join(todays.case.data, 
                                diabetes_data_counties[c("CountyFIPS","Percentage")], 
                                by=c("countyFIPS" = "CountyFIPS")) %>%
-  rename(Diabetes_rate = Percentage)
+  dplyr::rename(Diabetes_rate = Percentage)
 todays.case.data$Diabetes_rate <- as.numeric(todays.case.data$Diabetes_rate)/100 # Percentage
 todays.case.data$Diabetes_rate_ldi <- unlist(lapply(todays.case.data$Diabetes_rate, FUN=function(x){-log(pUS.7.diabetes/(x))}))
 todays.case.data <- todays.case.data %>%
@@ -390,7 +390,7 @@ obesity_data_counties$FIPS <- as.numeric(obesity_data_counties$FIPS)
 todays.case.data <- inner_join(todays.case.data,
                                obesity_data_counties[c("FIPS", "% Adults with Obesity")] ,
                                by=c("countyFIPS" = "FIPS")) %>%
-  rename(Obesity_rate = `% Adults with Obesity`)
+  dplyr::rename(Obesity_rate = `% Adults with Obesity`)
 todays.case.data$Obesity_rate <- as.numeric(todays.case.data$Obesity_rate)/100 # Percentage
 todays.case.data$Obesity_rate_ldi <- unlist(lapply(todays.case.data$Obesity_rate, FUN=function(x){-log(pUS.8.obesity/(x))}))
 todays.case.data <- todays.case.data %>%
@@ -402,7 +402,7 @@ states <- states %>%
   left_join(CRD_data_counties[c("CNTY", "MortalityRate2014")],
             by = c("NAME" = "CNTY")) %>%
   mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
-  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  dplyr::rename("CRD Mortality_rate" = MortalityRate2014) %>%
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
@@ -410,7 +410,7 @@ todays.case.data <- left_join(todays.case.data,
                                CRD_data_counties[c("FIPS", "MortalityRate2014")],
                                by = c("countyFIPS" = "FIPS")) %>%
   mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
-  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  dplyr::rename("CRD Mortality_rate" = MortalityRate2014) %>%
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
@@ -509,8 +509,8 @@ ranking.ldi <- ranking %>%
   mutate(`Daily Case_rate_ldi` = replace(`Daily Case_rate_ldi`, `Daily Case_rate_ldi` < -5, -5)) %>%
   mutate(`Daily Mortality_rate_ldi` = -log(US.ranking$deaths.delta/deaths.delta)) %>%
   mutate(`Daily Mortality_rate_ldi` = replace(`Daily Mortality_rate_ldi`, `Daily Mortality_rate_ldi` < -5, -5)) %>%
-  rename(`Daily Case_rate` = cases.delta) %>%
-  rename(`Daily Mortality_rate` = deaths.delta)
+  dplyr::rename(`Daily Case_rate` = cases.delta) %>%
+  dplyr::rename(`Daily Mortality_rate` = deaths.delta)
 
 states <- states %>%
   left_join(ranking.ldi[c("name", "Daily Case_rate", "Daily Case_rate_ldi", "Daily Mortality_rate", "Daily Mortality_rate_ldi")],
