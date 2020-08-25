@@ -2829,6 +2829,7 @@ GWAS_ADJ_P
 ```{r echo = F}
 library(ggplot2)
 
+##National Determinants
 #data from GWAS_ADJ_P and GWAS_MRR
 GWAS_ADJ_P
 #remove rows 1-14 
@@ -2851,11 +2852,20 @@ GWAS_MRR_t <- as.data.frame(t(GWAS_MRR_interested))
 GWAS_data <- merge(GWAS_ADJ_P_signficant, GWAS_MRR_t, by = 0) 
 #mutliply GWAS_MRR data by 100
 GWAS_data$MRRX100 <- GWAS_data$Interested_Variable.y * 100 
+GWAS_data <- GWAS_data[-c(7),] 
 
 #convert MRRX100 as numeric and Row.names as characters
 GWAS_data$MRRX100 <- as.numeric(as.character(GWAS_data$MRRX100))
 GWAS_data
 GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Daily PM2.5"] <- "Avg. Daily Air Pollution (PM2.5)"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Number of Physically Unhealthy Days"] <- "Avg. Numer of Physically Unhealthy Days"
+GWAS_data$Row.names[GWAS_data$Row.names == "Cancer.death_rate"] <- "Cancer Death Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Vaccinated"] <- "% Flu Vaccinated Medicare FFS"
+GWAS_data$Row.names[GWAS_data$Row.names == "Suicide Rate (Age-Adjusted)"] <- "Age-Adjusted Suicide Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Grade Performance"] <- "Avg. Grade Performance"
 
 #orders data from highest to lowest value
 GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[order(GWAS_data$MRRX100)])
@@ -2864,18 +2874,6 @@ GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[
 MRRX100 <- GWAS_data$MRRX100
 MRRX100_num<-round(MRRX100,digits=2)
 GWAS_data$MRRX100_round = MRRX100_num
-
-# ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
-#   geom_bar(stat="identity",aes(fill=MRRX100<0))
-
-#copy and make values N/A
-
-#current work in process
-MRRX100_round <- GWAS_data$MRRX100_round
-MRRX100_pos <- subset(GWAS_data,  MRRX100_round > 0)
-#GWAS_data <- merge(GWAS_data, MRRX100_pos, by = "Row.names", all = TRUE)
-MRRX100_neg <- subset(GWAS_data,  MRRX100_round < 0)
-#GWAS_data <- merge(GWAS_data, MRRX100_neg, by = "Row.names", all = TRUE)
 
 #plot
 # ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
@@ -2899,75 +2897,182 @@ MRRX100_neg <- subset(GWAS_data,  MRRX100_round < 0)
    geom_text(aes(label=MRRX100_round, colour =MRRX100 <0), vjust=0.5, size=3.5, nudge_y = 3)+
    scale_colour_manual(values=c("#000000","#FFFFFF"))
 
-#change to black and white
-
-# ggplot(p, aes(x=Area, y=Count, color=Type)) + 
-#         geom_bar(stat="identity", position="dodge", aes(fill=Type), color="black")  +
-#     scale_fill_manual(values = alpha(c("#000000", "#FF5733"))) +
-#     geom_text(aes(label=Count, colour=Type), 
-#              position=position_dodge(width = 0.9), 
-#              vjust=-0.40) +
-#     scale_colour_manual(values=c("#000000", "#FF5733"))
-
-#Avg. Daily Air Pollution (PM2.5)
-#% Flu Vaccinated Medicare FFS
 ggsave("national_sd.png")
+```
 
+```{r}
+##National Coefficients
+#Output Wald-test p-values
+high_risk_p <- as.data.frame(summary(high.risk.model)[10]$coefficients[2:25,4])
+high_risk_p_signficant <- subset(high_risk_p,  high_risk_p$`summary(high.risk.model)[10]$coefficients[2:25, 4]` < 0.05)
 
-#create data frame with information from Table 1 of the paper
-#Coefficientsdf = siginificant national coefficients from a high-risk control model
-#Mortality_Rate_Ratio = % increase in COVID-19 mortality rate per standard deviation increase of coefficient
-national.coefficients <- data.frame(Coefficientsdf  = c("Days Since First Infection", "% with Lung Cancer","% African American","Days Since Mask Required","Median Household Income","% Hispanic in County", "% Native American", "% with less than High-School Education" , "% Asian", "% Adult Asthma"),
-                                       Mortality_Rate_Ratio = c("124.94","40.87","36.11","30.41","22.00","21.53","16.34","14.13","8.31","-20.06")) 
+#Output MRR
+high_risk_MRR <- as.data.frame(exp(summary(high.risk.model)[10]$coefficients[2:25,1]))
 
-#changes column Mortality_Rate_Ratio from character to numeric
-national.coefficients$Mortality_Rate_Ratio <- as.numeric(as.character(national.coefficients$Mortality_Rate_Ratio))
+#merge high_risk_p and high_rish_mrr
+high_risk_data <- merge(high_risk_p_signficant, high_risk_MRR, by = 0) 
+#mutliply GWAS_MRR data by 100
+high_risk_data$MRRX100 <- high_risk_data$`exp(summary(high.risk.model)[10]$coefficients[2:25, 1])` * 100 
 
-#changes the order in which Coefficientsdf appear
-#highest to lowest value
-national.coefficients$Coefficientsdf <- factor(national.coefficients$Coefficientsdf, levels = national.coefficients$Coefficientsdf[order(national.coefficients$Mortality_Rate_Ratio)])
+#convert MRRX100 as numeric and Row.names as characters
+high_risk_data$MRRX100 <- as.numeric(as.character(high_risk_data$MRRX100))
+high_risk_data$Row.names <- as.character(high_risk_data$Row.names)
 
-ggplot(national.coefficients, aes(x=Coefficientsdf, y=Mortality_Rate_Ratio)) +
+#change coefficient names for readibility
+high_risk_data$Row.names <- as.character(high_risk_data$Row.names)
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(date_since_mask)"] <- "Days Since Mask Required"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(AdultAsthma)"] <- "% Adult Asthma"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(date_since)"] <- "Days Since First Infection"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(education)"] <- "% with less than High-School Education"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(hispanic)"] <- "% Hispanic in County"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(log(medhouseholdincome))"] <- "Median Household Income"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(LungCancer)"] <- "% with Lung Cancer"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_asian)"] <- "% Asian"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_blk)"] <- "% African American"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_native)"] <- "% Native American"
+
+#orders data from highest to lowest value
+high_risk_data$Row.names <- factor(high_risk_data$Row.names, levels = high_risk_data$Row.names[order(high_risk_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+hrmMRRX100 <- high_risk_data$MRRX100
+hrmMRRX100_minus <- hrmMRRX100 - 100
+high_risk_data$MRRX100 <- hrmMRRX100_minus
+hrmMRRX100_num<-round(hrmMRRX100_minus,digits=2)
+high_risk_data$MRRX100_round = hrmMRRX100_num
+
+ggplot(high_risk_data, aes(x=Row.names, y=MRRX100)) +
    ggtitle("Significant National Coefficients")+
    xlab("Significant Coefficients") +
    ylab("Mortality Rate Ratio") +
-   geom_bar(stat = "identity",aes(fill=Mortality_Rate_Ratio<0)) +
+   geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
    coord_flip()+
    theme(legend.position='none')+
    scale_fill_manual(values = c("#bd0026", "#253494"))+
-   geom_text(aes(label=Mortality_Rate_Ratio, colour =Mortality_Rate_Ratio <0), vjust=0.5, size=3.5, nudge_y = 7.5)+
+   geom_text(aes(label=MRRX100_round, colour =MRRX100_round <0), vjust=0.5, size=3.5, nudge_y = 7.0)+
    scale_colour_manual(values=c("#000000","#FFFFFF"))
+
 ggsave("national_coefficients.png")
-
-
-
-
-#create data frame with information from Table 2 of the paper
-#Social_Determinants = siginificant national determinants
-#Mortality_Rate_Ratio = % increase in COVID-19 mortality rate per standard deviation increase of coefficient
-national.determinants <- data.frame(Social_Determinants  = c("Days Since First Infection", "% with Lung Cancer","% African American","Days Since Mask Required","Median Household Income","% Hispanic in County", "% Native American", "% with less than High-School Education" , "% Asian", "% Adult Asthma","% Uninsured","% Not Proficient in English", "Avg. Daily Air Pollution (PM2.5)", "% Fair or Poor Health", "% Overcrowded Housing", "Avg. Number of Physically Unhealthy Days","% Frequently Mentally Distressed","Motor Vehicle Mortality Rate", "Cancer Death Rate","% Flu Vaccinated Medicare FFS","Preventable Hospitalization Rate","Age-Adjusted Suicide Rate","Avg. Grade Performance","% Excessive Drinking"),
-                                       Mortality_Rate_Ratio = c("124.94","40.87","36.11","30.41","22.00","21.53","16.34","14.13","8.31","-20.06","33.81","33.40","31.32","26.87","21.52","19.85","15.97","14.95","12.76","10.90","10.44","-12.93","-16.45","-18.93"))
-
-#changes column Mortality_Rate_Ratio from character to numeric
-national.determinants$Mortality_Rate_Ratio <- as.numeric(as.character(national.determinants$Mortality_Rate_Ratio))
-#changes the order in which Social_Determinants appear
-#highest to lowest value
-national.determinants$Social_Determinants <- factor(national.determinants$Social_Determinants, levels = national.determinants$Social_Determinants[order(national.determinants$Mortality_Rate_Ratio)])
-
- ggplot(national.determinants, aes(x=Social_Determinants, y=Mortality_Rate_Ratio)) +
-   ggtitle("Significant National Social Determinants")+
-   xlab("Significant Determinants") +
-   ylab("Mortality Rate Ratio") +
-   geom_bar(stat = "identity",aes(fill=Mortality_Rate_Ratio<0)) +
-   coord_flip()+
-   theme(legend.position='none')+
-   scale_fill_manual(values = c("#bd0026", "#253494"))+
-   geom_text(aes(label=Mortality_Rate_Ratio, colour =Mortality_Rate_Ratio <0), vjust=0.5, size=3, nudge_y = 6.75)+
-   scale_colour_manual(values=c("#000000","#FFFFFF"))
-
-#scale_color_manual(values = c("#c35442", "#2b517f"))
-
-ggsave("determinants_coefficients.png")
 ```
 
+
+Combined Graph of Coefficients and Determinants(to be used in COVIDMINDER)
+```{r}
+library(dplyr)
+library(ggplot2)
+
+##National Determinants
+#data from GWAS_ADJ_P and GWAS_MRR
+GWAS_ADJ_P
+#remove rows 1-14 
+GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
+#GWAS_ADJ_P_t<-t(GWAS_ADJ_P_interested)
+#convert to data frame
+GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
+#find significant determinants and create data frame with them
+GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
+#GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
+#rownames(GWAS_ADJ_P_t)
+
+GWAS_MRR
+#remove rows 1-14
+GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
+#convert to data frame
+GWAS_MRR_t <- as.data.frame(t(GWAS_MRR_interested))
+
+#merge GWAS_ADJ and GWAS_MRR data
+GWAS_data <- merge(GWAS_ADJ_P_signficant, GWAS_MRR_t, by = 0) 
+#mutliply GWAS_MRR data by 100
+GWAS_data$MRRX100 <- GWAS_data$Interested_Variable.y * 100 
+GWAS_data <- GWAS_data[-c(7),] 
+
+#convert MRRX100 as numeric and Row.names as characters
+GWAS_data$MRRX100 <- as.numeric(as.character(GWAS_data$MRRX100))
+GWAS_data
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Daily PM2.5"] <- "Avg. Daily Air Pollution (PM2.5)"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Number of Physically Unhealthy Days"] <- "Avg. Numer of Physically Unhealthy Days"
+GWAS_data$Row.names[GWAS_data$Row.names == "Cancer.death_rate"] <- "Cancer Death Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Vaccinated"] <- "% Flu Vaccinated Medicare FFS"
+GWAS_data$Row.names[GWAS_data$Row.names == "Suicide Rate (Age-Adjusted)"] <- "Age-Adjusted Suicide Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Grade Performance"] <- "Avg. Grade Performance"
+
+#orders data from highest to lowest value
+GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[order(GWAS_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+MRRX100 <- GWAS_data$MRRX100
+MRRX100_num<-round(MRRX100,digits=2)
+GWAS_data$MRRX100_round = MRRX100_num
+
+
+##National Coefficients
+#Output Wald-test p-values
+high_risk_p <- as.data.frame(summary(high.risk.model)[10]$coefficients[2:25,4])
+high_risk_p_signficant <- subset(high_risk_p,  high_risk_p$`summary(high.risk.model)[10]$coefficients[2:25, 4]` < 0.05)
+
+#Output MRR
+high_risk_MRR <- as.data.frame(exp(summary(high.risk.model)[10]$coefficients[2:25,1]))
+
+#merge high_risk_p and high_rish_mrr
+high_risk_data <- merge(high_risk_p_signficant, high_risk_MRR, by = 0) 
+#mutliply GWAS_MRR data by 100
+high_risk_data$MRRX100 <- high_risk_data$`exp(summary(high.risk.model)[10]$coefficients[2:25, 1])` * 100 
+
+#convert MRRX100 as numeric and Row.names as characters
+high_risk_data$MRRX100 <- as.numeric(as.character(high_risk_data$MRRX100))
+high_risk_data$Row.names <- as.character(high_risk_data$Row.names)
+
+#change coefficient names for readibility
+high_risk_data$Row.names <- as.character(high_risk_data$Row.names)
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(date_since_mask)"] <- "Days Since Mask Required"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(AdultAsthma)"] <- "% Adult Asthma"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(date_since)"] <- "Days Since First Infection"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(education)"] <- "% with less than High-School Education"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(hispanic)"] <- "% Hispanic in County"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(log(medhouseholdincome))"] <- "Median Household Income"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(LungCancer)"] <- "% with Lung Cancer"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_asian)"] <- "% Asian"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_blk)"] <- "% African American"
+high_risk_data$Row.names[high_risk_data$Row.names == "scale(pct_native)"] <- "% Native American"
+
+#orders data from highest to lowest value
+high_risk_data$Row.names <- factor(high_risk_data$Row.names, levels = high_risk_data$Row.names[order(high_risk_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+hrmMRRX100 <- high_risk_data$MRRX100
+hrmMRRX100_minus <- hrmMRRX100 - 100
+high_risk_data$MRRX100 <- hrmMRRX100_minus
+hrmMRRX100_num<-round(hrmMRRX100_minus,digits=2)
+high_risk_data$MRRX100_round = hrmMRRX100_num
+
+
+
+##Combinded Coefficients and Determinants
+#change column names in high_risk_data dataframe
+names(high_risk_data)[names(high_risk_data) == "summary(high.risk.model)[10]$coefficients[2:25, 4]"] <- "Interested_Variable.x"
+names(high_risk_data)[names(high_risk_data) == "exp(summary(high.risk.model)[10]$coefficients[2:25, 1])"] <- "Interested_Variable.y"
+
+#combine GWAS_data and high_risk_data
+combinded_determinants_data <- rbind(GWAS_data, high_risk_data)
+
+#orders data from highest to lowest value
+combinded_determinants_data$Row.names <- factor(combinded_determinants_data$Row.names, levels = combinded_determinants_data$Row.names[order(combinded_determinants_data$MRRX100)])
+
+#plot
+ggplot(combinded_determinants_data, aes(x=Row.names, y=MRRX100)) +
+   ggtitle("Significant National Determinants")+
+   xlab("Significant Determinants") +
+   ylab("Mortality Rate Ratio") +
+   geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
+   coord_flip()+
+   theme(legend.position='none')+
+   scale_fill_manual(values = c("#bd0026", "#253494"))+
+   geom_text(aes(label=MRRX100_round, colour =MRRX100_round <0), vjust=0.5, size=3.0, nudge_y = 6.7)+
+   scale_colour_manual(values=c("#000000","#FFFFFF"))
+
+ggsave("combinded_determinants.png")
+```
 
