@@ -1,10 +1,12 @@
 ---
-title: "ahns3ProtoNotebook"
+title: "State Determinants Visualization"
 output: html_document
 ---
 
+This notebook can be used to reproduce the visualizations for the social determinants of each state. States that did not have enough data were UT, VT, DE, ME, MD, MA, NH, and NJ. States that currently do not work are AK, MI, RI, and WY.
+
 from ProtoNotebook
-```{r echo = F, results = 'hide',  warning=FALSE, message=FALSE}
+```{r echo = F}
 
 #### Library and Data Imports ####
 ## Load essential R packages
@@ -12,197 +14,6 @@ source("Modules/Source.R")
 ## Load in model outputs per state:
 source("Modules/load_model_output.R")
 
-```
-
-from ProtoNotebook
-```{r echo = F}
-  
-# Normalize MRRs to MR by subtracting 1 and dividing by stdev for each state... output as table
-
-  state_c <- as.data.frame(states.all_c)
-  coefs <- state_c$coefficients
-  
-  coefs_clean <- c("hispanic", "pct_blk", "pct_asian", "pct_white", "pct_native", "pct_age65", "medhouseholdincome", "pct_obesity", "pct_diabetes", "LungCancer", "COPD", "AdultAsthma", "PediatricAsthma", "All.Cause.death_rate", "state")
-  states <- c("AL", "AR", "AZ", "CA", "CT","CO", "DE", "FL", "GA", "IA", "ID", "IL", "IN", "KS", "KY",
-            "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NM", "NJ", "NV", 
-            "NY", "OH", "OK", "OR", "PA", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
-  
-  # Split the data on state
-  statesplit <- split(model_input, model_input$state)
-
-  # Ignore states with less than 2 counties
-  for (name in names(statesplit)) {
-    if (nrow(statesplit[[name]]) < 2){
-      statesplit <- statesplit[names(statesplit) != name]
-    }
-  }
-  
-  state_MRs <- array(dim = c(length(states),length(coefs)))
-  
-  
-  for (i in 1:length(names(statesplit))) {
-    name = names(statesplit)[i]
-    # Ignore states having issues
-    if (name %in% c("AZ", "CT", "DE", "RI"))
-      next
-    state_data <- statesplit[[name]]
-      
-    state_data <- subset(state_data, select = c(fips, Deaths, hispanic, pct_blk, pct_asian, pct_white, pct_native, medhouseholdincome, pct_obesity, pct_age65, pct_diabetes, LungCancer, AdultChronicLungDisease, COPD, AdultAsthma, PediatricAsthma,  Despair.death_rate, All.Cause.death_rate, Cardiovascular.death_rate, population))
-    
-    b <- paste(name, ".summary", sep= "")
-    model_output <- eval(as.name(b))
-    this_state_Cs <- model_output$coefficients[,1]
-    names <- names(this_state_Cs)
-    this_state_Cs <- unname(this_state_Cs)
-    
-    if (!(name %in% states)) {
-      print(name)
-      next
-    }
-    
-    this_state_MRs <- array(dim = c(length(coefs)))
-    
-    for ( j in 1:length(names)) {
-      coef = names[j] 
-      sdev <- case_when (
-        coef == "scale(hispanic)"                ~ sd(state_data$hispanic, na.rm = TRUE) ,
-        coef == "scale(pct_blk)"                 ~ sd(state_data$pct_blk, na.rm = TRUE) ,
-        coef == "scale(pct_asian)"               ~ sd(state_data$pct_asian, na.rm = TRUE) ,
-        coef == "scale(pct_white)"               ~ sd(state_data$pct_white, na.rm = TRUE) ,
-        coef == "scale(pct_native)"              ~ sd(state_data$pct_native, na.rm = TRUE) ,
-        coef == "scale(pct_age65)"               ~ sd(state_data$pct_age65, na.rm = TRUE) ,
-        coef == "scale(log(medhouseholdincome))" ~ sd(state_data$medhouseholdincome, na.rm = TRUE) ,
-        coef == "scale(pct_obesity)"             ~ sd(state_data$pct_obesity, na.rm = TRUE) ,
-        coef == "scale(pct_diabetes)"            ~ sd(state_data$pct_diabetes, na.rm = TRUE) ,
-        coef == "scale(LungCancer)"              ~ sd(state_data$LungCancer, na.rm = TRUE) ,
-        coef == "scale(COPD)"                    ~ sd(state_data$COPD, na.rm = TRUE) ,
-        coef == "scale(AdultAsthma)"             ~ sd(state_data$AdultAsthma, na.rm = TRUE) ,
-        coef == "scale(PediatricAsthma)"         ~ sd(state_data$PediatricAsthma, na.rm = TRUE) ,
-        coef == "scale(All.Cause.death_rate)"    ~ sd(state_data$All.Cause.death_rate, na.rm = TRUE),
-        TRUE                                     ~ -100
-      )
-      if (!is.na(sdev) && sdev != -100) {
-        this_state_MRs[which(coefs %in% c(coef))] = (this_state_Cs[j]-1.0)/sdev
-      }
-    }
-    if (length(state_MRs[which(states %in% c(name)),]) != length(this_state_MRs)) {
-      #print(length(state_MRs[which(states %in% c(name)),]))
-      #print(length(this_state_MRs))
-      stop()
-    } else {
-      state_MRs[which(states %in% c(name)),] = this_state_MRs
-    }
-  }
-  
-  
-  t0 <- as.data.frame(state_MRs)
-  t1 <- as_tibble(t0)
-  
-  colnames(t1) <- as.character(coefs)
-  t2 <- t1 %>% 
-    mutate(state = states)
-  
-  saveRDS(t2, "states_normalize.rds")
-
-
-```
-
-from ProtoNotebook
-```{r echo = F}
-  
-    nat <- national
-    coefs <- row.names(nat$coefficients)
-  
-    mo_in <-subset(model_input, select = c(fips, Deaths, hispanic, pct_blk, pct_asian, pct_white, pct_native, medhouseholdincome, pct_obesity, pct_age65, pct_diabetes, LungCancer, AdultChronicLungDisease, COPD, AdultAsthma, PediatricAsthma,  Despair.death_rate, All.Cause.death_rate, Cardiovascular.death_rate, population)) 
-  
-    nat_Cs <- nat$coefficients[,1]
-    names <- names(nat_Cs)
-    
-    nat_MRs <- array(dim = c(length(coefs)))
-    
-    for ( j in 1:length(names)) {
-      coef = names[j] 
-      sdev <- case_when (
-        coef == "scale(hispanic)"                ~ sd(mo_in$hispanic, na.rm = TRUE) ,
-        coef == "scale(pct_blk)"                 ~ sd(mo_in$pct_blk, na.rm = TRUE) ,
-        coef == "scale(pct_asian)"               ~ sd(mo_in$pct_asian, na.rm = TRUE) ,
-        coef == "scale(pct_white)"               ~ sd(mo_in$pct_white, na.rm = TRUE) ,
-        coef == "scale(pct_native)"              ~ sd(mo_in$pct_native, na.rm = TRUE) ,
-        coef == "scale(pct_age65)"               ~ sd(mo_in$pct_age65, na.rm = TRUE) ,
-        coef == "scale(log(medhouseholdincome))" ~ sd(mo_in$medhouseholdincome, na.rm = TRUE) ,
-        coef == "scale(pct_obesity)"             ~ sd(mo_in$pct_obesity, na.rm = TRUE) ,
-        coef == "scale(pct_diabetes)"            ~ sd(mo_in$pct_diabetes, na.rm = TRUE) ,
-        coef == "scale(LungCancer)"              ~ sd(mo_in$LungCancer, na.rm = TRUE) ,
-        coef == "scale(COPD)"                    ~ sd(mo_in$COPD, na.rm = TRUE) ,
-        coef == "scale(AdultAsthma)"             ~ sd(mo_in$AdultAsthma, na.rm = TRUE) ,
-        coef == "scale(PediatricAsthma)"         ~ sd(mo_in$PediatricAsthma, na.rm = TRUE) ,
-        coef == "scale(All.Cause.death_rate)"    ~ sd(mo_in$All.Cause.death_rate, na.rm = TRUE),
-        TRUE                                     ~ -100
-      )
-      if (!is.na(sdev) && sdev != -100) {
-        nat_MRs[which(coefs %in% c(coef))] = (nat_Cs[j]-1.0)/sdev
-      }
-    }
-
-    t1 <- as_tibble(nat_MRs)
-    
-    t2 <- t1 %>%
-      mutate(coefficients = names)
-    saveRDS(t2, "national_normalize.rds")
-
-```
-
-from ProtoNotebook
-```{r echo = F}
-
-  # make GWAS per state per 305 vars
-  # rerun state models with new variables
-
-    library("leaflet")
-    # vars to pick from 
- #   var_i = "Intercept"  "hispanic"  "pct_blk"  "pct_asian"  "pct_white"  "pct_native"  "q_popdensity 2" "q_popdensity 3" "q_popdensity 4" "q_popdensity 5" "medhouseholdincome"   "pct_obesity"  "pct_age65"  "pct_diabetes"  "LungCancer"  "COPD"  "AdultAsthma"  "PediatricAsthma"  "All.Cause.death_rate" 
-    var_i = as.name("pct_blk") 
-    #state$state_heat$pct_blk
-    #colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
-    colors <- c("blue", "grey", "red")
-    #bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
-    bins <- c(-0.25, 0.25, 0.75, 1.25)
-    pal2 <- leaflet::colorBin(colors, domain = state$state_heat$pct_blk, bins = bins, reverse=FALSE)
-    labels2 <- sprintf(
-      "<strong>%s</strong><br/>
-      Mortality Rate P-val: %.2g",
-      colnames(state_p), state$state_heat$pct_blk
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes) %>%
-      setView(-96, 37.8, 4) %>% 
-      addPolygons(
-        fillColor = ~pal2(state$state_heat$pct_blk),
-        weight = 2,
-        opacity = 1,
-        color = "white",
-        dashArray = "3",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~state$state_heat$pct_blk, 
-                opacity = 0.7, 
-                title = paste("Mortality Rate  Ratio per " , var_i, sep = ""),
-                position = "bottomright"
-                ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light",
-        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
 ```
 
 from ProtoNotebook
@@ -262,7 +73,7 @@ from ProtoNotebook
 
 ```
 
-Start of Personal Contribution
+Start of State Visualization
 
 Alabama
 ```{r echo = F}
@@ -3080,4 +2891,3 @@ ggplot(combinded_determinants_data, aes(x=Row.names, y=MRRX100)) +
 
 ggsave("combinded_determinants.png")
 ```
-
