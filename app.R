@@ -303,8 +303,8 @@ ui <-
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
                                uiOutput("US.determinant.title"), offset=0),
-                        column(12, plotOutput(outputId = "US.determinants", 
-                                              width = "1000px"), offset = 3),
+                        column(12, align="center", plotOutput(outputId = "US.determinants", 
+                                              width = "1000px")),
                         # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
                         column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=10)
                ),
