@@ -138,3 +138,12 @@ covid_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_TS_counties
 covid_TS_state_long.cases <- read_csv("data/csv/time_series/covid_TS_state_long.cases.csv")
 covid_TS_US_long.cases <- read_csv("data/csv/time_series/covid_TS_US_long.cases.csv")
 
+
+##National Determinants
+#data from GWAS_ADJ_P and GWAS_MRR
+GWAS_ADJ_P <- readRDS('data/GWAS_ADJ_P.rds')
+
+
+GWAS_MRR <- readRDS('data/GWAS_MRR.rds')
+
+

@@ -353,7 +353,7 @@ states <- data.frame(states, "Diabetes_rate"=diabetes_data_states$pct_Adults_wit
 todays.case.data <- inner_join(todays.case.data, 
                                diabetes_data_counties[c("CountyFIPS","Percentage")], 
                                by=c("countyFIPS" = "CountyFIPS")) %>%
-  rename(Diabetes_rate = Percentage)
+  dplyr::rename(Diabetes_rate = Percentage)
 todays.case.data$Diabetes_rate <- as.numeric(todays.case.data$Diabetes_rate)/100 # Percentage
 todays.case.data$Diabetes_rate_ldi <- unlist(lapply(todays.case.data$Diabetes_rate, FUN=function(x){-log(pUS.7.diabetes/(x))}))
 todays.case.data <- todays.case.data %>%
@@ -390,7 +390,7 @@ obesity_data_counties$FIPS <- as.numeric(obesity_data_counties$FIPS)
 todays.case.data <- inner_join(todays.case.data,
                                obesity_data_counties[c("FIPS", "% Adults with Obesity")] ,
                                by=c("countyFIPS" = "FIPS")) %>%
-  rename(Obesity_rate = `% Adults with Obesity`)
+  dplyr::rename(Obesity_rate = `% Adults with Obesity`)
 todays.case.data$Obesity_rate <- as.numeric(todays.case.data$Obesity_rate)/100 # Percentage
 todays.case.data$Obesity_rate_ldi <- unlist(lapply(todays.case.data$Obesity_rate, FUN=function(x){-log(pUS.8.obesity/(x))}))
 todays.case.data <- todays.case.data %>%
@@ -402,7 +402,7 @@ states <- states %>%
   left_join(CRD_data_counties[c("CNTY", "MortalityRate2014")],
             by = c("NAME" = "CNTY")) %>%
   mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
-  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  dplyr::rename("CRD Mortality_rate" = MortalityRate2014) %>%
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
@@ -410,7 +410,7 @@ todays.case.data <- left_join(todays.case.data,
                                CRD_data_counties[c("FIPS", "MortalityRate2014")],
                                by = c("countyFIPS" = "FIPS")) %>%
   mutate(MortalityRate2014 = MortalityRate2014/100000) %>%
-  rename("CRD Mortality_rate" = MortalityRate2014) %>%
+  dplyr::rename("CRD Mortality_rate" = MortalityRate2014) %>%
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
@@ -509,8 +509,8 @@ ranking.ldi <- ranking %>%
   mutate(`Daily Case_rate_ldi` = replace(`Daily Case_rate_ldi`, `Daily Case_rate_ldi` < -5, -5)) %>%
   mutate(`Daily Mortality_rate_ldi` = -log(US.ranking$deaths.delta/deaths.delta)) %>%
   mutate(`Daily Mortality_rate_ldi` = replace(`Daily Mortality_rate_ldi`, `Daily Mortality_rate_ldi` < -5, -5)) %>%
-  rename(`Daily Case_rate` = cases.delta) %>%
-  rename(`Daily Mortality_rate` = deaths.delta)
+  dplyr::rename(`Daily Case_rate` = cases.delta) %>%
+  dplyr::rename(`Daily Mortality_rate` = deaths.delta)
 
 states <- states %>%
   left_join(ranking.ldi[c("name", "Daily Case_rate", "Daily Case_rate_ldi", "Daily Mortality_rate", "Daily Mortality_rate_ldi")],
@@ -534,3 +534,50 @@ todays.case.data <- todays.case.data %>%
   left_join(ct.ranking,
             by = c("countyFIPS" = "countyFIPS"))
 
+#Determinant Preprocessing
+#remove rows 1-14
+GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
+#GWAS_ADJ_P_t<-t(GWAS_ADJ_P_interested)
+#convert to data frame
+GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
+#find significant determinants and create data frame with them
+GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
+#GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
+#rownames(GWAS_ADJ_P_t)
+
+#remove rows 1-14
+GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
+#convert to data frame
+GWAS_MRR_t <- as.data.frame(t(GWAS_MRR_interested))
+GWAS_MRR_T <- exp(GWAS_MRR_t)
+
+#merge GWAS_ADJ and GWAS_MRR data
+GWAS_data <- merge(GWAS_ADJ_P_signficant, GWAS_MRR_T, by = 0)
+#mutliply GWAS_MRR data by 100
+GWAS_data$MRRX100 <- GWAS_data$Interested_Variable.y * 100
+GWAS_data <- GWAS_data[-c(7),]
+
+#convert MRRX100 as numeric and Row.names as characters
+GWAS_data$MRRX100 <- as.numeric(as.character(GWAS_data$MRRX100))
+GWAS_data
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Daily PM2.5"] <- "Avg. Daily Air Pollution (PM2.5)"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Number of Physically Unhealthy Days"] <- "Avg. Number of Physically Unhealthy Days"
+GWAS_data$Row.names[GWAS_data$Row.names == "Cancer.death_rate"] <- "Cancer Death Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Vaccinated"] <- "% Influenza Vaccinated Medicare FFS"
+GWAS_data$Row.names[GWAS_data$Row.names == "Suicide Rate (Age-Adjusted)"] <- "Age-Adjusted Suicide Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Grade Performance"] <- "Avg. Grade Performance"
+GWAS_data$Row.names[GWAS_data$Row.names == "Overcrowding"] <- "% of County with Overcrowded Housing"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Uninsured"] <- "% of County Uninsured"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Frequent Mental Distress"] <- "% Frequently Mentally Distressed"
+
+#orders data from highest to lowest value
+GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[order(GWAS_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+MRRX100 <- GWAS_data$MRRX100
+GWAS_data$MRRX100 <- MRRX100 -100
+MRRX100_num<-round(GWAS_data$MRRX100,digits=2)
+GWAS_data$MRRX100_round = MRRX100_num
