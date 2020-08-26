@@ -303,7 +303,10 @@ ui <-
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
                                uiOutput("US.determinant.title"), offset=0),
-                        column(12, img(src='national_determinants_cropped.png', align = "left"), offset = 3),
+                        column(12, plotOutput(outputId = "US.determinants", 
+                                              width = "1000px"), offset = 3),
+                        # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
+                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=10)
                ),
                tags$br(),
                tags$br(),
@@ -820,76 +823,6 @@ ui <-
       #            )
       #          )
       # )),
-      navbarMenu(menuName ="determinant_menu",
-                 HTML("<div><b>DETERMINANT ANALYSIS</b></div>"),
-               tabPanel(tags$div(class="tab-title",style="text-align:center;",
-                                 HTML("<div><b>DISCLAIMER</b></div>")),
-                        value = "determinant_disclaimer",
-                        fluidRow(column(8, class = "about",
-                                        tags$h1("Disclaimer"),
-                                        tags$p("Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."), 
-                                        offset = 2)))
-               #,
-      #          tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                HTML("<div><b>DETERMINANT</b></br>USA</div>")),
-      #          value="determinant_usa",
-      #          fluidPage(
-      #            fluidRow(class="page_title", uiOutput("us_det_title")),
-      #            fluidRow(class="page_title", uiOutput("us_det_subtitle")),
-      #            fluidRow(class = "map-container",
-      #           column(8, id = "mainpanel_us_db",
-      #                  uiOutput("us_det_map_title"),
-      #                  tags$br(),tags$br(),
-      #                  tags$div(class = "select-bar",
-      #                           selectInput(inputId = "determinant",
-      #                                       label = NULL,
-      #                                       choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
-      #                                       selected = "Diabetes"
-      #                           )),
-      #                  leafletOutput(outputId = "map.determinant", height=height)),
-      #            column(4,
-      #              id = "sidebar_us_db",
-      #                          uiOutput("sb_us_det_output"),
-      #                          HTML(
-      #                          "<div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
-      #                          <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-      #                          <i>Darker shades indicate greater disparity.</i><br><br></div>"),
-      #                          uiOutput("sb_us_det_footer")))
-      #          )
-      # ),
-      # tabPanel(tags$div(class="tab-title",style="text-align:center;",
-      #                   HTML("<div><b>DETERMINANT</b></br>NY</div>")),
-      #          value="determinant_ny",
-      #          fluidPage(
-      #            fluidRow(class="page_title", uiOutput("ny_det_title")),
-      #            fluidRow(class="page_title", uiOutput("ny_det_subtitle")),
-      #            fluidRow(class = "map-container",
-      #            column(8, id = "mainpanel_ny_det",
-      #              uiOutput("ny_det_map_title"),
-      #              tags$br(),tags$br(),
-      #              tags$div(class = "select-bar",
-      #                       selectInput(inputId = "determinant_NY",
-      #                                   label = NULL,
-      #                                   choices = c("Diabetes", "Obesity"), # , "Obesity", "Heart Disease"
-      #                                   selected = "Diabetes"
-      #                       )),
-      #              leafletOutput(outputId = "map.NY.determinant", height=height)),
-      #            column(4,
-      #              id = "sidebar_ny_det",
-      #              uiOutput("sb_ny_det_output"),
-      #              HTML("
-      #                   <div>
-      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
-      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #f7f7f7; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
-      #                  <div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
-      #                  <i>Darker shades indicate greater disparity.</i><br><br>
-      #                  </div>"),
-      #              uiOutput("sb_ny_det_footer")))
-      #          )
-      # )
-      ),
       tabPanel(HTML("<div><b>ABOUT</b></div>"),
                value="about",
                fluidRow(
@@ -2918,6 +2851,21 @@ server <- function(input, output, session) {
     }
   )
   
+  output$US.determinants.dl <- downloadHandler(
+    filename = function() {
+      return("US_determinants_analysis.png")
+    },
+    content = function(file) {
+      ggsave(filename = file, 
+             plot = ggplot.natDet(remove.title = F),
+             device = "png",
+             width = 12,
+             height = 8,
+             units = "in")
+      #file.copy("www/national_sd.png", file)
+    }
+  )
+  
   output$US.report <- render_gt({
     US.stats.table()
   })
@@ -3055,6 +3003,10 @@ server <- function(input, output, session) {
     hover <- input$US.DoT.hover
     US.barplot.tooltip(hover, "deaths")
   })
+  
+  output$US.determinants <- renderPlot({
+    ggplot.natDet(remove.title = T)
+  }, alt = "A visualization representing significant determinants in COVID-19 mortality rates in the United States ")
   
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)

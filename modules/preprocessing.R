@@ -534,3 +534,50 @@ todays.case.data <- todays.case.data %>%
   left_join(ct.ranking,
             by = c("countyFIPS" = "countyFIPS"))
 
+#Determinant Preprocessing
+#remove rows 1-14
+GWAS_ADJ_P_interested <- GWAS_ADJ_P[-c(1:14), ]
+#GWAS_ADJ_P_t<-t(GWAS_ADJ_P_interested)
+#convert to data frame
+GWAS_ADJ_P_t <- as.data.frame(t(GWAS_ADJ_P_interested))
+#find significant determinants and create data frame with them
+GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_t,  Interested_Variable < 0.05)
+#GWAS_ADJ_P_signficant <- subset(GWAS_ADJ_P_signficant,  Interested_Variable > 0)
+#rownames(GWAS_ADJ_P_t)
+
+#remove rows 1-14
+GWAS_MRR_interested <- GWAS_MRR[-c(1:14), ]
+#convert to data frame
+GWAS_MRR_t <- as.data.frame(t(GWAS_MRR_interested))
+GWAS_MRR_T <- exp(GWAS_MRR_t)
+
+#merge GWAS_ADJ and GWAS_MRR data
+GWAS_data <- merge(GWAS_ADJ_P_signficant, GWAS_MRR_T, by = 0)
+#mutliply GWAS_MRR data by 100
+GWAS_data$MRRX100 <- GWAS_data$Interested_Variable.y * 100
+GWAS_data <- GWAS_data[-c(7),]
+
+#convert MRRX100 as numeric and Row.names as characters
+GWAS_data$MRRX100 <- as.numeric(as.character(GWAS_data$MRRX100))
+GWAS_data
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+
+GWAS_data$Row.names <- as.character(GWAS_data$Row.names)
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Daily PM2.5"] <- "Avg. Daily Air Pollution (PM2.5)"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Number of Physically Unhealthy Days"] <- "Avg. Number of Physically Unhealthy Days"
+GWAS_data$Row.names[GWAS_data$Row.names == "Cancer.death_rate"] <- "Cancer Death Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Vaccinated"] <- "% Influenza Vaccinated Medicare FFS"
+GWAS_data$Row.names[GWAS_data$Row.names == "Suicide Rate (Age-Adjusted)"] <- "Age-Adjusted Suicide Rate"
+GWAS_data$Row.names[GWAS_data$Row.names == "Average Grade Performance"] <- "Avg. Grade Performance"
+GWAS_data$Row.names[GWAS_data$Row.names == "Overcrowding"] <- "% of County with Overcrowded Housing"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Uninsured"] <- "% of County Uninsured"
+GWAS_data$Row.names[GWAS_data$Row.names == "% Frequent Mental Distress"] <- "% Frequently Mentally Distressed"
+
+#orders data from highest to lowest value
+GWAS_data$Row.names <- factor(GWAS_data$Row.names, levels = GWAS_data$Row.names[order(GWAS_data$MRRX100)])
+
+#round MRRX100 to 2 decimal places for better viewing
+MRRX100 <- GWAS_data$MRRX100
+GWAS_data$MRRX100 <- MRRX100 -100
+MRRX100_num<-round(GWAS_data$MRRX100,digits=2)
+GWAS_data$MRRX100_round = MRRX100_num
