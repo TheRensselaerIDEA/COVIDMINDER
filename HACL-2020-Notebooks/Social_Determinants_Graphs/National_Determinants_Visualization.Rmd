@@ -132,7 +132,7 @@ ggplot(high_risk_data, aes(x=Row.names, y=MRRX100)) +
 ggsave("national_coefficients.png")
 ```
 
-Combinded Graph of Coefficients and Determinants(to be used in COVIDMINDER)
+Combined Graph of Coefficients and Determinants(to be used in COVIDMINDER)
 ```{r}
 library(dplyr)
 library(ggplot2)
@@ -228,19 +228,19 @@ high_risk_data$MRRX100 <- hrmMRRX100_minus
 hrmMRRX100_num<-round(hrmMRRX100_minus,digits=2)
 high_risk_data$MRRX100_round = hrmMRRX100_num
 
-##Combinded Coefficients and Determinants
+##Combined Coefficients and Determinants
 #change column names in high_risk_data dataframe
 names(high_risk_data)[names(high_risk_data) == "summary(high.risk.model)[10]$coefficients[2:25, 4]"] <- "Interested_Variable.x"
 names(high_risk_data)[names(high_risk_data) == "exp(summary(high.risk.model)[10]$coefficients[2:25, 1])"] <- "Interested_Variable.y"
 
 #combine GWAS_data and high_risk_data
-combinded_determinants_data <- rbind(GWAS_data, high_risk_data)
+combined_determinants_data <- rbind(GWAS_data, high_risk_data)
 
 #orders data from highest to lowest value
-combinded_determinants_data$Row.names <- factor(combinded_determinants_data$Row.names, levels = combinded_determinants_data$Row.names[order(combinded_determinants_data$MRRX100)])
+combined_determinants_data$Row.names <- factor(combined_determinants_data$Row.names, levels = combined_determinants_data$Row.names[order(combined_determinants_data$MRRX100)])
 
 #plot
-ggplot(combinded_determinants_data, aes(x=Row.names, y=MRRX100)) +
+ggplot(combined_determinants_data, aes(x=Row.names, y=MRRX100)) +
    ggtitle("Significant National Determinants")+
    xlab("Significant Determinants") +
    ylab("Mortality Rate Ratio") +
@@ -251,6 +251,6 @@ ggplot(combinded_determinants_data, aes(x=Row.names, y=MRRX100)) +
    geom_text(aes(label=MRRX100_round, colour =MRRX100_round <0), vjust=0.5, size=3.0, nudge_y = 6.7)+
    scale_colour_manual(values=c("#000000","#FFFFFF"))
 
-ggsave("combinded_determinants.png")
+ggsave("combined_determinants.png")
 ```
 
