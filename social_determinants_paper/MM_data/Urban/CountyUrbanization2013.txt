@@ -1,0 +1,63 @@
+County	County Code	2013 Urbanization
+"Albany County, NY"	36001	Medium Metro
+"Allegany County, NY"	36003	NonCore (Nonmetro)
+"Bronx County, NY"	36005	Large Central Metro
+"Broome County, NY"	36007	Small Metro
+"Cattaraugus County, NY"	36009	Micropolitan (Nonmetro)
+"Cayuga County, NY"	36011	Micropolitan (Nonmetro)
+"Chautauqua County, NY"	36013	Micropolitan (Nonmetro)
+"Chemung County, NY"	36015	Small Metro
+"Chenango County, NY"	36017	NonCore (Nonmetro)
+"Clinton County, NY"	36019	Micropolitan (Nonmetro)
+"Columbia County, NY"	36021	Micropolitan (Nonmetro)
+"Cortland County, NY"	36023	Micropolitan (Nonmetro)
+"Delaware County, NY"	36025	NonCore (Nonmetro)
+"Dutchess County, NY"	36027	Large Fringe Metro
+"Erie County, NY"	36029	Large Central Metro
+"Essex County, NY"	36031	NonCore (Nonmetro)
+"Franklin County, NY"	36033	Micropolitan (Nonmetro)
+"Fulton County, NY"	36035	Micropolitan (Nonmetro)
+"Genesee County, NY"	36037	Micropolitan (Nonmetro)
+"Greene County, NY"	36039	NonCore (Nonmetro)
+"Hamilton County, NY"	36041	NonCore (Nonmetro)
+"Herkimer County, NY"	36043	Medium Metro
+"Jefferson County, NY"	36045	Small Metro
+"Kings County, NY"	36047	Large Central Metro
+"Lewis County, NY"	36049	NonCore (Nonmetro)
+"Livingston County, NY"	36051	Large Fringe Metro
+"Madison County, NY"	36053	Medium Metro
+"Monroe County, NY"	36055	Large Central Metro
+"Montgomery County, NY"	36057	Micropolitan (Nonmetro)
+"Nassau County, NY"	36059	Large Fringe Metro
+"New York County, NY"	36061	Large Central Metro
+"Niagara County, NY"	36063	Large Fringe Metro
+"Oneida County, NY"	36065	Medium Metro
+"Onondaga County, NY"	36067	Medium Metro
+"Ontario County, NY"	36069	Large Fringe Metro
+"Orange County, NY"	36071	Large Fringe Metro
+"Orleans County, NY"	36073	Large Fringe Metro
+"Oswego County, NY"	36075	Medium Metro
+"Otsego County, NY"	36077	Micropolitan (Nonmetro)
+"Putnam County, NY"	36079	Large Fringe Metro
+"Queens County, NY"	36081	Large Central Metro
+"Rensselaer County, NY"	36083	Medium Metro
+"Richmond County, NY"	36085	Large Central Metro
+"Rockland County, NY"	36087	Large Fringe Metro
+"St. Lawrence County, NY"	36089	Micropolitan (Nonmetro)
+"Saratoga County, NY"	36091	Medium Metro
+"Schenectady County, NY"	36093	Medium Metro
+"Schoharie County, NY"	36095	Medium Metro
+"Schuyler County, NY"	36097	NonCore (Nonmetro)
+"Seneca County, NY"	36099	Micropolitan (Nonmetro)
+"Steuben County, NY"	36101	Micropolitan (Nonmetro)
+"Suffolk County, NY"	36103	Large Fringe Metro
+"Sullivan County, NY"	36105	NonCore (Nonmetro)
+"Tioga County, NY"	36107	Small Metro
+"Tompkins County, NY"	36109	Small Metro
+"Ulster County, NY"	36111	Small Metro
+"Warren County, NY"	36113	Small Metro
+"Washington County, NY"	36115	Small Metro
+"Wayne County, NY"	36117	Large Fringe Metro
+"Westchester County, NY"	36119	Large Fringe Metro
+"Wyoming County, NY"	36121	NonCore (Nonmetro)
+"Yates County, NY"	36123	Large Fringe Metro

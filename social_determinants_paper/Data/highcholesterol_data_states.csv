@@ -1,0 +1,53 @@
+State Name,FIPS,Rank,Value,Score
+United States,,,33,
+Alabama,1000,45,37.2,1.58
+Alaska,2000,12,31.2,-0.68
+Arizona,4000,28,33.4,0.15
+Arkansas,5000,43,36.8,1.43
+California,6000,7,30.8,-0.83
+Colorado,8000,5,30.3,-1.02
+Connecticut,9000,18,32.2,-0.3
+Delaware,10000,35,34.6,0.6
+Florida,12000,40,35.9,1.09
+Georgia,13000,10,31.1,-0.71
+Hawaii,15000,14,31.8,-0.45
+Idaho,16000,7,30.8,-0.83
+Illinois,17000,20,32.5,-0.19
+Indiana,18000,30,34.1,0.41
+Iowa,19000,30,34.1,0.41
+Kansas,20000,30,34.1,0.41
+Kentucky,21000,49,38.1,1.92
+Louisiana,22000,47,37.6,1.73
+Maine,23000,46,37.4,1.65
+Maryland,24000,20,32.5,-0.19
+Massachusetts,25000,19,32.4,-0.23
+Michigan,26000,38,35.1,0.79
+Minnesota,27000,3,29,-1.5
+Mississippi,28000,48,37.7,1.77
+Missouri,29000,33,34.3,0.49
+Montana,30000,2,28.8,-1.58
+Nebraska,31000,16,31.9,-0.41
+Nevada,32000,27,33.1,0.04
+New Hampshire,33000,23,32.8,-0.08
+New Jersey,34000,35,34.6,0.6
+New Mexico,35000,13,31.4,-0.6
+New York,36000,22,32.6,-0.15
+North Carolina,37000,39,35.5,0.94
+North Dakota,38000,10,31.1,-0.71
+Ohio,39000,28,33.4,0.15
+Oklahoma,40000,44,37,1.5
+Oregon,41000,17,32.1,-0.34
+Pennsylvania,42000,24,33,0
+Rhode Island,44000,24,33,0
+South Carolina,45000,42,36.7,1.39
+South Dakota,46000,4,29.5,-1.32
+Tennessee,47000,41,36.5,1.32
+Texas,48000,24,33,0
+Utah,49000,1,28.6,-1.65
+Vermont,50000,6,30.4,-0.98
+Virginia,51000,37,34.7,0.64
+Washington,53000,14,31.8,-0.45
+West Virginia,54000,50,39.7,2
+Wisconsin,55000,34,34.5,0.56
+Wyoming,56000,7,30.8,-0.83
+District of Columbia,11000,,27.5,

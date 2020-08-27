@@ -1,0 +1,120 @@
+---
+title: "social_determinant_zoom_in"
+output: html_notebook
+---
+
+Shows data flow to zoom in on a social determinant for a state and display box plots or whatever other plot is decided on.
+
+Load data and load libraries
+```{r}
+
+source("Source.R")
+
+```
+
+COVID mortality data
+
+```{r}
+date_of_study = "08-04-2020"
+
+chr <- read_csv("../Data/2020CHR.csv")
+chr <- chr[, -grep("Quartile", colnames(chr))]
+chr <- chr[, -grep("95", colnames(chr))]
+chr <- subset(chr, select = c(FIPS, Population))
+
+geo <- subset(geo.namemap, select = -c(state_fips))
+geo$county_fips <- str_pad(geo$county_fips, 5, pad = "0")
+
+# Historical data
+covid_hist = read.csv(text=getURL(paste0("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-22-2020.csv")))
+covid_us_hist = subset(covid_hist, Country_Region == "US" & is.na(FIPS)==F)
+covid_us_hist = subset(covid_us_hist, select = c(FIPS, Deaths))
+covid_us_hist$FIPS <- str_pad(covid_us_hist$FIPS, 5, pad = "0")
+covid_us_hist = merge(x = covid_us_hist,y = geo, by.x = "FIPS", by.y = "county_fips", all.y = TRUE)
+covid_us_hist = merge(x = covid_us_hist,y = chr, by = "FIPS", all.x = TRUE)
+covid_us_hist$period = "03-22-2020"
+
+date_of_all = format(seq(as.Date("2020-03-23"), as.Date(strptime(date_of_study,"%m-%d-%Y")), by = "weeks"),"%m-%d-%Y")
+
+for (i in 1:length(date_of_all)){
+  covid_daily = read.csv(text=getURL(paste0("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/",date_of_all[i],".csv")))
+  covid_daily = subset(covid_daily,Country_Region == "US" & is.na(FIPS)==F)
+  covid_daily = subset(covid_daily, select = c(FIPS, Deaths))
+  covid_daily$FIPS <- str_pad(covid_daily$FIPS, 5, pad = "0")
+  covid_daily = merge(x = covid_daily,y = geo, by.x = "FIPS", by.y = "county_fips", all.y = TRUE)
+  covid_daily = merge(x = covid_daily,y = chr, by = "FIPS", all.x = TRUE)
+  covid_daily$period = date_of_all[i]
+  covid_us_hist <- rbind(covid_us_hist, covid_daily)
+}
+
+covid_us_hist <- dplyr::rename(covid_us_hist, c(county_fips = FIPS, death_num = Deaths, population = Population))
+covid_us_hist$death_cause <- "COVID-19"
+covid_us_hist$death_rate <- covid_us_hist$death_num/covid_us_hist$population*100000
+
+```
+
+COVID correlations
+
+```{r}
+state <- "US"
+death.cause <- "COVID-19"
+
+county.clusters <- cluster.counties(cdc.mort.mat(covid_us_hist, state, death.cause),
+                                    cluster.method="kmeans",
+                                    cluster.num=6)
+cluster.deathrates <- get.cluster.deathrate.during.time(county.clusters, covid_us_hist, death.cause)
+cluster.order.map <- get.cluster.order.map(cluster.deathrates, time.period = "08-03-2020")
+county.clusters.ordered <- order.county.clusters(county.clusters, cluster.order.map)
+cluster.deathrates.ordered <- order.cluster.deathrate.during.time(cluster.deathrates, cluster.order.map)
+
+# get correlations
+kendall.cor <- kendall.func(county.clusters.ordered, chr.data.2019)
+
+# filter out determinants with p value above .05
+kendall.cor <- kendall.cor[kendall.cor$kendall_p <= .05,]
+```
+
+Select a social determinant. In app will be done by clicking a dterminant bar
+
+```{r}
+selected.determinant <- kendall.cor$chr_code[14]
+print(selected.determinant)
+```
+
+Create box plots for social determinants wrt county clusters. Note consistent colors between here and scatter plot
+
+```{r}
+cluster.determinant.vals <- dplyr::inner_join(county.clusters.ordered, 
+                                              chr.data.2019[c("county_fips", selected.determinant)],
+                                              by = "county_fips")
+
+cluster.boxplots <- ggplot(cluster.determinant.vals)  + 
+  geom_boxplot(aes_string(x = "cluster", y = selected.determinant, color = "cluster")) +
+  xlab("Cluster") +
+  ylab(chr.namemap.2019[selected.determinant,]) +
+  theme(legend.position = "none")
+
+cluster.boxplots
+```
+
+Create scatter plot of determinant vs morality with points colored by cluster
+
+```{r}
+# for scatter need to append most recent deathrate
+cluster.determinant.vals.deathrate <- dplyr::inner_join(cluster.determinant.vals, 
+                                              cdc.mort.mat(covid_us_hist, state, death.cause
+                                                            )[c("county_fips", "08-03-2020")],
+                                              by = "county_fips")
+
+colnames(cluster.determinant.vals.deathrate)[colnames(cluster.determinant.vals.deathrate)=="08-03-2020"] <- "mortality_rate"
+
+cluster.scatter <- ggplot(cluster.determinant.vals.deathrate)  + 
+  geom_point(aes_string(y = selected.determinant, x = "mortality_rate", color = "cluster")) +
+  ylab(chr.namemap.2019[selected.determinant,]) +
+  xlab("Mortality Rate") +
+  labs(color = "Cluster\n")
+
+cluster.scatter
+```
+
+
