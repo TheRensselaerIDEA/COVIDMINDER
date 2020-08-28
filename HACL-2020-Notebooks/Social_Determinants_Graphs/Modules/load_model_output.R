@@ -10,7 +10,7 @@ states.all_c <- readRDS("StateSummaries/ALL_C.rds")
 states.all_merged <- readRDS("StateSummaries/ALL_merged.rds")
 
 # Import model input data
-model_input <- readRDS('Preprocessing_FTS_Outputs/06-28-2020data.Rds')
+model_input <- readRDS('data/07-05-2020data.Rds')
 
 # Import national model summary
 national <- readRDS('Modules/combined.summary.July8.Rds')
