@@ -1,0 +1,133 @@
+---
+title: "states_NBGWAS"
+author: "mouh"
+date: "8/17/2020"
+output: html_document
+---
+
+# Setup Environment
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = substr(getwd(),0,nchar(getwd())-5))
+```
+
+```{r}
+source("./Modules/Source.R")
+```
+
+# Set state and date of analysis
+
+```{r}
+
+state = "NJ"
+
+sampledata <- readRDS('./Preprocessing_FTS_Outputs/07-06-2020data.Rds')
+
+```
+
+# Split the dataframe into groups defined by state
+
+```{r}
+
+statesplit <- split(sampledata, sampledata$state)
+
+```
+
+# Ignore states with less than 2 counties
+
+```{r}
+
+for (name in names(statesplit)) {
+  if (nrow(statesplit[[name]]) < 2){
+    statesplit <- statesplit[names(statesplit) != name]
+  }
+}
+
+```
+
+# Loop through social determinants to do a complete social determinants analysis
+
+```{r}
+
+# Use column names of dataframe as list of all interested variables
+for (interested_var in colnames(statesplit[[state]]) ) {
+  
+    # Skip columns of fixed factors
+    if (interested_var %in%  c ("Deaths","hispanic", "pct_blk", "pct_asian", "pct_white", "pct_native", "q_popdensity", 
+                                "medhouseholdincome", "education", "beds", "population", "date_since", "date_since_mask", "fips")) {
+      next
+    }
+    
+    # Filter sampledata to fixed variables and interested variable ready for analysis
+    sub_sampledata <- subset(statesplit[[state]], select = c ("Deaths","hispanic", "pct_blk", "pct_asian", "pct_white", "pct_native",
+                                                              "q_popdensity", "medhouseholdincome", "education", "beds", "population", 
+                                                              "date_since", "date_since_mask", "State", interested_var))
+    colnames(sub_sampledata)[ncol(sub_sampledata)] = "i_var"
+    
+    # ?
+    if (strcmp(unname(sapply(sub_sampledata, typeof)[ncol(sub_sampledata)]), "character")) {
+      next
+      s = paste("starting ", state, " model with : ", interested_var, " (factoring) \n", sep="")
+      cat(s)
+      In.loop.model=glm.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white) + scale(pct_native)
+                             + factor(q_popdensity)
+                             + scale(log(`Median Household Income`))+scale(education) + scale(beds/population)
+                          #  + scale(date_since) 
+                          #  + scale(date_since_mask)
+                             + factor(i_var)
+                             #+ (1|State)
+                             + offset(log(population)), data = sub_sampledata)
+    } else {
+      s = paste("starting ", state, " model with : ", interested_var, " (scaling) \n", sep="")
+      cat(s)
+      
+      # Skip social determinant if NA or less than 2 values are provided
+      if (any(is.na(sub_sampledata$i_var))) {
+        s = paste("skipping ", state, " model with : ", interested_var, " some values are NA \n", sep="")
+        cat(s)
+        next
+      } else if (all(sub_sampledata$i_var == sub_sampledata$i_var[1]) )   {
+        s = paste("skipping ", state, " model with : ", interested_var, " all values are the same \n", sep="")
+        cat(s)
+        next
+      }
+      
+      # Run model
+      In.loop.model=glm.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white) + scale(pct_native)
+                             + factor(q_popdensity)
+                             + scale(log(medhouseholdincome))+scale(education) + scale(beds/population)
+                            # + scale(date_since) 
+                            # + scale(date_since_mask)
+                             + scale(i_var)
+                           #  + (1|State)
+                             + offset(log(population)), data = sub_sampledata)
+    }
+    
+    # Set paths to save results
+    
+    MRR_file = paste("./GWAS/state_results/", state, "_GWAS_MRR.rds", sep = "")
+    P_file = paste("./GWAS/state_results/", state, "_GWAS_P.rds", sep = "")
+    ADJ_P_file = paste("./GWAS/state_results/", state, "_GWAS_ADJ_P.rds", sep = "")
+    
+    # 3 Steps of saving results: 
+  
+    # 1. Read in rds saved from last iteration
+    GWAS_MRR <- readRDS(MRR_file)
+    GWAS_P <- readRDS(P_file)
+    GWAS_ADJ_P <- readRDS(ADJ_P_file)
+    
+    # 2. Append/Modify values obtained from current iteration to dataframe
+    GWAS_MRR[[interested_var]]   <- exp(summary(In.loop.model)$coefficients[2:13,1])
+    GWAS_P[[interested_var]]     <- summary(In.loop.model)$coefficients[2:13,4]
+    
+    GWAS_ADJ_P[[interested_var]] <- p.adjust(summary(In.loop.model)$coefficients[2:13,4], 
+                                             method = 'BH', 
+                                             n = length(summary(In.loop.model)$coefficients[2:13,4]))
+    
+    # 3. Override rds file with updated dataframe
+    saveRDS(GWAS_MRR, MRR_file)
+    saveRDS(GWAS_P, P_file)
+    saveRDS(GWAS_ADJ_P, ADJ_P_file)
+}    
+```
