@@ -1,0 +1,597 @@
+---
+title: "COVIDMINDER Example Notebook:"
+subtitle: "DAR Fall 2020"
+author: "John S. Erickson"
+date: "09/01/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+# Set the default CRAN repository
+local({r <- getOption("repos")
+       r["CRAN"] <- "http://cran.r-project.org" 
+       options(repos=r)
+})
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "../")
+```
+
+```{r echo = F, results = 'hide',  warning=FALSE, message=FALSE}
+#### Library and Data Imports ####
+
+## Load essential R packages
+source("modules/Source.R")
+
+## Load stored data (see `data` subdirectory)
+source("modules/data_load.R")
+
+## Create dataframes; perform desparity index calcuations; prep for plotting
+source("modules/preprocessing.R")
+
+```
+
+## INTRODUCTION
+
+This R Notebook and its related R scripts provide a very basic introduction to the **COVIDMINDER** application, which you can find at:
+
+* Public "production" version: https://covidminder.idea.rpi.edu/
+
+The github repository for all the code required for this notebook, including a snapshot of the **COVIDMINDER** application, can be found at:
+
+* https://github.com/TheRensselaerIDEA/COVID-Notebooks
+
+The **COVIDMINDER** github repository can be found at:
+
+* https://github.com/TheRensselaerIDEA/COVIDMINDER
+
+**NOTE:** To contribute or submit to these repositories you must have a github.com ID and must send it to John Erickson at `erickj4@rpi.edu`. **PLEASE DO THIS IMMEDIATELY BEFORE READING ANY FURTHER!!**
+
+## DARL Assignment: CLONING A NOTEBOOK AND UPDATING THE REPOSITORY
+
+In this assignment we're asking you to...
+
+* clone the `COVID-Notebook` github repository...
+* create a personal branch using git, and...
+* make additions to the repository by creating a new, customized notebook. 
+
+The instructions which follow explain how to accomplish this. 
+
+**For DAR Fall 2020** you *must* be using RStudio Server on the IDEA Cluster. Instructions for accessing "The Cluster" appear at the end of this notebook. Don't forget to send your github ID to `erickj4@rpi.edu` 
+
+The recommended procedure for cloning and using this repository is as follows:
+
+* Access the RPI network via VPN	
+    * See https://itssc.rpi.edu/hc/en-us/articles/360008783172-VPN-Connection-and-Installation for information
+
+* Access RStudio Server on the IDEA Cluster at http://lp01.idea.rpi.edu/rstudio-ose/
+    * You must be on the RPI VPN!!
+* Access the Linux shell on the IDEA Cluster by clicking the **Terminal** tab of RStudio Server. `cd` into your home (login) directory using: `cd ~`
+    * Advanced users may use `ssh` to directly access the Linux shell
+* `git clone https://github.com/TheRensselaerIDEA/COVIDMINDER.git` in your `home` directory, resulting in a new directory `COVIDMINDER`
+* In the Linux shell, `cd` to `COVIDMINDER/DAL-2020-Notebooks` 
+* In the Linux shell, `git checkout -b hacl-yourrcs` where `yourrcs` is your RCS id
+    * For example, if your RCS is `erickj4`, your new branch should be `hacl-erickj4`
+    * It is critical that you include your RCS id in your branch id
+* In the RStudio Server UI, navigate to the `COVIDMINDER/DARL-2020-Notebooks` directory via the **Files** panel
+    * Set this to be your R working directory (under "More" menu)
+* **REQUIRED**: 
+    * Make a <b>copy</b> of this notebook (ie `covid-notebook-hacl.Rmd`) file using a *new, original, descriptive* filename that **includes your RCS ID!**
+    * Edit your new notebook; save
+    * Use the RStudio `knit` comment to creat an HTML file; repeat as necessary
+    * In Linux, `git add` each new file you want to add to the repository, esp. your new `Rmd` file and the `html` you created when you knitted
+    * When you're ready, in Linux: `git commit -a -m "some comment"` where "some comment" is a useful comment describing your changes
+    * Finally, `git push origin hacl-yourrcs` (where `hacl-yourrcs` is the branch you're working on) 
+* **REQUIRED**: On github, select your branch (from the branch drop-down) and submit a pull request.
+
+**REQUIRED:** For this assignment you will be asked to confirm the following in LMS:
+
+    * The location of the github:
+    * Your github ID:
+    * The name of your new branch:
+    * The location where you committed your new (copied) notebook:
+
+Please also see this handy github "cheatsheet": https://education.github.com/git-cheat-sheet-education.pdf
+
+## UNDERSTANDING THE DATA
+
+* All of the data used for this notebook and the **COVIDMINDER** app is located in the `data/` directory hierarchy, mostly under `data/csv/` and `data/csv/time_series/`
+* Feel free to browse the directory tree using RStudio or on the web via github
+* Most of the nationwide data is under `data/csv`
+* Most of the nationwide time series data and New York per-county data is under `data/csv/time_series/`
+    * This layout may change
+* We will be expanding our data archive, esp. using social determinatns data from <b>County Health Rankings</b>
+    * See https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/2020-measures 
+
+## WHAT SHOULD I WORK ON?!?!?
+
+* Choose an existing issue: https://github.com/TheRensselaerIDEA/COVIDMINDER/issues
+    * Ask questions about the issue in the "Comments" section of that issue
+    * "Claim" the issue by self-assigning 
+* OR, create your own issue; click "New Issue"
+* OR, ask Prof. Bennett or Dr. Erickson for an issue to work on!
+
+## HOW TO SHARE YOUR WORK OR ASK QUESTIONS
+
+* For class-related questions, use the `data-incite-2020` slack channel under The Rensselaer IDEA
+* For COVIDMINDER questions use the `idea_covidminder` stack channel 
+    * Contact Dr. Erickson to be added (if you haven't already)
+
+## WHAT TO INCLUDE IN YOUR NOTEBOOK
+* The code in your notebook should be well commented
+* You should include thorough discussions of your methods and explanations of your results in the **markdown** sections (the non-code sections)
+* You should always include enough detail for someone else to reproduce (and re-use!) your work!
+* **ALWAYS* include useful titles and legends for your plots and tables!
+* Nicely-formatted tables are always a bonus
+* Your "default" for knitting notebooks should be HTML; this makes it easier to view and reduces errors. 
+
+<hr>
+
+```{r echo = F, results = 'hide',  warning=FALSE, message=FALSE}
+### Text used for captions and explanations
+
+ldi_explanation_text <- "<h4><b>EXPLANATION OF VISUALIZATIONS:</b></h4> The goal of these visualizations is to examine 
+nationwide disparities in COVID-19 factors having to do with risks, mediations (e.g. testing, hospital beds), 
+and outcomes (e.g. deaths, cases). A common measure, the <i>disparity index</i> is used to represent the 
+difference between the observed rate in the state and some baseline rate.</p>
+<p>The advantage of the disparity index is that represents how far off a target standard the observed rate is. </p>
+<p>Mathematically,
+<code>DI = log(x/y)</code> or <code>DI = log(y/x)</code>
+depending upon whether being above or below the target is preferred. 
+<ul>
+<li>In the case of hospital beds or rate of testing, <i>x</i> would be some state's rate , and <i>y</i> would be the US rate or some rate 
+we're comparing against (e.g. South Korea's testing or Italy's hospital beds).</li>
+<li>In the case of mortality rates, <i>x</i> would be the target rate (e.g. some national rate, including the US), and <i>y</i> would be the individual state's rate.</li>
+</ul>
+</p>
+<p>&nbsp;</p>"
+
+rpi_accessibility_link <- "<div class='center'><p><a href='https://info.rpi.edu/statement-of-accessibility'>Rensselaer Statement of Accessibility</a></p></div>"
+
+### OUTCOMES: COVID-19 Mortality Rates (USA)
+us_mortality_rates_text <- "<h4><b>How do COVID-19 mortality rates compare across the United States?</b></h4>
+<i>This map compares the COVID-19 mortality rates of individual states with the US rate.
+This map is updated daily.</i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+state's COVID-19 mortality rate is higher than the US rate<br><br> 
+Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-07-2020)"
+
+### MEDIATION: COVID-19 Testing (USA)
+
+us_testing_rates_text <- "<h4><b>How do COVID-19 testing rates across the US compare with South Korea?</b></h4>
+<i>This map compares rates of COVID-19 tssting in US states vs South Korea's testing rate. 
+This map is updated daily.</i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+state's testing rate is lower than the South Korean rate<br><br>
+Data source: <a href='https://covidtracking.com/api'>The COVID Tracking Project daily reports</a> (04-07-2020)"
+
+### MEDIATION: Hospital Beds (USA)
+
+us_hospital_beds_text <- "<h4><b>How does the availability of hospital beds across the United States compare with Italy?</b></h4>
+<i>This map compares the availability of hospital beds in US states vs the rate in Italy (3.2 beds/1000). 
+This map uses recent historical figures and does not reflect 'surge' capacity.</i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+state's hospital bed availablity is lower than the rate in <b>Italy</b><br/><br>
+Data sources: <br/><a href='https://data.oecd.org/healtheqt/hospital-beds.htm'> Organisation for Economic Co-operation and Development</a>
+and <a href='https://bit.ly/2V0CYLU'>Kaiser Family Foundation</a>"
+
+### DETERMINANT: Cardiovascular Diseases (USA)
+
+us_cardio_deaths_rates_text <- "<h4><b>How do cardiovascular mortality rates across the US compare with the national average?</b></h4>
+<i>The map compares individual state mortality rates related to cardiovascular diseases (per 100k)
+with the US rate. In recent literature, COVID-19 risk has been
+linked to certain cardiovascular diseases, including hypertension. 
+This map uses recent historical figures. </i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+state's mortality rate from total cardiovascular diseases is 
+<b>higher</b> than the US rate<br/><br>
+Data source: <br/><a href='https://bit.ly/2V1Zl3I'>CDC (2017)</a>"
+
+us_diabetes_text <- "<div style='font-weight:bold;line-height:1.3;'>
+Determinant: What are the disparities between states in rate of diabetes patients 
+per 100k population per state when compared to the average United States rate? </div><br>
+<div style='font-size:90%;line-height:1.2;'>
+Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
+The  rate of diabetes deaths per 100k in a state is<br>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt;disparity index &lt; 0.2</div>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+<i>Darker shades indicate greater disparity.</i><br><br>
+<strong>Diabetes Rate</strong> = number of diabetic patients per 100K population <br>
+<strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
+<strong>Date: </strong> 2020<br><br>
+<b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+<a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+</div>"
+                            
+NY_diabetes_text <- "<div style='font-weight:bold;line-height:1.3;'>
+Determinant: What are the disparities between New York counties in the rate 
+of diabetes patients per 100k population when compared to the average United 
+States rate?</div><br>
+<div style='font-size:90%;line-height:1.2;'>
+Diabetes puts patients at increased risk of contracting and dying from COVID-19, 
+so areas with higher diabetes rates may face increased COVID-19 burdens. <br><br>
+The  rate of diabetes patients per 100k in a county  is<br>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #BD0026; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Higher</strong> than US avg. rate for disparity index &gt; 0.2</div>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #ffffff; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> About equal</strong> to US avg. rate for -0.2 &lt; disparity index &lt; 0.2</div>
+<div>&nbsp;&nbsp;&nbsp;<span style='background: #253494; border-radius: 50%; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span><strong> Lower</strong> than US avg. rate for disparity index &lt; -0.2</div>
+<i>Darker shades indicate greater disparity.</i><br><br>
+<strong>Diabetes Rate</strong> = number of diabetic patients  per 100K population <br>
+<strong>Diabetes Disparity Index</strong> = log(Diabetes Rate in state/average Diabetes Rate in US)<br>
+<strong>Date: </strong> 2020<br><br>
+<b>DATA SOURCE:</b> <a href='https://bit.ly/34mYLBP'>County Health Rankings</a> and 
+<a href='https://bit.ly/2V1Zl3I'>CDC</a><br>
+</div>"
+
+### OUTCOME: COVID-19 mortality rates (NY)
+
+NY_mortality_rates_text <- "<h4><b>How do COVID-19 mortality rates compare across New York State?</b></h4>
+<i>This map compares the COVID-19 mortality rates of NY counties with the NY average. 
+This map is updated daily. </i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+county's COVID-19 mortality rate is higher than the NY rate.<br>
+Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"
+
+### OUTCOME: COVID-19 Cases (NY)
+
+NY_covid_cases_text <- "<h4><b>How do COVID-19 cases compare across New York State?</b></h4>
+<i>This map compares the COVID-19 cases for NY counties with the NY average. 
+This map is updated daily. </i><br><br>
+Here, <span style='color:#b2182b'><b>shades of red</b></span> indicate that a 
+county's COVID-19 case count is higher than the NY rate.<br>
+Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"
+
+### OUTCOME: COVID-19 Cases Time Series (NY)
+
+NY_covid_cases_TS_text <- "<h4><b>How have COVID-19 cases increased across New York State?</b></h4>
+<i>This plot shows the growth of COVID-19 cases across NY counties since early 2020. 
+This data is updated daily. </i><br><br>
+Mouse over the plot to identify individual counties.<br>
+Data source: <a href='https://bit.ly/3dMWRP6'>JHU daily reports</a> (04-06-2020)"
+
+```
+
+`r ldi_explanation_text`
+
+`r us_mortality_rates_text`
+
+```{r echo = F}
+    colors <- c("grey","#426C85","#67a9cf","#d1e5f0","#f7f7f7","#fddbc7","#ef8a62","#b2182b")
+    bins <- c(5, 2, 1, .2, -.2, -1, -2, -5,-Inf)
+    pal2 <- leaflet::colorBin(colors, domain = states$Mortality_rate_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      COVID-19 Mortality Rate DI: %.2g",
+      states$NAME, states$Mortality_rate_ldi
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$Mortality_rate_ldi),
+        weight = 2,
+        opacity = 1,
+        color = "white",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$Mortality_rate_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>US COVID-19 Mortality Rates",
+                position = "bottomright"
+                ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+```
+
+  `r us_testing_rates_text` 
+
+```{r echo = F}
+    country <- "US"
+
+    # modify states to have selected columns for our plot
+    Testing_rate_ldi <- states %>% 
+      select(starts_with("Testing_rate_ldi")) 
+    
+    states <- data.frame(states, "Testing_rate_ldi"=unlist(Testing_rate_ldi)) # Append to states
+    
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$Testing_rate_ldi, bins = bins, reverse=TRUE)
+#    browser()
+    labels2 <- sprintf(
+      paste0("<strong>%s</strong> State<br/>
+      Testing Rate vs ", toupper(country)," DI: %.2g<br>
+      Testing Rate: %.1f /1000"),
+      states$NAME, states$Testing_rate_ldi, states$tests_per_1000*1000
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% # TODO: Doesn't seem to do anything
+      addPolygons(
+        fillColor = ~pal2(states$Testing_rate_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$Testing_rate_ldi, 
+                opacity = 0.7, 
+                title = paste0("Disparity Index<br/>US Total Tests vs. ",toupper(country)),
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                   cuts[n] = paste0(cuts[n]," lower") 
+                   # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                   for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                   cuts[2] = paste0(cuts[2]," higher") 
+                   paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+                ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light",
+        accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN')))
+```
+
+  `r us_cardio_deaths_rates_text` 
+
+```{r echo = F}
+
+# UPDATED: 28 April 2020
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$cardio_death_rate_BNH_ldi, bins = bins, reverse=FALSE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Heart Disease Death Rate DI (BNH): %.2g<br/>
+      Heart Disease Death Rate (BNH): %.1f per 100k",
+      states$NAME, states$cardio_death_rate_BNH_ldi, states$cardio_deaths_p_Black_Non_Hispanic
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$cardio_death_rate_BNH_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$cardio_death_rate_BNH_ldi, 
+                opacity = 0.7, title = "Disparity Index<br/>US Heart Disease Death Rate (BNH)",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+    #Remove personal API key
+
+```
+
+  `r us_hospital_beds_text` 
+
+```{r echo = F}
+
+# UPDATED: 28 Apr 2020
+    colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
+    bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
+    pal2 <- leaflet::colorBin(colors, domain = states$hosp_beds_ldi, bins = bins, reverse=TRUE)
+    labels2 <- sprintf(
+      "<strong>%s</strong><br/>
+      Hospital Beds vs Italy DI: %.2g",
+      states$NAME, states$hosp_beds_ldi
+    ) %>% lapply(htmltools::HTML)
+    
+    leaflet(states.shapes) %>%
+      setView(-96, 37.8, 4) %>% 
+      addPolygons(
+        fillColor = ~pal2(states$hosp_beds_ldi),
+        weight = 1,
+        opacity = 1,
+        color = "#330000",
+        dashArray = "1",
+        fillOpacity = 0.7,
+        highlight = highlightOptions(
+          weight = 5,
+          color = "#666",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels2,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>% 
+      addLegend(pal = pal2, 
+                values = ~states$hosp_beds_ldi, 
+                opacity = 0.7, 
+                title = "Disparity Index<br/>US Hospital Beds vs Italy",
+                position = "bottomright",
+                labFormat = function(type, cuts, p) { n = length(cuts) 
+                cuts[n] = paste0(cuts[n]," lower") 
+                # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
+                for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
+                cuts[2] = paste0(cuts[2]," higher") 
+                paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
+                }
+                ) %>%
+      addProviderTiles("MapBox", options = providerTileOptions(
+        id = "mapbox.light"))
+
+    
+```
+
+
+`r NY_covid_cases_TS_text` 
+
+```{r echo=F}
+
+    # selected.region <- input$NYRegion
+    selected.region <- "All Regions"
+    # select.size <- 2
+    if (selected.region == "All Regions") {
+      selected.region <- NY_counties_regions$Region
+      select.size <- 1
+    }
+    highlight_points <- covid_NY_TS_plot.cases %>% 
+      dplyr::filter( 
+        County == "Albany" & date == as.Date("2020-04-26") |
+          # County == "Allegany" & date == as.Date("2020-03-29") |
+          County == "Bronx" & date == as.Date("2020-04-25") |
+          County == "Broome" & date == as.Date("2020-04-12") |
+          # County == "Cattaraugus" & date == as.Date("2020-03-30") |
+          County == "Cayuga" & date == as.Date("2020-04-12") |
+          County == "Chautauqua" & date == as.Date("2020-04-10") |
+          # County == "Chemung" & date == as.Date("2020-04-10") |
+          County == "Chenango" & date == as.Date("2020-04-12") |
+          County == "Clinton" & date == as.Date("2020-04-26") |
+          # County == "Columbia" & date == as.Date("2020-03-29") |
+          County == "Cortland" & date == as.Date("2020-04-25") |
+          # County == "Delaware" & date == as.Date("2020-04-02") |
+          County == "Dutchess" & date == as.Date("2020-04-12") |
+          County == "Erie" & date == as.Date("2020-04-02") |
+          # County == "Essex" & date == as.Date("2020-04-10") |
+          # County == "Franklin" & date == as.Date("2020-04-10") |
+          # County == "Fulton" & date == as.Date("2020-04-12") |
+          County == "Genesee" & date == as.Date("2020-04-26") |
+          # County == "Greene" & date == as.Date("2020-03-29") |
+          County == "Hamilton" & date == as.Date("2020-04-25") |
+          County == "Herkimer" & date == as.Date("2020-04-12") |
+          # County == "Jefferson" & date == as.Date("2020-03-30") |
+          County == "Kings" & date == as.Date("2020-04-12") |
+          # County == "Lewis" & date == as.Date("2020-04-10") |
+          # County == "Livingston" & date == as.Date("2020-04-10") |
+          County == "Madison" & date == as.Date("2020-04-12") |
+          # County == "Monroe" & date == as.Date("2020-03-26") |
+          # County == "Montgomery" & date == as.Date("2020-03-29") |
+          County == "Nassau" & date == as.Date("2020-04-15") |
+          County == "New York" & date == as.Date("2020-04-10") |
+          County == "New York State" & date == as.Date("2020-04-12") |
+          County == "Manhattan" & date == as.Date("2020-04-10") |
+          County == "Niagara" & date == as.Date("2020-04-12") |
+          County == "Oneida" & date == as.Date("2020-04-10") |
+          County == "Onondaga" & date == as.Date("2020-04-10") |
+          # County == "Ontario" & date == as.Date("2020-04-12") |
+          County == "Orange" & date == as.Date("2020-04-18") |
+          County == "Orleans" & date == as.Date("2020-04-01") |
+          County == "Oswego" & date == as.Date("2020-04-25") |
+          County == "Otsego" & date == as.Date("2020-04-12") |
+          County == "Putnam" & date == as.Date("2020-04-20") |
+          County == "Queens" & date == as.Date("2020-04-12") |
+          County == "Rensselaer" & date == as.Date("2020-04-10") |
+          County == "Richmond" & date == as.Date("2020-04-11") |
+          County == "Rockland" & date == as.Date("2020-04-12") |
+          County == "St. Lawrence" & date == as.Date("2020-04-26") |
+          County == "Saratoga" & date == as.Date("2020-04-01") |
+          County == "Schenectady" & date == as.Date("2020-04-25") |
+          County == "Schoharie" & date == as.Date("2020-04-12") |
+          County == "Schuyler" & date == as.Date("2020-04-10") |
+          County == "Seneca" & date == as.Date("2020-04-12") |
+          # County == "Steuben" & date == as.Date("2020-04-10") |
+          County == "Suffolk" & date == as.Date("2020-04-10") |
+          County == "Sullivan" & date == as.Date("2020-04-12") |
+          # County == "Tioga" & date == as.Date("2020-03-26") |
+          County == "Tompkins" & date == as.Date("2020-04-10") |
+          County == "Ulster" & date == as.Date("2020-04-20") |
+          # County == "Warren" & date == as.Date("2020-04-02") |
+          # County == "Washington" & date == as.Date("2020-03-30") |
+          # County == "Wayne" & date == as.Date("2020-04-02") |
+          County == "Westchester" & date == as.Date("2020-04-10") |
+          # County == "Wyoming" & date == as.Date("2020-04-10") |
+          County == "Yates" & date == as.Date("2020-04-12")
+      )
+    
+    NY_region_palette.df <- NY_counties_regions %>%
+      dplyr::select(Region,Color) %>% 
+      dplyr::distinct(Region,Color)
+    
+    NY_region_palette <- setNames(as.character(NY_region_palette.df$Color), as.character(NY_region_palette.df$Region))
+    
+    covid_NY_TS_plot.cases %>%
+      ggplot(aes(date, 
+                 cases, 
+                 color = Region,
+                 group=County)) +
+      scale_color_manual(values=NY_region_palette) +
+      geom_line(size=1) +
+      scale_y_continuous(
+        trans = "log10",
+        breaks = c(10,100,500,1000,5000,10000, 50000)
+      ) +
+      scale_x_datetime(date_breaks = "1 week", date_minor_breaks = "1 day", date_labels = "%b %d") +
+      ylab("Cumulative Number of Cases") + 
+      ggtitle("New York State COVID-19 Cases per County (Mar-Apr 2020)")  +  
+      gghighlight(NY_counties_regions[NY_counties_regions$County %in% County,"Region"] %in% selected.region, use_direct_label=FALSE) +
+      geom_line(size=select.size) + 
+      geom_label_repel(data=highlight_points,  aes(label=County), box.padding = unit(1.75, 'lines')) +
+      # coord_cartesian(xlim = ranges$x, ylim = ranges$y, expand = FALSE) +
+      geom_vline(aes(xintercept=as_datetime("2020-03-20"), linetype="Gov. Cuomo issues stay-at-home order"), color = "black") + 
+      scale_linetype_manual(name = "Events", 
+                            values = c(2), 
+                            guide = guide_legend(override.aes = list(color = c("black")))) +
+      NULL
+
+
+```
+
+## Accessing RStudio Server on the IDEA Cluster
+
+The IDEA Cluster provides five compute nodes (4x 48 cores, 1x 80 cores, 1x storage server)
+
+* RCS credentials (via registration in class); email John Erickson for problems `erickj4@rpi.edu`
+* RStudio, Jupyter, MATLAB, GPUs (on two nodes); lots of storage and computes
+* Access via RPI physical network or VPN only
+
+RStudio GUI Access:
+
+* http://lp01.idea.rpi.edu/rstudio-ose/  or http://lp01.idea.rpi.edu/rstudio-ose-3/ (RStudio)
+* Linux terminal accessible from within RStudio "Terminal" or via ssh (below)
+
+Shared Data on Cluster:
+
+* All idea_users have access to shared storage via `/data` ("data" in your home directories)
+* Shell access to nodes: You must access "landing pad" first, then compute node:
+* `ssh your_rcs@lp01.idea.rpi.edu`  For example: `ssh erickj4@lp01.idea.rpi.edu`
+* Then, `ssh` to the desired compute node, e.g.: `ssh idea-node-02`
