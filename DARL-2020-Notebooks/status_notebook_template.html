@@ -11,7 +11,7 @@
 
 <meta name="author" content="Student Name" />
 
-<meta name="date" content="2020-09-01" />
+<meta name="date" content="2020-09-16" />
 
 <title>DARL Project Status Notebook Template</title>
 
@@ -366,77 +366,78 @@ summary {
 <h1 class="title toc-ignore">DARL Project Status Notebook Template</h1>
 <h3 class="subtitle">DARL Project Name</h3>
 <h4 class="author">Student Name</h4>
-<h4 class="date">01 September 2020</h4>
+<h4 class="date">16 September 2020</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#instructions-delete-before-submission">Instructions (DELETE BEFORE SUBMISSION)</a><ul>
-<li><a href="#guide-to-linking-to-external-resources-delete-before-submission">Guide to linking to external resources (DELETE BEFORE SUBMISSION)</a></li>
-<li><a href="#guide-to-linking-to-shiny-apps">Guide to linking to Shiny Apps</a></li>
-</ul></li>
-<li><a href="#weekly-work-summary">Weekly Work Summary</a></li>
+<li><a href="#instructions-submitting-notebook-via-github-delete-before-submission">Instructions: Submitting Notebook via github (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#guide-to-linking-to-your-knitted-notebook-on-github-delete-before-submission">Guide to linking to your knitted notebook on github (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#guide-to-linking-to-shiny-apps-delete-before-submission">Guide to linking to Shiny Apps (DELETE BEFORE SUBMISSION)</a></li>
+<li><a href="#required-weekly-work-summary">REQUIRED: Weekly Work Summary</a></li>
 <li><a href="#personal-contribution">Personal Contribution</a></li>
 <li><a href="#discussion-of-primary-findings">Discussion of Primary Findings</a></li>
-<li><a href="#new-drafting-your-darhacl-blog-post">NEW: Drafting your DAR/HACL Blog Post</a></li>
 </ul>
 </div>
 
-<div id="instructions-delete-before-submission" class="section level2">
-<h2>Instructions (DELETE BEFORE SUBMISSION)</h2>
+<div id="instructions-submitting-notebook-via-github-delete-before-submission" class="section level2">
+<h2>Instructions: Submitting Notebook via github (DELETE BEFORE SUBMISSION)</h2>
 <ul>
 <li>Use this notebook is a template for your weekly project status assignment.</li>
 <li>Use the sections starting with <strong>Weekly Work Summary</strong> as your outline for your submitted notebook.</li>
 <li>Summarize ALL of your work in this notebook; <strong>if you don’t show and/or link to your work here, it doesn’t exist for us!</strong></li>
 </ul>
 <ol style="list-style-type: decimal">
-<li><p>Create a new copy of this notebook in the <code>DARL-2020-Notebooks</code> sub-directory of your team’s github repository using the following naming convention</p>
+<li><p>Create a fresh github branch of your team’s project repository in which to do your work. Use a branch name line <code>darl-yourname-date</code></p></li>
+<li><p>Create a <strong>copy</strong> of this notebook file in the <code>DARL-2020-Notebooks</code> sub-directory of your team’s github repository using the following naming convention</p>
 <ul>
-<li><code>darl_rcsid_ddmmmyyyy.Rmd</code> and <code>darl_rcsid_ddmmmyyyy.html</code></li>
-<li>For example, <code>darl_erickj4_01Sep2020.Rmd</code></li>
+<li><code>darl_rcsid_ddmmmyyyy.Rmd</code> (your notebook source file)</li>
+<li><code>darl_rcsid_ddmmmyyyy.html</code> (your knitted notebook)</li>
+<li>For example, <code>darl_erickj4_16Sep2020.Rmd</code> and <code>darl_erickj4_16Sep2020.html</code></li>
+<li><strong>Please</strong> don’t make up your own naming syntax!</li>
 </ul></li>
 <li><p>Document <strong>all</strong> the work you did on your assigned project this week <strong>using the outline below.</strong></p></li>
 <li><p>You MUST include figures and/or tables to illustrate your work. <em>Screen shots are okay</em>, but include something!</p></li>
 <li><p>You MUST include links to other important resources (knitted HTMl files, Shiny apps). See the guide below for help.</p></li>
-<li><p>Commit the source (<code>.Rmd</code>) and knitted (<code>.html</code>) versions of your notebook and push to github</p></li>
-<li><p><strong>Submit a pull request.</strong> Please notify Dr. Erickson if you don’t see your notebook merged within one day.</p></li>
+<li><p>You MUST commit the source (<code>.Rmd</code>) and knitted (<code>.html</code>) versions of your notebook and push to github</p></li>
+<li><p><strong>Submit a pull request</strong> on github.rpi.edu. Please notify Dr. Erickson if you don’t see your notebook merged within one day.</p></li>
 <li><p><strong>DO NOT MERGE YOUR PULL REQUESTS YOURSELF!!</strong></p></li>
 </ol>
 <p>See the Grading Rubric for guidance on how the contents of this notebook will be graded: <a href="https://bit.ly/32OeY44" class="uri">https://bit.ly/32OeY44</a></p>
-<div id="guide-to-linking-to-external-resources-delete-before-submission" class="section level3">
-<h3>Guide to linking to external resources (DELETE BEFORE SUBMISSION)</h3>
+</div>
+<div id="guide-to-linking-to-your-knitted-notebook-on-github-delete-before-submission" class="section level2">
+<h2>Guide to linking to your knitted notebook on github (DELETE BEFORE SUBMISSION)</h2>
+<p>Part of the assignment is to provide a link to your knitted notebook on github. This section explains how to link to knitted notebooks (ie HTML) files.</p>
 <ol style="list-style-type: decimal">
-<li>How to link to knitted notebooks (ie HTML) files</li>
-</ol>
-<ul>
-<li><p>For files merged with the master on github, it’s possible to provide a direct link in your notebook using the following example pattern:</p>
+<li><p>For files merged with the master on the public github, provide a direct link in your notebook using the following example pattern:</p>
 <ul>
 <li>Preface: <code>https://htmlpreview.github.io/?</code></li>
 <li>Repo and branch: <code>https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/</code></li>
 <li>Directory and file: `DARL-2020-Notebooks/status_notebook_template.html’</li>
 </ul></li>
-<li><p>Example for projects on the public github (COVIDMINDER, COVID Twitter):</p></li>
+</ol>
+<ul>
+<li>Example for projects on the public github (COVIDMINDER, COVID Twitter):</li>
 </ul>
 <p><a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html" class="uri">https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html</a></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>For files merged with the master on the RPI github (e.g. Back-to-School, StudySafe, SafeCampus) you need a different syntax; here’s a few examples:</p>
 <ul>
-<li>Example for projects on the RPI github (COVID Contact Tracing, COVID WiFi):</li>
-</ul>
-<p><a href="https://htmlpreview.github.io/?https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/master/HACL-2020-Notebooks/status_notebook_template.html?token=AAAABG2FCVS45VKK5L4MIVC7GFBRA" class="uri">https://htmlpreview.github.io/?https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/master/HACL-2020-Notebooks/status_notebook_template.html?token=AAAABG2FCVS45VKK5L4MIVC7GFBRA</a></p>
-<ul>
-<li><p><strong>Note:</strong> URLs for RPI github links <strong>must</strong> include an access token at the end. The easiest way to obtain this is to browse to the “raw” version of a merged file and view the URL. For example:</p>
-<ul>
-<li>Browse to the Contact Tracing repo: <code>https://raw.github.rpi.edu/DataINCITE/IDEA-COVID-ContactTracing/</code></li>
-<li>Browse to the subdirectory where your file is…</li>
-<li>Browse to the file…</li>
-<li>Click on the “Raw” link (upper right)</li>
-<li>Copy the link from the address bar. It should begin with <code>https://raw.github.rpi.edu/</code> (for RPI repo) and end with <code>?token=SOMECODE</code> (for RPI)</li>
-<li>Links to the public github won’t have the token suffix</li>
+<li><a href="https://pages.github.rpi.edu/DataINCITE/DARL-2020/Notebooks/status-notebook-template.html" class="uri">https://pages.github.rpi.edu/DataINCITE/DARL-2020/Notebooks/status-notebook-template.html</a></li>
+<li><a href="https://pages.github.rpi.edu/DataINCITE/DARL-2020/Circadian/status-notebook-template.html" class="uri">https://pages.github.rpi.edu/DataINCITE/DARL-2020/Circadian/status-notebook-template.html</a></li>
 </ul></li>
-</ul>
+</ol>
+<p>To obtain this link, browse to your merged html on <a href="http://github.rpi.edu" class="uri">http://github.rpi.edu</a> , grab the link from the address bar of your browser, and insert <code>pages</code> into the subdomain of the address as shown above.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Test your link by pasting in a browser and verifying that you see your notebook</li>
+<li>Paste your working link into the assignment form on LMS.</li>
+</ol>
+<p>You may also want to use this technique to reference other notebooks on github.</p>
 </div>
-<div id="guide-to-linking-to-shiny-apps" class="section level3">
-<h3>Guide to linking to Shiny Apps</h3>
+<div id="guide-to-linking-to-shiny-apps-delete-before-submission" class="section level2">
+<h2>Guide to linking to Shiny Apps (DELETE BEFORE SUBMISSION)</h2>
+<p>In your notebook you can also link to Shiny apps you and others have created</p>
 <ul>
 <li><p>On the cluster, create a sub-directory called <code>ShinyApps</code> in your home directory</p>
 <ul>
@@ -461,9 +462,8 @@ summary {
 </ul></li>
 </ul>
 </div>
-</div>
-<div id="weekly-work-summary" class="section level2">
-<h2>Weekly Work Summary</h2>
+<div id="required-weekly-work-summary" class="section level2">
+<h2>REQUIRED: Weekly Work Summary</h2>
 <p><strong>NOTE:</strong> Follow an outline format; use bullets to express individual points.</p>
 <ul>
 <li>RCS ID: <strong>Always</strong> include this!</li>
@@ -480,7 +480,7 @@ summary {
 </ul></li>
 <li><p>List of presentations, papers, or other outputs</p>
 <ul>
-<li>Include browsable links</li>
+<li>Include browsable links (see Instructions)</li>
 </ul></li>
 <li>List of references (if necessary)</li>
 <li>Indicate any use of group shared code base</li>
@@ -506,29 +506,6 @@ summary {
 <ul>
 <li>Screen shots are acceptable</li>
 <li>If your figures are “live,” either include source code embedded in notebook or provide github location for their source scripts</li>
-</ul></li>
-</ul>
-</div>
-<div id="new-drafting-your-darhacl-blog-post" class="section level2">
-<h2>NEW: Drafting your DAR/HACL Blog Post</h2>
-<p><em>Use this space to begin drafting your by-the-end-of-term Data INCITE blog post. As discussed in class, the “specs” for this post are…</em></p>
-<ul>
-<li>400-600 words in length</li>
-<li><p>Clear statement of your <strong>lede</strong> — the first paragraph of any news story, containing the “Five W’s and H:” who, what, where, when, why, and how.</p>
-<ul>
-<li>Who: Who is the post about?</li>
-<li>What: What happened in the post?</li>
-<li>Where: Where did the work you’re writing about occur?</li>
-<li>When: When did it occur?</li>
-<li>Why: Why did this happen?</li>
-<li>How: How did this happen?</li>
-</ul></li>
-<li>A screen shot or image that best illustrates your post</li>
-<li><p>Answer Mary’s “three questions”:</p>
-<ul>
-<li>What did you want to know?</li>
-<li>How did you go about finding it?</li>
-<li>What did you find?</li>
 </ul></li>
 </ul>
 </div>
