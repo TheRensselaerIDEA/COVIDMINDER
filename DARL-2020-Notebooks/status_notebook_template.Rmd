@@ -55,8 +55,9 @@ https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerID
 
 2. For files merged with the master on the RPI github (e.g. Back-to-School, StudySafe, SafeCampus) you need a different syntax; here's a few examples:
 
-    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Notebooks/status-notebook-template.html
-    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Circadian/status-notebook-template.html
+    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Notebooks/status_notebook_template.html
+    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Circadian/status_notebook_template.html
+    * https://pages.github.rpi.edu/DataINCITE/IDEA-COVID-WarRoom/DARL-2020-Notebooks/status_notebook_template.html
     
 To obtain this link, browse to your merged html on http://github.rpi.edu , grab the link from the address bar of your browser, and insert `pages` into the subdomain of the address as shown above. 
 
