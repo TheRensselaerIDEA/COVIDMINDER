@@ -375,66 +375,6 @@ server <- function(input, output, session) {
   colors <- c("#253494","#4575B4", "#74ADD1","#ABD9E9","#f7f7f7","#FDAE61","#F46D43", "#D73027", "#BD0026")
   bins <- c(5, 3, 2, 1, .2, -.2, -1, -2, -3, -5)
   
-  # Join NY shape and data, may move to processing 
-  
-  # Render leaflet plot with all information in hover
-  output$map.testing <- renderLeaflet({
-    # browser()
-    country <- input$country # selected country
-    
-    # modify states to have selected columns for our plot
-    tests_ldi <- states %>% 
-      select(starts_with("tests_ldi")) %>%
-      select(ends_with(country))
-    
-    states <- data.frame(states, "tests_ldi"=unlist(tests_ldi)) # Append to states
-    
-    
-    pal2 <- leaflet::colorBin(colors, domain = states$tests_ldi, bins = bins, reverse=TRUE)
-#    browser()
-    labels2 <- sprintf(
-      paste0("<strong>%s</strong> State<br/>
-      Testing Rate vs ", toupper(country)," DI: %.2g<br>
-      Testing Rate: %.1f /1000"),
-      states$NAME, states$tests_ldi, states$tests_per_1000
-    ) %>% lapply(htmltools::HTML)
-    
-    leaflet(states.shapes, width="100%", height="100%") %>%
-      setView(-96, 37.8, 4) %>% # TODO: Doesn't seem to do anything
-      addPolygons(
-        fillColor = ~pal2(states$tests_ldi),
-        weight = 1,
-        opacity = 1,
-        color = "#330000",
-        dashArray = "1",
-        fillOpacity = 0.7,
-        highlight = highlightOptions(
-          weight = 5,
-          color = "#666",
-          dashArray = "",
-          fillOpacity = 0.7,
-          bringToFront = TRUE),
-        label = labels2,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "15px",
-          direction = "auto")) %>% 
-      addLegend(pal = pal2, 
-                values = ~states$tests_ldi, 
-                opacity = 0.7, 
-                title = paste0("Disparity Index<br/>US Total Tests vs. ",toupper(country)),
-                position = "bottomright",
-                labFormat = function(type, cuts, p) { n = length(cuts) 
-                   cuts[n] = paste0(cuts[n]," lower") 
-                   # for (i in c(1,seq(3,(n-1)))){cuts[i] = paste0(cuts[i],"—")} 
-                   for (i in c(1,seq(2,(n-1)))){cuts[i] = paste0(cuts[i]," — ")} 
-                   cuts[2] = paste0(cuts[2]," higher") 
-                   paste0(str_remove(cuts[-n],"higher"), str_remove(cuts[-1],"—"))
-                }
-                ) %>%
-      addProviderTiles("MapBox", options = providerTileOptions(
-        id = "mapbox.light"))
-  })
   
   ### State Report Cards Code ###
   
@@ -1488,35 +1428,6 @@ server <- function(input, output, session) {
              units = "in")
     }
   )
-  
-  # TODO: This is written twice
-  output$US.maps.determinant <- renderLeaflet({
-    det <- input$US.determinant
-    geo.plot("US", det)
-  })
-  
-  output$US.maps.determinant.dl <- downloadHandler(
-    filename = function() {
-      det <- input$US.determinant
-      return(paste0("US_", det, ".png"))
-    },
-    content = function(file) {
-      det <- input$US.determinant
-      det_title <- det
-      if (det == "CRD Mortality") {
-        det_title <- "Cronic Respiratory Disease (CRD) Mortality"
-      }
-      title <- tags$h1(paste0("US ", det_title, " Rate Disparities Compared to the US Average"))
-      mapshot(x = geo.plot("US", 
-                           det, 
-                           title = tags$div(title)
-      ),
-      file = file,
-      cliprect = "viewport",
-      selfcontained = F)
-    }
-  )
-  
   
   ### The following code deals with setting or responding to parameterized URLs
   observe(print(input$tab))
