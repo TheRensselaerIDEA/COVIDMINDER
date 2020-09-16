@@ -8,7 +8,7 @@ source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
 
-update_date <- "8-17-2020" # makes it easy to change all occurances when we update
+update_date <- "2020-09-14"
 
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
@@ -302,23 +302,12 @@ ui <-
                                )),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
-                               uiOutput("US.determinant.title")),
-                        column(6,
-                               selectInput(inputId = "US.determinant",
-                                           label = "Determinant",
-                                           title = "Determinant selecting form tool",
-                                           choices = c("Diabetes", "Obesity", "CRD Mortality", "Heart Disease Mortality"),
-                                           selected = "Diabetes"),
-                               leafletOutput("US.maps.determinant", height = height),
-                               column(2, downloadButton("US.maps.determinant.dl", label="Download Determinant Map"), offset = 6), offset = 3),
-                        column(8, style="text-align:center;",
-                               tags$p(textOutput("US.determinant.text"),
-                                      tags$br(),
-                                      tags$b("Data Source: "), tags$a("CDC", href="www.cdc.gov/diabetes/data"), ", ",
-                                      tags$a("CHR", href = 
-                                               "https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/health-behaviors/diet-exercise/adult-obesity")), 
-                               offset = 2
-                        )),
+                               uiOutput("US.determinant.title"), offset=0),
+                        column(12, align="center", plotOutput(outputId = "US.determinants", 
+                                              width = "1000px")),
+                        # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
+                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=10)
+               ),
                tags$br(),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
@@ -353,6 +342,7 @@ ui <-
                                         offset = 2)))
                
       ),
+
       tabPanel(HTML("<div><b>ABOUT</b></div>"),
                value="about",
                fluidRow(
@@ -1212,13 +1202,9 @@ server <- function(input, output, session) {
   })
   
   output$US.determinant.title <- renderUI({
-    det <- input$US.determinant
-    if (det == "CRD Mortality") {
-      det <- "Cronic Respiratory Disease (CRD) Mortality"
-    }
     tagList(
-      tags$h2(paste0("United States ", det, " Disparities")),
-      tags$h3(paste0("What are the nationwide disparities in ", det, " Rates compared to the US Average?"))
+      tags$h2(paste0("Signficant United States Determinants")),
+      tags$h3(paste0("What are the significant socioeconomic and medical determinants that impact COVID mortality rates?"))
     )
   })
   
@@ -1258,6 +1244,21 @@ server <- function(input, output, session) {
       file = file,
       cliprect = "viewport",
       selfcontained = F)
+    }
+  )
+  
+  output$US.determinants.dl <- downloadHandler(
+    filename = function() {
+      return("US_determinants_analysis.png")
+    },
+    content = function(file) {
+      ggsave(filename = file, 
+             plot = ggplot.natDet(remove.title = F),
+             device = "png",
+             width = 12,
+             height = 8,
+             units = "in")
+      #file.copy("www/national_sd.png", file)
     }
   )
   
@@ -1398,6 +1399,10 @@ server <- function(input, output, session) {
     hover <- input$US.DoT.hover
     US.barplot.tooltip(hover, "deaths")
   })
+  
+  output$US.determinants <- renderPlot({
+    ggplot.natDet(remove.title = T)
+  }, alt = "A visualization representing significant determinants in COVID-19 mortality rates in the United States ")
   
   output$US.CoT <- renderPlot({
     ggbar.US(y.value = "cases", remove.title = T)

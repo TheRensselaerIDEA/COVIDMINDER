@@ -518,3 +518,24 @@ ggplot.US <- function(y.value="cases",
     gg_title
   return(g)
 }
+
+ggplot.natDet <- function(remove.title = F) {
+  if (remove.title) {
+    ggtitle <- NULL
+  } else {
+    ggtitle <- ggtitle("Significant National Social Determinants")
+  }
+  
+  return(ggplot(GWAS_data, aes(x=Row.names, y=MRRX100)) +
+           ggtitle +
+           xlab("Significant Determinants") +
+           ylab("Mortality Rate Ratio") +
+           geom_bar(stat = "identity",aes(fill=MRRX100_round<0)) +
+           coord_flip()+
+           theme(legend.position='none')+
+           scale_fill_manual(values = c("#bd0026", "#253494"))+
+           geom_text(aes(label=MRRX100_round, colour =MRRX100_round <0), vjust=0.5, size=3.5, nudge_y = 3)+
+           scale_colour_manual(values=c("#000000","#FFFFFF")))
+}
+
+

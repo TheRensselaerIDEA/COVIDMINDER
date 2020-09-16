@@ -1,0 +1,146 @@
+---
+title: "High-Risk Model"
+output: html_notebook
+---
+
+This notebook can be used to reproduce the High-Risk Model from "Comprehensive Study of Social Determinants Associated with COVID-19 Mortality". 
+
+Load preprocessing analysis and the necessary dependencies. 
+```{r setup, include=FALSE, cache = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = substr(getwd(),0,nchar(getwd())-9))
+```
+
+```{r}
+source("./Modules/Source.R")
+aggregate.data<-readRDS('./Preprocessing_FTS_Outputs/07-05-2020data.Rds')
+```
+
+Execute the main analysis. 
+
+```{r}
+high.risk.model = glmer.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome)) + scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                                            + (1|state)
+                                            + offset(log(population)), data= aggregate.data)
+                                            
+```
+
+
+Print the output of main analysis.
+
+```{r}
+#General Summary
+summary(high.risk.model)
+#Output MRR
+exp(summary(high.risk.model)[10]$coefficients[2:25,1])
+high_risk_MRR <- as.data.frame(exp(summary(high.risk.model)[10]$coefficients[2:25,1]))
+saveRDS(high_risk_MRR, file = "./HighRiskResults/high.risk.model_MRR.Rds")
+#Output Wald-test p-values
+summary(high.risk.model)[10]$coefficients[2:25,4]
+high_risk_p <- as.data.frame(summary(high.risk.model)[10]$coefficients[2:25,4])
+saveRDS(high_risk_p, file = "./HighRiskResults/high.risk.model_P.Rds")
+```
+
+Ensure statistical assumptions.
+
+```{r}
+##DISPERSION TEST
+#Calculate mean
+Mean<-mean(aggregate.data$Deaths) 
+#Calculate variance
+Variance<-var(aggregate.data$Deaths) 
+#Ratio to test for Dispersion
+Ratio<-(Variance/Mean)
+Ratio
+```
+
+Test alternative models to ensure robustness of results. These are discussed in the Supplementary Materials. 
+
+```{r}
+###Zero Inflated
+high.risk.zero= glmmTMB(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome))+ scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                           + (1|state)
+                           + offset(log(population)), data = aggregate.data,
+                           family = nbinom2, ziformula  = ~ 1)
+summary(high.risk.zero)
+###Fixed Negative Binomial 
+high.risk.fixed = glm.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome))+ scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                    + offset(log(population)), data = aggregate.data)
+summary(high.risk.fixed)
+###Spatial-Correlation 
+high.risk.spatial = glmer.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome))+ scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                      +(1|state)
+                      + offset(log(population)) + scale(Lat) + scale(Long_), data = aggregate.data)
+summary(high.risk.spatial)
+###Negative Binomial Mixed Model Excluding NYC
+high.risk.no.nyc = glmer.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome)) + scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                                  + (1|state)
+                                  + offset(log(population)), data = subset(aggregate.data,!(fips %in% c("09001","42089","36111","09009","36059","36103","34013",
+                                                                                                                                              "36079","36081",  "36085",  "36087",  "36119",  "36027",                                                                                                                           "36071",  "09005",  "34021"))))
+summary(high.risk.no.nyc)
+###Negative Binomial Mixed Model Excluding Counties With Less Than 10 Cases
+high.risk.ten = glmer.nb(Deaths ~ scale(hispanic) + scale(pct_blk) + scale(pct_asian) + scale(pct_white)+   scale(pct_native)
+                                            + factor(q_popdensity)
+                                            + scale(log(medhouseholdincome)) + scale(education) + scale(beds/population)
+                                            + scale(date_since_social) + scale(date_since) + scale(date_since_reopen)
+                                            +scale(date_since_reclosure)+scale(date_since_mask)
+                                            +scale(pct_obesity)
+                                            +scale(pct_age65)+scale(pct_diabetes)
+                                            +scale(LungCancer)
+                                            +scale(COPD)
+                                            +scale(AdultAsthma)
+                                            +scale(Cardiovascular.death_rate)
+                                    + (1|state)
+                                    + offset(log(population)), data = subset(aggregate.data,Confirmed >=10))
+summary(high.risk.ten)
+```

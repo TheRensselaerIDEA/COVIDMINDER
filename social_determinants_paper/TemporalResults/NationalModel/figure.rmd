@@ -1,0 +1,137 @@
+---
+title: "Temporal Visualization"
+author: "mouh"
+date: "8/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = substr(getwd(),0,nchar(getwd())-30))
+```
+
+```{r}
+source("./Modules/Source.R")
+```
+
+# Plots of significant factors
+
+```{r}
+
+# MRR of significant factors
+data_1 <- readRDS("./TemporalResults/NationalModel/ALL_C_sig.rds")
+data_1 <- melt(data_1)
+data_1 <- subset(data_1, coefficients != "(Intercept)")
+
+# list of factor names for indexing
+COEF <- data_1$coefficients
+
+# MRR of all factors
+data_2 <- readRDS("./TemporalResults/NationalModel/ALL_C.rds")
+data_2 <- melt(data_2)
+
+# remove factors that are never significant
+data_2 <- data_2[data_2$coefficients %in% COEF, ]
+
+# p-value of significant factors
+data_3 <- readRDS("./TemporalResults/NationalModel/ALL_P_sig.rds")
+data_3 <- melt(data_3)
+data_3 <- subset(data_3, coefficients != "(Intercept)")
+
+# p-value of all factors
+data_4 <- readRDS("./TemporalResults/NationalModel/ALL_P.rds")
+data_4 <- melt(data_4)
+
+# remove factors that are never significant
+data_4 <- data_4[data_4$coefficients %in% COEF, ]
+
+# rename data frames for ploting
+data_1 <- dplyr::rename(data_1, c(date = variable, `Social Determinants` = coefficients))
+data_2 <- dplyr::rename(data_2, c(date = variable, `Social Determinants` = coefficients))
+data_3 <- dplyr::rename(data_3, c(date = variable, `Social Determinants` = coefficients))
+data_4 <- dplyr::rename(data_4, c(date = variable, `Social Determinants` = coefficients))
+
+# MRR plot
+mrr <- ggplot(mapping = aes(x=date, y=value, group=`Social Determinants`, color=`Social Determinants`)) +
+              geom_point(data = data_1) +
+              geom_line(data = data_2) +
+              ggtitle("Temporal Analysis Significant Factors MRR Plot") +
+              ylab("MRR")
+mrr
+
+# p-value plot
+p <- ggplot(mapping = aes(x=date, y=value, group=`Social Determinants`, color=`Social Determinants`)) +
+            geom_point(data = data_3) +
+            geom_line(data = data_4) +
+            ggtitle("Temporal Analysis Significant Factors p-value Plot") +
+            ylab("p-value")
+p
+
+# combine MRR plot with p-value plot
+figure <- ggarrange(mrr, p,
+                    legend = "right", 
+                    common.legend = TRUE, 
+                    ncol = 1, nrow = 2)
+figure
+```
+
+# Plots of insignifican factors
+
+```{r}
+# helper
+'%ni%' <- Negate('%in%')
+
+# MRR of significant factors
+data_1 <- readRDS("./TemporalResults/NationalModel/ALL_C_sig.rds")
+data_1 <- melt(data_1)
+
+# list of factor names for indexing
+COEF <- data_1$coefficients
+
+# MRR of all factors
+data_2 <- readRDS("./TemporalResults/NationalModel/ALL_C.rds")
+data_2 <- melt(data_2)
+
+# keep only factors that are never significant
+data_2 <- data_2[data_2$coefficients %ni% COEF, ]
+
+# p-value of significant factors
+data_3 <- readRDS("./TemporalResults/NationalModel/ALL_P_sig.rds")
+data_3 <- melt(data_3)
+
+# p-value of all factors
+data_4 <- readRDS("./TemporalResults/NationalModel/ALL_P.rds")
+data_4 <- melt(data_4)
+
+# keep only factors that are never significant
+data_4 <- data_4[data_4$coefficients %ni% COEF, ]
+
+# rename data frames for ploting
+data_1 <- dplyr::rename(data_1, c(date = variable, `Social Determinants` = coefficients))
+data_2 <- dplyr::rename(data_2, c(date = variable, `Social Determinants` = coefficients))
+data_3 <- dplyr::rename(data_3, c(date = variable, `Social Determinants` = coefficients))
+data_4 <- dplyr::rename(data_4, c(date = variable, `Social Determinants` = coefficients))
+
+# MRR plot
+mrr <- ggplot(mapping = aes(x=date, y=value, group=`Social Determinants`, color=`Social Determinants`)) +
+              geom_point(data = data_2) +
+              geom_line(data = data_2) +
+              ggtitle("Temporal Analysis Insignificant Factors MRR Plot") +
+              ylab("MRR")
+mrr
+
+# p-value plot
+p <- ggplot(mapping = aes(x=date, y=value, group=`Social Determinants`, color=`Social Determinants`)) +
+            geom_point(data = data_4) +
+            geom_line(data = data_4) +
+            ggtitle("Temporal Analysis Insignificant Factors p-value Plot") +
+            ylab("p-value")
+p
+
+# combine MRR plot with p-value plot
+figure <- ggarrange(mrr, p,
+                    legend = "right", 
+                    common.legend = TRUE, 
+                    ncol = 1, nrow = 2)
+figure
+```

@@ -430,3 +430,117 @@ cor.test(COVIDexcessdrink.50_100$X..Excessive.Drinking,COVIDexcessdrink.50_100$l
 cor.test(COVIDexcessdrink.greater100$X..Excessive.Drinking,COVIDexcessdrink.greater100$log10covid)
 ```
 
+overcrowding
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+#0-50 covid death vs excessive drinking
+#data for excessive drinking
+aaa<-read.csv("2020CHR.csv")
+data.overcrowding <- aaa %>% dplyr::select(FIPS, State, County,Overcrowding)
+
+#data for covid death rate from counties with 0-50 deaths
+covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
+coviddeathallcounties <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths <= 50 ),]
+
+#combine data frames
+keeps.covid <- c("County","countyFIPS","p_deaths")
+covid.data.updated = coviddeathallcounties[keeps.covid]
+COVIDovercrowding.all = merge(data.overcrowding, covid.data.updated, by.x="FIPS", by.y="countyFIPS")
+COVIDovercrowding<- distinct(COVIDovercrowding.all,FIPS, .keep_all= TRUE)
+
+#correlation test
+cor.test(COVIDovercrowding$Overcrowding,COVIDovercrowding$p_deaths)
+
+#plot
+pg1<-ggplot(data=COVIDovercrowding, aes(x=Overcrowding, y=p_deaths)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (<50)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+#log10 transformation of data and plot
+log10.covid.greater100<-(log10(COVIDovercrowding$p_deaths))
+COVIDovercrowding$log10covid= log10.covid.greater100
+pg1_5<-ggplot(data=COVIDovercrowding, aes(x=Overcrowding, y=log10covid)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (<50)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+#50-100 covid deaths vs excessive drinking
+aaa<-read.csv("2020CHR.csv")
+data.overcrowding <- aaa %>% dplyr::select(FIPS, State, County, Overcrowding)
+
+#data for covid death rate from counties with 50-100 deaths
+covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
+coviddeathallcounties50_100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 50|covid_TS_counties_long.cases$deaths <= 100 ),]
+
+keeps.covid <- c("County","countyFIPS","p_deaths")
+covid.data.updated50_100 = coviddeathallcounties50_100[keeps.covid]
+COVIDovercrowding.all.50_100 = merge(data.overcrowding, covid.data.updated50_100, by.x="FIPS", by.y="countyFIPS")
+COVIDovercrowding.50_100<- distinct(COVIDovercrowding.all.50_100,FIPS, .keep_all= TRUE)
+
+cor.test(COVIDovercrowding.50_100$Overcrowding,COVIDovercrowding.50_100$p_deaths)
+
+pg2<-ggplot(data=COVIDovercrowding.50_100, aes(x=Overcrowding, y=p_deaths)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (50-100)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+log10.covid.50_100<-(log10(COVIDovercrowding.50_100$p_deaths))
+COVIDovercrowding.50_100$log10covid= log10.covid.50_100
+pg2_5<-ggplot(data=COVIDovercrowding.50_100, aes(x=Overcrowding, y=log10covid)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (50-100)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+#>100 covid deaths vs excessive drinking
+aaa<-read.csv("2020CHR.csv")
+data.overcrowding <- aaa %>% dplyr::select(FIPS, State, County, Overcrowding)
+
+#data for covid death rate from counties with >100 deaths
+covid_TS_counties_long.cases<- read.csv("covid_TS_counties_long.cases.csv")
+coviddeathallcountiesgreater100 <- covid_TS_counties_long.cases[ which(covid_TS_counties_long.cases$deaths >= 100 ),]
+
+keeps.covid <- c("County","countyFIPS","p_deaths")
+covid.data.updatedgreater100 = coviddeathallcountiesgreater100[keeps.covid]
+COVIDovercrowding.all.greater100 = merge(data.overcrowding, covid.data.updatedgreater100, by.x="FIPS", by.y="countyFIPS")
+COVIDovercrowding.greater100<- distinct(COVIDovercrowding.all.greater100,FIPS, .keep_all= TRUE)
+
+cor.test(COVIDovercrowding.greater100$Overcrowding,COVIDovercrowding.greater100$p_deaths)
+
+pg3<-ggplot(data=COVIDovercrowding.greater100, aes(x=Overcrowding, y=p_deaths)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (>100)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+log10.covid.greater100<-(log10(COVIDovercrowding.greater100$p_deaths))
+COVIDovercrowding.greater100$log10covid= log10.covid.greater100
+pg3_5<-ggplot(data=COVIDovercrowding.greater100, aes(x=Overcrowding, y=log10covid)) + 
+  geom_point() + geom_smooth(method="lm",se= TRUE) +
+  ggtitle("Overcrowding vs COVID Mortality Rate (>100)") +
+  xlab("Overcrowding") +
+  ylab("COVID Mortality Rate")
+
+pg1
+pg2
+pg3
+pg1_5
+pg2_5
+pg3_5
+grid.arrange(pg1, pg2, pg3, nrow = 3)
+grid.arrange(pg1_5,pg2_5,pg3_5, nrow=3)
+```
+
+
+```{r}
+cor.test(COVIDovercrowding$Overcrowding,COVIDovercrowding$log10covid)
+cor.test(COVIDovercrowding.50_100$Overcrowding,COVIDovercrowding.50_100$log10covid)
+cor.test(COVIDovercrowding.greater100$Overcrowding,COVIDovercrowding.greater100$log10covid)
+```
