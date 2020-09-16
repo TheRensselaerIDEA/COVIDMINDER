@@ -241,7 +241,7 @@ combined_determinants_data$Row.names <- factor(combined_determinants_data$Row.na
 
 #plot
 ggplot(combined_determinants_data, aes(x=Row.names, y=MRRX100)) +
-   ggtitle("Significant National Determinants")+
+   ggtitle("What are the significant social and economic \ndeterminants that impact COVID mortality?")+
    xlab("Significant Determinants") +
    ylab("Mortality Rate Ratio") +
    geom_bar(stat = "identity",aes(fill=MRRX100<0)) +
