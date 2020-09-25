@@ -1,0 +1,51 @@
+---
+title: "DARL Project Status Notebook"
+author: "Jocelyn McConnon"
+date: "24 September 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "MORTALITYMINDER"
+---
+
+## REQUIRED: Weekly Work Summary	
+* RCS ID: mcconj2
+* Project Name: MORTALITYMINDER
+* Summary of work since last week 
+    * Determined I would be working on results section of the mortality minder paper.
+    * Read the mortality minder paper.
+    * Marked typos to correct.
+    * Noticed Kendall correlation number is not in methods section.
+    * Formulated questions about the results section for deep dive meeting.
+    * Determined in deep dive meeting that results section would follow a use case format.
+    * Read the social determinants paper.
+    * Determined in stand-up meeting that I would draft three use cases.
+    * Drafted use case for health care providers in Rensselaer county.
+    * Drafted use case for NYS policy maker.
+    * Came up with third use case idea.
+* Summary of github commits
+    * Not applicable
+* List of presentations,  papers, or other outputs
+    * Use case 1 (draft): county level health care provider. Rensselaer county. Medium risk of cardiovascular disease but has seen an increase in risk in the past 6-8 years. Medium risk of cancer but has seen a decrease in risk in the past 6-8 years. Low risk group for deaths of despair but has seen increases consistent with the rest of the low risk groups. Rensselaer county health care providers may find it helpful to prioritize preventative actions on cardiovascular disease since it is quickly on the rise. The leading determinants of cardiovascular disease for New York state are frequent physical distress, physically unhealthy days, frequent mental distress, as well as adult smoking. Let’s take a closer look at these factors for cardiovascular disease. Rensselaer county has just under 11% of adults reporting 14 or more days of poor physical health per month, which means the County lies in the first quartile for counties at medium risk for cardiovascular disease but is actually pretty close to the median of counties with low risk of cardiovascular disease. The average number of physically unhealthy days reported in the last month for Rensselaer County is just under 3.75. This puts Rensselaer County in the Lower quartile for counties in the medium risk group but below the median. The percentage of adults in Rensselaer County reporting 14 or more days of poor mental health per month is around 11.25. This puts Rensselaer County in the first quartile group for the medium risk group counties and around the median for the low risk group counties.
+    * Use case 2 (draft): New York has an increasing amount of mid-life deaths of despair. New York has a decreasing amount of deaths due to cardiovascular disease, and deaths due to cancer. Among all causes of mid-life death adult smoking, frequent physical distress, physically unhealthy days, frequent mental distress , an percent unemployed are all leading determinants. Adult in the highest risk group for midlife mortality experience smoking rates at around 20%. 
+* List of references (if necessary)
+    * Investigating Social Determinants of Premature Mortality in the United States, 2020, Lilian Ngweta, Karan Bhanot, John S. Erickson, Kristin P. Bennett, Rensselaer Institute for Data Exploration and Applications, Troy, New York.
+    * Social Determinants Associated with COVID-19 Mortality in the United States, 2020, Debopadhaya S,  Sprague AD,  Mou H,  Benavides TL,  Ahn SM,  Reschke CA, Erickson JS,  Bennett KP, Department of Computer Sciences/ Department of Mathematical Sciences Rensselaer Polytechnic Institute, Troy, New York.
+
+## Personal Contribution	
+* marked typos in mortality minder paper
+* noticed Kendall wasn't explained in methods section
+* Two use cases for results section
+    * health care providers in Rensselaer county
+    *  NYS policy maker
+* Idea for third use case
+    * national trends in determinants of deaths of dispair
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+This week I got assigned to work on the mortality minder results section. I sought first to familiarize myself with the paper. Then, I came up with a game plan of how to approach my contributors- i.e. I decided to include use cases. I then drafted some ideas for what the use cases would be, and what details they would include. After this notebook is due, and before our next deep dive meeting, I will continue to work on the use cases and flesh out what detials from the app I want to include as well as incorproate more images.
+
