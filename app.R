@@ -8,7 +8,7 @@ source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
 
-update_date <- "2020-09-29"
+update_date <- "2020-09-30"
 
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
@@ -304,9 +304,9 @@ ui <-
                fluidRow(column(12, style="text-align:center;",
                                uiOutput("US.determinant.title"), offset=0),
                         column(12, align="center", plotOutput(outputId = "US.determinants", 
-                                              width = "1000px")),
+                                              )),
                         # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
-                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=10)
+                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=6)
                ),
                tags$br(),
                tags$br(),
