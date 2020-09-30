@@ -52,6 +52,22 @@ comments_link <-"<img src='comment.png' style='float:left;width:40px;padding-rig
 url1 <- url2 <- ""
 
 #### UI Code ####
+
+ ### Footer
+footer <- tags$div(
+      class = "footer",
+      hr(),
+      HTML("<a href='?tab=about'>About</a>&emsp;"),
+      HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
+      HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
+      HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
+      HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
+      <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
+      tags$a(href="#top", "Back to Navbar")
+            
+    )
+
+
 ui <- 
   tagList(
     tags$html(lang = "en-us"),
@@ -349,23 +365,11 @@ ui <-
                  column(8,offset=2,class="about",
                         tags$h1("About the Project"),
                         HTML(whatisit_text_abt),
-                        HTML(footer_text))
+                        HTML(footer_text)),
+               ),
                )
-               )
-    ), 
-    ### Footer
-    tags$div(
-      class = "footer",
-      hr(),
-      HTML("<a href='?tab=about'>About</a>&emsp;"),
-      HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
-      HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
-      HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
-      HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
-      <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
-      tags$a(href="#top", "Back to Navbar")
-            
-    )
+    ) 
+   
    
     #,tags$script(src = "style.js")
   )
