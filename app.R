@@ -52,6 +52,27 @@ comments_link <-"<img src='comment.png' style='float:left;width:40px;padding-rig
 url1 <- url2 <- ""
 
 #### UI Code ####
+
+ ### Footer
+footer <- tags$div(
+      class = "footer",
+      
+        hr(),
+      tags$div(
+        class="footerchild",
+        HTML("<a href='?tab=about'>About</a>&emsp;"),
+        HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
+        HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
+        HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
+        HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
+        <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
+        tags$a(href="#top", "Back to Navbar"),
+      ),
+      
+            
+    )
+
+
 ui <- 
   tagList(
     tags$html(lang = "en-us"),
@@ -68,7 +89,6 @@ ui <-
       windowTitle = "COVIDMINDER: Where you live matters",
       tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
-                  fluidPage(
                     fluidRow(column(12,
                                     selectInput(inputId = "state_name",
                                                 label = "State Selector",
@@ -202,7 +222,6 @@ ui <-
                                                            selected = "Descending",
                                                            width="50%")),
                                      gt_output("ranking.table"), offset = 2))
-                 )
       ),
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
@@ -349,23 +368,12 @@ ui <-
                  column(8,offset=2,class="about",
                         tags$h1("About the Project"),
                         HTML(whatisit_text_abt),
-                        HTML(footer_text))
-               )
+                        HTML(footer_text)),
+               ),
                )
     ), 
-    ### Footer
-    fluidRow(
-      column(12, class = "footer",
-             hr(),
-             HTML("<a href='?tab=about'>About</a>&emsp;"),
-             HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
-             HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
-             HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
-             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
-                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
-             tags$a(href="#top", "Back to Navbar")
-             )
-    )
+   
+  footer 
     #,tags$script(src = "style.js")
   )
 
@@ -1495,3 +1503,4 @@ server <- function(input, output, session) {
 
 #### Set up Shiny App ####
 shinyApp(ui = ui, server = server, enableBookmarking = "url")
+                              
