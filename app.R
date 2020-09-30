@@ -354,18 +354,19 @@ ui <-
                )
     ), 
     ### Footer
-    fluidRow(
-      column(12, class = "footer",
-             hr(),
-             HTML("<a href='?tab=about'>About</a>&emsp;"),
-             HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
-             HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
-             HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
-             HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
-                  <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
-             tags$a(href="#top", "Back to Navbar")
-             )
+    tags$div(
+      class = "footer",
+      hr(),
+      HTML("<a href='?tab=about'>About</a>&emsp;"),
+      HTML("<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"),
+      HTML("<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"),
+      HTML("<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"),
+      HTML("<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
+      <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"),
+      tags$a(href="#top", "Back to Navbar")
+            
     )
+   
     #,tags$script(src = "style.js")
   )
 
