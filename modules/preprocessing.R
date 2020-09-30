@@ -298,52 +298,6 @@ todays.case.data <- left_join(todays.case.data,
   mutate("CRD Mortality_rate_ldi" = -log(pUS.9.CRD/(`CRD Mortality_rate`))) %>%
   mutate("CRD Mortality_rate_ldi" = replace(`CRD Mortality_rate_ldi`, `CRD Mortality_rate_ldi` < -5, -5))
 
-## Needed for NY TS plot
-
-# Pre-filter to remove small numbers
-covid_NY_TS_counties_long <- covid_NY_TS_counties_long %>% 
-  filter(cases >= 2) %>%
-  filter(County != "Unassigned")
-
-covid_NY_TS_counties_long.cases <- covid_NY_TS_counties_long.cases %>% 
-  filter(cases >= 2) %>%
-  filter(County != "Unassigned")
-
-covid_NY_TS_plot <- covid_NY_TS_counties_long %>%
-  group_by(date)
-
-covid_NY_TS_counties_long <- dplyr::inner_join(covid_NY_TS_counties_long, as.data.frame(NY_counties_regions), by = c("County" = "County"))
-
-# NOTE: The new TS plot is using this special version
-covid_NY_TS_counties_long.cases <- dplyr::inner_join(covid_NY_TS_counties_long.cases, as.data.frame(NY_counties_regions), by = c("County" = "County"))
-
-# Do it this way to be safe:
-covid_NY_TS_plot.cases <- read_csv("data/csv/time_series/covid_NY_TS_plot.cases.csv")
-
-# Creates difference in cases from previous recorded date. First date is equal to case reported
-covid_NY_TS_plot.cases %>% group_by(County) %>% 
-  mutate(diff = ifelse(as.Date(date - 1) == lag(date), cases - lag(cases), cases)) -> 
-  covid_NY_TS_plot.cases
-
-covid_NY_TS_plot.cases %>% 
-  mutate(p_diff = ifelse(as.Date(date - 1) == lag(date), p_cases - lag(p_cases), p_cases)) %>%
-  ungroup() -> covid_NY_TS_plot.cases
-
-covid_NY_TS_plot.cases$diff <- ifelse(is.na(covid_NY_TS_plot.cases$diff), covid_NY_TS_plot.cases$cases, covid_NY_TS_plot.cases$diff)
-covid_NY_TS_plot.cases$p_diff <- ifelse(is.na(covid_NY_TS_plot.cases$p_diff), covid_NY_TS_plot.cases$p_cases, covid_NY_TS_plot.cases$p_diff)
-
-covid_NY_TS_plot.deaths <- read_csv("data/csv/time_series/covid_NY_TS_plot.deaths.csv")
-# Creates difference in deaths from previous recorded date. First date is equal to deaths reported
-covid_NY_TS_plot.deaths %>% group_by(County) %>% 
-  mutate(diff = ifelse(as.Date(date - 1) == lag(date), deaths - lag(deaths), deaths)) -> 
-  covid_NY_TS_plot.deaths
-
-covid_NY_TS_plot.deaths %>% 
-  mutate(p_diff = ifelse(as.Date(date - 1) == lag(date), p_deaths - lag(p_deaths), p_deaths)) %>%
-  ungroup() -> covid_NY_TS_plot.deaths
-
-covid_NY_TS_plot.deaths$diff <- ifelse(is.na(covid_NY_TS_plot.deaths$diff), covid_NY_TS_plot.deaths$deaths, covid_NY_TS_plot.deaths$diff)
-covid_NY_TS_plot.deaths$p_diff <- ifelse(is.na(covid_NY_TS_plot.deaths$p_diff), covid_NY_TS_plot.deaths$p_deaths, covid_NY_TS_plot.deaths$p_diff)
 
 
 # Legislative action 
