@@ -1499,6 +1499,29 @@ server <- function(input, output, session) {
     }
     
   })
+
+  # Content of modal dialog 
+  query_modal <- modalDialog(
+    title = "Welcome to COVIDMINDER",
+    "WARNING: COVIDMINDER represents experimental, student-created work. Reasonable
+    effort has been made to provide a safe, informative, enjoyable user experience, but
+    some COVIDMINDER features may not comply with Web Content Accessibility Guidelines (WCAG).
+    USE AT YOUR OWN RISK.",
+    easyClose = F,
+    footer = tagList(
+      actionButton("run", "Continue with COVIDMINDER app")
+    )
+  )
+  
+  # Creates modal dialog
+  showModal(query_modal)
+  
+  # Removes modal
+  observeEvent(input$run, {
+    removeModal()
+  })
+  
+  
 }
 
 #### Set up Shiny App ####
