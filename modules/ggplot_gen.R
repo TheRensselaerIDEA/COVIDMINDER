@@ -107,7 +107,7 @@ ggplot.state <- function(selected.state = "NY",
     mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
     mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
     ungroup()
-  
+  # edge case for NYC: we remove the counties in the city from the data table, combine them into one row, and add that row back in to the data table 
   if (selected.state == "NY") {
     nyc.population <- covid_TS_counties.cases.plot %>%
       filter(County %in% c("New York", "Kings", "Queens", "Bronx", "Richmond")) %>%
@@ -144,7 +144,6 @@ ggplot.state <- function(selected.state = "NY",
     mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right")))
   
   state$County = selected.state
-  
   covid_TS_counties.cases.plot <-  covid_TS_counties.cases.plot %>%
     filter(County %in% counties) %>%
     rbind.data.frame(state) %>%
@@ -172,15 +171,18 @@ ggplot.state <- function(selected.state = "NY",
     mutate(max_date = max_date - ((num*((range%/%n_county) + 1))%%range))  %>%
     filter(date == max_date) %>%
     top_n(1, wt=max_date) 
-  
+  # we wanna set the color for each line in our graph so we use rcolorbrewer 
   library(RColorBrewer)
   qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
+  # grab a list of all palettes in rcolorbrewer for "qualitative" data ie the colors are not continuous 
+  # grab the colors from all these palettes and smush them into one fat list
   col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+  # put the highest contrast of these in again as the first two palettes to be used
+  col_vector = c(brewer.pal(8, "Dark2"), brewer.pal(9, "Set1"), col_vector)
   county.num$Color <- col_vector[1:n_county]
-  
   region_palette <- setNames(as.character(county.num$Color), as.character(county.num$County))
   region_palette[selected.state] <- "#A8A8A8"
-  
+   
   g <- covid_TS_counties.cases.plot %>%
     ggplot(aes_string(
       x="date",
@@ -203,7 +205,7 @@ ggplot.state <- function(selected.state = "NY",
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
-      aes(label=County, fill=County), 
+      aes(label=County, color=Colors),
       box.padding = unit(1.75, 'lines'),
       color = "black",
       size = 5,
@@ -498,11 +500,12 @@ ggplot.US <- function(y.value="cases",
     #theme(legend.position = "none") +
     geom_label_repel(
       data=highlight_points,  
-      aes(label=name, color=Region), 
+      aes(label=name), 
       box.padding = unit(1.75, 'lines'),
       segment.color = "black",
       size = 5,
-      show.legend = FALSE
+      show.legend = FALSE,
+      color="black"
     ) +
     scale_color_manual(values=region_palette, aesthetics = c("color")) +
     guides(color = guide_legend(title = "Region",
