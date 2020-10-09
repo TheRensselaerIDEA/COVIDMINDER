@@ -1279,8 +1279,8 @@ server <- function(input, output, session) {
                                  y.value="cases", 
                                  moving.avg.window=14) {
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 17
-    top.offset <- 82
+    left.offset <- 0
+    top.offset <- -100
     
     if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
