@@ -1,0 +1,39 @@
+---
+title: "DARL Project Status Notebook Template"
+author: "Durasia Anderson"
+date: "October 09 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "COVIDMINDER"
+---
+## Weekly Work Summary	
+
+* RCS ID: anderd11
+* Project Name: COVIDMINDER
+* Summary of work since last week 
+
+    * began process for cleaning up charts within State Determinants Visualizations for COVIDMINDER
+    * reran State_Determinants_Visualization.Rmd to see which states have incorretly labeld features or include features that aren't required to analyze social factors that impact COVID-19 patients
+    * tired to add code (details below), but it doesn't produce anything so I only have a screenshot attached until I can get it running
+    
+
+## Personal Contribution	
+
+* sorted through code to see which features need to be removed from charts: I reviewed the features that appear on the charts for each state's MRR of Interested Variable graph; some are redundant, others are raw numbers but we need the rates to better evaluate the impact each feature may have
+* used excel chart to note which features need to be updated or removed
+* ![half-size image](feature_change_tracker.PNG)
+* attempted adding several lines of code to remove redundant attributes, but I need help determining why it isn't working
+* ![half-size image](CODE_removal_attempt.PNG)
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * longitude and latitude are not exactly needed features, since we have the state names as indicator of location
+    * many features repeat and show up in chart (i.e. # uninsured and % uninsured), which is redundant
+    * Idaho image not loading for some reason
+    * it works out nicely that for some states (like Arizona) only some of the # features show up as opposed to the rate - there is less to fix for these, but for states like Florida, a lot more needs to be redone
+

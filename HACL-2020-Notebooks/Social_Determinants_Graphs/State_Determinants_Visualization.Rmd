@@ -225,6 +225,7 @@ x_num<-round(x,digits=2)
 dataAZ$x_round = x_num
 dataAZ <- subset(dataAZ,  x_round > 0.05)
 
+# naming features
 dataAZ$y <- as.character(dataAZ$y)
 dataAZ$y[dataAZ$y == "Average Daily PM2.5"] <- "Avg. Daily Air Pollution (PM2.5)"
 dataAZ$y[dataAZ$y == "Average Number of Physically Unhealthy Days"] <- "Avg. Number of Physically Unhealthy Days"
@@ -280,7 +281,8 @@ dataAZ$y[dataAZ$y == "% Food Insecure"] <- "% Food Insecurity"
 dataAZ$y[dataAZ$y == "# Limited Access"] <- "# Limited Access to Healthy Foods"
 dataAZ$y[dataAZ$y == "# Uninsured_1"] <- "# of Adults Under 65 with No Health Insurance"
 dataAZ$y[dataAZ$y == "% Uninsured_1"] <- "% of Adults Under 65 with No Health Insurance"
-dataAZ$y[dataAZ$y == "# Uninsured_2"] <- "# of Children with No Health Insurance"
+# remove number uninsured
+#dataAZ$y[dataAZ$y == "# Uninsured_2"] <- "# of Children with No Health Insurance"
 dataAZ$y[dataAZ$y == "% Uninsured_2"] <- "% of Children with No Health Insurance"
 dataAZ$y[dataAZ$y == "Average Grade Performance_1"] <- "Avg. Math Grade Performance"
 dataAZ$y[dataAZ$y == "Segregation index"] <- "Segregation Index Between Black and White"
@@ -299,6 +301,16 @@ dataAZ$y[dataAZ$y == "COPD"] <- "% of County with COPD"
 dataAZ$y[dataAZ$y == "AdultChronicLungDisease"] <- "% of County with Adult Chronic Lung Disease"
 dataAZ$y[dataAZ$y == "LungCancer"] <- "% of County with Lung Cancer"
 dataAZ$y[dataAZ$y == "# Associations"] <- "# of Social Associations"
+
+# remove unneeded columns
+#tempb4 <- nrow(dataAZ)
+#tempb4
+
+#removeAZ <- c("# Associations")
+#dataAZ[ !(row.names(dataAZ) %in% removeAZ), ]
+
+#tempAFTR <- nrow(dataAZ)
+#tempAFTR
 
 dataAZ$y <- factor(dataAZ$y, levels = dataAZ$y[order(dataAZ$x)])
 
