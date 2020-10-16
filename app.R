@@ -614,7 +614,7 @@ server <- function(input, output, session) {
                            ),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
+              selfcontained = T)
     }
   )
   
@@ -655,7 +655,7 @@ server <- function(input, output, session) {
                            title = tags$div(title)),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
+              selfcontained = T)
     }
   )
   
@@ -688,7 +688,7 @@ server <- function(input, output, session) {
                            title = tags$div(title, class = "leaflet-map-title")),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
+              selfcontained = T)
     }
   )
   
@@ -1191,7 +1191,7 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
+      selfcontained = T)
     }
   )
   
@@ -1238,7 +1238,7 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
+      selfcontained = T)
     }
   )
   
@@ -1272,7 +1272,7 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
+      selfcontained = T)
     }
   )
   
