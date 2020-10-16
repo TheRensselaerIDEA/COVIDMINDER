@@ -1254,9 +1254,10 @@ server <- function(input, output, session) {
   })
   
   output$US.map.deaths.dl <- downloadHandler(
-    filename = function() {
-      return("US_mortality.png")
-    },
+    # filename = function() {
+    #   return("US_mortality.png")
+    # },
+    filename = "US_mortality.png",
     content = function(file) {
       title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
       time <- input$NRC.deaths.time
