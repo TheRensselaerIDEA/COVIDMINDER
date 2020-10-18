@@ -427,7 +427,6 @@ server <- function(input, output, session) {
       select(County) %>%
       unlist() %>%
       unique()
-    
     selected <- state.df %>%
       group_by(County) %>%
       top_n(1, cases) %>%
@@ -436,8 +435,8 @@ server <- function(input, output, session) {
       unlist() %>%
       unique()
     
-    if (length(selected) > 10) {
-      selected <- selected[1:10]
+    if (length(selected) > 5) {
+      selected <- selected[1:5]
     }
     selectInput(inputId = "SRC.county",
                 label = "County Selector",
@@ -1051,7 +1050,6 @@ server <- function(input, output, session) {
   observeEvent(input$trends.dbl_click, {
     brush <- input$trends.brush
     if (!is.null(brush)) {
-      #browser()
       Tr.ranges$x <- as.POSIXct(c(brush$xmin, brush$xmax), origin="1970-01-01")
       Tr.ranges$y <- c(brush$ymin, brush$ymax)
       
@@ -1472,7 +1470,6 @@ server <- function(input, output, session) {
       session$input$tab
     )
     #TODO: Special handling for tabs with selectors!
-    # browser()
     updateQueryString(url.new)
   })
   
@@ -1480,7 +1477,6 @@ server <- function(input, output, session) {
     
     data <- parseQueryString(session$clientData$url_search)
     
-    # browser()
     # the navbar tab and tabpanel variables are two variables 
     # we have to pass to the client for the update to take place
     # if nav is defined, send a message to the client to set the nav tab
@@ -1495,7 +1491,6 @@ server <- function(input, output, session) {
                           'about'
     )], 
     Negate(is.null)))) {
-      # browser()
       session$sendCustomMessage(type='setTab', data)
     }
     
