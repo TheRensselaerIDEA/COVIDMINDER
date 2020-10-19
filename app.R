@@ -481,10 +481,19 @@ server <- function(input, output, session) {
   output$main_title <- renderUI({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    tagList(
-      tags$h1(paste0(state_name, " Overview")),
-      tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
-    )
+    worst <- as.character(unlist(ranking[ranking$rank==50, "name"]))
+    if(!state_name == worst){
+      tagList(
+        tags$h1(paste0(state_name, " Overview")),
+        tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
+      ) 
+    }else{
+      tagList(
+        tags$h1(paste0(state_name, " Overview (Current Highest Case Rate)")),
+        tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
+      )
+    }
+    
   })
   
   output$state.CoT.title <- renderUI({
