@@ -614,7 +614,8 @@ server <- function(input, output, session) {
               file = file,
               cliprect = "viewport",
               selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$map.deaths <- renderLeaflet({
@@ -655,7 +656,8 @@ server <- function(input, output, session) {
               file = file,
               cliprect = "viewport",
               selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$maps.determinant <- renderLeaflet({
@@ -688,7 +690,8 @@ server <- function(input, output, session) {
               file = file,
               cliprect = "viewport",
               selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   barplot.tooltip <- function(hover, 
@@ -1018,7 +1021,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$state.DoT.dl <- downloadHandler(
@@ -1036,7 +1040,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$state.DoT <- renderPlot({
@@ -1105,7 +1110,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$ranking.table <- render_gt({
@@ -1190,7 +1196,8 @@ server <- function(input, output, session) {
       file = file,
       cliprect = "viewport",
       selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.determinants.dl <- downloadHandler(
@@ -1205,7 +1212,8 @@ server <- function(input, output, session) {
              height = 8,
              units = "in")
       #file.copy("www/national_sd.png", file)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.report <- render_gt({
@@ -1237,7 +1245,8 @@ server <- function(input, output, session) {
       file = file,
       cliprect = "viewport",
       selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.map.deaths <- renderLeaflet({
@@ -1272,7 +1281,8 @@ server <- function(input, output, session) {
       file = file,
       cliprect = "viewport",
       selfcontained = T)
-    }
+    },
+    contentType = 'image/png'
   )
   
   US.barplot.tooltip <- function(hover,
@@ -1366,7 +1376,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.DoT <- renderPlot({
@@ -1384,7 +1395,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.trends <- renderPlot({
@@ -1433,7 +1445,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   ### The following code deals with setting or responding to parameterized URLs
