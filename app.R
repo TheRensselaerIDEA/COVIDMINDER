@@ -235,16 +235,16 @@ ui <- function(request){
                                     plotOutput(outputId = "state.CoT", 
                                                height = height, 
                                                hover = hoverOpts(id = "state.CoT.hover",
-                                                                 delay = 100,
-                                                                 delayType = "throttle")),
+                                                                 delay = 15,
+                                                                 delayType = "debounce")),
                                     uiOutput("state.CoT.tooltip")),
                              column(1, downloadButton("state.CoT.dl", label="Download Case Barplot"),offset = 9),
                              column(12, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
                                                hover = hoverOpts(id = "state.DoT.hover",
-                                                                 delay = 100,
-                                                                 delayType = "throttle")),
+                                                                 delay = 15,
+                                                                 delayType = "debounce")),
                                     uiOutput("state.DoT.tooltip"))),
                              column(1, downloadButton("state.DoT.dl", label="Download Mortality Barplot"), offset = 9),
                     fluidRow(column(8, style="text-align:center;",
@@ -268,8 +268,8 @@ ui <- function(request){
                                     plotOutput(outputId = "state.trends", 
                                                height=height,
                                                hover = hoverOpts(id = "state.trends.hover",
-                                                                 delay = 100,
-                                                                 delayType = "throttle"),
+                                                                 delay = 15,
+                                                                 delayType = "debounce"),
                                                dblclick = "trends.dbl_click",
                                                brush = brushOpts(
                                                  id = "trends.brush",
@@ -352,6 +352,7 @@ ui <- function(request){
                                                            width="50%")),
                                      gt_output("ranking.table"), offset = 2))
       ),
+
       navbarMenu(menuName ="determinant_menu",
                  HTML("<div><b>DETERMINANT ANALYSIS</b></div>"),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -712,8 +713,8 @@ server <- function(input, output, session) {
                               moving.avg.window=14) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 17
-    top.offset <- 82
+    left.offset <- 0
+    top.offset <- -100 
     
     if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
@@ -793,8 +794,8 @@ server <- function(input, output, session) {
                              moving.avg.window=7) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 17
-    top.offset <- 226
+    left.offset <- 0
+    top.offset <- -100
     
     #if(is.null()) {return(NULL)}
     y_label <- get_y_label(y.value)
@@ -880,7 +881,8 @@ server <- function(input, output, session) {
                     z-index:100;
                     width: 200px;",
                     "left:", (left_px)/pixelratio + left.offset, "px; 
-                    top:", (top_px)/pixelratio + top.offset, "px;")
+                    top:", (top_px)/pixelratio + top.offset, "px;",
+                    "pointer-events: none;")
     
     state.or.county = "County: "
     if (state_initial %in% point$County) {
@@ -923,8 +925,8 @@ server <- function(input, output, session) {
                                     selected.states = c(), 
                                     moving.avg.window=7) {
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 17
-    top.offset <- 226
+    left.offset <- 0
+    top.offset <- -100
     
     y_label <- get_y_label(y.value)
     covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
@@ -1301,8 +1303,8 @@ server <- function(input, output, session) {
                                  y.value="cases", 
                                  moving.avg.window=14) {
     pixelratio <- session$clientData$pixelratio
-    left.offset <- 17
-    top.offset <- 82
+    left.offset <- 0
+    top.offset <- -100
     
     if(is.null(hover)) {return(NULL)}
     my_diff <- get_dif(y.value)
