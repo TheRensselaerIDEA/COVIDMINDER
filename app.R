@@ -12,7 +12,7 @@ update_date <- "2020-10-19"
 
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
-                       # (i.e. a 20 day window if Catskill Region has 19 report dates.)
+                       # (i.e. a 20 day window if Catskill /Region has 19 report dates.)
 height <- "600px"# plot heights
 
 # Leaving this in case we need it
@@ -73,7 +73,9 @@ footer <- tags$div(
     )
 
 
-ui <- 
+ui <- function(request){
+  
+
   tagList(
     tags$html(lang = "en-us"),
     tags$head(includeHTML("www/analytics.html")),
@@ -376,6 +378,7 @@ ui <-
   footer 
     #,tags$script(src = "style.js")
   )
+  }
 
 #### Server Code ####
 server <- function(input, output, session) {
@@ -1459,75 +1462,38 @@ server <- function(input, output, session) {
   )
   
   ### The following code deals with setting or responding to parameterized URLs
-  observe(print(input$tab))
   
-  observe({
-    # This "does the right thing" for an incoming URL
-    # suppose url is http://127.0.0.1:5682/?tab=tab3c/plot
-    query <- parseQueryString(session$clientData$url_search)
-    
-    if(!is.null(query$tab)) {
-      url <- strsplit(query$tab,"/")[[1]]
-      print(url)
-      url1 <<- url[1]
-      url2 <<- url[2]
-      updateTabsetPanel(session, 'tab', url1)
-    }
-    if(!is.null(query$state)){
-      print(query$state)
-      current_selected_state = strsplit(query$state,"/")[[1]]
-      updateSelectInput(session, "state_name", current_selected_state)
-    }
+  # reactive variable to compute a list representing all reactive variables not in our "toparameterize" list
+  # reactive vars are lazily evaluated so we don't have to worry about spam-querying our reactive variables every time we have a tooltip pop up
+  excluded_vars <- reactive({
+    # select which reactive variables from the full list to parameterize
+    reactvals <- reactiveValuesToList(input)
+    toparameterize <- c("state_name", "tab")
+    toexclude = reactvals[!reactvals %in% toparameterize]
   })
   
-  
   observe({
-    # Trigger this observer every time an input changes
-    params <- reactiveValuesToList(input)
+    # every time the user changes their selected state or their tab
+    input$state_name
+    input$tab
+    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
+    setBookmarkExclude(excluded_vars())
+    # bookmark application state
     session$doBookmark()
   })
-  
+
+  # every time we bookmark application state we update the url
   onBookmarked(function(url) {
-    # Construct the replacement URL:
-    url.new <- paste0(
-      session$clientData$url_protocol,"//",
-      session$clientData$url_hostname,
-      session$clientData$url_port,
-      session$clientData$url_pathname,
-      "?tab=",
-      session$input$tab,
-      "?selected_state=",
-      session$input$state_name
-    )
-    updateQueryString(url.new)
+    updateQueryString(url)
   })
+
   
-  observe({ # this observer executes once, when the page loads " 
-    
-    data <- parseQueryString(session$clientData$url_search)
-    
-    # the navbar tab and tabpanel variables are two variables 
-    # we have to pass to the client for the update to take place
-    # if nav is defined, send a message to the client to set the nav tab
-    if (! is.null(data$page)) {
-      session$sendCustomMessage(type='setNavbar', data)
-    }
-    
-    # if the tab variable is defined, send a message to client to update the tab
-    if (any(sapply(data[c("state_report_cards",
-                          "national_report_card",
-                          'determinant_disclaimer',
-                          'about'
-    )], 
-    Negate(is.null)))) {
-      session$sendCustomMessage(type='setTab', data)
-    }
-    
-    if (!is.null(data$selected_state)) { # if a variable isn't specified, it will be NULL
-      updateSelectInput(session, 'state_name', selected=data$selected_state)
-    }
-    
-  })
+  
+
+  
+
+  
+ 
 
   # Content of modal dialog 
   query_modal <- modalDialog(
