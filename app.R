@@ -92,30 +92,65 @@ ui <- function(request){
      
       tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
                value = "national_report_card",
-               tags$div(style = "float:right;",
-                        HTML(paste("<b>Date:</b>", update_date))),
-               fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
+               
+               fluidRow(
+                 column(
+                   width=2,
+                   offset=10,
+                   tags$span(
+                     style="padding: 5px 20px;float:right;",
+                     tags$b("Date:"),
+                     HTML(update_date)),
+                   
+                 )
+               ),
+               fluidRow(
+                 column(8,
+                        style="text-align:center;",
+                        tags$h1("United States Overview"),
+                        offset=2
+                        )
+              ),
                tags$br(),
-               fluidRow(column(10, style="text-align:center;position:relative;",
-                               tags$h2("United States COVID-19 Case Curve"),
-                               tags$h3("How have United States overall COVID-19 Cases changed over time?"),
-                               plotOutput(outputId = "US.CoT", 
-                                          height = height,
-                                          hover = hoverOpts(id = "US.CoT.hover",
-                                                           delay = 100,
-                                                           delayType = "throttle")),
-                               uiOutput("US.CoT.tooltip"), offset = 1),
-                        column(1, downloadButton("US.CoT.dl", label="Download Case Barplot"),offset = 9),
-                        column(10, style="text-align:center;position:relative;",
-                               tags$h2("United States COVID-19 Mortality Curve"),
-                               tags$h3("How have United States overall COVID-19 deaths changed over time?"),
-                               plotOutput(outputId = "US.DoT", 
-                                          height = height,
-                                          hover = hoverOpts(id = "US.DoT.hover",
-                                                            delay = 100,
-                                                            delayType = "throttle")),
-                               uiOutput("US.DoT.tooltip"), offset = 1),
-                        column(1, downloadButton("US.DoT.dl", label="Download Mortality Barplot"),offset = 9)),
+              fluidRow(
+                column(8, style="text-align:center;",
+                       tags$h2("United States COVID-19 Case Curve"),
+                       tags$h3("How have United States overall COVID-19 Cases changed over time?"),
+                       offset=2
+                )),
+               fluidRow(
+                 column(8,
+                         plotOutput(outputId = "US.CoT", 
+                                    height = height,
+                                    hover = hoverOpts(id = "US.CoT.hover",
+                                                     delay = 100,
+                                                     delayType = "throttle")),
+                         uiOutput("US.CoT.tooltip"),
+                        downloadButton("US.CoT.dl", label="Download Case Barplot"),
+                        offset = 2)
+               ),
+              fluidRow(
+                column(8, style="text-align:center;",
+                       tags$h2("United States COVID-19 Mortality Curve"),
+                       tags$h3("How have United States overall COVID-19 deaths changed over time?"),
+                       offset=2
+                       
+                )
+              ),
+              fluidRow(
+                column(8, 
+                       plotOutput(outputId = "US.DoT", 
+                                  height = height,
+                                  hover = hoverOpts(id = "US.DoT.hover",
+                                                    delay = 100,
+                                                    delayType = "throttle")),
+                       uiOutput("US.DoT.tooltip"),
+                       downloadButton("US.DoT.dl", label="Download Mortality Barplot"),
+                       offset = 2),
+              
+              
+                        
+                 ),
                fluidRow(column(8, style="text-align:center;",
                                tags$h2("Flattening the Curve"),
                                tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
@@ -160,7 +195,7 @@ ui <- function(request){
                                     <span style='background: #74ADD1; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> Lower</strong> than national average rate</div>
                                <i style='display:inline;'>Darker shades indicate greater disparity.</i><br><br>
                                </div>")), offset=4)),
-               fluidRow(column(6,
+               fluidRow(column(8,
                                tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
                                tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Case Rates? (",time.period, " day average)")),
                                radioButtons(inputId = "NRC.case.time",
@@ -169,8 +204,9 @@ ui <- function(request){
                                             selected = "Daily",
                                             inline = T),
                                leafletOutput("US.map.cases", height = height),
-                               column(2, downloadButton("US.map.cases.dl", label="Download Case Map"), offset=6)),
-                        column(6,
+                              downloadButton("US.map.cases.dl", label="Download Case Map"),
+                              offset=2),
+                        column(8,
                                tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
                                tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Mortality Rates? (",time.period, " day average)")),
                                radioButtons(inputId = "NRC.deaths.time",
@@ -179,20 +215,26 @@ ui <- function(request){
                                             selected = "Daily",
                                             inline = T),
                                leafletOutput("US.map.deaths", height = height),
-                               column(2, downloadButton("US.map.deaths.dl", label="Download Mortality Map"), offset = 6)),
-                        column(6,
+                               downloadButton("US.map.deaths.dl", label="Download Mortality Map"),
+                               offset=2),
+                        column(8,
                                tags$h2(style="text-align:center;", "US COVID-19 Testing Disparities"),
                                tags$h3(style="text-align:center;", "What are the Nationwide disparities in COVID-19 Testing?"),
                                leafletOutput("US.map.testing", height = height), 
-                               column(2, downloadButton("US.maps.testing.dl", label="Download Testing Map"), offset = 6), offset = 3
-                               )),
+                               downloadButton("US.maps.testing.dl", label="Download Testing Map"), 
+                               offset = 2
+                               )
+                        ),
                tags$br(),
                fluidRow(column(12, style="text-align:center;",
                                uiOutput("US.determinant.title"), offset=0),
-                        column(12, align="center", plotOutput(outputId = "US.determinants", 
-                                              )),
-                        # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
-                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=6)
+                        column(8,
+                               align="center", 
+                               plotOutput(outputId = "US.determinants"),
+                               downloadButton("US.determinants.dl", label="Download Determinants Visualization"),
+                               offset=2
+                               ),
+                        
                ),
                tags$br(),
                tags$br(),
@@ -219,26 +261,32 @@ ui <- function(request){
      tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                     fluidRow(column(12,
-                                    selectInput(inputId = "state_name",
-                                                label = "State Selector",
-                                                title = "State selecting form tool.",
-                                                choices = state.abr$name,
-                                                selected = as.character(unlist(ranking[ranking$rank==50, "name"]))),
-                                    tags$div(style = "float:right;",
-                                             HTML(paste("<b>Date:</b>", update_date))))),
+                      selectInput(inputId = "state_name",
+                        label = "State Selector",
+                        title = "State selecting form tool.",
+                        choices = state.abr$name,
+                        selected = as.character(unlist(ranking[ranking$rank==50, "name"]))
+                      ),
+                      tags$div(style = "float:right;",
+                        HTML(paste("<b>Date:</b>", update_date))
+                      ))
+                    ),
                     fluidRow(column(12, style="text-align:center;",uiOutput("main_title"))),
                     tags$br(),
                     fluidRow(column(8, style="text-align:center;",
                                     tags$b(tags$sup("*"),"States are ranked best to worst by their percentage change in COVID-19 cases over the past ",time.period," days."),
                                     offset=2)),
-                    fluidRow(column(12, style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
+                    fluidRow(column(8,
+                                    style="text-align:center;position:relative;",uiOutput("state.CoT.title"),
                                     plotOutput(outputId = "state.CoT", 
                                                height = height, 
                                                hover = hoverOpts(id = "state.CoT.hover",
                                                                  delay = 15,
                                                                  delayType = "debounce")),
-                                    uiOutput("state.CoT.tooltip")),
-                             column(1, downloadButton("state.CoT.dl", label="Download Case Barplot"),offset = 9),
+                                    uiOutput("state.CoT.tooltip"),
+                                    downloadButton("state.CoT.dl", label="Download Case Barplot"),
+                                    offset=2),
+                             
                              column(12, style="text-align:center;position:relative;",uiOutput("state.DoT.title"),
                                     plotOutput(outputId = "state.DoT", 
                                                height = height, 
