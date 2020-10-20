@@ -1463,24 +1463,19 @@ server <- function(input, output, session) {
   
   ### The following code deals with setting or responding to parameterized URLs
   
-  # reactive variable to compute a list representing all reactive variables not in our "toparameterize" list
-  # reactive vars are lazily evaluated so we don't have to worry about spam-querying our reactive variables every time we have a tooltip pop up
-  excluded_vars <- reactive({
-    # select which reactive variables from the full list to parameterize
-    reactvals <- reactiveValuesToList(input)
-    toparameterize <- c("state_name", "tab")
-    toexclude = reactvals[!reactvals %in% toparameterize]
-  })
-  
-  observe({
-    # every time the user changes their selected state or their tab
+  observe(
+    {
+    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
     input$state_name
     input$tab
-    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
-    setBookmarkExclude(excluded_vars())
+    # isolate so we don't trigger observe on literally every input change
+    reactvals <- names(isolate(reactiveValuesToList(input)))
+    toparameterize <- c("state_name", "tab")
+    toexclude = reactvals[!(reactvals %in% toparameterize)]
+    setBookmarkExclude(toexclude)
     # bookmark application state
     session$doBookmark()
-  })
+    })
 
   # every time we bookmark application state we update the url
   onBookmarked(function(url) {
