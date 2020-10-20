@@ -1459,9 +1459,14 @@ server <- function(input, output, session) {
     
     if(!is.null(query$tab)) {
       url <- strsplit(query$tab,"/")[[1]]
+      print(url)
       url1 <<- url[1]
       url2 <<- url[2]
       updateTabsetPanel(session, 'tab', url1)
+    }
+    if(!is.null(query$state)){
+      current_selected_state = strsplit(query$state)
+      updateSelectInput(session, "state_name", current_selected_state)
     }
   })
   
