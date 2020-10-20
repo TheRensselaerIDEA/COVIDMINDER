@@ -8,11 +8,11 @@ source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
 
-update_date <- "2020-10-07"
+update_date <- "2020-10-20"
 
 
 moving.avg.window <- 7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
-                       # (i.e. a 20 day window if Catskill Region has 19 report dates.)
+                       # (i.e. a 20 day window if Catskill /Region has 19 report dates.)
 height <- "600px"# plot heights
 
 # Leaving this in case we need it
@@ -73,7 +73,9 @@ footer <- tags$div(
     )
 
 
-ui <- 
+ui <- function(request){
+  
+
   tagList(
     tags$html(lang = "en-us"),
     tags$head(includeHTML("www/analytics.html")),
@@ -87,7 +89,134 @@ ui <-
                    img(class="logo", src="Rensselaer_round.png", alt="Small Rensselaer Polytechnic Institute Logo"),
                    HTML("COVID<b>MINDER</b>")),
       windowTitle = "COVIDMINDER: Where you live matters",
-      tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
+     
+      tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
+               value = "national_report_card",
+               tags$div(style = "float:right;",
+                        HTML(paste("<b>Date:</b>", update_date))),
+               fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
+               tags$br(),
+               fluidRow(column(10, style="text-align:center;position:relative;",
+                               tags$h2("United States COVID-19 Case Curve"),
+                               tags$h3("How have United States overall COVID-19 Cases changed over time?"),
+                               plotOutput(outputId = "US.CoT", 
+                                          height = height,
+                                          hover = hoverOpts(id = "US.CoT.hover",
+                                                           delay = 100,
+                                                           delayType = "throttle")),
+                               uiOutput("US.CoT.tooltip"), offset = 1),
+                        column(1, downloadButton("US.CoT.dl", label="Download Case Barplot"),offset = 9),
+                        column(10, style="text-align:center;position:relative;",
+                               tags$h2("United States COVID-19 Mortality Curve"),
+                               tags$h3("How have United States overall COVID-19 deaths changed over time?"),
+                               plotOutput(outputId = "US.DoT", 
+                                          height = height,
+                                          hover = hoverOpts(id = "US.DoT.hover",
+                                                            delay = 100,
+                                                            delayType = "throttle")),
+                               uiOutput("US.DoT.tooltip"), offset = 1),
+                        column(1, downloadButton("US.DoT.dl", label="Download Mortality Barplot"),offset = 9)),
+               fluidRow(column(8, style="text-align:center;",
+                               tags$h2("Flattening the Curve"),
+                               tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
+                               tags$b("Data Source: "), tags$a("CDC", href="https://wwwnc.cdc.gov/eid/article/26/8/20-1093_article"), offset=2)),
+               tags$br(),
+               tags$br(),
+               fluidRow(column(8,gt_output("US.report"),
+                               offset = 2)),
+               fluidRow(column(12, style="text-align:center;",
+                               tags$h1("State Level Breakdown"))),
+               fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("US.trends.title"),
+                               tags$div(style = "height:130px;text-align:left;padding-left:4%;",
+                                        uiOutput("US.report.state.selector"),
+                                        radioButtons(inputId = "NRC.rate",
+                                                     label = "Rate",
+                                                     choices = c("Overall", "Per/100k"),
+                                                     selected = "Per/100k")),
+                               tags$div(style="text-align:left;padding-left:4%", "Use the above form to select 1 or multiple States."),
+                               plotOutput(outputId = "US.trends", 
+                                          height=height,
+                                          hover = hoverOpts(id = "US.trends.hover",
+                                                            delay = 100,
+                                                            delayType = "throttle"),
+                                          dblclick = "trends.dbl_click",
+                                          brush = brushOpts(
+                                            id = "trends.brush",
+                                            resetOnNew = TRUE)),
+                               uiOutput("US.trends.tooltip"), offset = 1),
+                        column(1, downloadButton("US.trends.dl", label="Download Case Trend Plot"), offset = 9)),
+               tags$br(),
+               fluidRow(column(4, style="text-align:center;",
+                               tags$div(class = "info",
+                               HTML("<h2>Disparity Color Legend</h2>
+                               Colors on maps below represent:<br><br>
+                                <div>
+                               <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #F46D43; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> Higher</strong> than national average rate</div>
+                               <div><span style='background: #f7f7f7; border:solid 1px; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> About Equal</strong> to national average rate</div>
+                               <div><span style='background: #253494; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #4575B4; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
+                                    <span style='background: #74ADD1; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> Lower</strong> than national average rate</div>
+                               <i style='display:inline;'>Darker shades indicate greater disparity.</i><br><br>
+                               </div>")), offset=4)),
+               fluidRow(column(6,
+                               tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Case Rates? (",time.period, " day average)")),
+                               radioButtons(inputId = "NRC.case.time",
+                                            label = "Time Frame",
+                                            choices = c("Daily", "Overall"),
+                                            selected = "Daily",
+                                            inline = T),
+                               leafletOutput("US.map.cases", height = height),
+                               column(2, downloadButton("US.map.cases.dl", label="Download Case Map"), offset=6)),
+                        column(6,
+                               tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
+                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Mortality Rates? (",time.period, " day average)")),
+                               radioButtons(inputId = "NRC.deaths.time",
+                                            label = "Time Frame",
+                                            choices = c("Daily", "Overall"),
+                                            selected = "Daily",
+                                            inline = T),
+                               leafletOutput("US.map.deaths", height = height),
+                               column(2, downloadButton("US.map.deaths.dl", label="Download Mortality Map"), offset = 6)),
+                        column(6,
+                               tags$h2(style="text-align:center;", "US COVID-19 Testing Disparities"),
+                               tags$h3(style="text-align:center;", "What are the Nationwide disparities in COVID-19 Testing?"),
+                               leafletOutput("US.map.testing", height = height), 
+                               column(2, downloadButton("US.maps.testing.dl", label="Download Testing Map"), offset = 6), offset = 3
+                               )),
+               tags$br(),
+               fluidRow(column(12, style="text-align:center;",
+                               uiOutput("US.determinant.title"), offset=0),
+                        column(12, align="center", plotOutput(outputId = "US.determinants", 
+                                              )),
+                        # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
+                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=6)
+               ),
+               tags$br(),
+               tags$br(),
+               fluidRow(column(12, style="text-align:center;",
+                               tags$h1("Rankings")),
+                        tags$a(name = "ranking"),
+                        column(8,
+                               fluidRow(style="float:right;width:250px;",
+                                        selectInput(inputId = "US.entries",
+                                                    label = "Entries",
+                                                    title = "Entry amount selecting form tool.",
+                                                    choices = c(`Show 10` = 10, 
+                                                                `Show 25` = 25,
+                                                                `Show 50` = 50),
+                                                    selected = 10,
+                                                    width = "50%"),
+                                        radioButtons(inputId = "US.rank.order",
+                                                     label = "Order",
+                                                     choices = c("Ascending", "Descending"),
+                                                     selected = "Descending",
+                                                     width="50%")),
+                               gt_output("US.ranking.table"), offset = 2))
+      ),
+     tabPanel(title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
                value = "state_report_cards",
                     fluidRow(column(12,
                                     selectInput(inputId = "state_name",
@@ -223,133 +352,7 @@ ui <-
                                                            width="50%")),
                                      gt_output("ranking.table"), offset = 2))
       ),
-      tabPanel(title = HTML("<b>NATIONAL REPORT CARD</b>"),
-               value = "national_report_card",
-               tags$div(style = "float:right;",
-                        HTML(paste("<b>Date:</b>", update_date))),
-               fluidRow(column(12, style="text-align:center;",tags$h1("United States Overview"))),
-               tags$br(),
-               fluidRow(column(10, style="text-align:center;position:relative;",
-                               tags$h2("United States COVID-19 Case Curve"),
-                               tags$h3("How have United States overall COVID-19 Cases changed over time?"),
-                               plotOutput(outputId = "US.CoT", 
-                                          height = height,
-                                          hover = hoverOpts(id = "US.CoT.hover",
-                                                           delay = 15,
-                                                           delayType = "debounce")),
-                               uiOutput("US.CoT.tooltip"), offset = 1),
-                        column(1, downloadButton("US.CoT.dl", label="Download Case Barplot"),offset = 9),
-                        column(10, style="text-align:center;position:relative;",
-                               tags$h2("United States COVID-19 Mortality Curve"),
-                               tags$h3("How have United States overall COVID-19 deaths changed over time?"),
-                               plotOutput(outputId = "US.DoT", 
-                                          height = height,
-                                          hover = hoverOpts(id = "US.DoT.hover",
-                                                            delay = 15,
-                                                            delayType = "debounce")),
-                               uiOutput("US.DoT.tooltip"), offset = 1),
-                        column(1, downloadButton("US.DoT.dl", label="Download Mortality Barplot"),offset = 9)),
-               fluidRow(column(8, style="text-align:center;",
-                               tags$h2("Flattening the Curve"),
-                               tags$p("Nationwide, states have taken various approaches to mitigate the spread of coronavirus, such as social distancing interventions and encouraging mask use where social distancing is not possible. Studies by the CDC have shown these methods reduce new COVID-19 cases, hospitalizations, and deaths."),
-                               tags$b("Data Source: "), tags$a("CDC", href="https://wwwnc.cdc.gov/eid/article/26/8/20-1093_article"), offset=2)),
-               tags$br(),
-               tags$br(),
-               fluidRow(column(8,gt_output("US.report"),
-                               offset = 2)),
-               fluidRow(column(12, style="text-align:center;",
-                               tags$h1("State Level Breakdown"))),
-               fluidRow(column(10, style="text-align:center;position:relative;",uiOutput("US.trends.title"),
-                               tags$div(style = "height:130px;text-align:left;padding-left:4%;",
-                                        uiOutput("US.report.state.selector"),
-                                        radioButtons(inputId = "NRC.rate",
-                                                     label = "Rate",
-                                                     choices = c("Overall", "Per/100k"),
-                                                     selected = "Per/100k")),
-                               tags$div(style="text-align:left;padding-left:4%", "Use the above form to select 1 or multiple States."),
-                               plotOutput(outputId = "US.trends", 
-                                          height=height,
-                                          hover = hoverOpts(id = "US.trends.hover",
-                                                            delay = 15,
-                                                            delayType = "debounce"),
-                                          dblclick = "trends.dbl_click",
-                                          brush = brushOpts(
-                                            id = "trends.brush",
-                                            resetOnNew = TRUE)),
-                               uiOutput("US.trends.tooltip"), offset = 1),
-                        column(1, downloadButton("US.trends.dl", label="Download Case Trend Plot"), offset = 9)),
-               tags$br(),
-               fluidRow(column(4, style="text-align:center;",
-                               tags$div(class = "info",
-                               HTML("<h2>Disparity Color Legend</h2>
-                               Colors on maps below represent:<br><br>
-                                <div>
-                               <div><span style='background: #BD0026; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
-                                    <span style='background: #D73027; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
-                                    <span style='background: #F46D43; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> Higher</strong> than national average rate</div>
-                               <div><span style='background: #f7f7f7; border:solid 1px; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> About Equal</strong> to national average rate</div>
-                               <div><span style='background: #253494; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
-                                    <span style='background: #4575B4; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span>
-                                    <span style='background: #74ADD1; font-size: 11px; opacity: 0.7;'>&nbsp&nbsp&nbsp&nbsp</span> State rate is<strong> Lower</strong> than national average rate</div>
-                               <i style='display:inline;'>Darker shades indicate greater disparity.</i><br><br>
-                               </div>")), offset=4)),
-               fluidRow(column(6,
-                               tags$h2(style="text-align:center;", "US COVID-19 Case Hotspots"),
-                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Case Rates? (",time.period, " day average)")),
-                               radioButtons(inputId = "NRC.case.time",
-                                            label = "Time Frame",
-                                            choices = c("Daily", "Overall"),
-                                            selected = "Daily",
-                                            inline = T),
-                               leafletOutput("US.map.cases", height = height),
-                               column(2, downloadButton("US.map.cases.dl", label="Download Case Map"), offset=6)),
-                        column(6,
-                               tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots"),
-                               tags$h3(style="text-align:center;", paste0("What are the Nationwide disparities in Daily Mortality Rates? (",time.period, " day average)")),
-                               radioButtons(inputId = "NRC.deaths.time",
-                                            label = "Time Frame",
-                                            choices = c("Daily", "Overall"),
-                                            selected = "Daily",
-                                            inline = T),
-                               leafletOutput("US.map.deaths", height = height),
-                               column(2, downloadButton("US.map.deaths.dl", label="Download Mortality Map"), offset = 6)),
-                        column(6,
-                               tags$h2(style="text-align:center;", "US COVID-19 Testing Disparities"),
-                               tags$h3(style="text-align:center;", "What are the Nationwide disparities in COVID-19 Testing?"),
-                               leafletOutput("US.map.testing", height = height), 
-                               column(2, downloadButton("US.maps.testing.dl", label="Download Testing Map"), offset = 6), offset = 3
-                               )),
-               tags$br(),
-               fluidRow(column(12, style="text-align:center;",
-                               uiOutput("US.determinant.title"), offset=0),
-                        column(12, align="center", plotOutput(outputId = "US.determinants", 
-                                              )),
-                        # column(12, img(src='national_sd.png', height="50%", width="50%", align = "left"), offset = 3),
-                        column(2, downloadButton("US.determinants.dl", label="Download Determinants Visualization"), offset=6)
-               ),
-               tags$br(),
-               tags$br(),
-               fluidRow(column(12, style="text-align:center;",
-                               tags$h1("Rankings")),
-                        tags$a(name = "ranking"),
-                        column(8,
-                               fluidRow(style="float:right;width:250px;",
-                                        selectInput(inputId = "US.entries",
-                                                    label = "Entries",
-                                                    title = "Entry amount selecting form tool.",
-                                                    choices = c(`Show 10` = 10, 
-                                                                `Show 25` = 25,
-                                                                `Show 50` = 50),
-                                                    selected = 10,
-                                                    width = "50%"),
-                                        radioButtons(inputId = "US.rank.order",
-                                                     label = "Order",
-                                                     choices = c("Ascending", "Descending"),
-                                                     selected = "Descending",
-                                                     width="50%")),
-                               gt_output("US.ranking.table"), offset = 2))
-      ),
-     
+
       navbarMenu(menuName ="determinant_menu",
                  HTML("<div><b>DETERMINANT ANALYSIS</b></div>"),
                tabPanel(tags$div(class="tab-title",style="text-align:center;",
@@ -376,6 +379,7 @@ ui <-
   footer 
     #,tags$script(src = "style.js")
   )
+  }
 
 #### Server Code ####
 server <- function(input, output, session) {
@@ -481,10 +485,19 @@ server <- function(input, output, session) {
   output$main_title <- renderUI({
     state_name <- input$state_name
     state_initial <- state.abr[state.abr$name == state_name, "abr"]
-    tagList(
-      tags$h1(paste0(state_name, " Overview")),
-      tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
-    )
+    worst <- as.character(unlist(ranking[ranking$rank==50, "name"]))
+    if(!state_name == worst){
+      tagList(
+        tags$h1(paste0(state_name, " Overview")),
+        tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
+      ) 
+    }else{
+      tagList(
+        tags$h1(paste0(state_name, " Overview (Current Highest Case Rate)")),
+        tags$h2(tags$a(paste0("State rank: ", ranking[ranking$State == state_initial, "rank"]), tags$sup("*"), href = "#ranking", style="color:black;"))
+      )
+    }
+    
   })
   
   output$state.CoT.title <- renderUI({
@@ -613,8 +626,9 @@ server <- function(input, output, session) {
                            ),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
-    }
+              selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   output$map.deaths <- renderLeaflet({
@@ -654,8 +668,9 @@ server <- function(input, output, session) {
                            title = tags$div(title)),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
-    }
+              selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   output$maps.determinant <- renderLeaflet({
@@ -687,8 +702,9 @@ server <- function(input, output, session) {
                            title = tags$div(title, class = "leaflet-map-title")),
               file = file,
               cliprect = "viewport",
-              selfcontained = F)
-    }
+              selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   barplot.tooltip <- function(hover, 
@@ -1019,7 +1035,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$state.DoT.dl <- downloadHandler(
@@ -1037,7 +1054,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$state.DoT <- renderPlot({
@@ -1106,7 +1124,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$ranking.table <- render_gt({
@@ -1190,8 +1209,9 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
-    }
+      selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   output$US.determinants.dl <- downloadHandler(
@@ -1206,7 +1226,8 @@ server <- function(input, output, session) {
              height = 8,
              units = "in")
       #file.copy("www/national_sd.png", file)
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.report <- render_gt({
@@ -1237,8 +1258,9 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
-    }
+      selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   output$US.map.deaths <- renderLeaflet({
@@ -1253,9 +1275,10 @@ server <- function(input, output, session) {
   })
   
   output$US.map.deaths.dl <- downloadHandler(
-    filename = function() {
-      return("US_mortality.png")
-    },
+    # filename = function() {
+    #   return("US_mortality.png")
+    # },
+    filename = "US_mortality.png",
     content = function(file) {
       title <- tags$h2(style="text-align:center;", "US COVID-19 Mortality Hotspots")
       time <- input$NRC.deaths.time
@@ -1271,8 +1294,9 @@ server <- function(input, output, session) {
       ),
       file = file,
       cliprect = "viewport",
-      selfcontained = F)
-    }
+      selfcontained = T)
+    },
+    contentType = 'image/png'
   )
   
   US.barplot.tooltip <- function(hover,
@@ -1366,7 +1390,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.DoT <- renderPlot({
@@ -1384,7 +1409,8 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   output$US.trends <- renderPlot({
@@ -1433,68 +1459,38 @@ server <- function(input, output, session) {
              width = 12,
              height = 8,
              units = "in")
-    }
+    },
+    contentType = 'image/png'
   )
   
   ### The following code deals with setting or responding to parameterized URLs
-  observe(print(input$tab))
   
-  observe({
-    # This "does the right thing" for an incoming URL
-    # suppose url is http://127.0.0.1:5682/?tab=tab3c/plot
-    query <- parseQueryString(session$clientData$url_search)
-    
-    if(!is.null(query$tab)) {
-      url <- strsplit(query$tab,"/")[[1]]
-      url1 <<- url[1]
-      url2 <<- url[2]
-      updateTabsetPanel(session, 'tab', url1)
-    }
-  })
-  
-  
-  observe({
-    # Trigger this observer every time an input changes
-    params <- reactiveValuesToList(input)
+  observe(
+    {
+    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
+    input$state_name
+    input$tab
+    # isolate so we don't trigger observe on literally every input change
+    reactvals <- names(isolate(reactiveValuesToList(input)))
+    toparameterize <- c("state_name", "tab")
+    toexclude = reactvals[!(reactvals %in% toparameterize)]
+    setBookmarkExclude(toexclude)
+    # bookmark application state
     session$doBookmark()
-  })
-  
+    })
+
+  # every time we bookmark application state we update the url
   onBookmarked(function(url) {
-    # Construct the replacement URL:
-    url.new <- paste0(
-      session$clientData$url_protocol,"//",
-      session$clientData$url_hostname,
-      session$clientData$url_pathname,
-      "?tab=",
-      session$clientData$url_port,
-      session$input$tab
-    )
-    #TODO: Special handling for tabs with selectors!
-    updateQueryString(url.new)
+    updateQueryString(url)
   })
+
   
-  observe({ # this observer executes once, when the page loads " 
-    
-    data <- parseQueryString(session$clientData$url_search)
-    
-    # the navbar tab and tabpanel variables are two variables 
-    # we have to pass to the client for the update to take place
-    # if nav is defined, send a message to the client to set the nav tab
-    if (! is.null(data$page)) {
-      session$sendCustomMessage(type='setNavbar', data)
-    }
-    
-    # if the tab variable is defined, send a message to client to update the tab
-    if (any(sapply(data[c("state_report_cards",
-                          "national_report_card",
-                          'determinant_disclaimer',
-                          'about'
-    )], 
-    Negate(is.null)))) {
-      session$sendCustomMessage(type='setTab', data)
-    }
-    
-  })
+  
+
+  
+
+  
+ 
 
   # Content of modal dialog 
   query_modal <- modalDialog(
