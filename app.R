@@ -1465,7 +1465,8 @@ server <- function(input, output, session) {
       updateTabsetPanel(session, 'tab', url1)
     }
     if(!is.null(query$state)){
-      current_selected_state = strsplit(query$state)
+      print(query$state)
+      current_selected_state = strsplit(query$state,"/")[[1]]
       updateSelectInput(session, "state_name", current_selected_state)
     }
   })
@@ -1482,12 +1483,13 @@ server <- function(input, output, session) {
     url.new <- paste0(
       session$clientData$url_protocol,"//",
       session$clientData$url_hostname,
+      session$clientData$url_port,
       session$clientData$url_pathname,
       "?tab=",
-      session$clientData$url_port,
-      session$input$tab
+      session$input$tab,
+      "?selected_state=",
+      session$input$state_name
     )
-    #TODO: Special handling for tabs with selectors!
     updateQueryString(url.new)
   })
   
@@ -1510,6 +1512,10 @@ server <- function(input, output, session) {
     )], 
     Negate(is.null)))) {
       session$sendCustomMessage(type='setTab', data)
+    }
+    
+    if (!is.null(data$selected_state)) { # if a variable isn't specified, it will be NULL
+      updateSelectInput(session, 'state_name', selected=data$selected_state)
     }
     
   })
