@@ -215,7 +215,8 @@ ui <- function(request) {
         ),
         fluidRow(
           column(
-            width=8,
+            width=4,
+            offset=2,
             tags$div(
               style = "height:130px;",
               uiOutput("US.report.state.selector"),
@@ -226,8 +227,19 @@ ui <- function(request) {
                 selected = "Per/100k"
               )
             ),
-            tags$br(),
-            tags$div("Use the above form to select 1 or multiple States."),
+          )
+        ),
+        fluidRow(
+          column(
+            width=8,
+            offset=2,
+            tags$div("Use the above form to select 1 or more States."),
+          )
+        ),
+        fluidRow(
+          column(
+            width=8,
+            offset = 2,
             plotOutput(
               outputId = "US.trends",
               height = height,
@@ -241,9 +253,7 @@ ui <- function(request) {
                                 resetOnNew = TRUE)
             ),
             uiOutput("US.trends.tooltip"),
-            downloadButton("US.trends.dl", label = "Download Case Trend Plot"),
-            offset = 2
-            
+            downloadButton("US.trends.dl", label = "Download Case Trend Plot")
           ),
           
           
@@ -359,9 +369,9 @@ ui <- function(request) {
                  tags$h1("Rankings"), offset = 2),
           tags$a(name = "ranking"),
           column(
-            8,
+            width=8,
+            offset = 2,
             fluidRow(
-              style = "float:right;width:250px;",
               selectInput(
                 inputId = "US.entries",
                 label = "Entries",
@@ -371,18 +381,17 @@ ui <- function(request) {
                   `Show 50` = 50
                 ),
                 selected = 10,
-                width = "50%"
+                width = "100px"
               ),
               radioButtons(
                 inputId = "US.rank.order",
                 label = "Order",
                 choices = c("Ascending", "Descending"),
                 selected = "Descending",
-                width = "50%"
+                width = "200px"
               )
             ),
-            gt_output("US.ranking.table"),
-            offset = 2
+            gt_output("US.ranking.table")
           )
         )
       ),
@@ -398,7 +407,8 @@ ui <- function(request) {
           
         )),
         fluidRow(column(
-          8,
+          width=8,
+          offset=2,
           selectInput(
             inputId = "state_name",
             label = "State Selector",
@@ -406,8 +416,6 @@ ui <- function(request) {
             selected = as.character(unlist(ranking[ranking$rank ==
                                                      50, "name"]))
           ),
-          
-          offset = 2
         )),
         fluidRow(column(
           8,
@@ -512,7 +520,7 @@ ui <- function(request) {
         )),
         fluidRow(
           column(
-            8,
+            width=8,offset=2,
             tags$div(
               style = "height:130px;width:100%;text-align:left;",
               uiOutput("state.report.county.selector"),
@@ -522,10 +530,17 @@ ui <- function(request) {
                 choices = c("Overall", "Per/100k"),
                 selected = "Per/100k"
               )
-            ),
-            tags$div(style = "text-align:left;padding-left:4%", "Use the above form to select 1 or multiple Counties."),
-            tags$br(),
-            plotOutput(
+            )
+          )
+        ),
+        fluidRow(
+          column(width=8,offset=2,
+            tags$div("Use the above form to select 1 or more Counties."),
+                 )
+        ),
+        fluidRow(
+          column(width=8,offset=2,
+                 plotOutput(
               outputId = "state.trends",
               height = height,
               hover = hoverOpts(
@@ -539,13 +554,8 @@ ui <- function(request) {
             ),
             uiOutput("state.trends.tooltip"),
             downloadButton("state.trends.dl", label = "Download Case Trends Plot"),
-            offset = 2
-          )
+                 )
         ),
-        
-        
-        
-        
         tags$br(),
         fluidRow(column(
           8,
@@ -653,7 +663,6 @@ ui <- function(request) {
               column(
                 width=8,
                 offset=2,
-              style = "float:right;width:250px;",
               selectInput(
                 inputId = "entries",
                 label = "Entries",
@@ -663,20 +672,25 @@ ui <- function(request) {
                   `Show 50` = 50
                 ),
                 selected = 10,
-                width = "50%"
+                width = "100px"
               ),
               radioButtons(
                 inputId = "rank.order",
                 label = "Order",
                 choices = c("Ascending", "Descending"),
                 selected = "Descending",
-                width = "50%"
+                width = "200px"
               ),
               
-            gt_output("ranking.table")
               )
               
             ),
+        fluidRow(
+          column(
+            width=8,offset=2,
+            gt_output("ranking.table")
+          )
+        )
           ),
         
       
