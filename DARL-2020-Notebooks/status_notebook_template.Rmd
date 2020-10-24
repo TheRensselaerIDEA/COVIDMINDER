@@ -97,6 +97,7 @@ In your notebook you can also link to Shiny apps you and others have created
 
 * RCS ID: **Always** include this!
 * Project Name: **Always** include this!
+* Branch Name: **Always** include this!
 * Summary of work since last week 
 
     * Describe the important aspects of what you worked on and accomplished
