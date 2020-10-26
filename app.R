@@ -112,7 +112,7 @@ ui <- function(request) {
         fluidRow(column(
           width = 2,
           offset = 10,
-          tags$span(style = "padding: 5px 20px;float:right;",
+          tags$span(style = "float:right; padding: 5px 40px",
                     tags$b("Date:"),
                     HTML(update_date)),
           
@@ -220,12 +220,13 @@ ui <- function(request) {
             tags$div(
               style = "height:130px;",
               uiOutput("US.report.state.selector"),
-              radioButtons(
-                inputId = "NRC.rate",
-                label = "Rate",
-                choices = c("Overall", "Per/100k"),
-                selected = "Per/100k"
+                radioButtons(
+                  inputId = "NRC.rate",
+                  label = "Rate",
+                  choices = c("Overall", "Per/100k"),
+                  selected = "Per/100k"
               )
+              
             ),
           )
         ),
@@ -233,7 +234,7 @@ ui <- function(request) {
           column(
             width=8,
             offset=2,
-            tags$div("Use the above form to select 1 or more States."),
+            tags$div(style="padding: 20px 0px;", "Use the above form to select 1 or more States."),
           )
         ),
         fluidRow(
@@ -261,8 +262,8 @@ ui <- function(request) {
         ),
         tags$br(),
         fluidRow(column(
-          4,
-          offset = 4,
+          8,
+          offset = 2,
           style = "text-align:center;",
           tags$div(
             class = "info",
@@ -365,13 +366,15 @@ ui <- function(request) {
         tags$br(),
         tags$br(),
         fluidRow(
-          column(8, style = "text-align:center;",
-                 tags$h1("Rankings"), offset = 2),
-          tags$a(name = "ranking"),
-          column(
-            width=8,
-            offset = 2,
-            fluidRow(
+          column(width=8,
+                 offset=2,
+                 style = "text-align:center;",
+                 tags$h1("Rankings")
+                 )
+        ),
+        fluidRow(
+          column(width=8,
+                 offset=2,
               selectInput(
                 inputId = "US.entries",
                 label = "Entries",
@@ -390,10 +393,15 @@ ui <- function(request) {
                 selected = "Descending",
                 width = "200px"
               )
-            ),
+                 )
+        ),
+        fluidRow(
+          column(width=8, offset=2,
+                 
             gt_output("US.ranking.table")
-          )
-        )
+                 )
+        ),
+        
       ),
       tabPanel(
         title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
@@ -401,7 +409,7 @@ ui <- function(request) {
         fluidRow(column(
           width = 2,
           offset = 10,
-          tags$span(style = "padding: 5px 20px;float:right;",
+          tags$span(style = "padding: 5px 40px;float:right;",
                     tags$b("Date:"),
                     HTML(update_date)),
           
@@ -535,7 +543,7 @@ ui <- function(request) {
         ),
         fluidRow(
           column(width=8,offset=2,
-            tags$div("Use the above form to select 1 or more Counties."),
+            tags$div(style="padding: 20px 0px;", "Use the above form to select 1 or more Counties."),
                  )
         ),
         fluidRow(
