@@ -1162,7 +1162,6 @@ server <- function(input, output, session) {
                               state_initial,
                               y.value = "p_cases",
                               moving.avg.window = 14) {
-    print("here what")
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 0
