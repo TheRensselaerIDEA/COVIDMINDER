@@ -1162,10 +1162,11 @@ server <- function(input, output, session) {
                               state_initial,
                               y.value = "p_cases",
                               moving.avg.window = 14) {
+    print("here what")
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 0
-    top.offset <- -100
+    top.offset <- -200
     
     if (is.null(hover)) {
       return(NULL)
@@ -1282,7 +1283,7 @@ server <- function(input, output, session) {
     #print(session$clientData)
     pixelratio <- session$clientData$pixelratio
     left.offset <- 0
-    top.offset <- -100
+    top.offset <- -200
     
     #if(is.null()) {return(NULL)}
     y_label <- get_y_label(y.value)
@@ -1460,7 +1461,7 @@ server <- function(input, output, session) {
                                     moving.avg.window = 7) {
     pixelratio <- session$clientData$pixelratio
     left.offset <- 0
-    top.offset <- -100
+    top.offset <- -200
     
     y_label <- get_y_label(y.value)
     covid_TS_state.cases.plot <- covid_TS_state_long.cases %>%
@@ -1944,7 +1945,7 @@ server <- function(input, output, session) {
                                  moving.avg.window = 14) {
     pixelratio <- session$clientData$pixelratio
     left.offset <- 0
-    top.offset <- -100
+    top.offset <- -200
     
     if (is.null(hover)) {
       return(NULL)
