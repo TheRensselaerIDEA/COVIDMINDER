@@ -1,4 +1,5 @@
-
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "../")
 
 # Import p values for states
 states.all_p <- readRDS("StateSummaries/ALL_P.rds")
@@ -75,4 +76,11 @@ states <- data.frame(states)
 states <- states[c("fips_state", "name")]
 colnames(states) <- c("FIPS", "NAME")
 
+## remove non-rate features (such as # of deaths)
+# factors that are not rates, to be removed before analysis
+non_rate <- c("Lat", "Long_", "# Alcohol-Impaired Driving Deaths", "# Driving Deaths", "# Chlamydia Cases", "# Chlamydia Cases", "# Uninsured", "# Primary Care Physicians", "# Dentists", "# Mental Health Providers", "# Some College", "# Unemployed", "# Single-Parent Households", "# Households", "# Associations", "# Injury Deaths", "# Workers who Drive Alone", "pre_covid_deaths", "child_deaths", "infant_deaths", "# HIV Cases", "# Food Insecure", "# Limited Access", "# Drug Overdose Deaths", "# Motor Vehicle Deaths", "# Uninsured_1", "# Uninsured_2", "# Firearm Fatalities", "# Homeowners", "# Households with Severe Cost Burden", "# less than 18 years of age", "# Black", "# American Indian & Alaska Native", "# Asian", "# Native Hawaiian/Other Pacific Islander", "# Hispanic", "# Non-Hispanic White", "# Not Proficient in English", "# Rural")
 
+GWAS_MRR <- GWAS_MRR[ !(row.names(GWAS_MRR) %in% non_rate), ]
+#View(GWAS_MRR)
+
+GWAS_ADJ_P <- GWAS_ADJ_P[ !(row.names(GWAS_ADJ_P) %in% non_rate), ]
