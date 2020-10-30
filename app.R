@@ -621,7 +621,7 @@ ui <- function(request) {
         fluidRow(column(
           8,
           style = "text-align:center;",
-          tags$h1("Comorbidities"),
+          tags$h1("Comorbidities and Other Determinants"),
           offset = 2
         )),
         fluidRow(
@@ -636,8 +636,9 @@ ui <- function(request) {
             selectInput(
               inputId = "state.determinant",
               label = "Determinant",
-              choices = c("Diabetes", "Obesity", "CRD Mortality"),
-              selected = "Diabetes"
+              choices = c("Diabetes", "Obesity", "CRD Mortality", "GOP Vote"),
+#              selected = "Diabetes"
+              selected = "GOP Vote"
             ),
             leafletOutput("maps.determinant", height = height),
             downloadButton("map.determinant.dl", label = "Download Determinant Map"),
@@ -992,8 +993,22 @@ server <- function(input, output, session) {
     det <- input$state.determinant
     if (det ==  "CRD Mortality") {
       det <- "Cronic Respiratory Disease (CRD) Mortality"
-    }
-    tagList(tags$h2(paste0(state_name, " ", det, " Disparities")),
+    } 
+    
+    if (det ==  "GOP Vote") {
+      det <- "2016 Presidential Election Voting Tendancies: GOP Voting Rate"
+      
+      tagList(tags$h2(paste0(state_name, " ", det)),
+              tags$h3(
+                paste0(
+                  "How do ",
+                  state_name, 
+                  " GOP voting rates in the 2016 presidential election compare to the US Average?"
+                )
+              ))
+      
+    } else {
+     tagList(tags$h2(paste0(state_name, " ", det, " Disparities")),
             tags$h3(
               paste0(
                 "What are the ",
@@ -1003,13 +1018,18 @@ server <- function(input, output, session) {
                 " Rates compared to US Average?"
               )
             ))
+    }
   })
   
   output$determinant.text <- renderText({
     det <- input$state.determinant
+    if (det ==  "GOP Vote") {
+      paste0("2016 voting tendancies may be an indicator of a county's acceptance of state and national COVID-19 guidelines.")
+    } else {
     paste0("Nationwide, ",
            det,
            " has been observed as a leading comorbidity of COVID-19.")
+    }
   })
   
   output$state.report <- render_gt({

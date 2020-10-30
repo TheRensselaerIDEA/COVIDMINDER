@@ -53,6 +53,7 @@ geo.plot <- function(state.choice,
   # Feature: Case, Mortality...
   # US Data: ....
   ldi_feature <- get_ldi(feature)
+#  browser()
   if (state.choice == "US") {
     shapes <- states.shapes 
     dataset <- states
@@ -69,15 +70,30 @@ geo.plot <- function(state.choice,
     m.a.w <- ""
   }
   
-  pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
+#  pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
   
-  labels <- sprintf(
-    paste0("<strong>%s</strong><br/>",
-    feature," Rate DI: %.2g<br>",
-    feature," Rate: %.1f /100k"),
-    dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
-  ) %>% lapply(htmltools::HTML)
-  
+  if (feature == "GOP Vote") {
+    #browser()
+    labels <- sprintf(
+      paste0("<strong>%s</strong><br/>",
+             feature," Rate DI: %.2g<br>",
+             feature," Rate: %.1f pct"),
+      dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100
+    ) %>% lapply(htmltools::HTML)
+    
+    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*1.25, reverse=reverse)
+    #browser()
+  } else {
+    labels <- sprintf(
+      paste0("<strong>%s</strong><br/>",
+             feature," Rate DI: %.2g<br>",
+             feature," Rate: %.1f /100k"),
+      dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])*100000
+    ) %>% lapply(htmltools::HTML)
+    
+    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
+    
+  }
   
   l <- leaflet(shapes) %>%
             addPolygons(
