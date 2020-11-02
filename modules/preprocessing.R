@@ -428,5 +428,10 @@ todays.case.data <- inner_join(todays.case.data,
                                election_results_counties[,c("FIPS", "GOP Vote_rate")] ,
                                by=c("countyFIPS" = "FIPS"))
 
-todays.case.data$"GOP Vote_rate_ldi" <- unlist(lapply(todays.case.data$`GOP Vote_rate`, FUN=function(x){-log(pUS.election.gop/(x)) * 10}))
+todays.case.data$"GOP Vote_rate_ldi" <- unlist(lapply(todays.case.data$`GOP Vote_rate`, FUN=function(x){-log(pUS.election.gop/(x)) * 10})) 
+
+# Fix the extremes (to eliminate gray counties)
+todays.case.data <- todays.case.data %>% mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` < -5, -5)) %>%
+  mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` > 5, 5))
+
 
