@@ -82,8 +82,15 @@ footer <- tags$div(
     ),
     tags$a(href = "#top", "Back to Navbar")
   )
+)
+
+header <- tags$div(
+  class = "header",
   
-  
+  tags$div(
+    class = "headerchild",
+    HTML("<b>COVIDMINDER</b>"),
+  )
 )
 
 
@@ -100,9 +107,10 @@ ui <- function(request) {
         name = "top",
         href = "/",
         img(class = "logo", src = "Rensselaer_round.png", alt =
-              "Small Rensselaer Polytechnic Institute Logo"),
-        HTML("COVID<b>MINDER</b>")
+              "Rensselaer Polytechnic Institute Logo"),
+        HTML("<span style='text-align: right;'> COVID<b>MINDER</b></span>")
       ),
+      collapsible = TRUE, 
       windowTitle = "COVIDMINDER: Where you live matters",
       
       tabPanel(
