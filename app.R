@@ -115,14 +115,6 @@ ui <- function(request) {
       tabPanel(
         title = HTML("<b>NATIONAL REPORT CARD</b>"),
         value = "national_report_card",
-
-        fluidRow(column(
-          8,
-          style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
-          tags$h1("COVIDMINDER: Where you live matters"),
-          offset = 2
-        )),
-        
         fluidRow(column(
           width = 2,
           offset = 10,
@@ -131,6 +123,14 @@ ui <- function(request) {
                     HTML(update_date)),
           
         )),
+        fluidRow(column(
+          8,
+          style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+          tags$h1("COVIDMINDER: Where you live matters"),
+          offset = 2
+        )),
+        
+        
         fluidRow(column(
           8,
           style = "text-align:center;",
