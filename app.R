@@ -1850,7 +1850,7 @@ server <- function(input, output, session) {
   
   output$US.determinant.title <- renderUI({
     tagList(tags$h2(paste0(
-      "Signficant United States Determinants"
+      "Significant United States Determinants"
     )),
     tags$h3(
       paste0(
