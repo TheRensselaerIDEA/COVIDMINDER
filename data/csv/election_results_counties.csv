@@ -1,4 +1,4 @@
-votes_dem,votes_gop,total_votes,dem_pct,gop_pct,diff_votes,diff_votes_pct,STATE_Abbreviation,NAME,FIPS,STATE,election_ldi.us
+dem_votes,GOP_votes,Total_votes,"Democrat Vote_rate","GOP Vote_rate",diff_votes,diff_votes_pct,STATE_Abbr,Name,FIPS,State,"GOP Vote_rate_ldi"
 777,1376,2153,0.315,0.558,599,24.3,AK,Aleutians East,2013,Alaska,-4.484335010403965
 1406,811,2217,0.57,0.329,595,24.1,AK,Aleutians West,2016,Alaska,-5.012636222019905
 1023,1156,2179,0.415,0.469,133,5.4,AK,Anchorage,2020,Alaska,-4.658091204338998

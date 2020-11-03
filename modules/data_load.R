@@ -101,4 +101,7 @@ GWAS_ADJ_P <- readRDS('data/GWAS_ADJ_P.rds')
 
 GWAS_MRR <- readRDS('data/GWAS_MRR.rds')
 
-
+## 2016 Presidential Election Results
+# Derived from: 
+# This includes ldi calculations!
+election_results_counties <- read_csv("data/csv/election_results_counties.csv")
