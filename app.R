@@ -148,6 +148,7 @@ ui <- function(request) {
           ),
           uiOutput("US.CoT.tooltip"),
           downloadButton("US.CoT.dl", label = "Download Case Barplot"),
+          downloadButton("US.CoT.data.dl", label = "Download Data For This Plot"),
           offset = 2
         )),
         fluidRow(
@@ -176,6 +177,7 @@ ui <- function(request) {
             ),
             uiOutput("US.DoT.tooltip"),
             downloadButton("US.DoT.dl", label = "Download Mortality Barplot"),
+            downloadButton("US.DoT.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
           
@@ -254,7 +256,8 @@ ui <- function(request) {
                                 resetOnNew = TRUE)
             ),
             uiOutput("US.trends.tooltip"),
-            downloadButton("US.trends.dl", label = "Download Case Trend Plot")
+            downloadButton("US.trends.dl", label = "Download Case Trend Plot"),
+            downloadButton("US.trends.data.dl", label = "Download Data For This Plot")
           ),
           
           
@@ -306,6 +309,7 @@ ui <- function(request) {
             leafletOutput("US.map.cases", height = height),
             
             downloadButton("US.map.cases.dl", label = "Download Case Map"),
+            downloadButton("US.map.cases.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
           column(
@@ -328,6 +332,7 @@ ui <- function(request) {
             ),
             leafletOutput("US.map.deaths", height = height),
             downloadButton("US.map.deaths.dl", label = "Download Mortality Map"),
+            downloadButton("US.map.deaths.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
           column(
@@ -340,6 +345,7 @@ ui <- function(request) {
             leafletOutput("US.map.testing", height = height),
             
             downloadButton("US.maps.testing.dl", label = "Download Testing Map"),
+            downloadButton("US.maps.testing.data.dl", label = "Download Data For This Plot"),
             offset = 2
           )
         ),
@@ -361,6 +367,7 @@ ui <- function(request) {
         fluidRow(column(
           2,
           downloadButton("US.determinants.dl", label = "Download Determinants Visualization"),
+          downloadButton("US.determinants.data.dl", label = "Download Data For This Plot"),
           offset = 2
         )),
         tags$br(),
@@ -465,7 +472,8 @@ ui <- function(request) {
             
             uiOutput("state.CoT.tooltip"),
             
-            downloadButton("state.CoT.dl", label = "Download Case Barplot")
+            downloadButton("state.CoT.dl", label = "Download Case Barplot"),
+            downloadButton("state.CoT.data.dl", label = "Download Data For This Plot")
           )
         ),
         
@@ -488,6 +496,7 @@ ui <- function(request) {
           ),
           uiOutput("state.DoT.tooltip"),
           downloadButton("state.DoT.dl", label = "Download Mortality Barplot"),
+          downloadButton("state.DoT.data.dl", label = "Download Data For This Plot"),
           offset = 2
         )),
         
@@ -562,6 +571,7 @@ ui <- function(request) {
             ),
             uiOutput("state.trends.tooltip"),
             downloadButton("state.trends.dl", label = "Download Case Trends Plot"),
+            downloadButton("state.trends.data.dl", label = "Download Data For This Plot"),
                  )
         ),
         tags$br(),
@@ -600,6 +610,7 @@ ui <- function(request) {
             ),
             leafletOutput("map.cases", height = height),
             downloadButton("map.cases.dl", label = "Download Case Map"),
+            downloadButton("map.cases.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
           column(
@@ -614,6 +625,7 @@ ui <- function(request) {
             ),
             leafletOutput("map.deaths", height = height),
             downloadButton("map.deaths.dl", label = "Download Mortality Map"),
+            downloadButton("map.deaths.data.dl", label = "Download Data For This Plot"),
             offset = 2
           )
         ),
@@ -641,6 +653,7 @@ ui <- function(request) {
             ),
             leafletOutput("maps.determinant", height = height),
             downloadButton("map.determinant.dl", label = "Download Determinant Map"),
+            downloadButton("map.determinant.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
           column(
@@ -2075,7 +2088,15 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
-  
+  output$US.CoT.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_CoT_data.csv")
+    },
+    content = function(file) {
+      
+    },
+    contentType = 'text/csv'
+  )
   output$US.DoT <- renderPlot({
     ggbar.US(y.value = "deaths", remove.title = T)
   })
