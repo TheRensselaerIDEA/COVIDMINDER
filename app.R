@@ -364,12 +364,14 @@ ui <- function(request) {
             offset = 2
           ),
         ),
-        fluidRow(column(
-          2,
-          downloadButton("US.determinants.dl", label = "Download Determinants Visualization"),
-          downloadButton("US.determinants.data.dl", label = "Download Data For This Plot"),
-          offset = 2
-        )),
+        fluidRow(
+         column(
+           width=8, offset=2,
+           downloadButton("US.determinants.dl", label = "Download Determinants Visualization"),
+          downloadButton("US.determinants.data.dl", label = "Download Data For This Plot")
+         ) 
+          
+        ),
         tags$br(),
         tags$br(),
         fluidRow(
@@ -1077,6 +1079,23 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+  output$map.cases.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_cases_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      dataset <- todays.case.data %>%
+      filter(State == state_initial)
+      write_csv(dataset, file)
+    },
+    contentType = 'text/csv'
+  )
   
   output$map.deaths <- renderLeaflet({
     state_name <- input$state_name
@@ -1124,6 +1143,23 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+  output$map.deaths.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_mortality_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <-
+      state.abr[state.abr$name == state_name, "abr"]
+      dataset <- todays.case.data %>%
+      filter(State == state_initial)
+      write_csv(dataset, file)
+    },
+    contentType = 'text/csv'
+  )
   
   output$maps.determinant <- renderLeaflet({
     state_name <- input$state_name
@@ -1169,6 +1205,25 @@ server <- function(input, output, session) {
       )
     },
     contentType = 'image/png'
+  )
+   output$map.determinant.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      det <- input$state.determinant
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_", det, "_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      det <- input$state.determinant
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+   dataset <- todays.case.data %>%
+     filter(State == state_initial) 
+   write_csv(dataset, file)
+    },
+    contentType = 'text/csv'
   )
   
   barplot.tooltip <- function(hover,
@@ -1641,6 +1696,23 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+    output$state.CoT.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_CoT_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      state <- covid_TS_state_long.cases %>%
+    filter(State == state_initial)
+  write_csv(state, file)
+    },
+    contentType = 'image/png'
+  )
   
   output$state.DoT.dl <- downloadHandler(
     filename = function() {
@@ -1666,6 +1738,23 @@ server <- function(input, output, session) {
         height = 8,
         units = "in"
       )
+    },
+    contentType = 'image/png'
+  )
+    output$state.DoT.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_DoT_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      state <- covid_TS_state_long.cases %>%
+    filter(State == state_initial)
+  write_csv(state, file)
     },
     contentType = 'image/png'
   )
@@ -1754,6 +1843,38 @@ server <- function(input, output, session) {
       )
     },
     contentType = 'image/png'
+  )
+    output$state.trends.data.dl <- downloadHandler(
+    filename = function() {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      return(paste0(state_initial, "_trends_data.csv"))
+    },
+    content = function(file) {
+      state_name <- input$state_name
+      state_initial <-
+        state.abr[state.abr$name == state_name, "abr"]
+      counties <- input$SRC.county
+      rate <- input$SRC.rate
+      if (rate == "Overall") {
+        y.value = "diff"
+      }
+      else {
+        #if per/100k
+        y.value = "p_diff"
+      }
+    covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
+    select(-c(countyFIPS, stateFIPS)) %>%
+    filter(State == state_initial) %>%
+    group_by(County) %>% 
+    filter(n() >= moving.avg.window) %>%
+    mutate(diff = c(numeric(moving.avg.window-1), zoo::rollmean(diff, moving.avg.window, align = "right"))) %>%
+    mutate(p_diff = c(numeric(moving.avg.window-1), zoo::rollmean(p_diff, moving.avg.window, align = "right"))) %>%
+    ungroup()
+    write_csv(covid_TS_counties.cases.plot, file)
+    },
+    contentType = 'text/csv'
   )
   
   output$ranking.table <- render_gt({
@@ -1858,6 +1979,15 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+  output$US.map.cases.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_cases_data.csv")
+    },
+    content = function(file) {
+   write_csv(states, file) 
+    },
+    contentType = 'text/csv'
+  )
   
   output$US.determinants.dl <- downloadHandler(
     filename = function() {
@@ -1873,6 +2003,15 @@ server <- function(input, output, session) {
         units = "in"
       )
       #file.copy("www/national_sd.png", file)
+    },
+    contentType = 'image/png'
+  )
+    output$US.determinants.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_determinants_analysis_data.csv")
+    },
+    content = function(file) {
+      write_csv(GWAS_data, file)
     },
     contentType = 'image/png'
   )
@@ -1913,6 +2052,15 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+  output$US.maps.testing.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_testing_data.csv")
+    },
+    content = function(file) {
+      write_csv(states, file)
+    },
+    contentType = 'text/csv'
+  )
   
   output$US.map.deaths <- renderLeaflet({
     time <- input$NRC.deaths.time
@@ -1950,6 +2098,13 @@ server <- function(input, output, session) {
       )
     },
     contentType = 'image/png'
+  )
+    output$US.map.deaths.data.dl <- downloadHandler(
+    filename = "US_mortality_data.csv",
+    content = function(file) {
+      write_csv(states, file)
+    },
+    contentType = 'text/csv'
   )
   
   US.barplot.tooltip <- function(hover,
@@ -2093,7 +2248,18 @@ server <- function(input, output, session) {
       return("US_CoT_data.csv")
     },
     content = function(file) {
-      
+      y.value="cases"
+      my_diff <- get_dif(y.value)
+      US.ma <- covid_TS_US_long.cases %>%
+      rename(Values = all_of(y.value)) %>%
+      rename(my_diff = all_of(my_diff)) %>%
+      mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
+      mutate(pct_increase =my_diff/Values*100) %>%
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+      names(US.ma)[names(US.ma) == "Values"] <- "cases"
+      names(US.ma)[names(US.ma) == "ma"] <- "cases_7day_moving_average"
+      write.csv(select(US.ma, "date", "cases", "cases_7day_moving_average"), file);
     },
     contentType = 'text/csv'
   )
@@ -2120,6 +2286,26 @@ server <- function(input, output, session) {
       )
     },
     contentType = 'image/png'
+  )
+    output$US.DoT.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_DoT_data.csv")
+    },
+    content = function(file) {
+      y.value="deaths"
+      my_diff <- get_dif(y.value)
+      US.ma <- covid_TS_US_long.cases %>%
+      rename(Values = all_of(y.value)) %>%
+      rename(my_diff = all_of(my_diff)) %>%
+      mutate(diff.ma =  c(my_diff[1:7-1], zoo::rollmean(my_diff, 7, align="right"))) %>%
+      mutate(pct_increase =my_diff/Values*100) %>%
+      mutate(ma = c(numeric(moving.avg.window-1), zoo::rollmean(Values, moving.avg.window, align = "right"))) %>%
+      filter(ma > 0)
+      names(US.ma)[names(US.ma) == "Values"] <- "deaths"
+      names(US.ma)[names(US.ma) == "ma"] <- "deaths_7day_moving_average"
+      write.csv(select(US.ma, "date", "deaths", "deaths_7day_moving_average"), file);
+    },
+    contentType = 'text/csv'
   )
   
   output$US.trends <- renderPlot({
@@ -2182,7 +2368,15 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
-  
+    output$US.trends.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_trends_data.csv")
+    },
+    content = function(file) {
+  write_csv(covid_TS_state_long.cases, file)
+    },
+    contentType = 'text/csv'
+  )
   ### The following code deals with setting or responding to parameterized URLs
   
   observe({
