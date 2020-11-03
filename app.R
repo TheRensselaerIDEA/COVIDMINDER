@@ -106,16 +106,22 @@ ui <- function(request) {
         title = whatisit_text,
         name = "top",
         href = "/",
-        img(class = "logo", src = "Rensselaer_round.png", alt =
-              "Rensselaer Polytechnic Institute Logo"),
-        HTML("<span style='text-align: right;'> COVID<b>MINDER</b></span>")
+        img(class = "logo", src = "Rensselaer.png", 
+            alt = "Rensselaer Polytechnic Institute Logo")
+        # HTML("<span style='text-align: right;'> COVID<b>MINDER</b></span>")
       ),
       collapsible = TRUE, 
       windowTitle = "COVIDMINDER: Where you live matters",
-      
       tabPanel(
         title = HTML("<b>NATIONAL REPORT CARD</b>"),
         value = "national_report_card",
+
+        fluidRow(column(
+          8,
+          style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+          tags$h1("COVIDMINDER: Where you live matters"),
+          offset = 2
+        )),
         
         fluidRow(column(
           width = 2,
@@ -423,6 +429,13 @@ ui <- function(request) {
           
         )),
         fluidRow(column(
+          8,
+          style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+          tags$h1("COVIDMINDER: Where you live matters"),
+          offset = 2
+        )),
+        
+        fluidRow(column(
           width=8,
           offset=2,
           selectInput(
@@ -721,6 +734,14 @@ ui <- function(request) {
             HTML("<div><b>DISCLAIMER</b></div>")
           ),
           value = "determinant_disclaimer",
+          
+          fluidRow(column(
+            8,
+            style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+            tags$h1("COVIDMINDER: Where you live matters"),
+            offset = 2
+          )),
+        
           fluidRow(column(
             8,
             class = "about",
@@ -737,6 +758,14 @@ ui <- function(request) {
       tabPanel(
         HTML("<div><b>ABOUT</b></div>"),
         value = "about",
+        
+        fluidRow(column(
+          8,
+          style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+          tags$h1("COVIDMINDER: Where you live matters"),
+          offset = 2
+        )),
+        
         fluidRow(column(
           8,
           offset = 2,

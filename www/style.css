@@ -97,7 +97,7 @@ p {
 .title-text {
   display: inline-block;
   vertical-align: middle;
-  height: 50px;
+  height: 45px;
   line-height: 100%;
   padding-right: 10px;
   color:black;
@@ -126,6 +126,17 @@ p {
 }
 
 .footerchild {
+    margin-left: 16.6666666666%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: 16.6666666666%;
+    width: 66.666666666%;
+    position: relative;
+    float: left; 
+}
+
+.headerchild {
     margin-left: 16.6666666666%;
     min-height: 1px;
     padding-right: 15px;
