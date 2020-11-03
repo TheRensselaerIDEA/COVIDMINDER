@@ -417,3 +417,21 @@ MRRX100 <- GWAS_data$MRRX100
 GWAS_data$MRRX100 <- MRRX100 -100
 MRRX100_num<-round(GWAS_data$MRRX100,digits=2)
 GWAS_data$MRRX100_round = MRRX100_num
+
+#################################
+### NEW (29 Oct 2020): US 2016 Election Results
+# election_results_counties contains ldi's already; also FIPS
+pUS.election.gop <- as.numeric(election_results_counties[which(election_results_counties$State=="United States"),"GOP Vote_rate"])
+
+# State Report Cards - Election Results
+todays.case.data <- inner_join(todays.case.data,
+                               election_results_counties[,c("FIPS", "GOP Vote_rate")] ,
+                               by=c("countyFIPS" = "FIPS"))
+
+todays.case.data$"GOP Vote_rate_ldi" <- unlist(lapply(todays.case.data$`GOP Vote_rate`, FUN=function(x){-log(pUS.election.gop/(x)) * 10})) 
+
+# Fix the extremes (to eliminate gray counties)
+todays.case.data <- todays.case.data %>% mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` < -5, -5)) %>%
+  mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` > 5, 5))
+
+
