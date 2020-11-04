@@ -45,12 +45,18 @@ sup3_fmt <- function(.x) {
   sup_fmt(.x, sup=3)
 }
 
+# Used by gt.ranking (added: 04 Nov 2020 (jse))
+createLink <- function(val) {
+  paste0('[',val,'](https://covidminder.idea.rpi.edu/?_inputs_&state_name="',str_replace_all(val, c(' '= '%20')),'"&tab="state_report_cards")')
+}
+
 gt.ranking <- function(entries = 50, 
                        order=function(x){x}) {
   ranking %>%
     arrange(order(rank)) %>%
     filter(row_number() <= entries) %>%
     select(name, cases.pct, deaths.pct, rank) %>%
+    mutate(name = createLink(name)) %>% # (added: 04 Nov 2020 (jse))
     gt() %>%
     tab_header(
       title = paste0("State Rankings"),
@@ -68,7 +74,8 @@ gt.ranking <- function(entries = 50,
     ) %>%
     cols_move_to_start(columns = vars(rank)) %>%
     tab_options(container.width = "100%",
-                table.width = "100%")
+                table.width = "100%") %>%
+    fmt_markdown(columns = "name")  # (added: 04 Nov 2020 (jse))
 }
 
 stats.table <- function(selected_state="NY") {
