@@ -671,9 +671,9 @@ ui <- function(request) {
             selectInput(
               inputId = "state.determinant",
               label = "Determinant",
-              choices = c("Diabetes", "Obesity", "CRD Mortality", "GOP Vote"),
-#              selected = "Diabetes"
-              selected = "GOP Vote"
+              choices = c("Diabetes", "Obesity", "CRD Mortality"),
+              selected = "Diabetes"
+              # selected = "GOP Vote"
             ),
             leafletOutput("maps.determinant", height = height),
             downloadButton("map.determinant.dl", label = "Download Determinant Map"),
