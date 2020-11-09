@@ -24,9 +24,6 @@ To deploy locally, clone the repository and run app.R on RStudio. On the source 
                  alt="Run App Screenshot"
                  />
 
-### Screen Shot (26 May 2020)
-![COVIDMinder Screenshot](https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/master/COVIDMinder_screenshot.png)
-
 
 ## Data Sources: Updated daily! (See also `data` subdirectories)
 
