@@ -27,7 +27,7 @@ todays_TS_data <- read_csv(paste0("data/csv/time_series/", dateURL.1))
 covid_TS_states <- todays_TS_data %>%
   dplyr::filter(Country_Region == "US") %>%
   dplyr::filter(!Province_State %in% c("Diamond Princess","Grand Princess","Northern Mariana Islands","Virgin Islands") ) %>%
-#  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Country_Region, -Lat, -Long_, -Combined_Key) %>%
+  #  select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Country_Region, -Lat, -Long_, -Combined_Key) %>%
   dplyr::select(-UID, -iso2, -iso3, -code3, -FIPS, -Admin2, -Lat, -Long_, -Combined_Key, -Population) %>%
   dplyr::group_by(Province_State,Country_Region) %>%
   dplyr::summarize_all(sum)
@@ -45,7 +45,8 @@ covid_TS_united_states[1,1] <- "United States"
 
 # Prepend United States summary to states summary
 # THIS IS "WIDE"!
-covid_TS_states <- data.frame(rbind(covid_TS_united_states, covid_TS_states[,-2]))
+#covid_TS_states <- data.frame(rbind(as.data.frame(covid_TS_united_states), as.data.frame(covid_TS_states[,-2])))
+covid_TS_states <- rbind(as.data.frame(covid_TS_united_states), as.data.frame(covid_TS_states[,-2]))
 
 # Make backup of existing WIDE data
 write_csv(read_csv("data/csv/time_series/covid_TS_states_wide.csv"),"data/csv/time_series/covid_TS_states_wide.csv.bak")
@@ -58,13 +59,13 @@ covid_TS_states_long <- covid_TS_states %>%
   tidyr::gather(date,deaths,2:ncol(covid_TS_states))
 
 # Make date column an actual R date_time
-covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
-covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m.%d.%y"))
+# covid_TS_states_long$date <- str_sub(covid_TS_states_long$date, 2,-1)
+covid_TS_states_long$date <- parse_date_time(covid_TS_states_long$date, c("%m/%d/%y"))
 
 covid_TS_states_long$NAME <- factor(covid_TS_states_long$NAME)
 
 covid_TS_states_long <- covid_TS_states_long %>% 
-    filter(deaths >= 10)
+  filter(deaths >= 10)
 
 # Make backup of existing LONG data
 write_csv(read_csv("data/csv/time_series/covid_TS_states_long.csv"),"data/csv/time_series/covid_TS_states_long.csv.bak")
