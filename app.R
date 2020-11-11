@@ -2435,10 +2435,8 @@ server <- function(input, output, session) {
     contentType = 'text/csv'
   )
   ### The following code deals with setting or responding to parameterized URLs
-  input$adamodal = TRUE
   observe({
     # trigger observer on these values
-    input$adamodal
     input$state_name
     input$tab
     # update the list of reactive variables we are excluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
@@ -2450,7 +2448,10 @@ server <- function(input, output, session) {
     # bookmark application state
     session$doBookmark()
   })
-  
+  # every time we bookmark application state set the ada modal flag to true
+  onBookmark(function(state) {
+    state$values$adamodal <- TRUE
+  })
   # every time we bookmark application state we update the url
   onBookmarked(function(url) {
     updateQueryString(url)
@@ -2474,17 +2475,16 @@ server <- function(input, output, session) {
   # the following code checks if we are loading the page with such a tagged url and removes the tag if so
   
   onRestore(function(state) {
-    if(TRUE){
-      
-      # if the tag is in the url, remove it and don't show the modal
-      print(parseQueryString(session$clientData$url_search)$adamodal)
-      if(parseQueryString(session$clientData$url_search)$adamodal = TRUE){
-        input$adamodal = FALSE
-      }else{
-        # Creates modal dialog
-        showModal(query_modal)
-      }
-    }
+    
+  # if the tag is in the url, remove it and don't show the modal
+  print(parseQueryString(session$clientData$url_search)$adamodal)
+  if(parseQueryString(session$clientData$url_search)$adamodal == FALSE){
+    state$values$adamodal <- TRUE
+  }else{
+    # Creates modal dialog
+    showModal(query_modal)
+  }
+   
   })
   
   # Removes modal
