@@ -2435,14 +2435,16 @@ server <- function(input, output, session) {
     contentType = 'text/csv'
   )
   ### The following code deals with setting or responding to parameterized URLs
-  
+  input$adamodal = TRUE
   observe({
-    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
+    # trigger observer on these values
+    input$adamodal
     input$state_name
     input$tab
+    # update the list of reactive variables we are excluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
     # isolate so we don't trigger observe on literally every input change
     reactvals <- names(isolate(reactiveValuesToList(input)))
-    toparameterize <- c("state_name", "tab")
+    toparameterize <- c("state_name", "tab", "adamodal")
     toexclude = reactvals[!(reactvals %in% toparameterize)]
     setBookmarkExclude(toexclude)
     # bookmark application state
@@ -2453,13 +2455,6 @@ server <- function(input, output, session) {
   onBookmarked(function(url) {
     updateQueryString(url)
   })
-  
-  
-  
-  
-  
-  
-  
   
   
   # Content of modal dialog
@@ -2473,13 +2468,39 @@ server <- function(input, output, session) {
     footer = tagList(actionButton("run", "Continue with COVIDMINDER app"))
   )
   
-  # Creates modal dialog
-  showModal(query_modal)
+  # the following is a hack to prevent the ADA disclaimer from popping up on page load if the user
+  # has clicked on a state link from the US.ranking.table
+  # the links in the table have a tag in the url telling the app not to display the disclaimer
+  # the following code checks if we are loading the page with such a tagged url and removes the tag if so
+  
+  onRestore(function(state) {
+    if(TRUE){
+      
+      # if the tag is in the url, remove it and don't show the modal
+      print(parseQueryString(session$clientData$url_search)$adamodal)
+      if(parseQueryString(session$clientData$url_search)$adamodal = TRUE){
+        input$adamodal = FALSE
+      }else{
+        # Creates modal dialog
+        showModal(query_modal)
+      }
+    }
+  })
   
   # Removes modal
   observeEvent(input$run, {
     removeModal()
   })
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
   
   
 }
