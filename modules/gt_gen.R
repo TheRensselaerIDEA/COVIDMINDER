@@ -51,7 +51,7 @@ createLink <- function(val, baseurl) {
 }
 
 gt.ranking <- function(entries = 50, 
-                       order=function(x){x}, baseurl="help") {
+                       order=function(x){x}, baseurl="https://covidminder.idea.rpi.edu/") {
   
   ranking %>%
     arrange(order(rank)) %>%
