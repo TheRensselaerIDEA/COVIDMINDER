@@ -1944,7 +1944,10 @@ server <- function(input, output, session) {
     if ("Descending" %in% input$rank.order) {
       order <- dplyr::desc
     }
-    gt.ranking(as.numeric(entries), order)
+    
+    # reconstruct the front of the url from the session
+    front_url = paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname, ":", session$clientData$url_port, session$clientData$url_pathname)
+    gt.ranking(as.numeric(entries), order, front_url)
   })
   
   ### National Overview Code ###
@@ -1960,7 +1963,9 @@ server <- function(input, output, session) {
     if ("Descending" %in% input$US.rank.order) {
       order <- dplyr::desc
     }
-    gt.ranking(as.numeric(entries), order)
+    # reconstruct the front of the url from the session
+    front_url = paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname, ":", session$clientData$url_port, session$clientData$url_pathname)
+    gt.ranking(as.numeric(entries), order, front_url)
   })
   
   output$US.trends.title <- renderUI({
@@ -2434,6 +2439,7 @@ server <- function(input, output, session) {
     },
     contentType = 'text/csv'
   )
+    
   ### The following code deals with setting or responding to parameterized URLs
   observe({
     # trigger observer on these values
@@ -2442,7 +2448,7 @@ server <- function(input, output, session) {
     # update the list of reactive variables we are excluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
     # isolate so we don't trigger observe on literally every input change
     reactvals <- names(isolate(reactiveValuesToList(input)))
-    toparameterize <- c("state_name", "tab", "adamodal")
+    toparameterize <- c("state_name", "tab")
     toexclude = reactvals[!(reactvals %in% toparameterize)]
     setBookmarkExclude(toexclude)
     # bookmark application state
@@ -2475,16 +2481,12 @@ server <- function(input, output, session) {
   # the following code checks if we are loading the page with such a tagged url and removes the tag if so
   
   onRestore(function(state) {
-    
   # if the tag is in the url, remove it and don't show the modal
-  print(parseQueryString(session$clientData$url_search)$adamodal)
-  if(parseQueryString(session$clientData$url_search)$adamodal == FALSE){
-    state$values$adamodal <- TRUE
-  }else{
+    
+  if(parseQueryString(session$clientData$url_search)$adamodal == "true"){
     # Creates modal dialog
     showModal(query_modal)
   }
-   
   })
   
   # Removes modal
