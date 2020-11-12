@@ -1944,7 +1944,10 @@ server <- function(input, output, session) {
     if ("Descending" %in% input$rank.order) {
       order <- dplyr::desc
     }
-    gt.ranking(as.numeric(entries), order)
+    
+    # reconstruct the front of the url from the session
+    front_url = paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname, ":", session$clientData$url_port, session$clientData$url_pathname)
+    gt.ranking(as.numeric(entries), order, front_url)
   })
   
   ### National Overview Code ###
@@ -1960,7 +1963,9 @@ server <- function(input, output, session) {
     if ("Descending" %in% input$US.rank.order) {
       order <- dplyr::desc
     }
-    gt.ranking(as.numeric(entries), order)
+    # reconstruct the front of the url from the session
+    front_url = paste0(session$clientData$url_protocol, "//", session$clientData$url_hostname, ":", session$clientData$url_port, session$clientData$url_pathname)
+    gt.ranking(as.numeric(entries), order, front_url)
   })
   
   output$US.trends.title <- renderUI({
@@ -2434,12 +2439,13 @@ server <- function(input, output, session) {
     },
     contentType = 'text/csv'
   )
+    
   ### The following code deals with setting or responding to parameterized URLs
-  
   observe({
-    # update the list of reactive variables we are exlcluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
+    # trigger observer on these values
     input$state_name
     input$tab
+    # update the list of reactive variables we are excluding from our bookmarked url and exclude them by passing said list to setbookmarkexclude
     # isolate so we don't trigger observe on literally every input change
     reactvals <- names(isolate(reactiveValuesToList(input)))
     toparameterize <- c("state_name", "tab")
@@ -2448,18 +2454,14 @@ server <- function(input, output, session) {
     # bookmark application state
     session$doBookmark()
   })
-  
+  # every time we bookmark application state set the ada modal flag to true
+  onBookmark(function(state) {
+    state$values$adamodal <- TRUE
+  })
   # every time we bookmark application state we update the url
   onBookmarked(function(url) {
     updateQueryString(url)
   })
-  
-  
-  
-  
-  
-  
-  
   
   
   # Content of modal dialog
@@ -2473,13 +2475,34 @@ server <- function(input, output, session) {
     footer = tagList(actionButton("run", "Continue with COVIDMINDER app"))
   )
   
-  # Creates modal dialog
-  showModal(query_modal)
+  # the following is a hack to prevent the ADA disclaimer from popping up on page load if the user
+  # has clicked on a state link from the US.ranking.table
+  # the links in the table have a tag in the url telling the app not to display the disclaimer
+  # the following code checks if we are loading the page with such a tagged url and removes the tag if so
+  
+  onRestore(function(state) {
+  # if the tag is in the url, remove it and don't show the modal
+    
+  if(parseQueryString(session$clientData$url_search)$adamodal == "true"){
+    # Creates modal dialog
+    showModal(query_modal)
+  }
+  })
   
   # Removes modal
   observeEvent(input$run, {
     removeModal()
   })
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
   
   
 }
