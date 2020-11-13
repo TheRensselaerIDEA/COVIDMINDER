@@ -36,7 +36,7 @@ todays_raw_racial_data <- todays_raw_racial_data %>%
 # Transform to wide
 todays_raw_racial_data.wide <- todays_raw_racial_data %>%
   #pivot_wider(names_from = indicator, values_from = 6:11)
-  pivot_wider(names_from = indicator, values_from = c(nhw, nhbaa, nhaian,  nhapi,     hlt,  other))
+  pivot_wider(id_cols = c(data_as_of,start_week,end_week,NAME), names_from = indicator, values_from = c(nhw, nhbaa, nhaian,  nhapi,     hlt,  other))
 
 # Make backup of existing data
 yesterday_data <- read_csv("data/csv/states_cdc_racial_wide.csv")
