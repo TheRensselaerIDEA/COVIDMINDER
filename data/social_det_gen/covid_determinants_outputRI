@@ -1,0 +1,4 @@
+chr_code,kendall_cor,kendall_p,DIR
+Mentally Unhealthy Days,0.7999999999999998,0.05004352124870516,Destructive
+Freq Mental Distress,0.7999999999999998,0.05004352124870516,Destructive
+Diabetes Prevalence,0.7378647873726218,0.07697417298126677,Destructive

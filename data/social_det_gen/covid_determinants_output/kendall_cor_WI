@@ -1,0 +1,4 @@
+chr_code,kendall_cor,kendall_p,DIR
+Driving Alone,0.20786850324726963,0.009839078996541272,Destructive
+Physically Inactive,0.1440963755073889,0.07507348522088177,Destructive
+Low Birthweight,0.14173547984889187,0.08058936236256473,Destructive

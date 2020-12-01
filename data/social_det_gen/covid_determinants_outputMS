@@ -1,0 +1,16 @@
+chr_code,kendall_cor,kendall_p,DIR
+Freq Physical Distress,0.4062029509183981,6.589813617689274e-8,Destructive
+Freq Mental Distress,0.40499849442938873,7.204594404827011e-8,Destructive
+Physically Unhealthy Days,0.40439626618488406,7.532465637049048e-8,Destructive
+Children In Poverty,0.39173747789360436,1.9690862439897819e-7,Destructive
+Fair Or Poor Health,0.38994278831677204,2.1512441804925112e-7,Destructive
+Mentally Unhealthy Days,0.36585365853658536,1.1421784311901888e-6,Destructive
+Food Insecure,0.3561523952212061,2.249170955718615e-6,Destructive
+Socio-Economic,0.35,3.7475564601691562e-6,Destructive
+Low Birthweight,0.34959349593495936,3.332689865761298e-6,Destructive
+Adult Smoking,0.33032219211081,1.1185495950938382e-5,Destructive
+Single Parent Households,0.3255043661547727,1.4991289504484588e-5,Destructive
+80th Percentile Income,-0.3797049081601927,4.426937182847098e-7,Protective
+20th Percentile Income,-0.3963258590331759,1.3649393608941858e-7,Protective
+Median Household Income,-0.3983739837398374,1.1714558970859008e-7,Protective
+Excessive Drinking,-0.4363143631436314,6.5350576316654256e-9,Protective
