@@ -59,30 +59,62 @@ url1 <- url2 <- ""
 
 #### UI Code ####
 
-### Footer
-footer <- tags$div(
-  class = "footer",
-  
-  hr(),
-  tags$div(
-    class = "footerchild",
+### Footer ####
+footer <- fluidRow(
+  column(
+    width = 12,
+    fluidRow(
+      column(
+        width = 8,
+        offset = 2,
+        tags$hr()
+            )
+      ),
+    fluidRow(
+        column(
+    width = 1,
+    offset = 2,
     HTML("<a href='?tab=about'>About</a>&emsp;"),
+         ),
+  column(
+    width = 3,
     HTML(
       "<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     HTML(
-      "<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"
+    "<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     HTML(
       "<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"
+    )
     ),
+  column(
+    width = 1,
     HTML(
       "<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
         <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     tags$a(href = "#top", "Back to Navbar")
   )
+ 
+    )
+  
+  )
+ 
+ 
+  
 )
+# get rid of footer class code in css doc
+
 
 header <- tags$div(
   class = "header",
@@ -137,7 +169,6 @@ ui <- function(request) {
           tags$h1("United States Overview"),
           offset = 2
         )),
-        tags$br(),
         fluidRow(
           column(
             8,
@@ -211,8 +242,6 @@ ui <- function(request) {
             offset = 2
           )
         ),
-        tags$br(),
-        tags$br(),
         fluidRow(column(8, gt_output("US.report"),
                         offset = 2)),
         fluidRow(column(
@@ -424,7 +453,7 @@ ui <- function(request) {
             gt_output("US.ranking.table")
                  )
         ),
-        
+      footer  
       ),
       tabPanel(
         title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
@@ -461,7 +490,6 @@ ui <- function(request) {
           uiOutput("main_title"),
           offset = 2
         )),
-        tags$br(),
         fluidRow(column(
           8,
           style = "text-align:center;",
@@ -541,8 +569,6 @@ ui <- function(request) {
             offset = 2
           )
         ),
-        tags$br(),
-        tags$br(),
         fluidRow(column(8, gt_output("state.report"),
                         offset = 2)),
         fluidRow(column(
@@ -597,7 +623,6 @@ ui <- function(request) {
             downloadButton("state.trends.data.dl", label = "Download Data For This Plot"),
                  )
         ),
-        tags$br(),
         fluidRow(column(
           8,
           style = "text-align:center;",
@@ -735,7 +760,8 @@ ui <- function(request) {
             width=8,offset=2,
             gt_output("ranking.table")
           )
-        )
+        ),
+        footer 
           ),
         
       
@@ -765,7 +791,8 @@ ui <- function(request) {
               "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."
             ),
             offset = 2
-          ))
+          )),
+          footer
         )
         
       ),
@@ -789,9 +816,9 @@ ui <- function(request) {
           HTML(whatisit_text_abt),
           HTML(footer_text)
         ),),
-      ),
+        footer
+      )
     
-    footer
       
       ),
     )
