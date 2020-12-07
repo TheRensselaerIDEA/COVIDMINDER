@@ -8,7 +8,7 @@ source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
 
-update_date <- "2020-12-06"
+update_date <- "2020-12-07"
 
 
 moving.avg.window <-
