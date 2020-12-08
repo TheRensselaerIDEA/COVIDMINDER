@@ -1,45 +1,133 @@
 ---
-title: "MATP-4910 COVID-19 Draft Final Project Notebook"
-author: "Jocelyn McConnon"
-date: "06 December 2020"
+title: "DARL Project Status Notebook Template"
+author: "Student Name"
+date: "16 September 2020"
 output:
   html_document:
     toc: yes
   pdf_document:
     toc: yes
-subtitle: "MORTALITYMINDER"
+subtitle: "DARL Project Name"
 ---
-## Final Project: Submission Links
-* github repository: https://github.com/TheRensselaerIDEA/COVIDMINDER
-* github branch: darl-mcconj2
-* github ID: jocelynmcconnon-bot
-* draft final notebook: 
-https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVIDMINDER/master/DARL-2020-Notebooks/darl_mcconj2_draft_final.html
 
-## Overview & Problems Tackled
-I used the MortalityMinder app to investigate the causes of midlife mortality in the American Southwest region, specifically in Sierra County, New Mexico. I summarized the results of my finding in the paper “Investigating Social Determinants of Premature Mortality in the United States”. I worked to bring this paper into JAMIA format.
+## Instructions: Submitting Notebook via github (DELETE BEFORE SUBMISSION)
 
-## Data Description
-All of the data I used came from the MortalityMinder app, which is simply a visualization tool for the mortality rates by county as reported by the CDC. MortalityMinder uses k-means clustering to partition each county into a risk group for each respective cause of midlife death. The risk groups are low, medium, and high. The causes of midlife mortality that are considered are deaths of despair, cardiovascular disease, cancer, and all causes.
+* Use this notebook is a template for your weekly project status assignment. 
+* Use the sections starting with **Weekly Work Summary** as your outline for your submitted notebook.
+* Summarize ALL of your work in this notebook; **if you don't show and/or link to your work here, it doesn't exist for us!**
 
-## Results
-Since the problem I was adressing in my reasearch was crafting use cases for the MortalityMinder app, to be used in the results secion of the paper, I will adress the use cases I researched below.
+1. Create a fresh github branch of your team's project repository in which to do your work. Use a branch name line `darl-yourname-date`
 
-## Sierra County, New Mexico: health care provider
-Sierra County, New Mexico is one of the worst effected places in the country, experiencing extremely high rates of midlife mortality. The rates of all cause, cancer, cardiovascular disease, and deaths of despair are all way above the national averages. 
+1. Create a **copy** of this notebook file in the `DARL-2020-Notebooks` sub-directory of your team's github repository using the following naming convention
 
-Sierra County is the single high risk county in New Mexico, and the vast majority of counties in NM experience the highest rates of premature mortality in the country.
+   * `darl_rcsid_ddmmmyyyy.Rmd` (your notebook source file) 
+   * `darl_rcsid_ddmmmyyyy.html` (your knitted notebook)
+   * For example, `darl_erickj4_16Sep2020.Rmd` and `darl_erickj4_16Sep2020.html`
+   * **Please** don't make up your own naming syntax!
 
-![Sierra County is the singular high risk county.](Sierra_County.png){width=400px}
+2. Document **all** the work you did on your assigned project this week **using the outline below.** 
 
-![The vast majority of counties expierence midlife mortality at a rate in excess of 560 in 100,000.](New_Mexico_allcause.png){width=345px}
+3. You MUST include figures and/or tables to illustrate your work. *Screen shots are okay*, but include something!
 
-Since MortalityMinder is a data visualization tool for health care researchers, providers, payers, and policy makers, I narrowed down the scope of the use case to only the utility it could provide to health care providers in this local.
+4. You MUST include links to other important resources (knitted HTMl files, Shiny apps). See the guide below for help.
 
-The leading factors associated with all causes of midlife mortality are children in poverty, free lunch, socio-economic status, mentally unhealthy days, fair or poor health, physically unhealthy days, single parent households, frequent mental distress, frequent physical distress, and income ratio.
+5. You MUST commit the source (`.Rmd`) and knitted (`.html`) versions of your notebook and push to github
 
-From the point of view of a health care provider, this information may be useful to understand what efforts would most positively impact the community.
+6. **Submit a pull request** on github.rpi.edu. Please notify Dr. Erickson if you don't see your notebook merged within one day. 
 
-For example, factors such as fair or poor health and physically unhealthy days are destructive determinants of mortality. Therefore, increasing access to physical activities (like offering yoga classes or swimming lessons at the local hospital) may be something that would have an impact on the midlife mortality rates.
+7. **DO NOT MERGE YOUR PULL REQUESTS YOURSELF!!**
 
-## New Mexico: policy maker
+See the Grading Rubric for guidance on how the contents of this notebook will be graded: https://bit.ly/32OeY44
+
+## Guide to linking to your knitted notebook on github (DELETE BEFORE SUBMISSION)
+
+Part of the assignment is to provide a link to your knitted notebook on github. This section explains how to link to knitted notebooks (ie HTML) files.
+
+1. For files merged with the master on the public github, provide a direct link in your notebook using the following example pattern:
+
+    * Preface: `https://htmlpreview.github.io/? `
+    * Repo and branch: `https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/ `
+    * Directory and file: `DARL-2020-Notebooks/status_notebook_template.html'
+
+* Example for projects on the public github (COVIDMINDER, COVID Twitter):
+
+https://htmlpreview.github.io/?https://raw.githubusercontent.com/TheRensselaerIDEA/COVID-Twitter/master/HACL-2020-Notebooks/status_notebook_template.html 
+
+2. For files merged with the master on the RPI github (e.g. Back-to-School, StudySafe, SafeCampus) you need a different syntax; here's a few examples:
+
+    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Notebooks/status_notebook_template.html
+    * https://pages.github.rpi.edu/DataINCITE/DARL-2020/Circadian/status_notebook_template.html
+    * https://pages.github.rpi.edu/DataINCITE/IDEA-COVID-WarRoom/DARL-2020-Notebooks/status_notebook_template.html
+    
+To obtain this link, browse to your merged html on http://github.rpi.edu , grab the link from the address bar of your browser, and insert `pages` into the subdomain of the address as shown above. 
+
+3. Test your link by pasting in a browser and verifying that you see your notebook
+4. Paste your working link into the assignment form on LMS. 
+
+You may also want to use this technique to reference other notebooks on github. 
+
+## Guide to linking to Shiny Apps (DELETE BEFORE SUBMISSION)
+
+In your notebook you can also link to Shiny apps you and others have created
+
+* On the cluster, create a sub-directory called `ShinyApps` in your home directory
+
+    * In RStudio in the **Terminal** tab, `cd ~`
+    * Then `mkdir ShinyApps`
+    * You only need to do this once
+    
+* In your new `ShinyApps` sub-directory, create a sub-directory to contain your app
+
+    * In the **Terminal** tab, `cd ~/ShinyApps` 
+    * Then `mkdir yourcoolapp` (if `yourcoolapp` is the name of your app)
+    * Then copy all of the files associated with your app (esp. the `app.R`) in that directory
+    
+* Alternatively, you can create a symbolic link in that directory, "pointing" to your working directory. In this way your shared app will always be up-to-date.
+
+    * In the **Terminal** tab, `cd ~/ShinyApps` 
+    * Then (for example) `ln -s /home/yourrcs/yourappdirectory yourcoolapp` 
+
+* You can now share your app on the RPI network using this syntax:
+
+    * `http://lp01.idea.rpi.edu/shiny/yourrcs/yourcoolapp/` 
+
+## REQUIRED: Weekly Work Summary	
+
+**NOTE:** Follow an outline format; use bullets to express individual points. 
+
+* RCS ID: **Always** include this!
+* Project Name: **Always** include this!
+* Summary of work since last week 
+
+    * Describe the important aspects of what you worked on and accomplished
+    
+* Summary of github commits 
+
+    * include branch name(s)
+    * include browsable links to all external files on github
+    * Include links to shared Shiny apps
+    
+* List of presentations,  papers, or other outputs
+
+    * Include browsable links (see Instructions)
+    
+* List of references (if necessary) 
+* Indicate any use of group shared code base
+* Indicate which parts of your described work were done by you or as part of joint efforts
+
+## Personal Contribution	
+
+* Clearly defined, unique contribution(s) done by you: code, ideas, writing...
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * What did you want to know? 
+    * How did you go about finding it? 
+    * What did you find?
+	
+* **Required:** Provide illustrating figures and/or tables
+
+    * Screen shots are acceptable 
+    * If your figures are "live," either include source code embedded in notebook or provide github location for their source scripts

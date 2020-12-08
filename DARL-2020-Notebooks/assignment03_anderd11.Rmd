@@ -1,0 +1,45 @@
+---
+title: "DARL Assignment 03"
+author: "Durasia Anderson"
+date: "22 September 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "DARL-COVIDMINDER"
+---
+
+## Weekly Work Summary	
+
+**NOTE:** Follow an outline format; use bullets to express individual points. 
+
+* RCS ID: anderd11
+* Project Name: COVIDMINDER
+* Summary of work since last week 
+
+    * Met with Sarah to discuss future work
+    * TRIED to run old code before making changes - having issues
+    
+* Summary of github commits 
+
+    * None thus far
+    
+## Personal Contribution	
+
+* Researched policy on COVID testing for states with unexpected testing-mortality pattern
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * Why do some states have low testing with low mortality (expected correlation  to be low testing with high mortality)
+    * Looked into state COVID testing protocols (ex state of Kansas, which only tests 2% of the state each month, with no found specifications on who is tested)
+    * (NOTE: numbers were updated from previous observations) none of the states have the expected correlation of low testing with high mortality
+        * several states that actually have done more tests than the National average show the highest mortality rates
+	
+* **Required:** Provide illustrating figures and/or tables
+
+<!-- ![Mortality vs Testing in United States.](/COVIDMINDER/HACL-2020-Notebooks/Social_Determinants_Graphs/Mortality_vs_Testing_US.PNG) -->
+
+<!-- #image link not working at the moment -->
