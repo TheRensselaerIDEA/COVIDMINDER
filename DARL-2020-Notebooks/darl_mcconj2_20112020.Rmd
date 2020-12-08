@@ -1,0 +1,49 @@
+---
+title: "DARL Project Status Notebook"
+author: "Jocelyn McConnon"
+date: "20 November 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "MORTALITYMINDER"
+---
+* RCS ID: Mcconj2
+* Project Name: MORTALITYMINDER
+
+## Weekly Work Summary
+
+* Summary of work since last week
+
+  * Finished my written contribution to the MortalityMinder "results" section.
+  * Added my written contribution to the MortalityMinder Overleaf.
+  * Added relivent figures to the "results" section.
+  * Discussed status of the MortalityMinder paper in DARL DeepDive meeting.
+  * Established that paper must be in JAMIA format.
+  * Scheduled meeting with Sky to discuss how to work the current draft into JAMIA format.
+
+* List of presentations,  papers, or other outputs
+  * MortalityMinder paper (Google Docs) https://docs.google.com/document/d/1BOn2qOngCWn5uBSTuOI_aRzS09d3G8bizSzTLp8AtiI/edit?usp=sharing
+  * MortalityMinder paper (Overleaf) https://www.overleaf.com/3174518441pxrdrryfsdnk
+
+* Indicate which parts of your described work were done by you or as part of joint efforts
+  * In the Google Docs, I am responcible for the first six paragraphs in red (in the results section).
+  * In the Overleaf, I am responcible for the first eight paragraphs in the results section, and the corrisponding first three figures.
+
+## Personal Contribution
+  * This week my goal was to finish my portion of the results section. I am happy with what I have now, and I think that I was able to articulate my research and the findings of MortalityMinder. First, I wrote out what I wanted to include in the final draft in the Google Docs. Then, I moved the text over to the Overleaf, and included the relevant figures.
+  * After establishing in the DeepDive meeting that the MortalityMinder paper needs to utimitly be in JAMIA format, Sky and I decided we should meet to discuss how to divide up this task. We have scheduled a time to meet.
+  * My thoughts as to how to get the paper into JAMIA format is to go through each sentence and make the wording more consise. I think there are many opportunities to say the same thing using less words. I think that the paper overall has a good structure and story, but it is currently over the word limit for the JAMIA format. Additionally, Sky and I will need to determine which figures to eliminate since there is currently too many.
+
+## Discussion of Primary Findings 	
+
+  * I did not make any remarkable findings this week since I mostly spent the time writting up what I have been researching all semester, so I will take the time now to breifly describe what I have learned.
+  * I learned that the county level data in MortalityMinder can be used to analyze what are the specific factors that are affecting the community. Used at the county level, MortalityMinder can help to inform health care providers what their allocation of resources should look like.
+  * MortalityMinder can be used at the state level to look at trends affecting different regions. Is there some countys that are doing significantly worse than other counties? State level policy makers could use MortalityMinder to justify things like, in the case of NM, implimenting a monitary bennifit to health care professionals to incentivise them to relocate to the state.
+  * MortalityMinder is most useful in analyzing national trends in midlife mrotality. By looking at the data, I have learned that there are some regions that are significantly impacted by economic factors that are directly corilated with deaths of dispair. Additionally, many of the leading factors assocaited with deaths of despair have been impacted in one way or another by the Covid-29 pandemic. Therefore, I think we will experience a spike in deaths of dispare as a result of the increased economic pressures and decreased access to health care that we have already seen.
+
+**Required:** Provide illustrating figures and/or tables
+![](Results_1.png)
+![](Results_2.png)
+![](Results_3.png)

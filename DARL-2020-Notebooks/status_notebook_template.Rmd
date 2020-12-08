@@ -97,7 +97,6 @@ In your notebook you can also link to Shiny apps you and others have created
 
 * RCS ID: **Always** include this!
 * Project Name: **Always** include this!
-* Branch Name: **Always** include this!
 * Summary of work since last week 
 
     * Describe the important aspects of what you worked on and accomplished
@@ -132,4 +131,3 @@ In your notebook you can also link to Shiny apps you and others have created
 
     * Screen shots are acceptable 
     * If your figures are "live," either include source code embedded in notebook or provide github location for their source scripts
-

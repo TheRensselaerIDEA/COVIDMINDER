@@ -1,0 +1,42 @@
+---
+title: "DARL Project Status Notebook"
+author: "Jocelyn McConnon"
+date: "06 November 2020"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+subtitle: "MORTALITYMINDER"
+---
+* RCS ID: Mcconj2
+* Project Name: MORTALITYMINDER
+* Summary of work since last week 
+
+    * wrote up use case on national trends in deaths of dispair (in shared google Docs)
+    * wrote up use case on state level policy maker in NM (in shared google Docs)
+    * wrote up use case on county level health care provider in Sierra, NM (in shared google Docs)
+    * established an outline for the results secion of the MortalityMinder paper
+    * created a shared google docs with the MortalityMinder paper in it, so the use cases can be worked into the results section
+    * shared Google docs with Sky
+    
+* List of presentations,  papers, or other outputs
+
+    * MortalityMinder paper https://docs.google.com/document/d/1BOn2qOngCWn5uBSTuOI_aRzS09d3G8bizSzTLp8AtiI/edit?usp=sharing
+    * Shared work Google Docs https://docs.google.com/document/d/15YSeTAvyaxTF1yh7QI6EjTNqYnHySU4qbgK42rD5mVc/edit?usp=sharing
+    
+* Indicate which parts of your described work were done by you or as part of joint efforts
+
+    * The use case write-ups I did are at the bottom of the shared Google docs (under "use case drafts")
+    * Sky & I collaborated on the outline on the first page of the shared work Google Docs
+    * I copy-pasted the MortalitMinder paper into a Google docs so it can be edited and shared
+    
+## Personal Contribution	
+
+  * This week I wrote up the use cases that I have been researching. This means I took what I have been working on and incorporated the feedbakc from our deep dives, as well as the scrip I created for the presentation of the use cases. I feel that what I have written currently will need to continue to under go editing, and there is some more details I would like to add. However, in the next phase of my work I will add the use cases to the paper and incorporate them into a cohesive narrative.
+
+## Discussion of Primary Findings 	
+
+* Discuss primary findings: 
+
+    * Primarily, my biggest finding this week was my understanding in the perspective to take with respect to the national trends in deaths of dispair. I was thinking that I should look for reasons to expain the findings of the data, however this isn't correcct. Instead, after concultation of Prof. Bennett, I realized I should be looking at the factors associated with deaths of dispair and how they may or may not be exagerated by outside events such as Covid-19. With this understanding, I wrote up the national trends use case.
