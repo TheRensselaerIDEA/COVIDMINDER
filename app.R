@@ -7,8 +7,8 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-
 update_date <- "2020-12-07"
+
 
 
 moving.avg.window <-
@@ -151,7 +151,7 @@ ui <- function(request) {
           width = 2,
           offset = 10,
           tags$span(style = "float:right; padding: 5px 40px",
-                    tags$b("Date:"),
+                    tags$b("Data last pulled:"),
                     HTML(update_date)),
           
         )),
@@ -462,7 +462,7 @@ ui <- function(request) {
           width = 2,
           offset = 10,
           tags$span(style = "padding: 5px 40px;float:right;",
-                    tags$b("Date:"),
+                    tags$b("Data last pulled:"),
                     HTML(update_date)),
           
         )),
@@ -2533,7 +2533,6 @@ server <- function(input, output, session) {
   
   
 }
-
 #### Set up Shiny App ####
 shinyApp(ui = ui,
          server = server,
