@@ -170,7 +170,7 @@ US.stats.table <- function() {
       subtitle = paste0("How is the US performing across various COVID-19 metrics?")
     ) %>%
     tab_source_note(
-      source_note = md(paste0("Deaths data current to: ", usafacts_last_update))
+      source_note = md(paste0("USA Facts Data Last Updated: ", usafacts_last_update))
     ) %>%
     tab_source_note(
       source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
