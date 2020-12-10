@@ -134,7 +134,8 @@ stats.table <- function(selected_state="NY") {
 US.stats.table <- function() {
   # TODO: Instead of row numbers, add aditional column specifying data type (For number formating)
   name <- "United States"
-  
+  # date of the last update to usafacts
+  usafacts_last_update <- tail(covid_TS_counties_long.cases$date, 1)
   stats <- covid_TS_US_long.cases %>%
     top_n(n=1, wt=date) %>%
     select(diff, cases, p_cases, d_diff, deaths, p_deaths) %>%
@@ -169,11 +170,15 @@ US.stats.table <- function() {
       subtitle = paste0("How is the US performing across various COVID-19 metrics?")
     ) %>%
     tab_source_note(
-      source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/), [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
+      source_note = md(paste0("USA Facts Data Last Updated: ", usafacts_last_update))
+    ) %>%
+    tab_source_note(
+      source_note = md("Data Source: [USA Facts<sup>1</sup>](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) [OWID<sup>2</sup>](https://covid.ourworldindata.org/data/owid-covid-data.csv)")
     ) %>%
     tab_source_note(
       source_note = md("Data Source: Raifman J, Nocka K, Jones D, Bor J, Lipson S, Jay J, and Chan P. (2020). 'COVID-19 US state policy database.' Available at: [www.tinyurl.com/statepolicies<sup>3</sup>](https://www.tinyurl.com/statepolicies)")
     ) %>%
+
     fmt(c("V1"),fns = numeric_fmt) %>%
     cols_hide(c("row_num")) %>%
     tab_options(column_labels.hidden = T,
