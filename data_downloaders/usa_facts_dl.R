@@ -39,6 +39,11 @@ todays.raw.death.data <- read_csv(paste0(file.dir,death.file))
 population <- read_csv(paste0(file.dir,pop.file))  %>%
   filter(countyFIPS > 1000)
 
+# Check if last column is bogus
+if (!grepl("/", colnames(todays.raw.death.data)[length(colnames(todays.raw.death.data))])) {
+  todays.raw.death.data <- todays.raw.death.data[,-length(colnames(todays.raw.death.data))]
+}
+
 # State report card data
 todays.case.data <- todays.raw.case.data %>%
   filter(countyFIPS > 1000) %>%

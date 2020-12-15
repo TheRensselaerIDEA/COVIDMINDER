@@ -341,7 +341,6 @@ ggbar.US <- function(y.value="cases",
     gg_title <- ggtitle(paste0("United States ", category, " over time (",date,")"))
   }
   
-  
   US.ma <- covid_TS_US_long.cases %>%
     rename(Values = all_of(y.value)) %>%
     rename(my_diff = all_of(my_diff)) %>%
