@@ -7,7 +7,7 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-update_date <- "2020-12-15"
+update_date <- "2020-12-16"
 
 
 
