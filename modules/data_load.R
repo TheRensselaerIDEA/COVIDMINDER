@@ -4,6 +4,9 @@ states.shapes <- readRDS("data/json/us_projection.Rds")
 #Dataset for all state mortality/cases at county level
 todays.case.data <- read_csv("data/csv/todays_case_data.csv")
 
+# This is a test...
+#todays.case.data <- todays.case.data %>% filter(!is.na(Mortality))
+
 # load in 
 library(datasets)
 state.abr <- cbind.data.frame(state.abb, as.character(state.name), state.center$x, state.center$y)
