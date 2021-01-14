@@ -7,7 +7,7 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-update_date <- "2021-01-11"
+update_date <- "2021-01-14"
 
 moving.avg.window <-
   7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
