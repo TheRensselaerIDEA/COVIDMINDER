@@ -7,7 +7,7 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-update_date <- "2021-01-19"
+update_date <- "2021-01-21"
 
 moving.avg.window <-
   7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
@@ -2492,12 +2492,12 @@ server <- function(input, output, session) {
   # Content of modal dialog
   query_modal <- modalDialog(
     title = "Welcome to COVIDMINDER",
-    "WARNING: COVIDMINDER represents experimental, student-created work. Reasonable
-    effort has been made to provide a safe, informative, enjoyable user experience, but
-    some COVIDMINDER features may not comply with Web Content Accessibility Guidelines (WCAG).
-    USE AT YOUR OWN RISK.",
+    "PLEASE NOTE: This application is the result of the efforts of students at 
+    Rensselaer’s Data INCITE Lab. It is presented here to showcase the talents 
+    of our students.  The application may not meet all of the standards one might 
+    expect of a production commercial product.",
     easyClose = F,
-    footer = tagList(actionButton("run", "Continue with COVIDMINDER app"))
+    footer = tagList(actionButton("run", "Continue with COVIDMINDER"))
   )
   
   # the following is a hack to prevent the ADA disclaimer from popping up on page load if the user
