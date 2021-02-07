@@ -51,7 +51,7 @@ todays.case.data <- inner_join(todays.case.data, population[c(1,4)], by=c("count
 
 todays.death.data <- todays.raw.death.data %>%
   filter(countyFIPS > 1000) %>%
-  select(1, ncol(todays.raw.death.data))
+  select(countyFIPS, ncol(todays.raw.death.data))
 colnames(todays.death.data)[2] <- "Mortality"
 
 todays.case.data <- inner_join(todays.case.data, todays.death.data, by=c("countyFIPS" = "countyFIPS"))
@@ -71,20 +71,19 @@ covid_TS_counties_long.cases <- todays.raw.case.data %>%
   tidyr::gather(date,cases,5:ncol(todays.raw.case.data))
 covid_TS_counties_long.death <- todays.raw.death.data %>%
   tidyr::gather(date,deaths,5:ncol(todays.raw.death.data))
-
 # Make date column an actual R date_time
-covid_TS_counties_long.cases$date <- parse_date_time(covid_TS_counties_long.cases$date, c("%m/%d/%y"))
-covid_TS_counties_long.death$date <- parse_date_time(covid_TS_counties_long.death$date, c("%m/%d/%y"))
+covid_TS_counties_long.cases$date <- parse_date_time(covid_TS_counties_long.cases$date, c("%y/%m/%d"))
+covid_TS_counties_long.death$date <- parse_date_time(covid_TS_counties_long.death$date, c("%y/%m/%d"))
 
 # Factor does not make sense here as there may be distint, same named counties
 covid_TS_counties_long.cases <- covid_TS_counties_long.cases %>%
   rename(County = `County Name`) %>%
   mutate(County = str_remove_all(County, regex(" County", ignore_case = T)))
-
 # Join death data
 covid_TS_counties_long.cases <- inner_join(covid_TS_counties_long.cases, 
-                                           covid_TS_counties_long.death[c(1,5,6)], 
+                                           covid_TS_counties_long.death[c("countyFIPS", "date", "deaths")], 
                                            by=c("countyFIPS" = "countyFIPS", "date" = "date"))
+
 # Filter small data
 covid_TS_counties_long.cases <- covid_TS_counties_long.cases %>%
   filter(countyFIPS > 1000) %>%
@@ -134,8 +133,8 @@ covid_TS_state_long.death <- todays.raw.death.data %>%
   tidyr::gather(date,deaths,5:ncol(todays.raw.death.data))
 
 # Make date column an actual R date_time
-covid_TS_state_long.cases$date <- parse_date_time(covid_TS_state_long.cases$date, c("%m/%d/%y"))
-covid_TS_state_long.death$date <- parse_date_time(covid_TS_state_long.death$date, c("%m/%d/%y"))
+covid_TS_state_long.cases$date <- parse_date_time(covid_TS_state_long.cases$date, c("%y/%m/%d"))
+covid_TS_state_long.death$date <- parse_date_time(covid_TS_state_long.death$date, c("%y/%m/%d"))
 
 # Factor does not make sense here as there may be distint, same named counties
 covid_TS_state_long.cases <- covid_TS_state_long.cases %>%
@@ -201,8 +200,8 @@ covid_TS_US_long.death <- todays.raw.death.data %>%
   tidyr::gather(date,deaths,5:ncol(todays.raw.death.data))
 
 # Make date column an actual R date_time
-covid_TS_US_long.cases$date <- parse_date_time(covid_TS_US_long.cases$date, c("%m/%d/%y"))
-covid_TS_US_long.death$date <- parse_date_time(covid_TS_US_long.death$date, c("%m/%d/%y"))
+covid_TS_US_long.cases$date <- parse_date_time(covid_TS_US_long.cases$date, c("%y/%m/%d"))
+covid_TS_US_long.death$date <- parse_date_time(covid_TS_US_long.death$date, c("%y/%m/%d"))
 
 # Factor does not make sense here as there may be distint, same named counties
 covid_TS_US_long.cases <- covid_TS_US_long.cases %>%
