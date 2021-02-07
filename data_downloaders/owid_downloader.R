@@ -5,24 +5,31 @@
 # "data/csv/owid_covid_testing.csv"
 # "data/csv/owid_covid_testing.csv.bak"
 library(tidyverse)
+library(sqldf) # Added 01/05/2021
 
 # Download states raw data 
 owidURL <- "https://covid.ourworldindata.org/data/owid-covid-data.csv"
 download.file(owidURL, paste0("data/csv/", "owid_testing_raw.csv"))
 
 # Import raw into R
-todays_raw_owid_data <- read_csv(paste0("data/csv/", "owid_testing_raw.csv"))
+# UPDATE: Only import USA data
+# todays_raw_owid_data <- read_csv(paste0("data/csv/", "owid_testing_raw.csv"))
+todays_raw_owid_data <- read.csv.sql("data/csv/owid_testing_raw.csv", 
+             sql = "SELECT * FROM file WHERE iso_code = 'USA'", eol = "\n")
 
-
+todays_raw_owid_data$date <- as.Date(todays_raw_owid_data$date)
+todays_raw_owid_data$total_tests <- as.numeric(todays_raw_owid_data$total_tests)
+todays_raw_owid_data$population <- as.numeric(todays_raw_owid_data$population)
 
 # Check rates against our list (30 Apr)
 check_iso_codes <- c("PRT","ITA","RUS","USA","GBR","CAN","CHE")
 check_iso_codes2 <- c("USA","BEL","PRT","CHE","ITA","ESP","IRL","DEU","CAN","RUS","GBR")
 
 # Grab latest reported total test rate for each country - Jose
-owid_data.total.test.rate <-todays_raw_owid_data %>% 
+owid_data.total.test.rate <- todays_raw_owid_data %>% 
   #filter(!is.na(total_tests_per_thousand) & iso_code %in% check_iso_codes2) %>%
   filter(!is.na(total_tests) & iso_code %in% check_iso_codes2) %>%
+  # filter(total_tests > 1) %>%
   #select(iso_code, location, date, total_tests_per_thousand) %>%
   select(iso_code, location, date, total_tests, population) %>%
   group_by(iso_code) %>%

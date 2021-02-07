@@ -12,9 +12,7 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-
-update_date <- "2020-11-16"
-
+update_date <- "2021-02-07"
 
 moving.avg.window <-
   7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
@@ -64,30 +62,62 @@ url1 <- url2 <- ""
 
 #### UI Code ####
 
-### Footer
-footer <- tags$div(
-  class = "footer",
-  
-  hr(),
-  tags$div(
-    class = "footerchild",
+### Footer ####
+footer <- fluidRow(
+  column(
+    width = 12,
+    fluidRow(
+      column(
+        width = 8,
+        offset = 2,
+        tags$hr()
+            )
+      ),
+    fluidRow(
+        column(
+    width = 1,
+    offset = 2,
     HTML("<a href='?tab=about'>About</a>&emsp;"),
+         ),
+  column(
+    width = 3,
     HTML(
       "<a href='https://idea.rpi.edu/'>Institute for Data Exploration and Applications (IDEA)</a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     HTML(
-      "<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"
+    "<a href='https://github.com/TheRensselaerIDEA/COVIDMINDER'>COVIDMINDER GitHub</a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     HTML(
       "<a href='https://info.rpi.edu/statement-of-accessibility'>Accessibility</a>&emsp;"
+    )
     ),
+  column(
+    width = 1,
     HTML(
       "<a href='https://forms.gle/8LwiYAVXXN7mu9wR6'>
         <span title='Thanks for using COVIDMINDER! Please take a few moments to fill out our short comments form.'>Comments</span></a>&emsp;"
+        )
     ),
+  column(
+    width = 1,
     tags$a(href = "#top", "Back to Navbar")
   )
+ 
+    )
+  
+  )
+ 
+ 
+  
 )
+# get rid of footer class code in css doc
+
 
 header <- tags$div(
   class = "header",
@@ -124,7 +154,7 @@ ui <- function(request) {
           width = 2,
           offset = 10,
           tags$span(style = "float:right; padding: 5px 40px",
-                    tags$b("Date:"),
+                    tags$b("Data last pulled:"),
                     HTML(update_date)),
           
         )),
@@ -142,7 +172,6 @@ ui <- function(request) {
           tags$h1("United States Overview"),
           offset = 2
         )),
-        tags$br(),
         fluidRow(
           column(
             8,
@@ -216,8 +245,6 @@ ui <- function(request) {
             offset = 2
           )
         ),
-        tags$br(),
-        tags$br(),
         fluidRow(column(8, gt_output("US.report"),
                         offset = 2)),
         fluidRow(column(
@@ -429,7 +456,7 @@ ui <- function(request) {
             gt_output("US.ranking.table")
                  )
         ),
-        
+      footer  
       ),
       tabPanel(
         title = HTML("<div><b>STATE REPORT CARDS</b></div>"),
@@ -438,7 +465,7 @@ ui <- function(request) {
           width = 2,
           offset = 10,
           tags$span(style = "padding: 5px 40px;float:right;",
-                    tags$b("Date:"),
+                    tags$b("Data last pulled:"),
                     HTML(update_date)),
           
         )),
@@ -466,7 +493,6 @@ ui <- function(request) {
           uiOutput("main_title"),
           offset = 2
         )),
-        tags$br(),
         fluidRow(column(
           8,
           style = "text-align:center;",
@@ -546,8 +572,6 @@ ui <- function(request) {
             offset = 2
           )
         ),
-        tags$br(),
-        tags$br(),
         fluidRow(column(8, gt_output("state.report"),
                         offset = 2)),
         fluidRow(column(
@@ -602,7 +626,6 @@ ui <- function(request) {
             downloadButton("state.trends.data.dl", label = "Download Data For This Plot"),
                  )
         ),
-        tags$br(),
         fluidRow(column(
           8,
           style = "text-align:center;",
@@ -740,7 +763,8 @@ ui <- function(request) {
             width=8,offset=2,
             gt_output("ranking.table")
           )
-        )
+        ),
+        footer 
           ),
         
       #### State Determinants UI ####
@@ -794,7 +818,8 @@ ui <- function(request) {
               "Determinant tabs are experimental and expected to change substantially, current displayed data may not be accurate."
             ),
             offset = 2
-          ))
+          )),
+          footer
         )
         
         
@@ -819,9 +844,9 @@ ui <- function(request) {
           HTML(whatisit_text_abt),
           HTML(footer_text)
         ),),
-      ),
+        footer
+      )
     
-    footer
       
       ),
     )
@@ -2515,12 +2540,12 @@ server <- function(input, output, session) {
   # Content of modal dialog
   query_modal <- modalDialog(
     title = "Welcome to COVIDMINDER",
-    "WARNING: COVIDMINDER represents experimental, student-created work. Reasonable
-    effort has been made to provide a safe, informative, enjoyable user experience, but
-    some COVIDMINDER features may not comply with Web Content Accessibility Guidelines (WCAG).
-    USE AT YOUR OWN RISK.",
+    "PLEASE NOTE: This application is the result of the efforts of students at 
+    Rensselaer’s Data INCITE Lab. It is presented here to showcase the talents 
+    of our students.  The application may not meet all of the standards one might 
+    expect of a production commercial product.",
     easyClose = F,
-    footer = tagList(actionButton("run", "Continue with COVIDMINDER app"))
+    footer = tagList(actionButton("run", "Continue with COVIDMINDER"))
   )
   
   # the following is a hack to prevent the ADA disclaimer from popping up on page load if the user
@@ -2554,7 +2579,6 @@ server <- function(input, output, session) {
   
   
 }
-
 #### Set up Shiny App ####
 shinyApp(ui = ui,
          server = server,
