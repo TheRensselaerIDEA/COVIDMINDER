@@ -799,6 +799,28 @@ ui <- function(request) {
           tags$div(
             class = "tab-title",
             style = "text-align:center;",
+            HTML("<div><b>Determinant Descriptions</b></div>")
+          ),
+          value = "state_social_det_descriptions",
+          
+          fluidRow(column(
+            8,
+            style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+            tags$h1("COVIDMINDER: Where you live matters"),
+            offset = 2
+          )),
+        
+          fluidRow(column(
+            8,
+            gt_output("determinant_descriptions"),
+            
+            offset = 2
+          ))
+        ),
+        tabPanel(
+          tags$div(
+            class = "tab-title",
+            style = "text-align:center;",
             HTML("<div><b>DISCLAIMER</b></div>")
           ),
           value = "determinant_disclaimer",
@@ -2510,6 +2532,10 @@ server <- function(input, output, session) {
     ## instead let's build the ggplot object
     output$social_det_graph <- renderPlot(
       make_state_det_image(input$social_det_picker)
+    )
+    # for the determinant descriptions table
+    output$determinant_descriptions <- render_gt(
+      gt(read_csv("./data/social_det_gen/covid_determinants_data/SocialDeterminants.csv")[,c("Name", "Definitions")])
     )
     
     
