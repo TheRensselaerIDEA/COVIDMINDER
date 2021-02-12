@@ -116,7 +116,7 @@ generate_output <- function (state_choice){
   # this funciton takes an abbreviated state name and outputs kendall correlation
   if(state_choice %in% c("HI","WY")){
     # these are states not having enough data
-    filename <- paste0("./data/social_det_gen/covid_determinants_output", state_choice, ".csv")
+    filename <- paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv")
     file.create(filename)
     fileConn<-file(filename)
     writeLines(c("chr_code,kendall_cor,kendall_p,DIR"), fileConn)
@@ -155,11 +155,13 @@ generate_output <- function (state_choice){
     dplyr::top_n(15, abs(kendall_cor)) %>% 
     dplyr::mutate(chr_code = reorder(chr_code, kendall_cor))
   
-  write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output", state_choice, ".csv"))
+  write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
 }
 
 make_state_det_image <- function(state_choice){
-  input <- read.csv(paste0("./data/social_det_gen/covid_determinants_output/kendall_cor_", state_choice))
+  # state choice is a string selected from R's builtin array state.abb
+  # this function takes some prebaked data and makes a realtime determinants plot given some state selection
+  input <- read.csv(paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
   if(nrow(input) > 0) {
     # updatePickerInput(session, "determinant_choice", selected = kendall.cor.new$chr_code[[1]])
     output_plot <- input %>% 
@@ -230,8 +232,8 @@ make_state_det_image <- function(state_choice){
 }
 # apply the generation function to each state and write data to csv
 # commented out because I've already generated the data and I want to use it to generate the images using make_state_det_image on a per-state basis
-lapply(state.abb, generate_output)
-lapply(state.abb, make_state_det_image)
+#lapply(state.abb, generate_output)
+#lapply(state.abb, make_state_det_image)
 # generate plot for each csv and save to ./covid_determinants_output/images
 
 

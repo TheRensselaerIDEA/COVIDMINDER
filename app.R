@@ -790,7 +790,7 @@ ui <- function(request) {
             8,
             selectInput("social_det_picker", "Select a state to display", state.abb, selected = NULL, multiple = FALSE,
                         selectize = TRUE, width = NULL, size = NULL),
-            plotOutput("social_det_graph", width ="112px", height="188px", inline=TRUE),
+            plotOutput("social_det_graph"),
             
             offset = 2
           ))
