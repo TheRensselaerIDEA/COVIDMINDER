@@ -113,9 +113,10 @@ kendall.func <- function(x.data, sd.data) {
 
 #### state determinant output generation ####
 generate_output <- function (state_choice){
+  # this funciton takes an abbreviated state name and outputs kendall correlation
   if(state_choice %in% c("HI","WY")){
     # these are states not having enough data
-    filename <- paste0("./data/social_det_gen/covid_determinants_output", state_choice)
+    filename <- paste0("./data/social_det_gen/covid_determinants_output", state_choice, ".csv")
     file.create(filename)
     fileConn<-file(filename)
     writeLines(c("chr_code,kendall_cor,kendall_p,DIR"), fileConn)
@@ -154,7 +155,7 @@ generate_output <- function (state_choice){
     dplyr::top_n(15, abs(kendall_cor)) %>% 
     dplyr::mutate(chr_code = reorder(chr_code, kendall_cor))
   
-  write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output", state_choice))
+  write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output", state_choice, ".csv"))
 }
 
 make_state_det_image <- function(state_choice){
@@ -229,8 +230,8 @@ make_state_det_image <- function(state_choice){
 }
 # apply the generation function to each state and write data to csv
 # commented out because I've already generated the data and I want to use it to generate the images using make_state_det_image on a per-state basis
-#lapply(state.abb, generate_output)
-#lapply(state.abb, make_state_det_image)
+lapply(state.abb, generate_output)
+lapply(state.abb, make_state_det_image)
 # generate plot for each csv and save to ./covid_determinants_output/images
 
 
