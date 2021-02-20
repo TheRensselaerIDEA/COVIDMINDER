@@ -1,0 +1,8 @@
+chr_code,kendall_cor,kendall_p,DIR
+Association Rate,0.21664851079742226,0.0022602147292029987,Destructive
+Prim Care Physicians Ratio,0.18126117889184665,0.01361953887327944,Destructive
+Native Hawaiian Islander,0.17286096054607494,0.019445233210350046,Destructive
+Other Prim Care Prov Rate,0.15006670776869394,0.03780261726940042,Destructive
+Single Parent Households,0.11967381640022949,0.09142264383387952,Destructive
+Drive Alone Long Commute,-0.15452070935299614,0.029515654359567624,Protective
+Segregation(NonWhite/White),-0.22122448979591836,0.02339777391212346,Protective
