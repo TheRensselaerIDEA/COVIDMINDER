@@ -396,28 +396,7 @@ ui <- function(request) {
           )
         ),
         tags$br(),
-        fluidRow(
-          column(
-            8,
-            style = "text-align:center;",
-            uiOutput("US.determinant.title"),
-            offset = 2
-          ),
-          column(
-            8,
-            align = "center",
-            plotOutput(outputId = "US.determinants",),
-            offset = 2
-          ),
-        ),
-        fluidRow(
-         column(
-           width=8, offset=2,
-           downloadButton("US.determinants.dl", label = "Download Determinants Visualization"),
-          downloadButton("US.determinants.data.dl", label = "Download Data For This Plot")
-         ) 
-          
-        ),
+     
         tags$br(),
         tags$br(),
         fluidRow(
@@ -790,7 +769,7 @@ ui <- function(request) {
             8,
             selectInput("social_det_picker", "Select a state to display", state.name, selected = NULL, multiple = FALSE,
                         selectize = TRUE, width = NULL, size = NULL),
-            plotOutput("social_det_graph"),
+            plotOutput("social_det_graph", width = "100%", height = "1600px"),
             
             offset = 2
           ))
