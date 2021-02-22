@@ -158,8 +158,9 @@ generate_output <- function (state_choice){
   write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
 }
 
-make_state_det_image <- function(state_choice){
-  # state choice is a string selected from R's builtin array state.abb
+make_state_det_image <- function(state_name){
+  # state choice is a string selected from R's builtin array state.name
+  state_choice = state.abb[which(state.name == state_name)]
   # this function takes some prebaked data and makes a realtime determinants plot given some state selection
   input <- read.csv(paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
   if(nrow(input) > 0) {

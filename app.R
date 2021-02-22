@@ -788,7 +788,7 @@ ui <- function(request) {
         
           fluidRow(column(
             8,
-            selectInput("social_det_picker", "Select a state to display", state.abb, selected = NULL, multiple = FALSE,
+            selectInput("social_det_picker", "Select a state to display", state.name, selected = NULL, multiple = FALSE,
                         selectize = TRUE, width = NULL, size = NULL),
             plotOutput("social_det_graph"),
             
