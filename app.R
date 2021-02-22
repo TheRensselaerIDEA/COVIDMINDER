@@ -1,4 +1,9 @@
 #### Library and Data Imports ####
+library(shinythemes)
+library(tidyverse)
+library(ggplot2)
+library(RCurl)
+
 source("modules/Source.R")
 source("modules/data_load.R")
 source("modules/preprocessing.R")
@@ -391,28 +396,7 @@ ui <- function(request) {
           )
         ),
         tags$br(),
-        fluidRow(
-          column(
-            8,
-            style = "text-align:center;",
-            uiOutput("US.determinant.title"),
-            offset = 2
-          ),
-          column(
-            8,
-            align = "center",
-            plotOutput(outputId = "US.determinants",),
-            offset = 2
-          ),
-        ),
-        fluidRow(
-         column(
-           width=8, offset=2,
-           downloadButton("US.determinants.dl", label = "Download Determinants Visualization"),
-          downloadButton("US.determinants.data.dl", label = "Download Data For This Plot")
-         ) 
-          
-        ),
+     
         tags$br(),
         tags$br(),
         fluidRow(
@@ -762,10 +746,56 @@ ui <- function(request) {
         footer 
           ),
         
-      
+      #### State Determinants UI ####
       navbarMenu(
         menuName = "determinant_menu",
         HTML("<div><b>DETERMINANT ANALYSIS</b></div>"),
+        tabPanel(
+          tags$div(
+            class = "tab-title",
+            style = "text-align:center;",
+            HTML("<div><b>State Analysis</b></div>")
+          ),
+          value = "state_social_det",
+          
+          fluidRow(column(
+            8,
+            style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+            tags$h1("COVIDMINDER: Where you live matters"),
+            offset = 2
+          )),
+        
+          fluidRow(column(
+            8,
+            selectInput("social_det_picker", "Select a state to display", state.name, selected = NULL, multiple = FALSE,
+                        selectize = TRUE, width = NULL, size = NULL),
+            plotOutput("social_det_graph", width = "100%", height = "1600px"),
+            
+            offset = 2
+          ))
+        ),
+        tabPanel(
+          tags$div(
+            class = "tab-title",
+            style = "text-align:center;",
+            HTML("<div><b>Determinant Descriptions</b></div>")
+          ),
+          value = "state_social_det_descriptions",
+          
+          fluidRow(column(
+            8,
+            style = "text-align:center;font-weight:bold;background-color: #EBEBEB;",
+            tags$h1("COVIDMINDER: Where you live matters"),
+            offset = 2
+          )),
+        
+          fluidRow(column(
+            8,
+            gt_output("determinant_descriptions"),
+            
+            offset = 2
+          ))
+        ),
         tabPanel(
           tags$div(
             class = "tab-title",
@@ -792,6 +822,7 @@ ui <- function(request) {
           )),
           footer
         )
+        
         
       ),
       
@@ -2464,6 +2495,28 @@ server <- function(input, output, session) {
     },
     contentType = 'text/csv'
   )
+    
+  #### state determinants output ####
+    # import the function for making the plots
+    source("./data/social_det_gen/getplotdata.R")
+    ## this output just puts the image on the page
+    # output$social_det_graph <- renderImage({
+    #   # When input$n is 1, filename is ./images/image1.jpeg
+    #   filename <- paste0("./data/social_det_gen/covid_determinants_output/images/kendall", input$social_det_picker,".png")
+    #   filename <- normalizePath(file.path(filename))
+    #   # Return a list containing the filename
+    #   list(src = filename)
+    # }, deleteFile = FALSE)
+    
+    ## instead let's build the ggplot object
+    output$social_det_graph <- renderPlot(
+      make_state_det_image(input$social_det_picker)
+    )
+    # for the determinant descriptions table
+    output$determinant_descriptions <- render_gt(
+      gt(read_csv("./data/social_det_gen/covid_determinants_data/SocialDeterminants.csv")[,c("Name", "Definitions")])
+    )
+    
     
   ### The following code deals with setting or responding to parameterized URLs
   observe({

@@ -1,0 +1,7 @@
+chr_code,kendall_cor,kendall_p,DIR
+Presence Of Violation,0.5933661039639299,0.006322947695810944,Destructive
+Physical Environment,0.39999999999999997,0.03068909760690719,Destructive
+Adult Smoking,0.35,0.058631591837875245,Destructive
+Fair Or Poor Health,0.35,0.058631591837875245,Destructive
+Income Ratio,0.31666666666666665,0.08710776496743847,Destructive
+Severe Housing Problems,0.31666666666666665,0.08710776496743847,Destructive
