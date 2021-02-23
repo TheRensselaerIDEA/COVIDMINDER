@@ -158,8 +158,9 @@ generate_output <- function (state_choice){
   write_csv(kendall.cor.new, paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
 }
 
-make_state_det_image <- function(state_choice){
-  # state choice is a string selected from R's builtin array state.abb
+make_state_det_image <- function(state_name){
+  # state choice is a string selected from R's builtin array state.name
+  state_choice = state.abb[which(state.name == state_name)]
   # this function takes some prebaked data and makes a realtime determinants plot given some state selection
   input <- read.csv(paste0("./data/social_det_gen/covid_determinants_output/kendall_cor", state_choice, ".csv"))
   if(nrow(input) > 0) {
@@ -167,15 +168,15 @@ make_state_det_image <- function(state_choice){
     output_plot <- input %>% 
       ggplot(
         aes(
-          #x = reorder(chr_code, kendall_cor), 
-          x = chr_code, 
+          x = reorder(chr_code, kendall_cor), 
+          #x = chr_code, 
           y = kendall_cor, 
           color = DIR, 
           fill = DIR)
       ) + 
       
       # Lolipop chart
-      geom_point(stat = 'identity', size = 12) + 
+      geom_point(stat = 'identity', size = 18) + 
       geom_segment(
         size = 1,
         aes(
@@ -195,12 +196,12 @@ make_state_det_image <- function(state_choice){
           hjust = ifelse(DIR == "Protective", 0, 1)
         ), 
         color = "#565254", 
-        size = 4
+        size = 8
       ) +
       geom_text(
         aes(label = round(kendall_cor, 2)), 
         color = "#565254", 
-        size = 3
+        size = 5 
       ) +
       
       # Coordinates
@@ -216,7 +217,18 @@ make_state_det_image <- function(state_choice){
       
         fill = "Relationship",
         color = "Relationship"
-      )
+      )+
+      theme(axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          text = element_text(size=20),
+          axis.ticks.y=element_blank(),
+          legend.position="top",
+          plot.title = element_text(hjust=.5),
+          panel.background = element_blank(),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          legend.key=element_blank()
+          )
   }
   #Display something else when there are no significant SD
   else {
