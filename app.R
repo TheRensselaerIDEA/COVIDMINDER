@@ -881,7 +881,7 @@ server <- function(input, output, session) {
     
     # Grab state subset for dataframe
     state.df <- covid_TS_counties_long.cases %>%
-      select(-c(countyFIPS, stateFIPS)) %>%
+      select(-c(countyFIPS, StateFIPS)) %>%
       filter(State == state_initial)
     
     if (state_initial == "NY") {
@@ -1469,7 +1469,7 @@ server <- function(input, output, session) {
     y_label <- get_y_label(y.value)
     state.name <- state.abr[state.abr$abr == state_initial, "name"]
     covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
-      select(-c(countyFIPS, stateFIPS)) %>%
+      select(-c(countyFIPS, StateFIPS)) %>%
       filter(State == state_initial) %>%
       group_by(County) %>%
       filter(n() >= moving.avg.window) %>%
@@ -1978,7 +1978,7 @@ server <- function(input, output, session) {
         y.value = "p_diff"
       }
     covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
-    select(-c(countyFIPS, stateFIPS)) %>%
+    select(-c(countyFIPS, StateFIPS)) %>%
     filter(State == state_initial) %>%
     group_by(County) %>% 
     filter(n() >= moving.avg.window) %>%
