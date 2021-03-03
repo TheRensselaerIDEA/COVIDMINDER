@@ -92,7 +92,7 @@ owid_data.obesity.rate <- read.csv("data/csv/owid_obese_pct_2016.csv")
 colnames(owid_data.obesity.rate) <- c("Entity", "Code", "Year", "Pct_obese_adult")
 
 # Time series data for nationwide, counties and states
-covid_TS_counties_long.cases <- read_csv("data/csv/time_series/covid_TS_counties_long.cases.csv")
+covid_TS_counties_long.cases <- readRDS("data/csv/time_series/covid_TS_counties_long.cases.rds")
 covid_TS_state_long.cases <- read_csv("data/csv/time_series/covid_TS_state_long.cases.csv")
 covid_TS_US_long.cases <- read_csv("data/csv/time_series/covid_TS_US_long.cases.csv")
 
