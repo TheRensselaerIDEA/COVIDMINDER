@@ -100,7 +100,7 @@ ggplot.state <- function(selected.state = "NY",
   
   
   covid_TS_counties.cases.plot <- covid_TS_counties_long.cases %>%
-    select(-c(countyFIPS, stateFIPS)) %>%
+    select(-c(countyFIPS, StateFIPS)) %>%
     filter(State == selected.state) %>%
     group_by(County) %>% 
     filter(n() >= moving.avg.window) %>%
