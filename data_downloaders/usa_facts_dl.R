@@ -125,9 +125,8 @@ covid_TS_counties_long.cases %>%
 covid_TS_counties_long.cases$d_diff <- ifelse(is.na(covid_TS_counties_long.cases$d_diff), covid_TS_counties_long.cases$deaths, covid_TS_counties_long.cases$d_diff)
 covid_TS_counties_long.cases$p.d_diff <- ifelse(is.na(covid_TS_counties_long.cases$p.d_diff), covid_TS_counties_long.cases$p_deaths, covid_TS_counties_long.cases$p.d_diff)
 
-# Backup case time series data
-write_csv(read_csv("data/csv/time_series/covid_TS_counties_long.cases.csv"), "data/csv/time_series/covid_TS_counties_long.cases.csv.bak")
-write_csv(covid_TS_counties_long.cases, "data/csv/time_series/covid_TS_counties_long.cases.csv")
+# save time series data
+saveRDS(covid_TS_counties_long.cases, "data/csv/time_series/covid_TS_counties_long.cases.rds")
 
 
 ### State Level ###
@@ -194,7 +193,6 @@ covid_TS_state_long.cases$d_diff <- ifelse(is.na(covid_TS_state_long.cases$d_dif
 covid_TS_state_long.cases$p.d_diff <- ifelse(is.na(covid_TS_state_long.cases$p.d_diff), covid_TS_state_long.cases$p_deaths, covid_TS_state_long.cases$p.d_diff)
 
 # Backup case time series data
-write_csv(read_csv("data/csv/time_series/covid_TS_state_long.cases.csv"), "data/csv/time_series/covid_TS_state_long.cases.csv.bak")
 write_csv(covid_TS_state_long.cases, "data/csv/time_series/covid_TS_state_long.cases.csv")
 
 ### US Level ###
