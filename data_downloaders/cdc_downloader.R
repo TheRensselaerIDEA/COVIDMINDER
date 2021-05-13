@@ -17,12 +17,14 @@ todays_raw_racial_data <- read_csv(paste0("data/csv/", "states_cdc_racial_raw.cs
 
 # Rename raw columns
 todays_raw_racial_data <- todays_raw_racial_data %>% 
+  filter(group=="By Total") %>%
   rename(NAME = state) %>%
   rename(nhw = non_hispanic_white) %>%
   rename(nhbaa = non_hispanic_black_african_american) %>% 
   rename(nhaian = non_hispanic_american_indian_alaska_native) %>% 
   rename(nhapi = non_hispanic_asian_pacific_islander) %>%
   rename(hlt = hispanic_latino_total) %>%
+  rename(other= non_hispanic_more_than_one_race) %>%
   select(-footnote)
 
 # Rewrite indicator column
@@ -36,7 +38,7 @@ todays_raw_racial_data <- todays_raw_racial_data %>%
 # Transform to wide
 todays_raw_racial_data.wide <- todays_raw_racial_data %>%
   #pivot_wider(names_from = indicator, values_from = 6:11)
-  pivot_wider(id_cols = c(data_as_of,start_week,end_week,NAME), names_from = indicator, values_from = c(nhw, nhbaa, nhaian,  nhapi,     hlt,  other))
+  pivot_wider(id_cols = c(data_as_of,start_week,end_week,NAME), names_from = indicator, values_from = c(nhw, nhbaa, nhaian,  nhapi, hlt, other))
 
 # Make backup of existing data
 yesterday_data <- read_csv("data/csv/states_cdc_racial_wide.csv")
