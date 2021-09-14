@@ -434,4 +434,41 @@ todays.case.data$"GOP Vote_rate_ldi" <- unlist(lapply(todays.case.data$`GOP Vote
 todays.case.data <- todays.case.data %>% mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` < -5, -5)) %>%
   mutate(`GOP Vote_rate_ldi` = replace(`GOP Vote_rate_ldi`, `GOP Vote_rate_ldi` > 5, 5))
 
+#######################
+# NEW (14 Sep 2021): Calculate state vaccination DIs based on median of US state rates
+
+# Do this is data_load.R
+state_vaccinations <- read_csv("data/csv/state_vaccinations.csv")
+
+#pUS.vax <- as.numeric(state_vaccinations[which(state_vaccinations$NAME=="United States"),"Vax_rate"])
+pUS.vax <- mean(t(state_vaccinations[which(state_vaccinations$NAME !="United States"),"Vax_rate"]))
+
+Vax_rate_ldi <- unlist(lapply(state_vaccinations$Vax_rate, FUN=function(x){log(x/pUS.vax)}))
+#Daily_vax_rate_ldi <- unlist(lapply(state_vaccinations$Vax_rate, FUN=function(x){log(x/pUS.vax.daily)}))
+
+#pUS.vax <- pUS.vax*1000
+#vax_ldi.us <- unlist(lapply(state_vaccinations$vax_per_1000, FUN=function(x){log(x/(pUS.vax))}))
+vax_ldi.us <- unlist(lapply(state_vaccinations$Vax_rate, FUN=function(x){log(x/(pUS.vax))}))
+
+# Write to data frame
+state_vaccinations <- data.frame(state_vaccinations, Vax_rate_ldi)
+#state_vaccinations <- data.frame(state_vaccinations, Daily_vax_rate_ldi)
+
+state_vaccinations <- data.frame(state_vaccinations, vax_ldi.us)
+
+state_vaccinations <- state_vaccinations[match(states$NAME, state_vaccinations$NAME),]
+
+# Check the row order of this
+state_vaccinations <- state_vaccinations[1:51,]
+
+state_vaccinations <- state_vaccinations %>% 
+  mutate(Vax_rate_ldi = replace(Vax_rate_ldi, Vax_rate_ldi < -5, -5)) %>%
+#  mutate(Daily_vax_rate_ldi = replace(Daily_vax_rate_ldi, Daily_vax_rate_ldi < -5, -5)) %>%
+  mutate(vax_ldi.us = replace(vax_ldi.us, vax_ldi.us < -5, -5))
+
+states <- data.frame(states, "Vax_rate"=state_vaccinations$Vax_rate, check.names = F) # Append to states
+
+#states <- data.frame(states, "Population"=state_vaccinations$Population, check.names = F) # Append to states (reference)
+
+states <- data.frame(states, "Vax_rate_ldi"=state_vaccinations$Vax_rate_ldi, check.names = F) # Append to states
 

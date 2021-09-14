@@ -79,6 +79,16 @@ geo.plot <- function(state.choice,
     ) %>% lapply(htmltools::HTML)
     
     pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*1.25, reverse=reverse)
+  } else if (feature == "Vax") {
+    labels <- sprintf(
+      paste0("<strong>%s</strong><br/>",
+             feature," Rate DI: %.2g<br>",
+             feature," Rate: %.1f /100K"),
+      dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])
+    ) %>% lapply(htmltools::HTML)
+    
+    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins, reverse=reverse)
+    
   } else {
     labels <- sprintf(
       paste0("<strong>%s</strong><br/>",
