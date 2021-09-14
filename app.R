@@ -393,6 +393,23 @@ ui <- function(request) {
             downloadButton("US.maps.testing.dl", label = "Download Testing Map"),
             downloadButton("US.maps.testing.data.dl", label = "Download Data For This Plot"),
             offset = 2
+          ),
+          column(
+            8,
+            tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities"),
+            tags$h3(
+              style = "text-align:center;",
+              "What are the Nationwide disparities in COVID-19 Vaccination Rates?"
+            ),
+            tags$h4(
+              style = "text-align:center;font-style:italic;",
+              "Based on US mean vaccination rate (per 100K population) across all states."
+            ),
+            leafletOutput("US.map.vaccination", height = height),
+            
+            downloadButton("US.maps.vaccination.dl", label = "Download Vaccination Map"),
+            downloadButton("US.maps.vaccination.data.dl", label = "Download Data For This Plot"),
+            offset = 2
           )
         ),
         tags$br(),
@@ -2180,6 +2197,42 @@ server <- function(input, output, session) {
     contentType = 'text/csv'
   )
   
+  output$US.map.vaccination <- renderLeaflet({
+    geo.plot("US", "Vax", reverse = T)
+  })
+  
+  output$US.maps.vaccination.dl <- downloadHandler(
+    filename = function() {
+      return("US_vaccination.png")
+    },
+    content = function(file) {
+      title <-
+        tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities")
+      mapshot(
+        x = geo.plot(
+          "US",
+          "Overall Vaccination",
+          title = tags$div(title),
+          reverse = T
+        ),
+        file = file,
+        cliprect = "viewport",
+        selfcontained = T
+      )
+    },
+    contentType = 'image/png'
+  )
+  output$US.maps.vaccination.data.dl <- downloadHandler(
+    filename = function() {
+      return("US_vaccination_data.csv")
+    },
+    content = function(file) {
+      write_csv(states, file)
+    },
+    contentType = 'text/csv'
+  )
+  
+    
   output$US.map.deaths <- renderLeaflet({
     time <- input$NRC.deaths.time
     if (time == "Daily") {
@@ -2428,9 +2481,11 @@ server <- function(input, output, session) {
   
   output$US.trends <- renderPlot({
     selected.states <- data.frame(name = input$NRC.state)
+    
     selected.states <- selected.states %>%
       left_join(state.abr[c("name", "abr")],
                 by = c("name" = "name"))
+    
     rate <- input$NRC.rate
     if (rate == "Overall") {
       y.value = "diff"
