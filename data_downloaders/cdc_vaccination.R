@@ -25,14 +25,14 @@ state_codes_to_exclude <- c("BP2", "IH2", "VA2", "DD2", "LTC", "MH", "MP", "VI",
 # Filter by most recent date
 # Exclude territories
 todays_raw_vax_data <- todays_raw_vax_data %>% 
-  select(Date, Location, Series_Complete_Pop_Pct) %>%
+  select(Date, Location, Series_Complete_Pop_Pct ) %>%
   mutate(Vax_pct = Series_Complete_Pop_Pct) %>%
   filter(Date == max(Date)) %>%
   filter(!(Location %in% state_codes_to_exclude )) %>% 
   left_join(states_abbreviations, by=c("Location" = "Abbreviation")) %>%
   left_join(state_population, by=c("NAME" = "NAME")) %>%
   mutate(Vax_total = ((Vax_pct/100) * Population)) %>% 
-  mutate(Vax_rate = Vax_total/100000) %>% 
+  mutate(Vax_rate = Vax_pct * 1000) %>% 
   select(-c(Rank, Series_Complete_Pop_Pct)) # %>% mutate(vax_per_1000 = Vax_rate/100)
 
 # Move United States to top

@@ -83,7 +83,7 @@ geo.plot <- function(state.choice,
     labels <- sprintf(
       paste0("<strong>%s</strong><br/>",
              feature," Rate DI: %.2g<br>",
-             feature," Rate: %.1f /100K"),
+             feature," Rate: %.0f /100K"),
       dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])
     ) %>% lapply(htmltools::HTML)
     
