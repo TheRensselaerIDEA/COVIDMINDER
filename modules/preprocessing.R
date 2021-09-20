@@ -440,8 +440,8 @@ todays.case.data <- todays.case.data %>% mutate(`GOP Vote_rate_ldi` = replace(`G
 # Do this is data_load.R
 state_vaccinations <- read_csv("data/csv/state_vaccinations.csv")
 
-#pUS.vax <- as.numeric(state_vaccinations[which(state_vaccinations$NAME=="United States"),"Vax_rate"])
-pUS.vax <- mean(t(state_vaccinations[which(state_vaccinations$NAME !="United States"),"Vax_rate"]))
+pUS.vax <- as.numeric(state_vaccinations[which(state_vaccinations$NAME=="United States"),"Vax_rate"])
+#pUS.vax <- mean(t(state_vaccinations[which(state_vaccinations$NAME !="United States"),"Vax_rate"]))
 
 Vax_rate_ldi <- unlist(lapply(state_vaccinations$Vax_rate, FUN=function(x){log(x/pUS.vax)}))
 #Daily_vax_rate_ldi <- unlist(lapply(state_vaccinations$Vax_rate, FUN=function(x){log(x/pUS.vax.daily)}))
