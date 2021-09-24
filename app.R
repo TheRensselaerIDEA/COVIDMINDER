@@ -12,7 +12,7 @@ source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
 sourceDir("modules/shiny/R")
 
-update_date <- "2021-09-20"
+update_date <- "2021-09-24"
 
 moving.avg.window <-
   7 # WARNING: Behavior for moving.avg.window > number of report dates for a region is undefined.
@@ -403,7 +403,7 @@ ui <- function(request) {
             ),
             tags$h4(
               style = "text-align:center;font-style:italic;",
-              "Based on US mean vaccination rate (per 100K population) across all states."
+              "Based on US mean vaccination rate (completed per 100K population) across all states."
             ),
             leafletOutput("US.map.vaccination", height = height),
             
