@@ -8,3 +8,6 @@ source("data_downloaders/jhu_ts_downloader.R")
 source("data_downloaders/cdc_downloader.R")
 source("data_downloaders/owid_downloader.R") 
 source("data_downloaders/cdc_vaccination.R") 
+# New: Automating identification of data download date
+today$date <- paste0("2021-",format(Sys.Date(),"%m"),"-",format(Sys.Date(),"%d"))
+saveRDS(today, "data_downloaders/today.Rds")
