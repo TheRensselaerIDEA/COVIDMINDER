@@ -10,8 +10,8 @@
 
 ## Usage
 ### Production Deployment (deployed 10 Apr 2020; updated daily)
-* http://covidminder.idea.rpi.edu (info)
-* App: https://inciteprojects.idea.rpi.edu/apps/covidminder/ 
+* http://covidminder.idea.rpi.edu (info and resources link)
+* https://inciteprojects.idea.rpi.edu/apps/covidminder/ (link app)
 
 ### Local Installation
 To deploy locally, clone the repository and run app.R on RStudio. On the source code pane, simply select Run App on the top right corner.
