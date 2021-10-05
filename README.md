@@ -9,12 +9,9 @@
 * For those new to github: https://education.github.com/git-cheat-sheet-education.pdf (github cheatsheet)
 
 ## Usage
-### Production Deployment (10 Apr 2020; updated daily)
-* http://covidminder.idea.rpi.edu
-
-### Shinyapps.io Deployment (Created 30 Mar 2020; updated frequently!)
-* http://bit.ly/COVIDMinder
-* https://olyerickson.shinyapps.io/covid-di-prototype/
+### Production Deployment (deployed 10 Apr 2020; updated daily)
+* http://covidminder.idea.rpi.edu (info)
+* App: https://inciteprojects.idea.rpi.edu/apps/covidminder/ 
 
 ### Local Installation
 To deploy locally, clone the repository and run app.R on RStudio. On the source code pane, simply select Run App on the top right corner.
