@@ -458,6 +458,7 @@ ggplot.US <- function(y.value="cases",
   highlight_points <- covid_TS_state.cases.plot  %>%
     group_by(name) %>%
     mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date)))) %>%
+    mutate(range = range / 3) %>%
     mutate(max_date = as.Date(max(date))) %>%
     mutate(max_date = max_date - ((num*((range%/%n_state) + 1))%%range))  %>%
     filter(date == max_date) %>%
