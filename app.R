@@ -6,7 +6,7 @@ library(RCurl)
 
 source("modules/Source.R")
 source("modules/data_load.R")
-source("modules/preprocessing.R")
+source("modules/preprocessing_2.R")
 source("modules/ggplot_gen.R")
 source("modules/leaflet_gen.R")
 source("modules/gt_gen.R")
@@ -403,12 +403,29 @@ ui <- function(request) {
             ),
             tags$h4(
               style = "text-align:center;font-style:italic;",
-              "Based on US mean vaccination rate (completed per 100K population) across all states."
+              "Based on US mean vaccination rate (completed series per 100K population) across all states."
             ),
             leafletOutput("US.map.vaccination", height = height),
             
             downloadButton("US.maps.vaccination.dl", label = "Download Vaccination Map"),
             downloadButton("US.maps.vaccination.data.dl", label = "Download Data For This Plot"),
+            offset = 2
+          ),
+          column(
+            8,
+            tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities (children 12-18 years old)"),
+            tags$h3(
+              style = "text-align:center;",
+              "What are the Nationwide disparities in COVID-19 vaccination rates for children aged 12-18 years?"
+            ),
+            tags$h4(
+              style = "text-align:center;font-style:italic;",
+              "Based on US mean vaccination rate (completed series per 100K population) for children aged 12-18 years across all states."
+            ),
+            leafletOutput("US.map.vaccination1218", height = height),
+            
+            downloadButton("US.maps.vaccination1218.dl", label = "Download Vaccination Map"),
+            downloadButton("US.maps.vaccination1218.data.dl", label = "Download Data For This Plot"),
             offset = 2
           )
         ),
@@ -2197,17 +2214,23 @@ server <- function(input, output, session) {
     contentType = 'text/csv'
   )
   
+  # Added 14 Sep 2021
   output$US.map.vaccination <- renderLeaflet({
     geo.plot("US", "Vax", reverse = T)
   })
+
+  # Added 07 Oct 2021
+  output$US.map.vaccination1218 <- renderLeaflet({
+    geo.plot("US", "Vax1218", reverse = T)
+  })
   
-  output$US.maps.vaccination.dl <- downloadHandler(
+  output$US.maps.vaccination1218.dl <- downloadHandler(
     filename = function() {
-      return("US_vaccination.png")
+      return("US_vaccination1218.png")
     },
     content = function(file) {
       title <-
-        tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities")
+        tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities (12-18 yrs)")
       mapshot(
         x = geo.plot(
           "US",
@@ -2222,16 +2245,17 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
-  output$US.maps.vaccination.data.dl <- downloadHandler(
+  
+  output$US.maps.vaccination1218.data.dl <- downloadHandler(
     filename = function() {
-      return("US_vaccination_data.csv")
+      return("US_vaccination1218_data.csv")
     },
     content = function(file) {
       write_csv(states, file)
     },
     contentType = 'text/csv'
   )
-  
+
     
   output$US.map.deaths <- renderLeaflet({
     time <- input$NRC.deaths.time
