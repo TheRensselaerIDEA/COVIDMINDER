@@ -167,6 +167,7 @@ ggplot.state <- function(selected.state = "NY",
     left_join(county.num, by=c("County" = "County")) %>%
     group_by(County) %>%
     mutate(range = as.numeric(as.Date(max(date))) - as.numeric(as.Date(min(date)))) %>%
+    mutate(range = range / 3 ) %>%
     mutate(max_date = as.Date(max(date))) %>%
     mutate(max_date = max_date - ((num*((range%/%n_county) + 1))%%range))  %>%
     filter(date == max_date) %>%
