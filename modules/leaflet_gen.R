@@ -87,7 +87,7 @@ geo.plot <- function(state.choice,
       dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])
     ) %>% lapply(htmltools::HTML)
     
-    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*0.1, reverse=reverse)
+    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*0.12938, reverse=reverse)
     
   } else if (feature == "Vax1218") {
     labels <- sprintf(
@@ -97,7 +97,8 @@ geo.plot <- function(state.choice,
       dataset$Name, dataset[,ldi_feature[1]], (dataset[,ldi_feature[2]])
     ) %>% lapply(htmltools::HTML)
     
-    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*0.1, reverse=reverse)
+    pal2 <- leaflet::colorBin(colors, domain = dataset[,ldi_feature[1]], bins = bins*0.12938, reverse=reverse)
+    #browser() 
     
   } else {
     labels <- sprintf(
