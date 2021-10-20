@@ -14,7 +14,13 @@
 * https://inciteprojects.idea.rpi.edu/apps/covidminder/ (link app)
 
 ### Local Installation
-To deploy locally, clone the repository and run app.R on RStudio. On the source code pane, simply select Run App on the top right corner.
+
+To deploy locally:
+* Clone the github repository
+* In R:
+     * `setwd()` to the COVIDMINDER directory
+     * `source("data_downloaders/source_downloaders.R")`
+* Run `app.R` in RStudio (ie in the source code pane, simply select "Run App" on the top right corner)
 
 
 ## Data Sources: Updated daily! (See also `data` subdirectories)
