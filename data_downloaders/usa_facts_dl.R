@@ -22,7 +22,9 @@ library(stringr)
 library(lubridate)
 library(readr)
 
-base.url <- "https://usafactsstatic.blob.core.windows.net/public/data/covid-19/"
+# https://static.usafacts.org/public/data/covid-19/covid_confirmed_usafacts.csv
+#base.url <- "https://usafactsstatic.blob.core.windows.net/public/data/covid-19/"
+base.url <- "https://static.usafacts.org/public/data/covid-19/"
 case.file <- "covid_confirmed_usafacts.csv"
 death.file <- "covid_deaths_usafacts.csv"
 pop.file <- "covid_county_population_usafacts.csv"
