@@ -427,7 +427,25 @@ ui <- function(request) {
             downloadButton("US.maps.vaccination1218.dl", label = "Download Vaccination Map"),
             downloadButton("US.maps.vaccination1218.data.dl", label = "Download Data For This Plot"),
             offset = 2
+          ),
+          column(
+            8,
+            tags$h2(style = "text-align:center;", "EXPERIMENTAL: US COVID-19 Vaccination Disparities (children 5-12 years old)"),
+            tags$h3(
+              style = "text-align:center;",
+              "What are the Nationwide disparities in COVID-19 vaccination rates for children aged 5-12 years?"
+            ),
+            tags$h4(
+              style = "text-align:center;font-style:italic;",
+              "Based on US mean vaccination rate (completed series per 100K population) for children aged 5-12 years across all states."
+            ),
+            leafletOutput("US.map.vaccination512", height = height),
+            
+            downloadButton("US.maps.vaccination512.dl", label = "Download Vaccination Map"),
+            downloadButton("US.maps.vaccination512.data.dl", label = "Download Data For This Plot"),
+            offset = 2
           )
+          
         ),
         tags$br(),
      
@@ -2245,6 +2263,36 @@ server <- function(input, output, session) {
     },
     contentType = 'image/png'
   )
+
+  #########
+  # Added 26 Nov 2021
+  output$US.map.vaccination512 <- renderLeaflet({
+    geo.plot("US", "Vax512", reverse = T)
+  })
+  
+  output$US.maps.vaccination512.dl <- downloadHandler(
+    filename = function() {
+      return("US_vaccination1218.png")
+    },
+    content = function(file) {
+      title <-
+        tags$h2(style = "text-align:center;", "EXPERIMENTAL: US COVID-19 Vaccination Disparities (5-12 yrs)")
+      mapshot(
+        x = geo.plot(
+          "US",
+          "Overall Vaccination",
+          title = tags$div(title),
+          reverse = T
+        ),
+        file = file,
+        cliprect = "viewport",
+        selfcontained = T
+      )
+    },
+    contentType = 'image/png'
+  )
+  
+  #########
   
   output$US.maps.vaccination1218.data.dl <- downloadHandler(
     filename = function() {

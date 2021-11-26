@@ -502,3 +502,33 @@ state_vaccinations <- state_vaccinations %>%
 states <- data.frame(states, "Vax1218_rate"=state_vaccinations$Vax1218_rate, check.names = F) # Append to states
 
 states <- data.frame(states, "Vax1218_rate_ldi"=state_vaccinations$Vax1218_rate_ldi, check.names = F) # Append to states
+
+#######################
+# NEW (26 Nov 2021): Calculate state 5-12 yr old vaccination DIs based on median of US state rates
+
+# Do this is data_load.R
+state_vaccinations <- read_csv("data/csv/state_vaccinations.csv")
+
+pUS.vax512 <- as.numeric(state_vaccinations[which(state_vaccinations$NAME=="United States"),"Vax512_rate"])
+
+Vax512_rate_ldi <- unlist(lapply(state_vaccinations$Vax512_rate, FUN=function(x){log(x/pUS.vax512)}))
+
+vax512_ldi.us <- unlist(lapply(state_vaccinations$Vax512_rate, FUN=function(x){log(x/(pUS.vax512))}))
+
+# Write to data frame
+state_vaccinations <- data.frame(state_vaccinations, Vax512_rate_ldi)
+
+state_vaccinations <- data.frame(state_vaccinations, vax512_ldi.us)
+
+state_vaccinations <- state_vaccinations[match(states$NAME, state_vaccinations$NAME),]
+
+# Check the row order of this
+state_vaccinations <- state_vaccinations[1:51,]
+
+state_vaccinations <- state_vaccinations %>% 
+  mutate(Vax512_rate_ldi = replace(Vax512_rate_ldi, Vax512_rate_ldi < -5, -5)) %>%
+  mutate(vax512_ldi.us = replace(vax512_ldi.us, vax512_ldi.us < -5, -5))
+
+states <- data.frame(states, "Vax512_rate"=state_vaccinations$Vax512_rate, check.names = F) # Append to states
+
+states <- data.frame(states, "Vax512_rate_ldi"=state_vaccinations$Vax512_rate_ldi, check.names = F) # Append to states

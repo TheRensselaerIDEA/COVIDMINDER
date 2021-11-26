@@ -26,11 +26,17 @@ state_codes_to_exclude <- c("BP2", "IH2", "VA2", "DD2", "LTC", "MH", "MP", "VI",
 # Exclude territories
 todays_raw_vax_data <- todays_raw_vax_data %>% 
   select(Date, Location, Series_Complete_Pop_Pct,
+         Series_Complete_5Plus,Series_Complete_5PlusPop_Pct,
          Series_Complete_12Plus,Series_Complete_12PlusPop_Pct,
          Series_Complete_18Plus,Series_Complete_18PlusPop_Pct ) %>%
+  mutate(Pop_5Plus = Series_Complete_5Plus / (Series_Complete_5PlusPop_Pct/100)) %>%
   mutate(Pop_12Plus = Series_Complete_12Plus / (Series_Complete_12PlusPop_Pct/100)) %>%
   mutate(Pop_18Plus = Series_Complete_18Plus / (Series_Complete_18PlusPop_Pct/100)) %>%
   mutate(Pop_12_18 = round(Pop_12Plus - Pop_18Plus)) %>%
+  mutate(Pop_5_12 = round(Pop_5Plus - Pop_12Plus)) %>%
+  mutate(Vax512_total = Series_Complete_5Plus - Series_Complete_12Plus) %>%
+  mutate(Vax512_pct = Vax512_total / Pop_5_12 ) %>%
+  mutate(Vax512_rate = Vax512_pct * 1000 ) %>%
   mutate(Vax1218_total = Series_Complete_12Plus - Series_Complete_18Plus) %>%
   mutate(Vax1218_pct = Vax1218_total / Pop_12_18 ) %>%
   mutate(Vax1218_rate = Vax1218_pct * 1000 ) %>%
@@ -42,8 +48,10 @@ todays_raw_vax_data <- todays_raw_vax_data %>%
   mutate(Vax_total = ((Vax_pct/100) * Population)) %>% 
   mutate(Vax_rate = Vax_pct * 1000) %>% 
   select(-c(Rank, Series_Complete_Pop_Pct)) %>%
-  select(-c("Series_Complete_12Plus", "Series_Complete_12PlusPop_Pct", "Series_Complete_18Plus",       
-            "Series_Complete_18PlusPop_Pct", "Pop_12Plus", "Pop_18Plus"))
+  select(-c("Series_Complete_5Plus", "Series_Complete_5PlusPop_Pct",
+            "Series_Complete_12Plus", "Series_Complete_12PlusPop_Pct", 
+            "Series_Complete_18Plus", "Series_Complete_18PlusPop_Pct", 
+            "Pop_5Plus", "Pop_12Plus", "Pop_18Plus"))
 
 # Move United States to top
 matched <- todays_raw_vax_data$NAME %in% c("United States")
