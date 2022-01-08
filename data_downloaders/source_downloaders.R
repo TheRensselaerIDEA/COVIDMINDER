@@ -11,5 +11,5 @@ source("data_downloaders/cdc_vaccination.R")
 # New: Automating identification of data download date
 today <-as.data.frame(matrix(nrow=1,ncol=1))
 colnames(today) <- c("date")
-today$date <- paste0("2021-",format(Sys.Date(),"%m"),"-",format(Sys.Date(),"%d"))
+today$date <- paste0("2022-",format(Sys.Date(),"%m"),"-",format(Sys.Date(),"%d"))
 saveRDS(today, "data_downloaders/today.Rds")
