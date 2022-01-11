@@ -4,9 +4,9 @@
 source("data_downloaders/cpt_downloader.R")
 source("data_downloaders/jhu_downloader.R")
 source("data_downloaders/usa_facts_dl.R")
-source("data_downloaders/jhu_ts_downloader.R")
+source("data_downloaders/jhu_ts_downloader.R") # TODO: Why does this need plotly??
 source("data_downloaders/cdc_downloader.R")
-source("data_downloaders/owid_downloader.R") 
+source("data_downloaders/owid_downloader.R") # TODO: Why sqldf?
 source("data_downloaders/cdc_vaccination.R") 
 # New: Automating identification of data download date
 today <-as.data.frame(matrix(nrow=1,ncol=1))
