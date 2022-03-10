@@ -381,19 +381,19 @@ ui <- function(request) {
             downloadButton("US.map.deaths.data.dl", label = "Download Data For This Plot"),
             offset = 2
           ),
-          column(
-            8,
-            tags$h2(style = "text-align:center;", "US COVID-19 Testing Disparities"),
-            tags$h3(
-              style = "text-align:center;",
-              "What are the Nationwide disparities in COVID-19 Testing?"
-            ),
-            leafletOutput("US.map.testing", height = height),
-            
-            downloadButton("US.maps.testing.dl", label = "Download Testing Map"),
-            downloadButton("US.maps.testing.data.dl", label = "Download Data For This Plot"),
-            offset = 2
-          ),
+          # column(
+          #   8,
+          #   tags$h2(style = "text-align:center;", "US COVID-19 Testing Disparities"),
+          #   tags$h3(
+          #     style = "text-align:center;",
+          #     "What are the Nationwide disparities in COVID-19 Testing?"
+          #   ),
+          #   leafletOutput("US.map.testing", height = height),
+          #   
+          #   downloadButton("US.maps.testing.dl", label = "Download Testing Map"),
+          #   downloadButton("US.maps.testing.data.dl", label = "Download Data For This Plot"),
+          #   offset = 2
+          # ),
           column(
             8,
             tags$h2(style = "text-align:center;", "US COVID-19 Vaccination Disparities"),
